@@ -1,0 +1,104 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+
+apply plugin: 'war'
+//apply plugin: 'jetty'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+version = '1.0'
+
+ext.springGroup = 'org.springframework'
+ext.springVersion = '3.2.8.RELEASE'
+def localMavenRepo = 'file://E:/maven/repo'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
+	}
+}
+apply plugin: 'com.bmuschko.tomcat'
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Cms Security', 'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+//	mavenRepo url: localMavenRepo
+}
+
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+	compile "$springGroup:spring-core:$springVersion",
+			"$springGroup:spring-orm:$springVersion",
+			"$springGroup:spring-expression:$springVersion",
+			"$springGroup:spring-web:$springVersion",
+			"$springGroup:spring-webmvc:$springVersion",
+			"$springGroup:spring-test:$springVersion",
+	 		"org.hibernate:hibernate-annotations:3.5.6-Final",
+			"org.hibernate:hibernate-validator:4.3.1.Final"
+			
+			
+	runtime "commons-dbcp:commons-dbcp:1.4",
+			"org.codehaus.jackson:jackson-mapper-asl:1.9.10",
+			"javassist:javassist:3.12.1.GA",
+			"mysql:mysql-connector-java:5.1.6",
+			"org.slf4j:slf4j-api:1.7.7",
+			"org.slf4j:slf4j-log4j12:1.7.7"
+			
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+	
+	providedCompile 'javax.servlet:servlet-api:2.5'
+	
+	def tomcatVersion = '7.0.11'
+	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+		   "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+	tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+		exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+	}
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+
+/*jettyRun {
+	httpPort = 9191
+	stopPort = 9999
+	stopKey = 'stopKey'
+	contextPath = 'todo'
+}*/
+
+tomcat {
+	httpPort = 9191
+	users {
+		user {
+			username = 'user1'
+			password = '123456'
+			roles = ['developers', 'admin']
+		}
+
+		user {
+			username = 'user2'
+			password = 'abcdef'
+			roles = ['manager']
+		}
+	}
+}
+
