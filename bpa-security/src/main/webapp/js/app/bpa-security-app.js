@@ -18,6 +18,10 @@
             
             registerMenu();
             
+            require(['./controller/WorkspaceSecurity'], function (WorkspaceSecurity) {
+            	var workspaceSecurity = new WorkspaceSecurity($("#content"));
+            });
+            
         });
     };
     return {
