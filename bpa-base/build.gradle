@@ -1,39 +1,30 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 
 apply plugin: 'war'
-//apply plugin: 'jetty'
-
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
+
+archivesBaseName = 'bpa-base'
+group = 'id.co.oriza.bpa'
 version = '1.0'
 
 ext.springGroup = 'org.springframework'
 ext.springVersion = '3.2.8.RELEASE'
-def localMavenRepo = 'file://E:/maven/repo'
-
-buildscript {
-	repositories {
-		jcenter()
-	}
-	dependencies {
-		classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
-	}
-}
-apply plugin: 'com.bmuschko.tomcat'
 
 
 jar {
 	manifest {
-		attributes 'Implementation-Title': 'Cms Security', 'Implementation-Version': version
+		attributes 'Implementation-Title': 'BPA Base', 'Implementation-Version': version
 	}
 }
 
 repositories {
 	mavenCentral()
-//	mavenRepo url: localMavenRepo
+	mavenLocal()
 }
 
 dependencies {
@@ -59,12 +50,6 @@ dependencies {
 	
 	providedCompile 'javax.servlet:servlet-api:2.5'
 	
-	def tomcatVersion = '7.0.11'
-	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-		   "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
-	tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-		exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
-	}
 }
 
 test {
@@ -76,30 +61,6 @@ uploadArchives {
 	   flatDir {
 		   dirs 'repos'
 	   }
-	}
-}
-
-/*jettyRun {
-	httpPort = 9191
-	stopPort = 9999
-	stopKey = 'stopKey'
-	contextPath = 'todo'
-}*/
-
-tomcat {
-	httpPort = 9191
-	users {
-		user {
-			username = 'user1'
-			password = '123456'
-			roles = ['developers', 'admin']
-		}
-
-		user {
-			username = 'user2'
-			password = 'abcdef'
-			roles = ['manager']
-		}
 	}
 }
 
