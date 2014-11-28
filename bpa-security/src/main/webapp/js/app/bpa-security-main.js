@@ -1,7 +1,7 @@
 ﻿require.config({
     paths: {
         "jQuery": "../jquery/1.11.1/jquery.min",
-//        "tinypubsub": "../tinypubsub/ba-tiny-pubsub.js",
+        "tinypubsub": "../tinypubsub/ba-tiny-pubsub",
         "jqxcore": "../jqwidgets/3.5.0/jqxcore",
         "jqxtabs": "../jqwidgets/3.5.0/jqxtabs",
         "jqxbuttons": "../jqwidgets/3.5.0/jqxbuttons",
@@ -24,10 +24,10 @@
     },
     //waitSeconds: 60,
     shim: {
-//    	"tinypubsub": {
-//            export: "$",
-//            deps: ['jQuery']
-//        },
+    	"tinypubsub": {
+            export: "$",
+            deps: ['jQuery']
+        },
         "jqxcore": {
             export: "$",
             deps: ['jQuery']
