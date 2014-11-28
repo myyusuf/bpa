@@ -16,17 +16,6 @@ version = '1.0'
 ext.springGroup = 'org.springframework'
 ext.springVersion = '3.2.8.RELEASE'
 
-buildscript {
-	repositories {
-		jcenter()
-	}
-	dependencies {
-		classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
-	}
-}
-apply plugin: 'com.bmuschko.tomcat'
-
-
 jar {
 	manifest {
 		attributes 'Implementation-Title': 'BPA Security', 'Implementation-Version': version
@@ -62,30 +51,6 @@ dependencies {
 	
 	providedCompile 'javax.servlet:servlet-api:2.5'
 	
-	def tomcatVersion = '7.0.11'
-	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-		   "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
-	tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-		exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
-	}
-	
-}
-
-tomcat {
-	httpPort = 9191
-	users {
-		user {
-			username = 'user1'
-			password = '123456'
-			roles = ['developers', 'admin']
-		}
-
-		user {
-			username = 'user2'
-			password = 'abcdef'
-			roles = ['manager']
-		}
-	}
 }
 
 uploadArchives {
