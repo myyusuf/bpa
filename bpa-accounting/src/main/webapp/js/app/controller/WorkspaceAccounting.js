@@ -13,6 +13,20 @@ define(["jQuery", "jqxcore"], function () {
 				
             	var userListPage = new UserList(gridContainer);
             });
+			
+		});
+		
+		$.subscribe("viewBalanceSheetListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+			
+			require(['./view/accounting/BalanceSheetList'], function (BalanceSheet) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var balanceSheet = new BalanceSheet(gridContainer);
+            });
 		});
 		
 	};

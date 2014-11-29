@@ -2,7 +2,7 @@ define(["jQuery", "jqxcore"], function () {
 	
 	var BalanceSheetList = function(container){
 		
-		var url = BPA.Constant.security.balanceSheetUrl;
+		var url = BPA.Constant.accounting.balanceSheetUrl;
         
         var source =
         {
