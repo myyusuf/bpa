@@ -3,18 +3,28 @@ define(["jQuery", "jqxcore"], function () {
 	var WorkspaceSecurity = function(container){
 		
 		$.subscribe("viewUserListEvent", function(e, data){
-			console.log("data.name : " + data.name);
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
 			
 			require(['./view/security/UserList'], function (UserList) {
-            	var userListPage = new UserList(container);
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var userListPage = new UserList(gridContainer);
             });
 		});
 		
 		$.subscribe("viewRoleListEvent", function(e, data){
-			console.log("data.name : " + data.name);
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
 			
 			require(['./view/security/RoleList'], function (RoleList) {
-            	var roleListPage = new RoleList(container);
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var roleListPage = new RoleList(gridContainer);
             });
 		});
 		

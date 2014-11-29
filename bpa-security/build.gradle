@@ -4,7 +4,7 @@ apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 
 apply plugin: 'war'
-apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
+//apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -51,6 +51,15 @@ dependencies {
 	
 	providedCompile 'javax.servlet:servlet-api:2.5'
 	
+}
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath "org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3"
+	}
 }
 
 uploadArchives {

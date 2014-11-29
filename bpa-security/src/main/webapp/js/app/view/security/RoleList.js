@@ -1,6 +1,4 @@
-define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar", "jqxexpander", 
-        "jqxsplitter", "jqxmenu", "jqxnavigationbar", 
-        "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxlistbox", "jqxdropdownlist", "jqxgrid", "jqxdata"], function () {
+define(["jQuery", "jqxcore"], function () {
 	
 	var RoleList = function(container){
 		
@@ -43,8 +41,8 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             editable: false,
             selectionmode: 'multiplerows',
             columns: [
-              { text: 'Code', datafield: 'username', width: '50%' },
-              { text: 'Name', datafield: 'firstName', width: '50%' }
+              { text: 'Code', datafield: 'code', width: '50%' },
+              { text: 'Name', datafield: 'name', width: '50%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],

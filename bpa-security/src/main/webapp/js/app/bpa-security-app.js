@@ -22,7 +22,9 @@
             registerMenu();
             
             require(['./controller/WorkspaceSecurity'], function (WorkspaceSecurity) {
-            	var workspaceSecurity = new WorkspaceSecurity($("#content"));
+            	
+            	var container = $("#content");
+            	var workspaceSecurity = new WorkspaceSecurity(container);
             });
             
         });
