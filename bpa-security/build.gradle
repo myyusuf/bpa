@@ -4,7 +4,7 @@ apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 
 apply plugin: 'war'
-//apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
+apply plugin: 'waroverlay'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
