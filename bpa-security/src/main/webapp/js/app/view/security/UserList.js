@@ -4,7 +4,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
 	
 	var UserList = function(container){
 		
-		var url = BPA.Constant.usersUrl;
+		var url = BPA.Constant.security.usersUrl;
         
         var source =
         {
