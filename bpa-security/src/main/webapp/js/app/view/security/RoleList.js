@@ -2,20 +2,18 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         "jqxsplitter", "jqxmenu", "jqxnavigationbar", 
         "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxlistbox", "jqxdropdownlist", "jqxgrid", "jqxdata"], function () {
 	
-	var UserList = function(container){
+	var RoleList = function(container){
 		
-		var url = BPA.Constant.usersUrl;
+		var url = BPA.Constant.rolesUrl;
         
         var source =
         {
             datatype: "json",
             datafields: [
-                { name: 'username', type: 'string' },
-                { name: 'firstName', type: 'string' },
-                { name: 'lastName', type: 'string' },
-                { name: 'email', type: 'string' }
+                { name: 'code', type: 'string' },
+                { name: 'name', type: 'string' }
             ],
-            id: 'username',
+            id: 'code',
             beforeprocessing: function (data) {
                 source.totalrecords = data.num;
             },
@@ -45,10 +43,8 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             editable: false,
             selectionmode: 'multiplerows',
             columns: [
-              { text: 'Username', datafield: 'username', width: '25%' },
-              { text: 'First Name', datafield: 'firstName', width: '25%' },
-              { text: 'Last Name', datafield: 'lastName', width: '25%' },
-              { text: 'Email', datafield: 'email', width: '25%' }
+              { text: 'Code', datafield: 'username', width: '50%' },
+              { text: 'Name', datafield: 'firstName', width: '50%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],
@@ -62,7 +58,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         
 	}
 
-    return UserList;
+    return RoleList;
     
 });
 

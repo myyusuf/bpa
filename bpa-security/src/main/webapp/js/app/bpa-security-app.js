@@ -11,8 +11,11 @@
             
             var registerMenu = function(){
             	$("#userListMenu").click(function(){
-            		console.log("click..");
-            		$.publish("viewUserListEvent", {name: "waw"});
+            		$.publish("viewUserListEvent", {name: "user"});
+            	});
+            	
+            	$("#roleListMenu").click(function(){
+            		$.publish("viewRoleListEvent", {name: "role"});
             	});
             }
             
