@@ -20,7 +20,9 @@
         "jqxdropdownlist": "../jqwidgets/3.5.0/jqxdropdownlist",
         "jqxlistbox": "../jqwidgets/3.5.0/jqxlistbox",
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
-        "jqxdata": "../jqwidgets/3.5.0/jqxdata"
+        "jqxdata": "../jqwidgets/3.5.0/jqxdata",
+        "jqxtreegrid": "../jqwidgets/3.5.0/jqxtreegrid",
+        "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
     },
     //waitSeconds: 60,
     shim: {
@@ -97,6 +99,14 @@
             deps: ['jQuery', "jqxcore", "jqxdropdownlist"]
         },
         "jqxdata": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxtreegrid": {
+            export: "$",
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxdatatable"]
+        },
+        "jqxdatatable": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
         }
