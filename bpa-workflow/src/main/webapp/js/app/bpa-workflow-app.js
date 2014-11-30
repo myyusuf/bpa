@@ -10,21 +10,22 @@
             $("#jqxMenu").css('visibility', 'visible');
             
             var registerMenu = function(){
-            	$("#userListMenu").click(function(){
-            		$.publish("viewUserListEvent", {name: "user"});
+            	$("#processDefinitionListMenu").click(function(){
+            		$.publish("viewProcessDefinitionListEvent", {name: "process definition"});
             	});
             	
-            	$("#roleListMenu").click(function(){
-            		$.publish("viewRoleListEvent", {name: "role"});
+            	$("#taskListMenu").click(function(){
+            		$.publish("viewTaskListListEvent", {name: "task"});
             	});
+            	
             }
             
             registerMenu();
             
-            require(['./controller/WorkspaceSecurity'], function (WorkspaceSecurity) {
+            require(['./controller/WorkspaceWorkflow'], function (WorkspaceWorkflow) {
             	
             	var container = $("#content");
-            	var workspaceSecurity = new WorkspaceSecurity(container);
+            	var workspaceWorkflow = new WorkspaceWorkflow(container);
             });
             
         });

@@ -102,6 +102,6 @@
         }
     }
 });
-require(["bpa-security-app"], function (App) {
+require(["bpa-workflow-app"], function (App) {
     App.initialize();
 });
