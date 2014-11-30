@@ -10,20 +10,50 @@ define(["jQuery", "jqxcore"], function () {
 		
 		
 		$.subscribe("viewUserListEvent", function(e, data){
-			console.log("data.name : " + data.name);
+			var userListGrid = $('<div id="userListGrid"></div>');
 			
-			var userListGrid = $('<div id="userListGrid">aaa</div>');
+			var tabsCount = tabs.jqxTabs('length');
 			
 			tabs.jqxTabs('addLast', 'User List' , 'userListGrid');
-			tabs.jqxTabs('setContentAt', 1 , '<div id="userListGrid">User Grid : [Loading]</div>');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="userListGrid">User Grid : [Loading]</div>');
 			
 			
 			require(['./view/security/UserList'], function (UserList) {
 				var parentContainer = $('#userListGrid').parent();
-            	var test = new UserList(parentContainer);
+            	var userList = new UserList(parentContainer);
             	tabs.on('removed', function (event) {
             		console.log('removed...');
             	}); 
+            });
+		});
+		
+		$.subscribe("viewRoleListEvent", function(e, data){
+			var roleListGrid = $('<div id="roleListGrid"></div>');
+			
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Role List' , 'roleListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="roleListGrid">Role Grid : [Loading]</div>');
+			
+			
+			require(['./view/security/RoleList'], function (RoleList) {
+				var parentContainer = $('#roleListGrid').parent();
+            	var roleList = new RoleList(parentContainer);
+            });
+		});
+		
+		$.subscribe("viewLedgerListEvent", function(e, data){
+			var roleListGrid = $('<div id="ledgerListGrid"></div>');
+			
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Ledger' , 'ledgerListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="ledgerListGrid">Ledger Grid : [Loading]</div>');
+			
+			
+			require(['./view/accounting/LedgerList'], function (LedgerList) {
+				var parentContainer = $('#ledgerListGrid').parent();
+            	var ledgerList = new LedgerList(parentContainer);
             });
 		});
 			

@@ -44,8 +44,13 @@
             
             var registerMenu = function(){
             	$("#userListMenu").click(function(){
-            		console.log("click..");
             		$.publish("viewUserListEvent", {name: "waw"});
+            	});
+            	$("#roleListMenu").click(function(){
+            		$.publish("viewRoleListEvent", {name: "waw"});
+            	});
+            	$("#ledgerListMenu").click(function(){
+            		$.publish("viewLedgerListEvent", {name: "waw"});
             	});
             }
             
