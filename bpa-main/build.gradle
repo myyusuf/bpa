@@ -35,7 +35,7 @@ dependencies {
 			"$springGroup:spring-web:$springVersion",
 			"$springGroup:spring-webmvc:$springVersion",
 			"$springGroup:spring-test:$springVersion",
-			 "org.hibernate:hibernate-annotations:3.5.6-Final",
+			"org.hibernate:hibernate-annotations:3.5.6-Final",
 			"org.hibernate:hibernate-validator:4.3.1.Final",
 			"id.co.oriza.bpa:bpa-base:1.0",
 			"id.co.oriza.bpa:bpa-security:1.0",
@@ -52,6 +52,7 @@ dependencies {
 	testCompile group: 'junit', name: 'junit', version: '4.+'
 	
 	providedCompile 'javax.servlet:servlet-api:2.5'
+}
 
 buildscript {
 	repositories {

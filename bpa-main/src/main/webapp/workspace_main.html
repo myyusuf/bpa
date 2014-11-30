@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Workspace - Security Module</title>
+	<script type="text/javascript" data-main="js/app/bpa-security-main" src="js/requirejs/2.1.14/require.js"></script>
+	<!-- <script type="text/javascript" src="js/app/bpa-security-constant.js"></script> -->
+	<script type="text/javascript" src="sample/bpa-security-constant-test.js"></script>
+	
+	<link type="text/css" rel="Stylesheet" href="resources/styles/jqx.base.css"/>
+	<link type="text/css" rel="Stylesheet" href="resources/styles/jqx.metro.css"/>
+	<link type="text/css" rel="Stylesheet" href="resources/styles/jqx.arctic.css"/>
+	
+	<link type="text/css" rel="Stylesheet" href="resources/styles/app.css"/>
+	
+	<style type="text/css">
+		html, body
+		{
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+		overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+
+<div style="width: 100%; height: 100%;">
+	<div id="header">
+		<div id="titleHeader" style="height: 20px; font: 11px arial; padding-top: 6px; padding-left: 6px; background-color: rgb(84, 88, 92); color: white;">
+			<span style="">BPA - Main Module</span>
+		</div>
+
+		<div id='jqxMenu'>
+			<ul>
+				<li><a href="#Home">Home</a></li>
+				<li>Transaction
+					<ul style=''>
+						<li><a href="#Education">Purchase</a></li>
+						<li><a href="#Financial">Financial services</a></li>
+						<li><a href="#Government">Government</a></li>
+						<li><a href="#Manufacturing">Manufacturing</a></li>
+						<li type='separator'></li>
+						<li>Software Solutions
+							<ul style='width: 220px;'>
+								<li><a href="#ConsumerPhoto">Consumer photo and video</a></li>
+								<li><a href="#Mobile">Mobile</a></li>
+								<li><a href="#RIA">Rich Internet applications</a></li>
+								<li><a href="#TechnicalCommunication">Technical communication</a></li>
+								<li><a href="#Training">Training and eLearning</a></li>
+								<li><a href="#WebConferencing">Web conferencing</a></li>
+							</ul>
+						</li>
+						<li><a href="#">All industries and solutions</a></li>
+					</ul>
+				</li>
+				<li>Products
+					<ul>
+						<li><a href="#PCProducts">PC products</a></li>
+						<li><a href="#MobileProducts">Mobile products</a></li>
+						<li><a href="#AllProducts">All products</a></li>
+					</ul>
+				</li>
+				<li>Support
+					<ul style='width: 200px;'>
+						<li><a href="#SupportHome">Support home</a></li>
+						<li><a href="#CustomerService">Customer Service</a></li>
+						<li><a href="#KB">Knowledge base</a></li>
+						<li><a href="#Books">Books</a></li>
+						<li><a href="#Training">Training and certification</a></li>
+						<li><a href="#SupportPrograms">Support programs</a></li>
+						<li><a href="#Forums">Forums</a></li>
+						<li><a href="#Documentation">Documentation</a></li>
+						<li><a href="#Updates">Updates</a></li>
+					</ul>
+				</li>
+				<li>Company
+					<ul style='width: 180px;'>
+						<li><a href="#About">About Us</a></li>
+						<li><a href="#Press">Press</a></li>
+						<li><a href="#Investor">Investor Relations</a></li>
+						<li><a href="#CorporateAffairs">Corporate Affairs</a></li>
+						<li><a href="#Careers">Careers</a></li>
+						<li><a href="#Showcase">Showcase</a></li>
+						<li><a href="#Events">Events</a></li>
+						<li><a href="#ContactUs">Contact Us</a></li>
+						<li><a href="#Become an affiliate">Become an affiliate</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
+	<div id="content">
+		<div id="mainSplitter">
+			<div>
+
+				<div style="border: none;" id="feedExpander" style="border-right: 0;">
+					<div class="jqx-hideborder">Modules</div>
+
+					<div id="jqxNavigationBar" style="">
+						<div>
+							<div style='margin-top: 2px;'>
+								<div style='float: left;'>
+									<img alt='Mail' src='resources/images/applications-blue.png'/></div>
+								<div style='margin-left: 4px; float: left;'>
+									Application Settings
+								</div>
+							</div>
+						</div>
+						<div>
+						
+							<div class="jqx-hideborder" id='jqxTree' style=''>
+								<ul>
+									<li item-expanded='true' id="t1">
+										<img style='float: left; margin-right: 5px;' src='resources/images/do-not-disturb-sign.png' /><span
+											item-title="true">Security Management</span>
+										<ul>
+											
+											<li id="userListMenu">
+												<img style='float: left; margin-right: 5px;' src='resources/images/xfn-friend-met.png' /><span
+													item-title="true">User</span> </li>
+											<li>
+												<img style='float: left; margin-right: 5px;' src='resources/images/sitemap-image.png' /><span
+													item-title="true">Group</span> </li>
+											<li>
+												<img style='float: left; margin-right: 5px;' src='resources/images/node-insert-next.png' /><span
+													item-title="true">Role</span> </li>
+										</ul>
+									</li>
+									
+									<li item-expanded='true' id="t1">
+										<img style='float: left; margin-right: 5px;' src='resources/images/database-insert.png' /><span
+											item-title="true">Master Data</span>
+										<ul>
+											
+											<li>
+												<img style='float: left; margin-right: 5px;' src='resources/images/folder.png' /><span
+													item-title="true">Posisi</span> </li>
+											<li>
+												<img style='float: left; margin-right: 5px;' src='resources/images/folder.png' /><span
+													item-title="true">Wilayah</span> </li>
+											<li>
+												<img style='float: left; margin-right: 5px;' src='resources/images/folder.png' /><span
+													item-title="true">Kategori</span> </li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+						<div>
+							<div style='margin-top: 2px;'>
+								<div style='float: left;'>
+									<img alt='Mail' src='resources/images/contactsIcon.png'/></div>
+								<div style='margin-left: 4px; float: left;'>
+									Contacts
+								</div>
+							</div>
+						</div>
+						<div>
+							<ul>
+								<li><a href='#'>Business Cards</a></li>
+								<li><a href='#'>Address Cards</a></li>
+								<li><a href='#'>Detailed Address Cards</a></li>
+								<li><a href='#'>Phone List</a></li>
+							</ul>
+						</div>
+						<div>
+							<div style='margin-top: 2px;'>
+								<div style='float: left;'>
+									<img alt='Mail' src='resources/images/tasksIcon.png'/></div>
+								<div style='margin-left: 4px; float: left;'>
+									Tasks
+								</div>
+							</div>
+						</div>
+						<div>
+							<ul>
+								<li><a href='#'>Simple List</a></li>
+								<li><a href='#'>Detailed List</a></li>
+								<li><a href='#'>Active Tasks</a></li>
+								<li><a href='#'>Phone List</a></li>
+							</ul>
+						</div>
+						<div>
+							<div style='margin-top: 2px;'>
+								<div style='float: left;'>
+									<img alt='Mail' src='resources/images/notesIcon.png'/></div>
+								<div style='margin-left: 4px; float: left;'>
+									Notes
+								</div>
+							</div>
+						</div>
+						<div>
+							<ul>
+								<li><a href='#'>Icons</a></li>
+								<li><a href='#'>Notes List</a></li>
+								<li><a href='#'>Last Seven Days</a></li>
+							</ul>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			<div>
+				<div id="contentSplitter">
+					<div class="feed-item-list-container" id="contentPanel" style="overflow: hidden; height: 100%; background-color: blue;">
+					
+					</div>
+					<div id="feedContentArea">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer">
+		<div style="font-size: 10px;">Footer</div>
+	</div>
+</div>
+
+</body>
+</html>
