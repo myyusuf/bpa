@@ -8,7 +8,10 @@ define(["jQuery", "jqxcore"], function () {
 			
 			require(['./view/accounting/CoaList'], function (UserList) {
 				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+					$(container.children()[0]).jqxTreeGrid('destroy');
+					if(container.children()[0] != undefined){
+						$(container.children()[0]).jqxGrid('destroy');
+					}
 				}
 				
             	var userListPage = new UserList(gridContainer);
@@ -23,6 +26,9 @@ define(["jQuery", "jqxcore"], function () {
 			require(['./view/accounting/BalanceSheetList'], function (BalanceSheet) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxTreeGrid('destroy');
+					if(container.children()[0] != undefined){
+						$(container.children()[0]).jqxGrid('destroy');
+					}
 				}
 				
             	var balanceSheet = new BalanceSheet(gridContainer);
