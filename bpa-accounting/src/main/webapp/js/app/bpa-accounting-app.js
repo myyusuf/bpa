@@ -18,6 +18,10 @@
             	$("#balanceSheetListMenu").click(function(){
             		$.publish("viewBalanceSheetListEvent", {name: "balance sheet"});
             	});
+            	
+            	$("#ledgerListMenu").click(function(){
+            		$.publish("viewLedgerListEvent", {name: "ledger"});
+            	});
             }
             
             registerMenu();
