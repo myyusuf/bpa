@@ -19,11 +19,11 @@ define(["jQuery", "jqxcore"], function () {
 			
 		});
 		
-		$.subscribe("viewBalanceSheetListEvent", function(e, data){
+		$.subscribe("viewJournalListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
 			
-			require(['./view/accounting/BalanceSheetList'], function (BalanceSheet) {
+			require(['./view/accounting/JournalList'], function (JournalList) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxTreeGrid('destroy');
 					if(container.children()[0] != undefined){
@@ -31,7 +31,7 @@ define(["jQuery", "jqxcore"], function () {
 					}
 				}
 				
-            	var balanceSheet = new BalanceSheet(gridContainer);
+            	var journalList = new JournalList(gridContainer);
             });
 		});
 		
@@ -48,6 +48,22 @@ define(["jQuery", "jqxcore"], function () {
 				}
 				
             	var ledgerList = new LedgerList(gridContainer);
+            });
+		});
+		
+		$.subscribe("viewBalanceSheetListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+			
+			require(['./view/accounting/BalanceSheetList'], function (BalanceSheetList) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxTreeGrid('destroy');
+					if(container.children()[0] != undefined){
+						$(container.children()[0]).jqxGrid('destroy');
+					}
+				}
+				
+            	var balanceSheetList = new BalanceSheetList(gridContainer);
             });
 		});
 		

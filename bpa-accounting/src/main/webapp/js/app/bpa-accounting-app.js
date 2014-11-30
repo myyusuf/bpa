@@ -15,13 +15,19 @@
             		$.publish("viewCoaListEvent", {name: "coa"});
             	});
             	
-            	$("#balanceSheetListMenu").click(function(){
-            		$.publish("viewBalanceSheetListEvent", {name: "balance sheet"});
+            	$("#journalListMenu").click(function(){
+            		$.publish("viewJournalListEvent", {name: "journal"});
             	});
             	
             	$("#ledgerListMenu").click(function(){
             		$.publish("viewLedgerListEvent", {name: "ledger"});
             	});
+            	
+            	$("#balanceSheetListMenu").click(function(){
+            		$.publish("viewBalanceSheetListEvent", {name: "balance sheet"});
+            	});
+            	
+            	
             }
             
             registerMenu();
