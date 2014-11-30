@@ -1,39 +1,30 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 
 apply plugin: 'war'
-//apply plugin: 'jetty'
-apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
+apply plugin: 'waroverlay'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
+
+archivesBaseName = 'bpa-main'
+group = 'id.co.oriza.bpa'
 version = '1.0'
 
 ext.springGroup = 'org.springframework'
 ext.springVersion = '3.2.8.RELEASE'
-def localMavenRepo = 'file://E:/maven/repo'
-
-buildscript {
-	repositories {
-		jcenter()
-	}
-	dependencies {
-		classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
-	}
-}
-apply plugin: 'com.bmuschko.tomcat'
-
 
 jar {
 	manifest {
-		attributes 'Implementation-Title': 'Cms Security', 'Implementation-Version': version
+		attributes 'Implementation-Title': 'BPA Main', 'Implementation-Version': version
 	}
 }
 
 repositories {
 	mavenCentral()
-//	mavenRepo url: localMavenRepo
+	mavenLocal()
 }
 
 dependencies {
@@ -45,7 +36,10 @@ dependencies {
 			"$springGroup:spring-webmvc:$springVersion",
 			"$springGroup:spring-test:$springVersion",
 			 "org.hibernate:hibernate-annotations:3.5.6-Final",
-			"org.hibernate:hibernate-validator:4.3.1.Final"
+			"org.hibernate:hibernate-validator:4.3.1.Final",
+			"id.co.oriza.bpa:bpa-base:1.0",
+			"id.co.oriza.bpa:bpa-security:1.0",
+			"id.co.oriza.bpa:bpa-accounting:1.0"
 			
 			
 	runtime "commons-dbcp:commons-dbcp:1.4",
@@ -58,48 +52,21 @@ dependencies {
 	testCompile group: 'junit', name: 'junit', version: '4.+'
 	
 	providedCompile 'javax.servlet:servlet-api:2.5'
-	
-	def tomcatVersion = '7.0.11'
-	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-		   "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
-	tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-		exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
-	}
-}
 
-test {
-	systemProperties 'property': 'value'
-}
-
-uploadArchives {
+buildscript {
 	repositories {
-	   flatDir {
-		   dirs 'repos'
-	   }
+		jcenter()
+	}
+	dependencies {
+		classpath "org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3"
 	}
 }
 
-/*jettyRun {
-	httpPort = 9191
-	stopPort = 9999
-	stopKey = 'stopKey'
-	contextPath = 'todo'
-}*/
-
-tomcat {
-	httpPort = 9191
-	users {
-		user {
-			username = 'user1'
-			password = '123456'
-			roles = ['developers', 'admin']
-		}
-
-		user {
-			username = 'user2'
-			password = 'abcdef'
-			roles = ['manager']
-		}
-	}
+task copyTask(type: Copy) {
+	from 'src/main/webapp'
+	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-main-1.0.war')
+	exclude 'WEB-INF'
 }
+
+
 
