@@ -15,7 +15,7 @@
             	});
             	
             	$("#taskListMenu").click(function(){
-            		$.publish("viewTaskListListEvent", {name: "task"});
+            		$.publish("viewTaskListEvent", {name: "task"});
             	});
             	
             }

@@ -1,14 +1,15 @@
 define(["jQuery", "jqxcore"], function () {
 	
-	var ProcessDefinitionList = function(container){
+	var TaskList = function(container){
 		
-		var url = BPA.Constant.workflow.processDefinitionsUrl;
+		var url = BPA.Constant.workflow.tasksUrl;
         
         var source =
         {
             datatype: "json",
             datafields: [
-                { name: 'processDefinitionKey', type: 'string' }
+                { name: 'code', type: 'string' },
+                { name: 'name', type: 'string' }
             ],
             id: 'code',
             beforeprocessing: function (data) {
@@ -40,7 +41,8 @@ define(["jQuery", "jqxcore"], function () {
             editable: false,
             selectionmode: 'multiplerows',
             columns: [
-              { text: 'Process Definition Key', datafield: 'processDefinitionKey', width: '100%' }
+              { text: 'Code', datafield: 'code', width: '50%' },
+              { text: 'Name', datafield: 'name', width: '50%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],
@@ -54,7 +56,7 @@ define(["jQuery", "jqxcore"], function () {
         
 	}
 
-    return ProcessDefinitionList;
+    return TaskList;
     
 });
 
