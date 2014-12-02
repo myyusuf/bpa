@@ -32,19 +32,19 @@ define(["jQuery", "jqxcore"], function () {
         	
         	var grid = $($(parentElement).children()[0]);
         	
-        	grid.html('<div style="height: 400px;" id="diagram"></div>');
+        	grid.html('<div style="height: 100%;" id="diagram"></div>');
         	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
         	      new Bpmn().renderUrl("sample/bpmn/SampleWorkflow.bpmn", {
         	        diagramElement : "diagram",
         	        overlayHtml : '<div style="position: relative; top:100%"></div>'
         	      }).then(function (bpmn){
         	        //bpmn.zoom(0.8);
-        	        bpmn.annotation("usertask1").setHtml('<span class="bluebox"  style="position: relative; top:100%">New Text</span>').addClasses(["highlight"]);
-        	        bpmn.annotation("sid-C7031B1A-7F7E-4846-B046-73C638547449").addDiv("<span>Test Div</span>", ["testDivClass"]);
+        	        bpmn.annotation("usertask1").addClasses(["highlight"]);
         			
-        			$("#" + "usertask1" + " .bpmnElement"),click(function(){
+        	        $('div[data-activity-id="usertask1"]').click(function(){
         				console.log("userTask clicked..");
         			});
+        			
         	      });
         	    });
         	
