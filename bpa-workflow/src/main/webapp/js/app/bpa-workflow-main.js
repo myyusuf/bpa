@@ -20,7 +20,8 @@
         "jqxdropdownlist": "../jqwidgets/3.5.0/jqxdropdownlist",
         "jqxlistbox": "../jqwidgets/3.5.0/jqxlistbox",
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
-        "jqxdata": "../jqwidgets/3.5.0/jqxdata"
+        "jqxdata": "../jqwidgets/3.5.0/jqxdata",
+        "bpmn/Bpmn" : "../bpmnjs/bpmn.min"
     },
     //waitSeconds: 60,
     shim: {
@@ -100,7 +101,11 @@
             export: "$",
             deps: ['jQuery', "jqxcore"]
         }
-    }
+    },
+    packages: [
+           { name: "dojo", location: "../dojo/dojo" },
+           { name: "dojox", location: "../dojo/dojox"},
+      ]
 });
 require(["bpa-workflow-app"], function (App) {
     App.initialize();
