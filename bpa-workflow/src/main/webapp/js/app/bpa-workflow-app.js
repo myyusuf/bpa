@@ -22,7 +22,7 @@
             
             registerMenu();
             
-            require(['./controller/WorkspaceWorkflow'], function (WorkspaceWorkflow) {
+            require(['./controller/workflow/WorkspaceWorkflow'], function (WorkspaceWorkflow) {
             	
             	var container = $("#content");
             	var workspaceWorkflow = new WorkspaceWorkflow(container);

@@ -62,14 +62,6 @@ buildscript {
 	}
 }
 
-uploadArchives {
-	repositories {
-	   flatDir {
-		   dirs 'repos'
-	   }
-	}
-}
-
 task copyTask(type: Copy) {
 	from 'src/main/webapp'
 	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-security-1.0.war')
