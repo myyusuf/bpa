@@ -32,7 +32,7 @@ define(["jQuery", "jqxcore"], function () {
         	
         	var grid = $($(parentElement).children()[0]);
         	
-        	grid.html('<div style="height: 100%;" id="diagram"></div>');
+        	grid.html('<div style="height: 100%;" id="myslider"></div><div style="height: 100%;" id="diagram"></div>');
         	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
         	      new Bpmn().renderUrl("sample/bpmn/SampleWorkflow.bpmn", {
         	        diagramElement : "diagram",
@@ -44,6 +44,11 @@ define(["jQuery", "jqxcore"], function () {
         	        $('div[data-activity-id="usertask1"]').click(function(){
         				console.log("userTask clicked..");
         			});
+        	        
+        	        var mySlider = $('#myslider').jqxSlider({ min: 1, max: 10, ticksFrequency: 1, value: 10, step: 1});
+        	        $('#myslider').on('change', function (event) {
+                        bpmn.zoom(mySlider.jqxSlider('value') /10);
+                    });
         			
         	      });
         	    });
@@ -75,7 +80,7 @@ define(["jQuery", "jqxcore"], function () {
             },
             rowdetails: true,
             initrowdetails: initrowdetails,
-            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailsheight: 420, rowdetailshidden: false }
+            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailshidden: false }
         });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});

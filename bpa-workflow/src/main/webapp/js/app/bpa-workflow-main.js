@@ -21,6 +21,7 @@
         "jqxlistbox": "../jqwidgets/3.5.0/jqxlistbox",
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
         "jqxdata": "../jqwidgets/3.5.0/jqxdata",
+        "jqxslider": "../jqwidgets/3.5.0/jqxslider",
         "bpmn/Bpmn" : "../bpmnjs/bpmn.min"
     },
     //waitSeconds: 60,
@@ -98,6 +99,10 @@
             deps: ['jQuery', "jqxcore", "jqxdropdownlist"]
         },
         "jqxdata": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxslider": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
         }
