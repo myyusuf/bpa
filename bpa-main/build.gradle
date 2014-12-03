@@ -39,6 +39,7 @@ dependencies {
 			"org.hibernate:hibernate-validator:4.3.1.Final",
 			"id.co.oriza.bpa:bpa-base:1.0",
 			"id.co.oriza.bpa:bpa-security:1.0",
+			"id.co.oriza.bpa:bpa-workflow:1.0",
 			"id.co.oriza.bpa:bpa-accounting:1.0"
 			
 			

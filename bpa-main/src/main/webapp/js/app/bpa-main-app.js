@@ -30,7 +30,10 @@
             
             $("#jqxNavigationBar").jqxNavigationBar({ width: "100%", height: feedExpanderHeight(), expandMode: "singleFitHeight", theme: 'metro'});
             $('#jqxNavigationBar').css({marginLeft: "1px"});
-            $('#jqxTree').jqxTree({ height: '100%', width: '100%', theme: 'metro'});
+            
+            $('#securityTreeMenu').jqxTree({ height: '300px', theme: 'metro'});
+            $('#financeTreeMenu').jqxTree({ height: '300px', theme: 'metro'});
+            $('#workflowTreeMenu').jqxTree({ height: '300px', theme: 'metro'});
             
             $("#jqxMenu").jqxMenu({ width: '100%', theme: 'metro'});
             $("#jqxMenu").css('visibility', 'visible');
@@ -52,6 +55,16 @@
             	$("#ledgerListMenu").click(function(){
             		$.publish("viewLedgerListEvent", {name: "waw"});
             	});
+            	$("#processListListMenu").click(function(){
+            		$.publish("viewProcessListListEvent", {name: "waw"});
+            	});
+            	
+//            	$('#jqxTree').bind('select', function (event) {
+//                    var htmlElement = event.args.element;
+//                    var item = $('#jqxTree').jqxTree('getItem', htmlElement);
+//                    console.log(item.label);
+//                    $.publish("viewUserListEvent", {name: "waw"});
+//                });
             }
             
             registerMenu();

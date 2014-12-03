@@ -56,6 +56,21 @@ define(["jQuery", "jqxcore"], function () {
             	var ledgerList = new LedgerList(parentContainer);
             });
 		});
+		
+		$.subscribe("viewProcessListListEvent", function(e, data){
+			var roleListGrid = $('<div id="taskListGrid"></div>');
+			
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Process List' , 'processListListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="processListListGrid">Process List Grid : [Loading]</div>');
+			
+			
+			require(['./view/workflow/TaskList'], function (TaskList) {
+				var parentContainer = $('#processListListGrid').parent();
+            	var taskList = new TaskList(parentContainer);
+            });
+		});
 			
 	};
 	
