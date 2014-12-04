@@ -38,7 +38,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             loadError: function (xhr, status, error) { }
         });
         
-        container.jqxTreeGrid(
+        var coaListGrid = container.jqxTreeGrid(
         {
             width: '100%',
             height: 200,
@@ -55,6 +55,21 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             ],
         	theme: 'metro'
         	
+        });
+        
+        coaListGrid.on('rowDoubleClick', function (event){ 
+        	
+        	var args = event.args;
+            // row data.
+            var row = args.row;
+            // row key.
+            var key = args.key;
+            // data field
+            var dataField = args.dataField;
+            
+        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
+            	var coaEdit = new CoaEdit(container, row);
+            });   
         });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});

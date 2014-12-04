@@ -30,7 +30,7 @@ define(["jQuery", "jqxcore"], function () {
             loadError: function (xhr, status, error) { }
         });
         
-        container.jqxGrid(
+        var journalListGrid = container.jqxGrid(
         {
             width: '100%',
             height: '100%',
@@ -54,6 +54,13 @@ define(["jQuery", "jqxcore"], function () {
         	rendergridrows: function () {
                 return dataAdapter.records;
             }
+        });
+        
+        journalListGrid.on('rowdoubleclick', function (event){ 
+        	console.log('test');
+//        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
+//            	var coaEdit = new CoaEdit(container);
+//            });   
         });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
