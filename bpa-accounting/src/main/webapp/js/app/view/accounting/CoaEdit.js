@@ -1,4 +1,4 @@
-define(["jQuery", "jqxcore", "jqxbuttons"], function () {
+define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
 	
 	var CoaEdit = function(container, row){
 		
@@ -15,12 +15,21 @@ define(["jQuery", "jqxcore", "jqxbuttons"], function () {
 		
 		var newRow = $('<tr></tr>');
 		newRow.appendTo(editTable);
-		var userNameLabel = $('<td>User Name</td>');
-		userNameLabel.appendTo(newRow);
-		var userNameInputColumn = $('<td></td>');
-		var userNameInput = $('<input type="text" id="userInput" class="text-input" />');
-		userNameInput.appendTo(userNameInputColumn);
-		userNameInputColumn.appendTo(newRow);
+		var codeLabel = $('<td>Code</td>');
+		codeLabel.appendTo(newRow);
+		var codeInputColumn = $('<td></td>');
+		var codeInput = $('<input type="text" class="text-input" />');
+		codeInput.appendTo(codeInputColumn);
+		codeInputColumn.appendTo(newRow);
+		
+		newRow = $('<tr></tr>');
+		newRow.appendTo(editTable);
+		var nameLabel = $('<td>Name</td>');
+		nameLabel.appendTo(newRow);
+		var nameInputColumn = $('<td></td>');
+		var nameInput = $('<input type="text" class="text-input" />');
+		nameInput.appendTo(nameInputColumn);
+		nameInputColumn.appendTo(newRow);
 		
 		
 		windowHeader.appendTo(editWindow);
@@ -38,6 +47,15 @@ define(["jQuery", "jqxcore", "jqxbuttons"], function () {
             },
             theme: 'metro'
         });
+        
+        $('.text-input').jqxInput({  });
+        editForm.jqxValidator({
+            rules: [
+                    { input: codeInput, message: 'Code is required', action: 'keyup, blur', rule: 'required' },
+                    { input: nameInput, message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                   
+                   ]
+        	});
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         

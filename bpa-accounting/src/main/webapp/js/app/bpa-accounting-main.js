@@ -23,7 +23,9 @@
         "jqxdata": "../jqwidgets/3.5.0/jqxdata",
         "jqxtreegrid": "../jqwidgets/3.5.0/jqxtreegrid",
         "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
-        "jqxwindow": "../jqwidgets/3.5.0/jqxwindow"
+        "jqxwindow": "../jqwidgets/3.5.0/jqxwindow",
+        "jqxinput": "../jqwidgets/3.5.0/jqxinput",
+        "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
     },
     //waitSeconds: 60,
     shim: {
@@ -114,7 +116,16 @@
         "jqxwindow": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
+        },
+        "jqxinput": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxvalidator": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
         }
+        
     }
 });
 require(["bpa-accounting-app"], function (App) {
