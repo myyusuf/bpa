@@ -1,7 +1,7 @@
 ﻿define(["require", "jQuery", "tinypubsub", "jqxcore", "jqxtabs", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar", "jqxexpander", 
         "jqxsplitter", "jqxmenu", "jqxnavigationbar", 
         "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxlistbox", "jqxdropdownlist", "jqxgrid", "jqxdata", 
-        "jqxtreegrid", "jqxdatatable"], function (require) {
+        "jqxtreegrid", "jqxdatatable", "jqxwindow"], function (require) {
     var initialize = function () {
     	
         $(document).ready(function () {
