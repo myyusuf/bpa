@@ -6,7 +6,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 		var randomId = BPA.Util.getRandomId("coaEdit");
         
 		var editWindow = $('<div id="coaEditWindow"></div>');
-		var windowHeader = $('<div><span>Chart of Account Edit</span></div>');
+		var windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
 		var windowContent = $('<div></div>');
 		
 		var editForm = $('<form></form>');
@@ -64,7 +64,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
             }
         	
         });
-        var parentComboBox = parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 25,
+        var parentComboBox = parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
         	
         	renderer: function (index, label, value) {
                 var item = dataAdapter.records[index];
@@ -100,11 +100,9 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
             theme: 'metro'
         });
         
-        
-        
         parentComboBox.on('bindingComplete', function (event) {
         	dataAdapter.records.splice(0, 0, {code: '', name: '--Please Select--'});
-        	parentComboBox.jqxComboBox('insertAt', {code: '1', name: 'Please Select'}, 0); 
+        	parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0); 
         	if(row.parent != undefined && row.parent != null){
         		var selectedParentItem = parentComboBox.jqxComboBox('getItemByValue', row.parent.code);
             	parentComboBox.jqxComboBox('selectItem', selectedParentItem);
@@ -112,7 +110,6 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
         	
         });
         
-         
 		//------------------------------------------------------
 		
 		newRow = $('<tr></tr>');
