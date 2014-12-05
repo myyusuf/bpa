@@ -3,6 +3,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
 	var CoaEdit = function(container, row){
 		
 		var url = BPA.Constant.accounting.coaUrl;
+		var randomId = BPA.Util.getRandomId("coaEdit");
         
 		var editWindow = $('<div id="coaEditWindow"></div>');
 		var windowHeader = $('<div><span>Chart of Account Edit</span></div>');
@@ -18,7 +19,8 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
 		var codeLabel = $('<td>Code</td>');
 		codeLabel.appendTo(newRow);
 		var codeInputColumn = $('<td></td>');
-		var codeInput = $('<input type="text" class="text-input" />');
+		var codeInput = $('<input type="text" class="text-input" maxlength="5" />');
+		codeInput.attr("id", "codeInput" + randomId);
 		codeInput.appendTo(codeInputColumn);
 		codeInputColumn.appendTo(newRow);
 		
@@ -27,9 +29,32 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
 		var nameLabel = $('<td>Name</td>');
 		nameLabel.appendTo(newRow);
 		var nameInputColumn = $('<td></td>');
-		var nameInput = $('<input type="text" class="text-input" />');
+		var nameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		nameInput.attr("id", "nameInput" + randomId);
 		nameInput.appendTo(nameInputColumn);
 		nameInputColumn.appendTo(newRow);
+		
+		newRow = $('<tr></tr>');
+		newRow.appendTo(editTable);
+		var descriptionLabel = $('<td>Description</td>');
+		descriptionLabel.appendTo(newRow);
+		var descriptionInputColumn = $('<td></td>');
+		var descriptionInput = $('<textarea rows="5" cols="30"></textarea>');
+		descriptionInput.appendTo(descriptionInputColumn);
+		descriptionInputColumn.appendTo(newRow);
+		
+		newRow = $('<tr></tr>');
+		newRow.appendTo(editTable);
+		var saveButtonLabel = $('<td></td>');
+		saveButtonLabel.appendTo(newRow);
+		var buttonColumn = $('<td colspan="2"></td>');
+		var saveButton = $('<input type="button" value="Save" style="margin-right: 5px;"/>');
+		saveButton.appendTo(buttonColumn);
+		
+		var cancelButton = $('<input type="button" value="Cancel"/>');
+		cancelButton.appendTo(buttonColumn);
+		
+		buttonColumn.appendTo(newRow);
 		
 		
 		windowHeader.appendTo(editWindow);
@@ -41,7 +66,9 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
         editWindow.jqxWindow('open');
         
         editWindow.jqxWindow({
-            showCollapseButton: true, maxHeight: 400, maxWidth: 700, minHeight: 200, minWidth: 200, height: 300, width: 500,
+            showCollapseButton: false, 
+            isModal: true,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 237, width: 375,
             initContent: function () {
             	editWindow.jqxWindow('focus');
             },
@@ -50,12 +77,16 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
         
         $('.text-input').jqxInput({  });
         editForm.jqxValidator({
+        	closeOnClick: true,
             rules: [
-                    { input: codeInput, message: 'Code is required', action: 'keyup, blur', rule: 'required' },
-                    { input: nameInput, message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
                    
                    ]
         	});
+        
+        saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         
