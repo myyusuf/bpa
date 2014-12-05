@@ -1,4 +1,4 @@
-define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
+define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 	
 	var CoaEdit = function(container, row){
 		
@@ -21,6 +21,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
 		var codeInputColumn = $('<td></td>');
 		var codeInput = $('<input type="text" class="text-input" maxlength="5" />');
 		codeInput.attr("id", "codeInput" + randomId);
+		codeInput.val(row.code);
 		codeInput.appendTo(codeInputColumn);
 		codeInputColumn.appendTo(newRow);
 		
@@ -33,6 +34,20 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
 		nameInput.attr("id", "nameInput" + randomId);
 		nameInput.appendTo(nameInputColumn);
 		nameInputColumn.appendTo(newRow);
+		//------------------------------------------------------
+		newRow = $('<tr></tr>');
+		newRow.appendTo(editTable);
+		var parentLabel = $('<td>Parent</td>');
+		parentLabel.appendTo(newRow);
+		var parentInputColumn = $('<td></td>');
+		var parentInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		parentInput.attr("id", "parentInput" + randomId);
+		parentInput.appendTo(parentInputColumn);
+		parentInput.appendTo(newRow);
+		
+		var source = new Array();
+		parentInput.jqxComboBox({source: source, width: '233'});
+		//------------------------------------------------------
 		
 		newRow = $('<tr></tr>');
 		newRow.appendTo(editTable);
@@ -68,7 +83,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator"], function () {
         editWindow.jqxWindow({
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 237, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 272, width: 375,
             initContent: function () {
             	editWindow.jqxWindow('focus');
             },
