@@ -1,4 +1,4 @@
-define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
+define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function (ErrorWindow) {
 	
 	var CoaEdit = function(container, row){
 		
@@ -188,32 +188,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 			    	editWindow.jqxWindow('destroy');
 			    },
 			    error: function(jqXHR, status, error){
-			    	
-			    	var errorWindow = $('<div id="coaEditErrorWindow"></div>');
-					var errorWindowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/error.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Error Updating Chart of Account</span></td></tr></table></div>');
-					var errorWindowContent = $('<div><span style="color: red">Error status : '+ jqXHR.status + '<br>Error message : '+ error + '</span></div>');
-					
-					errorWindowHeader.appendTo(errorWindow);
-					errorWindowContent.appendTo(errorWindow);
-					errorWindow.appendTo(container);
-					
-					var editDiv = $('<div style="position:absolute; bottom: 15px; text-align: center; width: 100%;"></div>');
-					closeButton.appendTo(editDiv);
-					editDiv.appendTo(errorWindowContent);
-					
-					closeButton.click(function(event){
-						errorWindow.jqxWindow('destroy');
-					});
-					
-					errorWindow.jqxWindow({
-			            showCollapseButton: false, 
-			            isModal: true,
-			            height: 150, width: 400,
-			            initContent: function () {
-			            	errorWindow.jqxWindow('focus');
-			            },
-			            theme: 'metro'
-			        });
+			    	var errorWindow = new ErrorWindow(container, 'Error Updating Chart of Account', 'Error status : '+ jqXHR.status + '<br>Error message : '+ error);
 			    }
 			});
 		});
@@ -223,7 +198,6 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
         });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
-        
         
 	}
 
