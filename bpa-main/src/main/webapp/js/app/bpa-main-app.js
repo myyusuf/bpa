@@ -32,17 +32,26 @@
             $("#jqxNavigationBar").jqxNavigationBar({ width: "100%", height: feedExpanderHeight(), expandMode: "singleFitHeight", theme: 'metro'});
             $('#jqxNavigationBar').css({marginLeft: "1px"});
             
-            $('#securityTreeMenu').jqxTree({ height: '300px', theme: 'metro'});
-            $('#financeTreeMenu').jqxTree({ height: '300px', theme: 'metro'});
+            var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
+            
+            $('#securityTreeMenu').jqxTree({ height: '300px', width: innerWidth, theme: 'metro'});
+            $('#financeTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
             $('#workflowTreeMenu').jqxTree({ height: '300px', theme: 'metro'});
             
             $("#jqxMenu").jqxMenu({ width: '100%', theme: 'metro'});
             $("#jqxMenu").css('visibility', 'visible');
             
             $(window).resize(function(){
+            	
             	$('#mainSplitter').css({height: contentHeight()});
-            	$('#feedExpander').css({height: feedExpanderHeight()});
-            	$('#jqxNavigationBar').css({height: feedExpanderHeight()});
+            	$('#feedExpander').jqxExpander({height: $(document).height()-101});
+            	$('#jqxNavigationBar').jqxNavigationBar({height: $(document).height()-101});
+            	
+            });
+            
+            $('#mainSplitter').on('resize', function (event) {
+            	var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
+            	$('#financeTreeMenu').jqxTree({width: innerWidth});
             });
             
             

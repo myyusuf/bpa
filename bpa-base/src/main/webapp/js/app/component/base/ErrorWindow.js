@@ -21,6 +21,7 @@ define(["jqxbuttons"], function () {
 		editDiv.appendTo(errorWindowContent);
 		
 		closeButton.click(function(event){
+			errorWindow.jqxWindow('close');
 			errorWindow.jqxWindow('destroy');
 		});
 		

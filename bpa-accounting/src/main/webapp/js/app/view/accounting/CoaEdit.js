@@ -32,6 +32,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var nameInputColumn = $('<td></td>');
 		var nameInput = $('<input type="text" class="text-input" maxlength="50" />');
 		nameInput.attr("id", "nameInput" + randomId);
+		nameInput.val(row.name);
 		nameInput.appendTo(nameInputColumn);
 		nameInputColumn.appendTo(newRow);
 		//------------------------------------------------------
