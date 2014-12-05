@@ -46,7 +46,25 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 		parentInput.appendTo(newRow);
 		
 		var source = new Array();
-		parentInput.jqxComboBox({source: source, width: '233'});
+		var url = BPA.Constant.accounting.coaUrl;
+        var comboSource =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'code' },
+                { name: 'name' }
+            ],
+            url: url
+        };
+        var dataAdapter = new $.jqx.dataAdapter(comboSource,{
+        	
+        	formatData: function (data) {
+                   data.selfAccountCode = row.code;
+                   return data;
+            }
+        	
+        });
+        parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "name", width: 233});
 		//------------------------------------------------------
 		
 		newRow = $('<tr></tr>');
