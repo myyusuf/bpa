@@ -165,11 +165,23 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
                    ]
         	});
         
+        editForm.on('validationSuccess', function (event) { 
+        	saveCoa();
+        }); 
+        	
         saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         saveButton.click(function(event){
-        	
+        	editForm.jqxValidator('validate');
+		});
+        
+        cancelButton.click(function(event){
+        	editWindow.jqxWindow('close');
+        	editWindow.jqxWindow('destroy');
+        });
+        
+        var saveCoa = function(){
         	var item = parentComboBox.jqxComboBox('getSelectedItem');
         	
         	var data = {};
@@ -187,17 +199,14 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 			    type: 'PUT',
 			    data: data,
 			    success: function(result) {
-			    	editWindow.jqxWindow('destroy');
+			    	editWindow.jqxWindow('close');
+		        	editWindow.jqxWindow('destroy');
 			    },
 			    error: function(jqXHR, status, error){
 			    	var errorWindow = new ErrorWindow(container, 'Error Updating Chart of Account', 'Error status : '+ jqXHR.status + '<br>Error message : '+ error);
 			    }
 			});
-		});
-        
-        cancelButton.click(function(event){
-        	editWindow.jqxWindow('close');
-        });
+        }
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         
