@@ -64,27 +64,55 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
             }
         	
         });
-        parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "name", width: 233, height: 25,
+        var parentComboBox = parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 25,
         	
         	renderer: function (index, label, value) {
                 var item = dataAdapter.records[index];
                 if (item != null) {
-                    var label = item.code + " (" + item.name + ")";
-                    return label;
+                	var label = '';
+                	if(item.code != ''){
+                		label = item.code + " (" + item.name + ")";
+                	}else{
+                		label = item.name;
+                	}
+                	return label;
                 }
-                return "";
+                
+                return '';
             },
             
             renderSelectedItem: function(index, item){
                 var item = dataAdapter.records[index];
                 if (item != null) {
-                    var label = item.code + " (" + item.name + ")";
-                    return label;
+                	
+                	var label = '';
+                	if(item.code != ''){
+                		label = item.code + " (" + item.name + ")";
+                	}else{
+                		label = item.name;
+                	}
+                	return label;
+                    
                 }
-                return "";   
+                
+                return '';   
             },
             theme: 'metro'
         });
+        
+        
+        
+        parentComboBox.on('bindingComplete', function (event) {
+        	dataAdapter.records.splice(0, 0, {code: '', name: '--Please Select--'});
+        	parentComboBox.jqxComboBox('insertAt', {code: '1', name: 'Please Select'}, 0); 
+        	if(row.parent != undefined && row.parent != null){
+        		var selectedParentItem = parentComboBox.jqxComboBox('getItemByValue', row.parent.code);
+            	parentComboBox.jqxComboBox('selectItem', selectedParentItem);
+        	}
+        	
+        });
+        
+         
 		//------------------------------------------------------
 		
 		newRow = $('<tr></tr>');
