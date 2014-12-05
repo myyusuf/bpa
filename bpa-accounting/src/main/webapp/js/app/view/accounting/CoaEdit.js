@@ -64,7 +64,27 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
             }
         	
         });
-        parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "name", width: 233});
+        parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "name", width: 233, height: 25,
+        	
+        	renderer: function (index, label, value) {
+                var item = dataAdapter.records[index];
+                if (item != null) {
+                    var label = item.code + " (" + item.name + ")";
+                    return label;
+                }
+                return "";
+            },
+            
+            renderSelectedItem: function(index, item){
+                var item = dataAdapter.records[index];
+                if (item != null) {
+                    var label = item.code + " (" + item.name + ")";
+                    return label;
+                }
+                return "";   
+            },
+            theme: 'metro'
+        });
 		//------------------------------------------------------
 		
 		newRow = $('<tr></tr>');
@@ -108,9 +128,12 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
             theme: 'metro'
         });
         
-        $('.text-input').jqxInput({  });
+        $('.text-input').jqxInput({ theme: 'metro' });
+        descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
+        
         editForm.jqxValidator({
         	closeOnClick: true,
+        	arrow: false,
             rules: [
                     { input: "#" + codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
                     { input: "#" + nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
