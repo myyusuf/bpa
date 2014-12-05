@@ -134,7 +134,6 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 		
 		buttonColumn.appendTo(newRow);
 		
-		
 		windowHeader.appendTo(editWindow);
 		windowContent.appendTo(editWindow);
         editWindow.appendTo(container);
@@ -168,6 +167,50 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
         
         saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        
+        saveButton.click(function(event){
+        	
+        	var data = {};
+        	data.code = codeInput.val();
+        	data.name = "";
+        	data.description = "";
+        	data.parent = {};
+        	data.parent.code = "";
+        	
+        	var closeButton = $('<input type="button" value="Close"/>');
+        	closeButton = .jqxButton({ width: 60, height: 25, theme: 'metro'});
+        	
+			$.ajax({
+			    url: BPA.Constant.accounting.coaUrl,
+			    type: 'PUT',
+			    data: data,
+			    success: function(result) {
+			    	editWindow.jqxWindow('destroy');
+			    },
+			    error: function(jqXHR, status, error){
+			    	
+			    	var errorWindow = $('<div id="coaEditErrorWindow"></div>');
+					var errorWindowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/error.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Error Updating Chart of Account</span></td></tr></table></div>');
+					var errorWindowContent = $('<div><span style="color: red">Error status : '+ jqXHR.status + '<br>Error message : '+ error + '</span></div>');
+					
+					errorWindowHeader.appendTo(errorWindow);
+					errorWindowContent.appendTo(errorWindow);
+					errorWindow.appendTo(container);
+					
+					closeButton.appendTo(errorWindowContent);
+					
+					errorWindow.jqxWindow({
+			            showCollapseButton: false, 
+			            isModal: true,
+			            height: 150, width: 400,
+			            initContent: function () {
+			            	errorWindow.jqxWindow('focus');
+			            },
+			            theme: 'metro'
+			        });
+			    }
+			});
+		});
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         
