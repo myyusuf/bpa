@@ -8,11 +8,11 @@
         	
             
         	var contentHeight = function(){
-        		return $(document).height()-77;
+        		return $(window).height()-77;
         	}
         	
         	var feedExpanderHeight = function(){
-        		return $(document).height()-101;
+        		return $(window).height()-101;
         	}
         	
         	
@@ -44,8 +44,8 @@
             $(window).resize(function(){
             	
             	$('#mainSplitter').css({height: contentHeight()});
-            	$('#feedExpander').jqxExpander({height: $(document).height()-101});
-            	$('#jqxNavigationBar').jqxNavigationBar({height: $(document).height()-101});
+            	$('#feedExpander').jqxExpander({height: $(window).height()-101});
+            	$('#jqxNavigationBar').jqxNavigationBar({height: $(window).height()-101});
             	
             });
             
