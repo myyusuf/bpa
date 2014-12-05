@@ -170,12 +170,14 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         
         saveButton.click(function(event){
         	
+        	var item = parentComboBox.jqxComboBox('getSelectedItem');
+        	
         	var data = {};
         	data.code = codeInput.val();
-        	data.name = "";
-        	data.description = "";
+        	data.name = nameInput.val();;
+        	data.description = descriptionInput.val();
         	data.parent = {};
-        	data.parent.code = "";
+        	data.parent.code = item.value;
         	
         	var closeButton = $('<input type="button" value="Close"/>');
         	closeButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
@@ -194,7 +196,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		});
         
         cancelButton.click(function(event){
-        	editWindow.jqxWindow('destroy');
+        	editWindow.jqxWindow('close');
         });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
