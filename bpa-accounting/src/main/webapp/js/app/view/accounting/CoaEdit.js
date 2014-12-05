@@ -178,7 +178,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
         	data.parent.code = "";
         	
         	var closeButton = $('<input type="button" value="Close"/>');
-        	closeButton = .jqxButton({ width: 60, height: 25, theme: 'metro'});
+        	closeButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         	
 			$.ajax({
 			    url: BPA.Constant.accounting.coaUrl,
@@ -197,7 +197,13 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 					errorWindowContent.appendTo(errorWindow);
 					errorWindow.appendTo(container);
 					
-					closeButton.appendTo(errorWindowContent);
+					var editDiv = $('<div style="position:absolute; bottom: 15px; text-align: center; width: 100%;"></div>');
+					closeButton.appendTo(editDiv);
+					editDiv.appendTo(errorWindowContent);
+					
+					closeButton.click(function(event){
+						errorWindow.jqxWindow('destroy');
+					});
 					
 					errorWindow.jqxWindow({
 			            showCollapseButton: false, 
@@ -211,6 +217,10 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function () {
 			    }
 			});
 		});
+        
+        cancelButton.click(function(event){
+        	editWindow.jqxWindow('destroy');
+        });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         
