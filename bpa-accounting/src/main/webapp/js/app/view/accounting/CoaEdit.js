@@ -203,6 +203,12 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         });
         
         var saveCoa = function(){
+        	if(isEditForm){
+        		requestType = "POST";
+        	}else{
+        		requestType = "PUT";
+        	}
+        	
         	var item = parentComboBox.jqxComboBox('getSelectedItem');
         	
         	var data = {};
@@ -217,7 +223,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         	
 			$.ajax({
 			    url: BPA.Constant.accounting.coaUrl,
-			    type: 'PUT',
+			    type: requestType,
 			    data: data,
 			    success: function(result) {
 			    	editWindow.jqxWindow('close');

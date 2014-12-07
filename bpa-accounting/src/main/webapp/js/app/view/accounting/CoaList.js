@@ -92,6 +92,10 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
                 		coaListGrid.jqxTreeGrid('updateBoundData');
                 	}
                 });
+                
+                addButton.click(function(event){
+                	showEditPage();
+                });
             },
             ready: function()
             {
@@ -119,12 +123,17 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             // data field
             var dataField = args.dataField;
             
-        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
-            	var coaEdit = new CoaEdit(container, row);
-            });   
+            showEditPage(row);
+        	   
         });
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+        
+        var showEditPage = function(row){
+        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
+            	var coaEdit = new CoaEdit(container, row);
+            });
+        }
         
 	}
 
