@@ -22,3 +22,18 @@
 	height: 21px;
 	width: 150px;
 }
+
+.edit-table {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.edit-table td,.edit-table tr {
+	margin: 0px;
+	padding: 2px;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	font-family: Verdana;
+	font-size: 12px;
+	height: 27px;
+}

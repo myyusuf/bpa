@@ -11,7 +11,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		
 		var editForm = $('<form></form>');
 		editForm.appendTo(windowContent);
-		var editTable = $('<table class="register-table"></table>');
+		var editTable = $('<table class="edit-table"></table>');
 		editTable.appendTo(editForm);
 		
 		var newRow = $('<tr></tr>');
@@ -127,7 +127,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var saveButtonLabel = $('<td></td>');
 		saveButtonLabel.appendTo(newRow);
 		var buttonColumn = $('<td colspan="2"></td>');
-		var saveButton = $('<input type="button" value="Save" style="margin-right: 5px;"/>');
+		var saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
 		saveButton.appendTo(buttonColumn);
 		
 		var cancelButton = $('<input type="button" value="Cancel"/>');
@@ -146,7 +146,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         editWindow.jqxWindow({
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 272, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
             initContent: function () {
             	editWindow.jqxWindow('focus');
             },
