@@ -67,14 +67,14 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         		
         		newColumn = $('<td></td>');
         		newColumn.appendTo(newRow);
-        		var addButton = $('<div><img src="resources/images/application--plus.png"/></div>');
+        		var addButton = $('<div style="margin-left: 10px;">New Account</div>');
         		addButton.appendTo(newColumn);
         		
                 toolbar.append(container);
                 
                 searchInput.jqxInput({placeHolder: " Search Chart of Account", theme: 'metro' });
                 searchButton.jqxButton({ width: '14', height: '14', theme: 'metro' });
-                addButton.jqxButton({ width: '16', height: '14', theme: 'metro' });
+                addButton.jqxButton({ width: '80', height: '16', theme: 'metro' });
             },
             ready: function()
             {
