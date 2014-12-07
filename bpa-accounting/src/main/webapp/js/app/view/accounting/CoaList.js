@@ -46,13 +46,29 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             pageable: true,
             pagerMode: 'advanced',
             showToolbar: true,
+            toolbarheight: 40,
             renderToolbar: function(toolbar)
             {
-                var container = $("<div style='margin: 5px; text-align: right;'></div>");
-                var searchInput = $('<input type="text" class="text-input" style="width: 240px;"/>');
+                var container = $("<div style='float: right; margin: 5px; text-align: right;'></div>");
+                var searchTable = $('<table></table>');
+                searchTable.appendTo(container);
+        		
+        		var newRow = $('<tr></tr>');
+        		newRow.appendTo(searchTable);
+        		var newColumn = $('<td></td>');
+        		newColumn.appendTo(newRow);
+        		var searchInput = $('<input type="text" class="text-input" style="width: 250px;"/>');
+        		searchInput.appendTo(newColumn);
+        		
+        		newColumn = $('<td></td>');
+        		newColumn.appendTo(newRow);
+        		var saveButton = $('<div><img src="resources/images/magnifier-medium.png"/></div>');
+        		saveButton.appendTo(newColumn);
+        		
                 toolbar.append(container);
-                container.append(searchInput);
+                
                 searchInput.jqxInput({placeHolder: " Search Chart of Account", theme: 'metro' });
+                saveButton.jqxButton({ width: '14', height: '14' });
             },
             ready: function()
             {
