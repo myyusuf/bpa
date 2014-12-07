@@ -134,7 +134,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var descriptionLabel = $('<td>Description</td>');
 		descriptionLabel.appendTo(newRow);
 		var descriptionInputColumn = $('<td></td>');
-		var descriptionInput = $('<textarea rows="5" cols="30"></textarea>');
+		var descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
 		descriptionInput.attr("id", "descriptionInput" + randomId);
 		if(isEditForm){
 			descriptionInput.val(data.description);
