@@ -59,7 +59,7 @@ define(["jQuery", "jqxcore"], function () {
 		$.subscribe("viewCoaListEvent", function(e, data){
 			var tabsCount = tabs.jqxTabs('length');
 			
-			tabs.jqxTabs('addLast', 'Coa' , 'coaListGrid');
+			tabs.jqxTabs('addLast', 'Chart of Account' , 'coaListGrid');
 			tabs.jqxTabs('setContentAt', tabsCount , '<div id="coaListGrid">Coa Grid : [Loading]</div>');
 			
 			require(['./view/accounting/CoaList'], function (CoaList) {
