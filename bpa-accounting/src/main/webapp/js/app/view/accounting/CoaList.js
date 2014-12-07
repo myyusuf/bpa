@@ -127,13 +127,39 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         	   
         });
         
-        container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+        var gridContextMenu = $('<div><ul><li><a href="#">Add New</a></li><li><a href="#">Edit</a></li><li><a href="#">Delete</a></li></ul></div>');
+        gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+        coaListGrid.on('rowClick', function (event) {
+        	
+        	var clickEvent = event.args.originalEvent;
+//            var rightClick = isRightClick(event) || $.jqx.mobile.isTouchDevice();
+        	var rightClick = isRightClick(clickEvent);
+            if (rightClick) {
+                var scrollTop = $(window).scrollTop();
+                var scrollLeft = $(window).scrollLeft();
+                gridContextMenu.jqxMenu('open', parseInt(clickEvent.clientX) + 5 + scrollLeft, parseInt(clickEvent.clientY) + 5 + scrollTop);
+                return false;
+            }
+        });
+        
+        coaListGrid.on('contextmenu', function (e) {
+            return false;
+        });
+        var isRightClick = function(event) {
+            var rightclick;
+            if (!event) var event = window.event;
+            if (event.which) rightclick = (event.which == 3);
+            else if (event.button) rightclick = (event.button == 2);
+            return rightclick;
+        }
         
         var showEditPage = function(row){
         	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
             	var coaEdit = new CoaEdit(container, row);
             });
         }
+        
+        container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         
 	}
 
