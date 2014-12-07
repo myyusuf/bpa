@@ -67,7 +67,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         		
         		newColumn = $('<td></td>');
         		newColumn.appendTo(newRow);
-        		var addButton = $('<div style="margin-left: 10px;">New Account</div>');
+        		var addButton = $('<div style="margin-left: 7px;">New Account</div>');
         		addButton.appendTo(newColumn);
         		
                 toolbar.append(container);
