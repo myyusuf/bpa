@@ -2,11 +2,22 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 	
 	var CoaEdit = function(container, row){
 		
+		var data = row || {};
+		
+		var isEditForm = data.code != undefined && data.code != null;
+		var isAddForm = !isEditForm;
+		
 		var url = BPA.Constant.accounting.coaUrl;
 		var randomId = BPA.Util.getRandomId("coaEdit");
         
 		var editWindow = $('<div id="coaEditWindow"></div>');
-		var windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
+		var windowHeader = "";
+		if(isEditForm){
+			windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
+		}else{
+			windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">New Chart of Account</span></td></tr></table></div>');
+		}
+		
 		var windowContent = $('<div></div>');
 		
 		var editForm = $('<form></form>');
@@ -21,7 +32,9 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var codeInputColumn = $('<td></td>');
 		var codeInput = $('<input type="text" class="text-input" maxlength="5" />');
 		codeInput.attr("id", "codeInput" + randomId);
-		codeInput.val(row.code);
+		if(isEditForm){
+			codeInput.val(data.code);
+		}
 		codeInput.appendTo(codeInputColumn);
 		codeInputColumn.appendTo(newRow);
 		
@@ -32,7 +45,10 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var nameInputColumn = $('<td></td>');
 		var nameInput = $('<input type="text" class="text-input" maxlength="50" />');
 		nameInput.attr("id", "nameInput" + randomId);
-		nameInput.val(row.name);
+		if(isEditForm){
+			nameInput.val(data.name);
+		}
+		
 		nameInput.appendTo(nameInputColumn);
 		nameInputColumn.appendTo(newRow);
 		//------------------------------------------------------
@@ -60,7 +76,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         var dataAdapter = new $.jqx.dataAdapter(comboSource,{
         	
         	formatData: function (data) {
-                   data.selfAccountCode = row.code;
+                   data.selfAccountCode = data.code;
                    return data;
             }
         	
@@ -104,8 +120,8 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         parentComboBox.on('bindingComplete', function (event) {
         	dataAdapter.records.splice(0, 0, {code: '', name: '--Please Select--'});
         	parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0); 
-        	if(row.parent != undefined && row.parent != null){
-        		var selectedParentItem = parentComboBox.jqxComboBox('getItemByValue', row.parent.code);
+        	if(data.parent != undefined && data.parent != null){
+        		var selectedParentItem = parentComboBox.jqxComboBox('getItemByValue', data.parent.code);
             	parentComboBox.jqxComboBox('selectItem', selectedParentItem);
         	}
         	
@@ -119,6 +135,10 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		descriptionLabel.appendTo(newRow);
 		var descriptionInputColumn = $('<td></td>');
 		var descriptionInput = $('<textarea rows="5" cols="30"></textarea>');
+		descriptionInput.attr("id", "descriptionInput" + randomId);
+		if(isEditForm){
+			descriptionInput.val(data.description);
+		}
 		descriptionInput.appendTo(descriptionInputColumn);
 		descriptionInputColumn.appendTo(newRow);
 		
