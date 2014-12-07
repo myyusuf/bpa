@@ -127,8 +127,30 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         	   
         });
         
-        var gridContextMenu = $('<div><ul><li><a href="#">Add New</a></li><li><a href="#">Edit</a></li><li><a href="#">Delete</a></li></ul></div>');
+        var gridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
         gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+        gridContextMenu.on('itemclick', function (event){
+        	
+        	var menuKey = $(event.target).data("menukey");
+        	
+        	var rowData = "";
+        	
+        	if("edit" == menuKey || "delete" == menuKey){
+        		var selection = coaListGrid.jqxTreeGrid('getSelection');
+        		for (var i = 0; i < selection.length; i++) {
+            		rowData = selection[i];
+            	}
+        	}
+        	
+	 		if("add" == menuKey){
+	 			showEditPage();
+	 		}else if("edit" == menuKey){
+	 			showEditPage(rowData);
+	 		}else if("delete" == menuKey){
+	 			console.log('delete');
+	 		}
+        });
+        
         coaListGrid.on('rowClick', function (event) {
         	
         	var clickEvent = event.args.originalEvent;
@@ -139,6 +161,8 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
                 var scrollLeft = $(window).scrollLeft();
                 gridContextMenu.jqxMenu('open', parseInt(clickEvent.clientX) + 5 + scrollLeft, parseInt(clickEvent.clientY) + 5 + scrollTop);
                 return false;
+            }else{
+            	gridContextMenu.jqxMenu('close');
             }
         });
         
