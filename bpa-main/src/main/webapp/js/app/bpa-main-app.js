@@ -37,6 +37,8 @@
             $('#securityTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
             $('#financeTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
             $('#workflowTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
+            $('#purchasingTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
+            $('#salesTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
             
             $("#jqxMenu").jqxMenu({ width: '100%', theme: 'metro'});
             $("#jqxMenu").css('visibility', 'visible');
@@ -51,6 +53,8 @@
             	var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
             	$('#financeTreeMenu').jqxTree({width: innerWidth});
             	$('#securityTreeMenu').jqxTree({width: innerWidth});
+            	$('#purchasingTreeMenu').jqxTree({width: innerWidth});
+            	$('#salesTreeMenu').jqxTree({width: innerWidth});
             	$('#workflowTreeMenu').jqxTree({width: innerWidth});
             });
             

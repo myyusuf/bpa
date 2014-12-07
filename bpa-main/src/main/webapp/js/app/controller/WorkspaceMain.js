@@ -8,6 +8,8 @@ define(["jQuery", "jqxcore"], function () {
         	$('#financeTreeMenu').jqxTree({width: innerWidth});
         	$('#securityTreeMenu').jqxTree({width: innerWidth});
         	$('#workflowTreeMenu').jqxTree({width: innerWidth});
+        	$('#purchasingTreeMenu').jqxTree({width: innerWidth});
+        	$('#salesTreeMenu').jqxTree({width: innerWidth});
 		}
 		
 		var tabs = $('<div id="tabs"><ul><li>Dashboard</li></ul><div></div></div>');
