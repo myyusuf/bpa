@@ -1,7 +1,7 @@
 define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar", "jqxexpander", 
         "jqxsplitter", "jqxmenu", "jqxnavigationbar", 
         "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxlistbox", "jqxdropdownlist", "jqxgrid", "jqxdata", 
-        "jqxtreegrid"], function () {
+        "jqxtreegrid", "jqxinput"], function () {
 	
 	var CoaList = function(container){
 		
@@ -45,13 +45,22 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             source: dataAdapter,                
             pageable: true,
             pagerMode: 'advanced',
+            showToolbar: true,
+            renderToolbar: function(toolbar)
+            {
+                var container = $("<div style='margin: 5px; text-align: right;'></div>");
+                var searchInput = $('<input type="text" class="text-input" style="width: 240px;"/>');
+                toolbar.append(container);
+                container.append(searchInput);
+                searchInput.jqxInput({placeHolder: " Search Chart of Account", theme: 'metro' });
+            },
             ready: function()
             {
             },
             columns: [
-              { text: 'Code', datafield: 'code', width: '33%' },
-              { text: 'Name', datafield: 'name', width: '33%' },
-              { text: 'Description', datafield: 'description', width: '33%' }
+              { text: 'Code', datafield: 'code', width: '33.3%' },
+              { text: 'Name', datafield: 'name', width: '33.3%' },
+              { text: 'Description', datafield: 'description', width: '33.3%' }
             ],
         	theme: 'metro'
         	
