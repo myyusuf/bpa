@@ -62,9 +62,14 @@
             	$("#roleListMenu").click(function(){
             		$.publish("viewRoleListEvent", {name: "waw"});
             	});
+            	
+            	$("#coaListMenu").click(function(){
+            		$.publish("viewCoaListEvent", {name: "waw"});
+            	});
             	$("#ledgerListMenu").click(function(){
             		$.publish("viewLedgerListEvent", {name: "waw"});
             	});
+            	
             	$("#processListListMenu").click(function(){
             		$.publish("viewProcessListListEvent", {name: "waw"});
             	});

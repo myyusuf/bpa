@@ -54,6 +54,19 @@ define(["jQuery", "jqxcore"], function () {
 			changeWidth();
 		});
 		
+		$.subscribe("viewCoaListEvent", function(e, data){
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Coa' , 'coaListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="coaListGrid">Coa Grid : [Loading]</div>');
+			
+			require(['./view/accounting/CoaList'], function (CoaList) {
+				var parentContainer = $('#coaListGrid').parent();
+            	var coaList = new CoaList(parentContainer);
+            });
+			
+			changeWidth();
+		});
 		$.subscribe("viewLedgerListEvent", function(e, data){
 			var roleListGrid = $('<div id="ledgerListGrid"></div>');
 			

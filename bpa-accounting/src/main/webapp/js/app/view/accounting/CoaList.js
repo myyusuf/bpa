@@ -41,7 +41,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         var coaListGrid = container.jqxTreeGrid(
         {
             width: '100%',
-            height: 200,
+            height: '100%',
             source: dataAdapter,                
             pageable: true,
             pagerMode: 'advanced',

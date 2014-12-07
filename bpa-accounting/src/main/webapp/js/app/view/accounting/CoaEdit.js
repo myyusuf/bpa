@@ -1,4 +1,4 @@
-define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"], function (ErrorWindow) {
+define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (ErrorWindow) {
 	
 	var CoaEdit = function(container, row){
 		
