@@ -28,7 +28,14 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             url: url
         };
         
+        var searchInput = $('<input type="text" class="text-input" style="width: 250px;"/>');
         var dataAdapter = new $.jqx.dataAdapter(source, {
+        	
+        	formatData: function (data) {
+                data.codeOrNameStartsWith = searchInput.val();
+                return data;
+            },
+        
             downloadComplete: function (data, status, xhr) { 
             },
             loadComplete: function (data) { 
@@ -49,6 +56,8 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             toolbarheight: 40,
             renderToolbar: function(toolbar)
             {
+            	toolbar.empty();
+            	
                 var container = $("<div style='float: left; margin: 5px; text-align: right;'></div>");
                 var searchTable = $('<table></table>');
                 searchTable.appendTo(container);
@@ -57,7 +66,6 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         		newRow.appendTo(searchTable);
         		var newColumn = $('<td></td>');
         		newColumn.appendTo(newRow);
-        		var searchInput = $('<input type="text" class="text-input" style="width: 250px;"/>');
         		searchInput.appendTo(newColumn);
         		
         		newColumn = $('<td></td>');
@@ -75,6 +83,15 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
                 searchInput.jqxInput({placeHolder: " Search Chart of Account", theme: 'metro' });
                 searchButton.jqxButton({ width: '14', height: '14', theme: 'metro' });
                 addButton.jqxButton({ width: '80', height: '16', theme: 'metro' });
+                
+                searchButton.click(function(event){
+                	coaListGrid.jqxTreeGrid('updateBoundData');
+                });
+                searchInput.on('keypress', function(event){
+                	if(13 == event.charCode){
+                		coaListGrid.jqxTreeGrid('updateBoundData');
+                	}
+                });
             },
             ready: function()
             {
@@ -86,6 +103,10 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
             ],
         	theme: 'metro'
         	
+        });
+        
+        coaListGrid.on('bindingComplete', function (event) { 
+        	searchInput.focus();
         });
         
         coaListGrid.on('rowDoubleClick', function (event){ 
