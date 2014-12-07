@@ -2,6 +2,14 @@ define(["jQuery", "jqxcore"], function () {
 	
 	var WorkspaceMain = function(container){
 		
+		// It is needed to fix bug for jqxtree
+		var changeWidth = function(){
+			var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
+        	$('#financeTreeMenu').jqxTree({width: innerWidth});
+        	$('#securityTreeMenu').jqxTree({width: innerWidth});
+        	$('#workflowTreeMenu').jqxTree({width: innerWidth});
+		}
+		
 		var tabs = $('<div id="tabs"><ul><li>Dashboard</li></ul><div></div></div>');
 		
 		tabs.appendTo(container);
@@ -25,6 +33,8 @@ define(["jQuery", "jqxcore"], function () {
             		console.log('removed...');
             	}); 
             });
+			
+			changeWidth();
 		});
 		
 		$.subscribe("viewRoleListEvent", function(e, data){
@@ -40,6 +50,8 @@ define(["jQuery", "jqxcore"], function () {
 				var parentContainer = $('#roleListGrid').parent();
             	var roleList = new RoleList(parentContainer);
             });
+			
+			changeWidth();
 		});
 		
 		$.subscribe("viewLedgerListEvent", function(e, data){
@@ -55,6 +67,8 @@ define(["jQuery", "jqxcore"], function () {
 				var parentContainer = $('#ledgerListGrid').parent();
             	var ledgerList = new LedgerList(parentContainer);
             });
+			
+			changeWidth();
 		});
 		
 		$.subscribe("viewProcessListListEvent", function(e, data){
@@ -70,6 +84,8 @@ define(["jQuery", "jqxcore"], function () {
 				var parentContainer = $('#processListListGrid').parent();
             	var taskList = new TaskList(parentContainer);
             });
+			
+			changeWidth();
 		});
 			
 	};
