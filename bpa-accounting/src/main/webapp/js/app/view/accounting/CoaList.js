@@ -179,7 +179,11 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar"
         
         var showEditPage = function(row){
         	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
-            	var coaEdit = new CoaEdit(container, row);
+        		var onAfterSave = function(savedData){
+        			coaListGrid.jqxTreeGrid('updateBoundData');
+        			console.log('savedData : ' + savedData);
+        		}
+            	var coaEdit = new CoaEdit(container, {editedCoa: row, onAfterSave: onAfterSave});
             });
         }
         
