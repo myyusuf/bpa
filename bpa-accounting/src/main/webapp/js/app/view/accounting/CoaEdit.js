@@ -6,81 +6,80 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
 		
 		var _options = options || {};
 		
-		var editedCoa = _options.editedCoa || {};
+		var _editedCoa = _options.editedCoa || {};
 		
-		var onSaveCoa = _options.onSaveCoa || function(coa, self){
+		var _onSaveCoa = _options.onSaveCoa || function(coa, self){
 			console.log("[No implementation] Call default onSaveCoa function with data : " + coa)
 		};
 		
-		var comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.coaUrl;
+		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.coaUrl;
 		
-		this.isEditForm = editedCoa.code != undefined && editedCoa.code != null;
+		this.isEditForm = _editedCoa.code != undefined && _editedCoa.code != null;
 		
-		var randomId = BPA.Util.getRandomId("coaEdit");
+		var _randomId = BPA.Util.getRandomId("coaEdit");
         
-		var editWindow = $('<div id="coaEditWindow"></div>');
-		var windowHeader = "";
+		var _editWindow = $('<div id="coaEditWindow"></div>');
+		var _windowHeader = "";
 		if(this.isEditForm){
-			windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
+			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
 		}else{
-			windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">New Chart of Account</span></td></tr></table></div>');
+			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">New Chart of Account</span></td></tr></table></div>');
 		}
 		
-		var windowContent = $('<div></div>');
+		var _windowContent = $('<div></div>');
 		
-		var editForm = $('<form></form>');
-		editForm.appendTo(windowContent);
-		var editTable = $('<table class="edit-table"></table>');
-		editTable.appendTo(editForm);
+		var _editForm = $('<form></form>');
+		_editForm.appendTo(_windowContent);
+		var _editTable = $('<table class="edit-table"></table>');
+		_editTable.appendTo(_editForm);
 		
-		var newRow = $('<tr></tr>');
-		newRow.appendTo(editTable);
-		var codeLabel = $('<td>Code</td>');
-		codeLabel.appendTo(newRow);
-		var codeInputColumn = $('<td></td>');
-		var codeInput = $('<input type="text" class="text-input" maxlength="5" />');
-		codeInput.attr("id", "codeInput" + randomId);
+		var _newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _codeLabel = $('<td>Code</td>');
+		_codeLabel.appendTo(_newRow);
+		var _codeInputColumn = $('<td></td>');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
+		_codeInput.attr("id", "codeInput" + _randomId);
 		if(this.isEditForm){
-			codeInput.val(editedCoa.code);
+			_codeInput.val(_editedCoa.code);
 		}
-		codeInput.appendTo(codeInputColumn);
-		codeInputColumn.appendTo(newRow);
+		_codeInput.appendTo(_codeInputColumn);
+		_codeInputColumn.appendTo(_newRow);
 		
-		newRow = $('<tr></tr>');
-		newRow.appendTo(editTable);
-		var nameLabel = $('<td>Name</td>');
-		nameLabel.appendTo(newRow);
-		var nameInputColumn = $('<td></td>');
-		var nameInput = $('<input type="text" class="text-input" maxlength="50" />');
-		nameInput.attr("id", "nameInput" + randomId);
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _nameLabel = $('<td>Name</td>');
+		_nameLabel.appendTo(_newRow);
+		var _nameInputColumn = $('<td></td>');
+		var _nameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		_nameInput.attr("id", "nameInput" + _randomId);
 		if(this.isEditForm){
-			nameInput.val(editedCoa.name);
+			_nameInput.val(_editedCoa.name);
 		}
 		
-		nameInput.appendTo(nameInputColumn);
-		nameInputColumn.appendTo(newRow);
+		_nameInput.appendTo(_nameInputColumn);
+		_nameInputColumn.appendTo(_newRow);
 		//------------------------------------------------------
-		newRow = $('<tr></tr>');
-		newRow.appendTo(editTable);
-		var parentLabel = $('<td>Parent</td>');
-		parentLabel.appendTo(newRow);
-		var parentInputColumn = $('<td></td>');
-		var parentInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
-		parentInput.attr("id", "parentInput" + randomId);
-		parentInput.appendTo(parentInputColumn);
-		parentInput.appendTo(newRow);
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _parentLabel = $('<td>Parent</td>');
+		_parentLabel.appendTo(_newRow);
+		var _parentInputColumn = $('<td></td>');
+		var _parentInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		_parentInput.attr("id", "parentInput" + _randomId);
+		_parentInput.appendTo(_parentInputColumn);
+		_parentInput.appendTo(_newRow);
 		
-		var source = new Array();
-        var comboSource =
+        var _comboSource =
         {
             datatype: "json",
             datafields: [
                 { name: 'code' },
                 { name: 'name' }
             ],
-            url: comboboxUrl
+            url: _comboboxUrl
         };
-        var dataAdapter = new $.jqx.dataAdapter(comboSource,{
+        var _dataAdapter = new $.jqx.dataAdapter(_comboSource,{
         	
         	formatData: function (data) {
                    data.selfAccountCode = data.code;
@@ -88,34 +87,34 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
             }
         	
         });
-        var parentComboBox = parentInput.jqxComboBox({ selectedIndex: 0, source: dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        var _parentComboBox = _parentInput.jqxComboBox({ selectedIndex: 0, source: _dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
         	
         	renderer: function (index, label, value) {
-                var item = dataAdapter.records[index];
-                if (item != null) {
-                	var label = '';
-                	if(item.code != ''){
-                		label = item.code + " (" + item.name + ")";
+                var _item = _dataAdapter.records[index];
+                if (_item != null) {
+                	var _label = '';
+                	if(_item.code != ''){
+                		_label = _item.code + " (" + _item.name + ")";
                 	}else{
-                		label = item.name;
+                		_label = _item.name;
                 	}
-                	return label;
+                	return _label;
                 }
                 
                 return '';
             },
             
             renderSelectedItem: function(index, item){
-                var item = dataAdapter.records[index];
-                if (item != null) {
+                var _item = _dataAdapter.records[index];
+                if (_item != null) {
                 	
-                	var label = '';
-                	if(item.code != ''){
-                		label = item.code + " (" + item.name + ")";
+                	var _label = '';
+                	if(_item.code != ''){
+                		_label = _item.code + " (" + _item.name + ")";
                 	}else{
-                		label = item.name;
+                		_label = _item.name;
                 	}
-                	return label;
+                	return _label;
                     
                 }
                 
@@ -124,120 +123,114 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
             theme: 'metro'
         });
         
-        parentComboBox.on('bindingComplete', function (event) {
-        	dataAdapter.records.splice(0, 0, {code: '', name: '--Please Select--'});
-        	parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0); 
-        	if(editedCoa.parent != undefined && editedCoa.parent != null){
-        		var selectedParentItem = parentComboBox.jqxComboBox('getItemByValue', editedCoa.parent.code);
-            	parentComboBox.jqxComboBox('selectItem', selectedParentItem);
+        _parentComboBox.on('bindingComplete', function (event) {
+        	_dataAdapter.records.splice(0, 0, {code: '', name: '--Please Select--'});
+        	_parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0); 
+        	if(_editedCoa.parent != undefined && _editedCoa.parent != null){
+        		var _selectedParentItem = _parentComboBox.jqxComboBox('getItemByValue', _editedCoa.parent.code);
+            	_parentComboBox.jqxComboBox('selectItem', _selectedParentItem);
         	}
         	
         });
         
 		//------------------------------------------------------
 		
-		newRow = $('<tr></tr>');
-		newRow.appendTo(editTable);
-		var descriptionLabel = $('<td>Description</td>');
-		descriptionLabel.appendTo(newRow);
-		var descriptionInputColumn = $('<td></td>');
-		var descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
-		descriptionInput.attr("id", "descriptionInput" + randomId);
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _descriptionLabel = $('<td>Description</td>');
+		_descriptionLabel.appendTo(_newRow);
+		var _descriptionInputColumn = $('<td></td>');
+		var _descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
+		_descriptionInput.attr("id", "descriptionInput" + _randomId);
 		if(this.isEditForm){
-			descriptionInput.val(editedCoa.description);
+			_descriptionInput.val(_editedCoa.description);
 		}
-		descriptionInput.appendTo(descriptionInputColumn);
-		descriptionInputColumn.appendTo(newRow);
+		_descriptionInput.appendTo(_descriptionInputColumn);
+		_descriptionInputColumn.appendTo(_newRow);
 		
-		newRow = $('<tr></tr>');
-		newRow.appendTo(editTable);
-		var saveButtonLabel = $('<td></td>');
-		saveButtonLabel.appendTo(newRow);
-		var buttonColumn = $('<td colspan="2"></td>');
-		var saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
-		saveButton.appendTo(buttonColumn);
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
 		
-		var cancelButton = $('<input type="button" value="Cancel"/>');
-		cancelButton.appendTo(buttonColumn);
+		var _saveButtonLabel = $('<td></td>');
+		_saveButtonLabel.appendTo(_newRow);
+		var _buttonColumn = $('<td colspan="2"></td>');
+		var _saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
+		_saveButton.appendTo(_buttonColumn);
 		
-		buttonColumn.appendTo(newRow);
+		var _cancelButton = $('<input type="button" value="Cancel"/>');
+		_cancelButton.appendTo(_buttonColumn);
 		
-		windowHeader.appendTo(editWindow);
-		windowContent.appendTo(editWindow);
-        editWindow.appendTo(container);
+		_buttonColumn.appendTo(_newRow);
+		
+		_windowHeader.appendTo(_editWindow);
+		_windowContent.appendTo(_editWindow);
+        _editWindow.appendTo(container);
         
-        editWindow.jqxWindow('resizable', true);
-        editWindow.jqxWindow('draggable', true);
-        editWindow.jqxWindow('open');
+        _editWindow.jqxWindow('resizable', true);
+        _editWindow.jqxWindow('draggable', true);
+        _editWindow.jqxWindow('open');
         
-        editWindow.jqxWindow({
+        _editWindow.jqxWindow({
             showCollapseButton: false, 
             isModal: true,
             maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
             initContent: function () {
-            	editWindow.jqxWindow('focus');
+            	_editWindow.jqxWindow('focus');
             },
             theme: 'metro'
         });
         
-        editWindow.on('close', function (event) { 
-        	editWindow.jqxWindow('destroy');
+        _editWindow.on('close', function (event) { 
+        	_editWindow.jqxWindow('destroy');
         });
         
-        $('.text-input').jqxInput({ theme: 'metro' });
-        descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
+        _codeInput.jqxInput({ theme: 'metro' });
+        _nameInput.jqxInput({ theme: 'metro' });
+        _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
-        editForm.jqxValidator({
+        _editForm.jqxValidator({
         	closeOnClick: true,
         	arrow: false,
             rules: [
-                    { input: "#" + codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + _codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
                    
                    ]
         	});
         
-        editForm.on('validationSuccess', function (event) { 
-        	saveCoa();
+        _editForm.on('validationSuccess', function (event) { 
+        	_saveCoa();
         }); 
         	
-        saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
-        cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
-        saveButton.click(function(event){
-        	editForm.jqxValidator('validate');
+        _saveButton.click(function(event){
+        	_editForm.jqxValidator('validate');
 		});
         
-        cancelButton.click(function(event){
-        	editWindow.jqxWindow('close');
-        	editWindow.jqxWindow('destroy');
+        _cancelButton.click(function(event){
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
         });
         
-        var successNotification = $('<div>Data successfully saved</div>');
-        successNotification.jqxNotification({
-            width: 250, position: "top-right", opacity: 0.9,
-            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
-        });
-        
-        var saveCoa = function(){
+        var _saveCoa = function(){
         	
-        	var item = parentComboBox.jqxComboBox('getSelectedItem');
+        	var _item = _parentComboBox.jqxComboBox('getSelectedItem');
         	
-        	var savedData = {};
-        	savedData.code = codeInput.val();
-        	savedData.name = nameInput.val();;
-        	savedData.description = descriptionInput.val();
-        	savedData.parent = {};
-        	savedData.parent.code = item.value;
+        	var _savedData = {};
+        	_savedData.code = _codeInput.val();
+        	_savedData.name = _nameInput.val();;
+        	_savedData.description = _descriptionInput.val();
+        	_savedData.parent = {};
+        	_savedData.parent.code = _item.value;
         	
-        	onSaveCoa(savedData, _self);
+        	_onSaveCoa(_savedData, _self);
         }
         
-        container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
-        
         this.close = function(){
-        	editWindow.jqxWindow('close');
-        	editWindow.jqxWindow('destroy');
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
         }
         
 	}
