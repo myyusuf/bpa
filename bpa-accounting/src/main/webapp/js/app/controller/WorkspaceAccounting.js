@@ -1,4 +1,4 @@
-define(["jQuery", "jqxcore"], function () {
+define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 	
 	var WorkspaceAccounting = function(container){
 		

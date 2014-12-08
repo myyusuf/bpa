@@ -111,7 +111,7 @@
         },
         "jqxtreegrid": {
             export: "$",
-            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxdatatable"]
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar", "jqxdatatable"]
         },
         "jqxdatatable": {
             export: "$",

@@ -1,7 +1,4 @@
-﻿define(["require", "jQuery", "tinypubsub", "jqxcore", "jqxtabs", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar", "jqxexpander", 
-        "jqxsplitter", "jqxmenu", "jqxnavigationbar", 
-        "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxlistbox", "jqxdropdownlist", "jqxgrid", "jqxdata", 
-        "jqxtreegrid", "jqxdatatable", "jqxwindow", "jqxcombobox"], function (require) {
+﻿define(["require", "jQuery", "tinypubsub", "jqxcore", "jqxmenu"], function (require) {
     var initialize = function () {
     	
         $(document).ready(function () {

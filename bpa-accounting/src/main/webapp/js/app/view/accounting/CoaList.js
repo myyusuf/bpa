@@ -1,7 +1,4 @@
-define(["jQuery", "jqxcore", "jqxbuttons", "jqxtree", "jqxpanel", "jqxscrollbar", "jqxexpander", 
-        "jqxsplitter", "jqxmenu", "jqxnavigationbar", 
-        "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxlistbox", "jqxdropdownlist", "jqxgrid", "jqxdata", 
-        "jqxtreegrid", "jqxinput"], function () {
+define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function () {
 	
 	var CoaList = function(container){
 		
