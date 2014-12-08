@@ -36,6 +36,7 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 		}
 		
 		var _coaList = new CoaList(container, _options);
+		container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
 		
 		var _sendData = function(savedData, requestType, onSuccess, onError){
 			$.ajax({
