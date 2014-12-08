@@ -168,9 +168,9 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
         
         _editWindow.jqxWindow('resizable', true);
         _editWindow.jqxWindow('draggable', true);
-        _editWindow.jqxWindow('open');
         
         _editWindow.jqxWindow({
+        	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
             maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
@@ -226,6 +226,10 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
         	_savedData.parent.code = _item.value;
         	
         	_onSaveCoa(_savedData, _self);
+        }
+        
+        this.open = function(){
+        	_editWindow.jqxWindow('open');
         }
         
         this.close = function(){

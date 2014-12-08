@@ -33,6 +33,7 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 				_sendData(savedData, _requestType, _onSuccess, _onError);
 			}
 			var _coaEdit = new CoaEdit(container, {editedCoa: coa, onSaveCoa: _onSaveCoa, comboboxUrl: _coaListUrl});
+			_coaEdit.open();
 		}
 		
 		var _coaList = new CoaList(container, _options);
