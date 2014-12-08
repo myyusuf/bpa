@@ -2,19 +2,25 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 	
 	var CoaEdit = function(container, options){
 		
+		var _self = this;
+		
 		var _options = options || {};
 		
 		var editedCoa = _options.editedCoa || {};
 		
-		var isEditForm = editedCoa.code != undefined && editedCoa.code != null;
-		var isAddForm = !isEditForm;
+		var onSaveCoa = _options.onSaveCoa || function(coa, self){
+			console.log("[No implementation] Call default onSaveCoa function with data : " + coa)
+		};
 		
-		var url = BPA.Constant.accounting.coaUrl;
+		var comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.coaUrl;
+		
+		this.isEditForm = editedCoa.code != undefined && editedCoa.code != null;
+		
 		var randomId = BPA.Util.getRandomId("coaEdit");
         
 		var editWindow = $('<div id="coaEditWindow"></div>');
 		var windowHeader = "";
-		if(isEditForm){
+		if(this.isEditForm){
 			windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
 		}else{
 			windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">New Chart of Account</span></td></tr></table></div>');
@@ -34,7 +40,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var codeInputColumn = $('<td></td>');
 		var codeInput = $('<input type="text" class="text-input" maxlength="5" />');
 		codeInput.attr("id", "codeInput" + randomId);
-		if(isEditForm){
+		if(this.isEditForm){
 			codeInput.val(editedCoa.code);
 		}
 		codeInput.appendTo(codeInputColumn);
@@ -47,7 +53,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var nameInputColumn = $('<td></td>');
 		var nameInput = $('<input type="text" class="text-input" maxlength="50" />');
 		nameInput.attr("id", "nameInput" + randomId);
-		if(isEditForm){
+		if(this.isEditForm){
 			nameInput.val(editedCoa.name);
 		}
 		
@@ -65,7 +71,6 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		parentInput.appendTo(newRow);
 		
 		var source = new Array();
-		var url = BPA.Constant.accounting.coaUrl;
         var comboSource =
         {
             datatype: "json",
@@ -73,7 +78,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
                 { name: 'code' },
                 { name: 'name' }
             ],
-            url: url
+            url: comboboxUrl
         };
         var dataAdapter = new $.jqx.dataAdapter(comboSource,{
         	
@@ -138,7 +143,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 		var descriptionInputColumn = $('<td></td>');
 		var descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
 		descriptionInput.attr("id", "descriptionInput" + randomId);
-		if(isEditForm){
+		if(this.isEditForm){
 			descriptionInput.val(editedCoa.description);
 		}
 		descriptionInput.appendTo(descriptionInputColumn);
@@ -211,43 +216,25 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         });
         
         var saveCoa = function(){
-        	if(isEditForm){
-        		requestType = "POST";
-        	}else{
-        		requestType = "PUT";
-        	}
         	
         	var item = parentComboBox.jqxComboBox('getSelectedItem');
         	
-        	var requestData = {};
-        	requestData.code = codeInput.val();
-        	requestData.name = nameInput.val();;
-        	requestData.description = descriptionInput.val();
-        	requestData.parent = {};
-        	requestData.parent.code = item.value;
+        	var savedData = {};
+        	savedData.code = codeInput.val();
+        	savedData.name = nameInput.val();;
+        	savedData.description = descriptionInput.val();
+        	savedData.parent = {};
+        	savedData.parent.code = item.value;
         	
-        	var closeButton = $('<input type="button" value="Close"/>');
-        	closeButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
-        	
-			$.ajax({
-			    url: BPA.Constant.accounting.coaUrl,
-			    type: requestType,
-			    data: requestData,
-			    success: function(result) {
-			    	editWindow.jqxWindow('close');
-		        	editWindow.jqxWindow('destroy');
-		        	successNotification.jqxNotification("open");
-		        	if(_options.onAfterSave != undefined){
-		        		_options.onAfterSave(requestData);
-		        	}
-			    },
-			    error: function(jqXHR, status, error){
-			    	var errorWindow = new ErrorWindow(container, 'Error Updating Chart of Account', 'Error status : '+ jqXHR.status + '<br>Error message : '+ error);
-			    }
-			});
+        	onSaveCoa(savedData, _self);
         }
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+        
+        this.close = function(){
+        	editWindow.jqxWindow('close');
+        	editWindow.jqxWindow('destroy');
+        }
         
 	}
 

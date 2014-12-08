@@ -1,8 +1,14 @@
 define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function () {
 	
-	var CoaList = function(container){
+	var CoaList = function(container, options){
 		
-		var url = BPA.Constant.accounting.coaUrl;
+		var _options = options || {};
+		
+		var url = _options.url || BPA.Constant.accounting.coaUrl;
+		
+		var onEditRow = _options.onEditRow || function(coa){
+			console.log("[No implementation] Call default onEditRow function with data : " + coa)
+		};
         
         var source =
         {
@@ -175,16 +181,22 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
         }
         
         var showEditPage = function(row){
-        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
-        		var onAfterSave = function(savedData){
-        			coaListGrid.jqxTreeGrid('updateBoundData');
-        			console.log('savedData : ' + savedData);
-        		}
-            	var coaEdit = new CoaEdit(container, {editedCoa: row, onAfterSave: onAfterSave});
-            });
+//        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
+//        		var onAfterSave = function(savedData){
+//        			coaListGrid.jqxTreeGrid('updateBoundData');
+//        			console.log('savedData : ' + savedData);
+//        		}
+//            	var coaEdit = new CoaEdit(container, {editedCoa: row, onAfterSave: onAfterSave});
+//            });
+        	
+        	onEditRow(row);
         }
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+        
+        this.refreshGrid = function(){
+        	coaListGrid.jqxTreeGrid('updateBoundData');
+        }
         
 	}
 
