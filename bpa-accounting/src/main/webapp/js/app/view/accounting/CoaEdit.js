@@ -1,4 +1,4 @@
-define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (ErrorWindow) {
+define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow", "jqxnotification"], function (ErrorWindow) {
 	
 	var CoaEdit = function(container, options){
 		
@@ -204,6 +204,12 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
         	editWindow.jqxWindow('destroy');
         });
         
+        var successNotification = $('<div>Data successfully saved</div>');
+        successNotification.jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
+        });
+        
         var saveCoa = function(){
         	if(isEditForm){
         		requestType = "POST";
@@ -230,6 +236,7 @@ define(["bpaErrorWindow", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox
 			    success: function(result) {
 			    	editWindow.jqxWindow('close');
 		        	editWindow.jqxWindow('destroy');
+		        	successNotification.jqxNotification("open");
 		        	if(_options.onAfterSave != undefined){
 		        		_options.onAfterSave(requestData);
 		        	}

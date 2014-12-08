@@ -27,6 +27,7 @@
         "jqxinput": "../jqwidgets/3.5.0/jqxinput",
         "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
+        "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         
         "bpaErrorWindow": "../app/component/base/ErrorWindow"
     },
@@ -129,6 +130,10 @@
             deps: ['jQuery', "jqxcore"]
         },
         "jqxcombobox": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxnotification": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },
