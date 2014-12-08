@@ -180,6 +180,10 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
             theme: 'metro'
         });
         
+        editWindow.on('close', function (event) { 
+        	editWindow.jqxWindow('destroy');
+        });
+        
         $('.text-input').jqxInput({ theme: 'metro' });
         descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
