@@ -2,6 +2,8 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 	
 	var CoaList = function(container, options){
 		
+		var _self = this;
+		
 		var _options = options || {};
 		
 		var url = _options.url || BPA.Constant.accounting.coaUrl;
@@ -189,7 +191,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 //            	var coaEdit = new CoaEdit(container, {editedCoa: row, onAfterSave: onAfterSave});
 //            });
         	
-        	onEditRow(row);
+        	onEditRow(row, _self);
         }
         
         container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
