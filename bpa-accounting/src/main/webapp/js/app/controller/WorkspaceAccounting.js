@@ -17,7 +17,18 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 //            	var userListPage = new UserList(gridContainer);
 //            });
         	
-        	require(['./composer/accounting/CoaComposer'], function (CoaComposer) {
+//        	require(['./composer/accounting/CoaComposer'], function (CoaComposer) {
+//				if(container.children()[0] != undefined){
+//					$(container.children()[0]).jqxTreeGrid('destroy');
+//					if(container.children()[0] != undefined){
+//						$(container.children()[0]).jqxGrid('destroy');
+//					}
+//				}
+//				
+//            	var coaComposer = new CoaComposer(gridContainer);
+//            });
+        	
+        	require(['./composer/accounting/CoaComposerExt'], function (CoaComposerExt) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxTreeGrid('destroy');
 					if(container.children()[0] != undefined){
@@ -25,7 +36,7 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 					}
 				}
 				
-            	var coaComposer = new CoaComposer(gridContainer);
+            	var coaComposerExt = new CoaComposerExt(gridContainer);
             });
 			
 		});

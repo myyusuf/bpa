@@ -2,6 +2,8 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 	
 	var CoaComposer = function(container){
 		
+		var _self = this;
+		
 		var _coaListUrl = BPA.Constant.accounting.coaUrl;
 		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
             width: 250, position: "top-right", opacity: 0.9,
@@ -17,19 +19,14 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 		
 		var _coaList = new CoaList(container, _options);
 		
-		var _onEditRow = function(editedCoa){
-			
-			//Consider always new instance
-			var _coaEdit = new CoaEdit(container, {editedCoa: editedCoa, comboboxUrl: _coaListUrl});
-			
-			//Because this listener always depends on _coaEdit new instance, it must also always defined again 
+		CoaComposer.prototype.buildOnUpdateCoa = function(coaList, coaEdit){
 			var _onUpdateCoa = function(updatedCoa){
 				
 				var _requestType = "POST";
 				
 				var _onSuccess = function(result){// Depends on new _coaEdit instance
-					_coaEdit.close();//new _coaEdit instance
-					_coaList.refreshGrid();
+					coaEdit.close();//new _coaEdit instance
+					coaList.refreshGrid();
 					_successNotification.jqxNotification("open");
 				}
 				
@@ -39,6 +36,34 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 				
 				_sendData(updatedCoa, _requestType, _onSuccess, _onError);
 			}
+			
+			return _onUpdateCoa;
+		}
+		
+		var _onEditRow = function(editedCoa){
+			
+			//Consider always new instance
+			var _coaEdit = new CoaEdit(container, {editedCoa: editedCoa, comboboxUrl: _coaListUrl});
+			
+			//Because this listener always depends on _coaEdit new instance, it must also always defined again 
+//			var _onUpdateCoa = function(updatedCoa){
+//				
+//				var _requestType = "POST";
+//				
+//				var _onSuccess = function(result){// Depends on new _coaEdit instance
+//					_coaEdit.close();//new _coaEdit instance
+//					_coaList.refreshGrid();
+//					_successNotification.jqxNotification("open");
+//				}
+//				
+//				var _onError = function(status, error){
+//					var _errorWindow = new ErrorWindow(container, 'Error saving chart of account', 'Error status : '+ status + '<br>Error message : '+ error);
+//				}
+//				
+//				_sendData(updatedCoa, _requestType, _onSuccess, _onError);
+//			}
+			
+			var _onUpdateCoa = _self.buildOnUpdateCoa(_coaList, _coaEdit);
 			_coaEdit.subscribe(_onUpdateCoa, "updatecoa");
 			
 			//Because this listener always depends on _coaEdit new instance, it must also always defined again
