@@ -11,6 +11,9 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 		var _onEditRow = _options.onEditRow || function(coa){
 			console.log("[No implementation] Call default onEditRow function with data : " + coa)
 		};
+		var _onDeleteRow = _options.onDeleteRow || function(coa){
+			console.log("[No implementation] Call default onDeleteRow function with data : " + coa)
+		};
         
         var _source =
         {
@@ -141,7 +144,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 	 		}else if("edit" == _menuKey){
 	 			_showEditPage(_rowData);
 	 		}else if("delete" == _menuKey){
-	 			console.log('delete');
+	 			_onDeleteRow(_rowData, _self);
 	 		}
         });
         
