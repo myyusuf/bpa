@@ -202,31 +202,29 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
         }
         
         var _showEditPage = function(rowData){
-        	var _coa = {};
-        	
-        	if(rowData){
-        		_coa.code = rowData.code;
-            	_coa.name = rowData.name;
-            	_coa.description = rowData.description;
-            	_coa.parent = rowData.parent;
-            	_coa.parentCode = rowData.parentCode;
-        	}
-        	
-        	_publish(_coa, "editrow");
+        	_publish(_getCoaFromRowData(rowData), "editrow");
         }
         
         var _deleteRow = function(rowData){
+        	_publish(_getCoaFromRowData(rowData), "deleterow");
+        }
+        
+        var _getCoaFromRowData = function(rowData){
         	var _coa = {};
         	
         	if(rowData){
         		_coa.code = rowData.code;
             	_coa.name = rowData.name;
             	_coa.description = rowData.description;
-            	_coa.parent = rowData.parent;
+            	if(rowData.parent){
+            		_coa.parent = {};
+            		_coa.parent.code = rowData.parent.code;
+            		_coa.parent.name = rowData.parent.name;
+            	}
             	_coa.parentCode = rowData.parentCode;
         	}
         	
-        	_publish(_coa, "deleterow");
+        	return _coa;
         }
         
         this.refreshGrid = function(){
