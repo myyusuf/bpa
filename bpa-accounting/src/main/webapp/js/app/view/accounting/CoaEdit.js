@@ -1,4 +1,4 @@
-define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function () {
+define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
 	
 	var CoaEdit = function(container, options){
 		
@@ -14,35 +14,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
 			any:[]
 		};
 		
-		this.subscribe = function (fn, type) {
-			type = type || 'any';
-			if (typeof _subscribers[type] === "undefined") {
-				_subscribers[type] = [];
-			}
-				_subscribers[type].push(fn);
-		};
-		
-		var _unsubscribe = function (fn, type) {
-			_visitSubscribers('unsubscribe', fn, type);
-		};
-		
-		var _publish = function (publication, type) {
-			_visitSubscribers('publish', publication, type);
-		};
-		
-		var _visitSubscribers = function (action, arg, type) {
-			var _pubtype = type || 'any',
-			_tmpsubscribers = _subscribers[_pubtype], i, _max = _tmpsubscribers.length;
-			for (i = 0; i < _max; i += 1) {
-				if (action === 'publish') {
-					_tmpsubscribers[i](arg);
-				} else {
-					if (_tmpsubscribers[i] === arg) {
-						_tmpsubscribers.splice(i, 1);
-					}
-				}
-			}
-		};
+		Observable.call(_self, _subscribers);
 		
 		var _isEditForm = _editedCoa.code != undefined && _editedCoa.code != null;
 		
@@ -256,9 +228,9 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
         	_savedData.parent.code = _item.value;
         	
         	if(_isEditForm){
-        		_publish(_savedData, "updatecoa");
+        		Observable.prototype.publish.call(_self, _savedData, "updatecoa");
         	}else{
-        		_publish(_savedData, "addnewcoa");
+        		Observable.prototype.publish.call(_self, _savedData, "addnewcoa");
         	}
         }
         
@@ -272,6 +244,8 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
         }
         
 	}
+	
+	inheritPrototype(CoaEdit, Observable);
 
     return CoaEdit;
     
