@@ -171,7 +171,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 	 		}else if("edit" == _menuKey){
 	 			_showEditPage(_rowData);
 	 		}else if("delete" == _menuKey){
-	 			_publish(_rowData, "deleterow");
+	 			_deleteRow(_rowData);
 	 		}
         });
         
@@ -203,13 +203,30 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
         
         var _showEditPage = function(rowData){
         	var _coa = {};
-        	_coa.code = rowData.code;
-        	_coa.name = rowData.name;
-        	_coa.description = rowData.description;
-        	_coa.parent = rowData.parent;
-        	_coa.parentCode = rowData.parentCode;
+        	
+        	if(rowData){
+        		_coa.code = rowData.code;
+            	_coa.name = rowData.name;
+            	_coa.description = rowData.description;
+            	_coa.parent = rowData.parent;
+            	_coa.parentCode = rowData.parentCode;
+        	}
         	
         	_publish(_coa, "editrow");
+        }
+        
+        var _deleteRow = function(rowData){
+        	var _coa = {};
+        	
+        	if(rowData){
+        		_coa.code = rowData.code;
+            	_coa.name = rowData.name;
+            	_coa.description = rowData.description;
+            	_coa.parent = rowData.parent;
+            	_coa.parentCode = rowData.parentCode;
+        	}
+        	
+        	_publish(_coa, "deleterow");
         }
         
         this.refreshGrid = function(){

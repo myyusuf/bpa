@@ -20,7 +20,7 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 		var _onEditRow = function(editedCoa){
 			
 			//Consider always new instance
-			var _coaEdit = new CoaEdit(container, {editedCoa: coa, comboboxUrl: _coaListUrl});
+			var _coaEdit = new CoaEdit(container, {editedCoa: editedCoa, comboboxUrl: _coaListUrl});
 			
 			//Because this listener always depends on _coaEdit new instance, it must also always defined again 
 			var _onUpdateCoa = function(updatedCoa){
