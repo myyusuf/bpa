@@ -8,6 +8,40 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 		
 		var _url = _options.url || BPA.Constant.accounting.coaUrl;
 		
+		var _subscribers = {
+			any:[]
+		};
+		
+		this.subscribe = function (fn, type) {
+			type = type || 'any';
+			if (typeof _subscribers[type] === "undefined") {
+				_subscribers[type] = [];
+			}
+				_subscribers[type].push(fn);
+		};
+		
+		var _unsubscribe = function (fn, type) {
+			_visitSubscribers('unsubscribe', fn, type);
+		};
+		
+		var _publish = function (publication, type) {
+			_visitSubscribers('publish', publication, type);
+		};
+		
+		var _visitSubscribers = function (action, arg, type) {
+			var _pubtype = type || 'any',
+			_tmpsubscribers = _subscribers[_pubtype], i, _max = _tmpsubscribers.length;
+			for (i = 0; i < _max; i += 1) {
+				if (action === 'publish') {
+					_tmpsubscribers[i](arg);
+				} else {
+					if (_tmpsubscribers[i] === arg) {
+						_tmpsubscribers.splice(i, 1);
+					}
+				}
+			}
+		};
+		
 		var _onEditRow = _options.onEditRow || function(coa){
 			console.log("[No implementation] Call default onEditRow function with data : " + coa)
 		};
@@ -175,6 +209,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
         }
         
         var _showEditPage = function(row){
+        	_publish(row, "test");
         	_onEditRow(row, _self);
         }
         

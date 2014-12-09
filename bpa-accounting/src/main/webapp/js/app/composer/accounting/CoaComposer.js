@@ -55,6 +55,9 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 		};
 		
 		var _coaList = new CoaList(container, _options);
+		_coaList.subscribe(function(data){
+			console.log('test subscribers' + data);
+		}, "test");
 		container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
 		
 		var _sendData = function(data, requestType, onSuccess, onError){
