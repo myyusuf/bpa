@@ -65,6 +65,9 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 		_coaList.subscribe(_onEditRow, "editrow");
 		
 		var _onDeleteRow = function(deletedCoa){
+			
+			_coaList.test2();
+			
 			var _requestType = "DELETE";
 			var _onSuccess = function(result){
 				_coaList.refreshGrid();

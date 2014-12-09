@@ -29,7 +29,9 @@
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         
-        "bpaErrorWindow": "../app/component/base/ErrorWindow"
+        "bpaErrorWindow": "../app/component/base/ErrorWindow",
+        "bpaObservable": "../app/component/base/Observable"
+        	
     },
     //waitSeconds: 60,
     shim: {
@@ -139,6 +141,9 @@
         },
         "bpaErrorWindow": {
             export: "ErrorWindow"
+        },
+        "bpaObservable": {
+            export: "Observable"
         }
         
     }

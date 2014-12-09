@@ -1,4 +1,4 @@
-define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function () {
+define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function (Observable) {
 	
 	var CoaList = function(container, options){
 		
@@ -12,35 +12,37 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 			any:[]
 		};
 		
-		this.subscribe = function (fn, type) {
-			type = type || 'any';
-			if (typeof _subscribers[type] === "undefined") {
-				_subscribers[type] = [];
-			}
-				_subscribers[type].push(fn);
-		};
+		Observable.call(_self, _subscribers);
 		
-		var _unsubscribe = function (fn, type) {
-			_visitSubscribers('unsubscribe', fn, type);
-		};
-		
-		var _publish = function (publication, type) {
-			_visitSubscribers('publish', publication, type);
-		};
-		
-		var _visitSubscribers = function (action, arg, type) {
-			var _pubtype = type || 'any',
-			_tmpsubscribers = _subscribers[_pubtype], i, _max = _tmpsubscribers.length;
-			for (i = 0; i < _max; i += 1) {
-				if (action === 'publish') {
-					_tmpsubscribers[i](arg);
-				} else {
-					if (_tmpsubscribers[i] === arg) {
-						_tmpsubscribers.splice(i, 1);
-					}
-				}
-			}
-		};
+//		this.subscribe = function (fn, type) {
+//			type = type || 'any';
+//			if (typeof _subscribers[type] === "undefined") {
+//				_subscribers[type] = [];
+//			}
+//				_subscribers[type].push(fn);
+//		};
+//		
+//		var _unsubscribe = function (fn, type) {
+//			_visitSubscribers('unsubscribe', fn, type);
+//		};
+//		
+//		var _publish = function (publication, type) {
+//			_visitSubscribers('publish', publication, type);
+//		};
+//		
+//		var _visitSubscribers = function (action, arg, type) {
+//			var _pubtype = type || 'any',
+//			_tmpsubscribers = _subscribers[_pubtype], i, _max = _tmpsubscribers.length;
+//			for (i = 0; i < _max; i += 1) {
+//				if (action === 'publish') {
+//					_tmpsubscribers[i](arg);
+//				} else {
+//					if (_tmpsubscribers[i] === arg) {
+//						_tmpsubscribers.splice(i, 1);
+//					}
+//				}
+//			}
+//		};
 		
         var _source =
         {
@@ -202,11 +204,11 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
         }
         
         var _showEditPage = function(rowData){
-        	_publish(_getCoaFromRowData(rowData), "editrow");
+        	Observable.prototype.publish.call(_self, _getCoaFromRowData(rowData), "editrow");
         }
         
         var _deleteRow = function(rowData){
-        	_publish(_getCoaFromRowData(rowData), "deleterow");
+        	Observable.prototype.publish.call(_self, _getCoaFromRowData(rowData), "deleterow");
         }
         
         var _getCoaFromRowData = function(rowData){
@@ -232,6 +234,8 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
         }
         
 	}
+	
+	inheritPrototype(CoaList, Observable);
 
     return CoaList;
     
