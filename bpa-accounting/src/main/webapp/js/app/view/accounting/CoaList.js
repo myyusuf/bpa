@@ -42,13 +42,6 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 			}
 		};
 		
-		var _onEditRow = _options.onEditRow || function(coa){
-			console.log("[No implementation] Call default onEditRow function with data : " + coa)
-		};
-		var _onDeleteRow = _options.onDeleteRow || function(coa){
-			console.log("[No implementation] Call default onDeleteRow function with data : " + coa)
-		};
-        
         var _source =
         {
             dataType: "json",
@@ -178,7 +171,7 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
 	 		}else if("edit" == _menuKey){
 	 			_showEditPage(_rowData);
 	 		}else if("delete" == _menuKey){
-	 			_onDeleteRow(_rowData, _self);
+	 			_publish(_rowData, "deleterow");
 	 		}
         });
         
@@ -208,9 +201,15 @@ define(["jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"]
             return _rightclick;
         }
         
-        var _showEditPage = function(row){
-        	_publish(row, "test");
-        	_onEditRow(row, _self);
+        var _showEditPage = function(rowData){
+        	var _coa = {};
+        	_coa.code = rowData.code;
+        	_coa.name = rowData.name;
+        	_coa.description = rowData.description;
+        	_coa.parent = rowData.parent;
+        	_coa.parentCode = rowData.parentCode;
+        	
+        	_publish(_coa, "editrow");
         }
         
         this.refreshGrid = function(){

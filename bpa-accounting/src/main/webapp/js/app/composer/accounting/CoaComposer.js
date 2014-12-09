@@ -14,36 +14,60 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 			
 		var _options = {};
 		_options.url = _coaListUrl;
-		_options.onEditRow = function(coa, coaList){
-			var _onSaveCoa = function(savedData, coaEdit){
+		
+		var _coaList = new CoaList(container, _options);
+		
+		var _onEditRow = function(editedCoa){
+			
+			//Consider always new instance
+			var _coaEdit = new CoaEdit(container, {editedCoa: coa, comboboxUrl: _coaListUrl});
+			
+			//Because this listener always depends on _coaEdit new instance, it must also always defined again 
+			var _onUpdateCoa = function(updatedCoa){
 				
-				var _requestType = "";
-				if(coaEdit.isEditForm){
-					_requestType = "POST";
-	        	}else{
-	        		_requestType = "PUT";
-	        	}
+				var _requestType = "POST";
 				
-				var _onSuccess = function(result){
-					coaEdit.close();
-					coaList.refreshGrid();
+				var _onSuccess = function(result){// Depends on new _coaEdit instance
+					_coaEdit.close();//new _coaEdit instance
+					_coaList.refreshGrid();
 					_successNotification.jqxNotification("open");
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new ErrorWindow(container, 'Error Updating Chart of Account', 'Error status : '+ status + '<br>Error message : '+ error);
+					var _errorWindow = new ErrorWindow(container, 'Error saving chart of account', 'Error status : '+ status + '<br>Error message : '+ error);
 				}
 				
-				_sendData(savedData, _requestType, _onSuccess, _onError);
+				_sendData(updatedCoa, _requestType, _onSuccess, _onError);
 			}
-			var _coaEdit = new CoaEdit(container, {editedCoa: coa, onSaveCoa: _onSaveCoa, comboboxUrl: _coaListUrl});
+			_coaEdit.subscribe(_onUpdateCoa, "updatecoa");
+			
+			//Because this listener always depends on _coaEdit new instance, it must also always defined again
+			var _onAddNewCoa = function(newCoa){
+				
+				var _requestType = "PUT";
+				
+				var _onSuccess = function(result){// Depends on new _coaEdit instance
+					_coaEdit.close();//new _coaEdit instance
+					_coaList.refreshGrid();
+					_successNotification.jqxNotification("open");
+				}
+				
+				var _onError = function(status, error){
+					var _errorWindow = new ErrorWindow(container, 'Error saving chart of account', 'Error status : '+ status + '<br>Error message : '+ error);
+				}
+				
+				_sendData(newCoa, _requestType, _onSuccess, _onError);
+			}
+			_coaEdit.subscribe(_onAddNewCoa, "addnewcoa");
+
 			_coaEdit.open();
 		};
+		_coaList.subscribe(_onEditRow, "editrow");
 		
-		_options.onDeleteRow = function(row, coaList){
+		var _onDeleteRow = function(deletedCoa){
 			var _requestType = "DELETE";
 			var _onSuccess = function(result){
-				coaList.refreshGrid();
+				_coaList.refreshGrid();
 				_successDeleteNotification.jqxNotification("open");
 			}
 			
@@ -51,14 +75,9 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 				var _errorWindow = new ErrorWindow(container, 'Error Deleting Chart of Account', 'Error status : '+ status + '<br>Error message : '+ error);
 			}
 			
-			_sendData({code: row.code}, _requestType, _onSuccess, _onError);
+			_sendData(deletedCoa, _requestType, _onSuccess, _onError);
 		};
-		
-		var _coaList = new CoaList(container, _options);
-		_coaList.subscribe(function(data){
-			console.log('test subscribers' + data);
-		}, "test");
-		container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+		_coaList.subscribe(_onDeleteRow, "deleterow");
 		
 		var _sendData = function(data, requestType, onSuccess, onError){
 			$.ajax({
@@ -73,6 +92,8 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 			    }
 			});
 		};
+		
+		container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
         
 	}
 	

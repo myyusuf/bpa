@@ -8,19 +8,49 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
 		
 		var _editedCoa = _options.editedCoa || {};
 		
-		var _onSaveCoa = _options.onSaveCoa || function(coa, self){
-			console.log("[No implementation] Call default onSaveCoa function with data : " + coa)
-		};
-		
 		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.coaUrl;
 		
-		this.isEditForm = _editedCoa.code != undefined && _editedCoa.code != null;
+		var _subscribers = {
+			any:[]
+		};
+		
+		this.subscribe = function (fn, type) {
+			type = type || 'any';
+			if (typeof _subscribers[type] === "undefined") {
+				_subscribers[type] = [];
+			}
+				_subscribers[type].push(fn);
+		};
+		
+		var _unsubscribe = function (fn, type) {
+			_visitSubscribers('unsubscribe', fn, type);
+		};
+		
+		var _publish = function (publication, type) {
+			_visitSubscribers('publish', publication, type);
+		};
+		
+		var _visitSubscribers = function (action, arg, type) {
+			var _pubtype = type || 'any',
+			_tmpsubscribers = _subscribers[_pubtype], i, _max = _tmpsubscribers.length;
+			for (i = 0; i < _max; i += 1) {
+				if (action === 'publish') {
+					_tmpsubscribers[i](arg);
+				} else {
+					if (_tmpsubscribers[i] === arg) {
+						_tmpsubscribers.splice(i, 1);
+					}
+				}
+			}
+		};
+		
+		var _isEditForm = _editedCoa.code != undefined && _editedCoa.code != null;
 		
 		var _randomId = BPA.Util.getRandomId("coaEdit");
         
 		var _editWindow = $('<div id="coaEditWindow"></div>');
 		var _windowHeader = "";
-		if(this.isEditForm){
+		if(_isEditForm){
 			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
 		}else{
 			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">New Chart of Account</span></td></tr></table></div>');
@@ -40,7 +70,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
 		var _codeInputColumn = $('<td></td>');
 		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
 		_codeInput.attr("id", "codeInput" + _randomId);
-		if(this.isEditForm){
+		if(_isEditForm){
 			_codeInput.val(_editedCoa.code);
 		}
 		_codeInput.appendTo(_codeInputColumn);
@@ -53,7 +83,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
 		var _nameInputColumn = $('<td></td>');
 		var _nameInput = $('<input type="text" class="text-input" maxlength="50" />');
 		_nameInput.attr("id", "nameInput" + _randomId);
-		if(this.isEditForm){
+		if(_isEditForm){
 			_nameInput.val(_editedCoa.name);
 		}
 		
@@ -142,7 +172,7 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
 		var _descriptionInputColumn = $('<td></td>');
 		var _descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
 		_descriptionInput.attr("id", "descriptionInput" + _randomId);
-		if(this.isEditForm){
+		if(_isEditForm){
 			_descriptionInput.val(_editedCoa.description);
 		}
 		_descriptionInput.appendTo(_descriptionInputColumn);
@@ -225,7 +255,11 @@ define(["jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], f
         	_savedData.parent = {};
         	_savedData.parent.code = _item.value;
         	
-        	_onSaveCoa(_savedData, _self);
+        	if(_isEditForm){
+        		_publish(_savedData, "updatecoa");
+        	}else{
+        		_publish(_savedData, "addnewcoa");
+        	}
         }
         
         this.open = function(){
