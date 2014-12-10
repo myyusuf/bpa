@@ -24,7 +24,7 @@ public class ConcurrencySafeEntity extends Entity{
 	
 	public void failWhenConcurrencyViolation(int aVersion){
 		if(aVersion != this.concurrenceyVersion){
-			throw new IllegalStateException("Concurrancy Violation : Stale data detected. Entity wal already modified");
+			throw new IllegalStateException("Concurrency Violation : Stale data detected. Entity wal already modified");
 		}
 	}
 
