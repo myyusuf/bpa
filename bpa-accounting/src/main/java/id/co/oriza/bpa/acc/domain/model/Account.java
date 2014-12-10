@@ -1,6 +1,6 @@
 package id.co.oriza.bpa.acc.domain.model;
 
-import java.io.Serializable;
+import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "BPA_ACCOUNT")
-public class Account implements Serializable {
+public class Account extends ConcurrencySafeEntity {
 
 	/**
 	 * 

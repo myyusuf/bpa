@@ -35,7 +35,7 @@ dependencies {
 			"$springGroup:spring-web:$springVersion",
 			"$springGroup:spring-webmvc:$springVersion",
 			"$springGroup:spring-test:$springVersion",
-			 "org.hibernate:hibernate-annotations:3.5.6-Final",
+			"org.hibernate:hibernate-annotations:3.5.6-Final",
 			"org.hibernate:hibernate-validator:4.3.1.Final"
 			
 			
@@ -52,15 +52,5 @@ dependencies {
 	
 }
 
-test {
-	systemProperties 'property': 'value'
-}
 
-uploadArchives {
-	repositories {
-	   flatDir {
-		   dirs 'repos'
-	   }
-	}
-}
 
