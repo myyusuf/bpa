@@ -1,4 +1,4 @@
-define(["jqxbuttons"], function () {
+define(["jqxbuttons", "jqxwindow"], function () {
 	
 	var NotificationWindow = function(container, options){
 		

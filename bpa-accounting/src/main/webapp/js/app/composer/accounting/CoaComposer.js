@@ -81,14 +81,15 @@ define(["bpaErrorWindow", "notificationWindow", "view/accounting/CoaList", "view
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new ErrorWindow(container, 'Error Deleting Chart of Account', 'Error status : '+ status + '<br>Error message : '+ error);
+					var _deleteErrorWindow = new NotificationWindow(container, {title:'Error Deleting Chart of Account', 
+						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
 				_sendData(deletedCoa, _requestType, _onSuccess, _onError);
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Chart of Account', 
-			content: "Are you sure want to delete?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this account : " + deletedCoa.code + " (" + deletedCoa.name + ") ?", type: 'info', onOk: _onOk});
 			
 			
 		};
