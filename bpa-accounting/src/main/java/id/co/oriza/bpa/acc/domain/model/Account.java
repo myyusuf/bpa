@@ -2,21 +2,6 @@ package id.co.oriza.bpa.acc.domain.model;
 
 import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
-@Entity
-@Table(name = "BPA_ACCOUNT")
 public class Account extends ConcurrencySafeEntity {
 
 	/**
@@ -24,79 +9,68 @@ public class Account extends ConcurrencySafeEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq_gen")
-	@SequenceGenerator(name = "user_seq_gen", sequenceName = "USER_ENTITY_SEQ")
-	@Column(name = "ID")
-	private Long id;
-
-	@NotEmpty
-	@Column(name = "CODE")
 	private String code;
-	
-	@NotEmpty
-	@Column(name = "NAME")
 	private String name;
-	
-	@Column(name = "DESCRIPTION")
 	private String description;
-	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "PARENT_ID")
 	private Account parent;
-	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "CATEGORY_ID")
 	private AccountCategory category;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
+	
+	public String code() {
 		return code;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
+	public String description() {
 		return description;
 	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	
+	public Account parent() {
+		return this.parent;
 	}
 
-	public Account getParent() {
-		return parent;
-	}
-
-	public void setParent(Account parent) {
-		this.parent = parent;
+	public AccountCategory category() {
+		return this.category;
 	}
 	
-
-	public AccountCategory getCategory() {
-		return category;
+	protected Account(String aCode, String aName, String aDescription, Account aParent, AccountCategory aCategory){
+		
+		this();
+		
+		this.setCode(aCode);
+		this.setName(aName);
+		this.setDescription(aDescription);
+		this.setParent(aParent);
+		this.setCategory(aCategory);
+	}
+	
+	private void setCategory(AccountCategory aCategory) {
+		this.assertArgumentNotNull(aCategory, "The Category is required.");
+		this.category = aCategory;
 	}
 
-	public void setCategory(AccountCategory category) {
-		this.category = category;
+	private void setParent(Account aParent) {
+		this.parent = aParent;
+	}
+
+	private void setCode(String aCode) {
+		this.assertArgumentNotEmpty(aCode, "The Code is required.");
+		this.code = aCode;
+	}
+	
+	private void setName(String aName) {
+		this.assertArgumentNotEmpty(aName, "The Name is required.");
+		this.name = aName;
+	}
+	
+	private void setDescription(String aDescription) {
+		this.description = aDescription;
+	}
+	
+	protected Account() {
+		super();
 	}
 
 	@Override

@@ -17,5 +17,17 @@ public class AssertionConcern {
 			throw new IllegalArgumentException(aMessage);
 		}
 	}
+	
+	protected void assertArgumentNotEmpty(String aString, String aMessage){
+		if(aString == null || aString.trim().isEmpty()){
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
+	
+	protected void assertArgumentNotNull(Object anObject, String aMessage){
+		if(anObject == null){
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
 
 }
