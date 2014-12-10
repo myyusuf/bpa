@@ -12,11 +12,11 @@ define(["jqxbuttons"], function () {
 		var _notificationWindow = $('<div></div>'), _notificationWindowHeader = '', _notificationWindowContent = '';
 		var _buttonContainer = $('<div style="position:absolute; bottom: 15px; text-align: center; width: 100%;"></div>');
 		
-		if('info' == type){
+		if('info' == _type){
 			_notificationWindowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/exclamation-circle.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">' + _title + '</span></td></tr></table></div>');
-			_notificationWindowContent = $('<div><span style="color: red">' + _content + '</span></div>');
+			_notificationWindowContent = $('<div><span>' + _content + '</span></div>');
 		
-			var _okButton = $('<input type="button" value="Ok"/>');
+			var _okButton = $('<input type="button" value="Ok" style="margin-right: 5px;"/>');
 			_okButton.appendTo(_buttonContainer);
 			_okButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
 			_okButton.click(function(event){

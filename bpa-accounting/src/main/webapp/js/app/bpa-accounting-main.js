@@ -30,6 +30,7 @@
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         
         "bpaErrorWindow": "../app/component/base/ErrorWindow",
+        "notificationWindow": "../app/component/base/NotificationWindow",
         "bpaObservable": "../app/component/base/Observable"
         	
     },
@@ -141,6 +142,9 @@
         },
         "bpaErrorWindow": {
             export: "ErrorWindow"
+        },
+        "notificationWindow": {
+            export: "NotificationWindow"
         },
         "bpaObservable": {
             export: "Observable"

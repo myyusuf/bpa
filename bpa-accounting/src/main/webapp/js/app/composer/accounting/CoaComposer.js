@@ -1,4 +1,4 @@
-define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", "jqxnotification"], function (ErrorWindow, CoaList, CoaEdit) {
+define(["bpaErrorWindow", "notificationWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", "jqxnotification"], function (ErrorWindow, NotificationWindow, CoaList, CoaEdit) {
 	
 	var CoaComposer = function(container){
 		
@@ -45,24 +45,6 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 			//Consider always new instance
 			var _coaEdit = new CoaEdit(container, {editedCoa: editedCoa, comboboxUrl: _coaListUrl});
 			
-			//Because this listener always depends on _coaEdit new instance, it must also always defined again 
-//			var _onUpdateCoa = function(updatedCoa){
-//				
-//				var _requestType = "POST";
-//				
-//				var _onSuccess = function(result){// Depends on new _coaEdit instance
-//					_coaEdit.close();//new _coaEdit instance
-//					_coaList.refreshGrid();
-//					_successNotification.jqxNotification("open");
-//				}
-//				
-//				var _onError = function(status, error){
-//					var _errorWindow = new ErrorWindow(container, 'Error saving chart of account', 'Error status : '+ status + '<br>Error message : '+ error);
-//				}
-//				
-//				_sendData(updatedCoa, _requestType, _onSuccess, _onError);
-//			}
-			
 			var _onUpdateCoa = _self.buildOnUpdateCoa(_coaList, _coaEdit);
 			_coaEdit.subscribe(_onUpdateCoa, "updatecoa");
 			
@@ -91,19 +73,24 @@ define(["bpaErrorWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", 
 		
 		var _onDeleteRow = function(deletedCoa){
 			
-			_coaList.test2();
-			
-			var _requestType = "DELETE";
-			var _onSuccess = function(result){
-				_coaList.refreshGrid();
-				_successDeleteNotification.jqxNotification("open");
+			var _onOk = function(){
+				var _requestType = "DELETE";
+				var _onSuccess = function(result){
+					_coaList.refreshGrid();
+					_successDeleteNotification.jqxNotification("open");
+				}
+				
+				var _onError = function(status, error){
+					var _errorWindow = new ErrorWindow(container, 'Error Deleting Chart of Account', 'Error status : '+ status + '<br>Error message : '+ error);
+				}
+				
+				_sendData(deletedCoa, _requestType, _onSuccess, _onError);
 			}
 			
-			var _onError = function(status, error){
-				var _errorWindow = new ErrorWindow(container, 'Error Deleting Chart of Account', 'Error status : '+ status + '<br>Error message : '+ error);
-			}
+			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Chart of Account', 
+			content: "Are you sure want to delete?", type: 'info', onOk: _onOk});
 			
-			_sendData(deletedCoa, _requestType, _onSuccess, _onError);
+			
 		};
 		_coaList.subscribe(_onDeleteRow, "deleterow");
 		

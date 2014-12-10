@@ -17,18 +17,7 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 //            	var userListPage = new UserList(gridContainer);
 //            });
         	
-//        	require(['./composer/accounting/CoaComposer'], function (CoaComposer) {
-//				if(container.children()[0] != undefined){
-//					$(container.children()[0]).jqxTreeGrid('destroy');
-//					if(container.children()[0] != undefined){
-//						$(container.children()[0]).jqxGrid('destroy');
-//					}
-//				}
-//				
-//            	var coaComposer = new CoaComposer(gridContainer);
-//            });
-        	
-        	require(['./composer/accounting/CoaComposerExt'], function (CoaComposerExt) {
+        	require(['./composer/accounting/CoaComposer'], function (CoaComposer) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxTreeGrid('destroy');
 					if(container.children()[0] != undefined){
@@ -36,8 +25,19 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 					}
 				}
 				
-            	var coaComposerExt = new CoaComposerExt(gridContainer);
+            	var coaComposer = new CoaComposer(gridContainer);
             });
+        	
+//        	require(['./composer/accounting/CoaComposerExt'], function (CoaComposerExt) {
+//				if(container.children()[0] != undefined){
+//					$(container.children()[0]).jqxTreeGrid('destroy');
+//					if(container.children()[0] != undefined){
+//						$(container.children()[0]).jqxGrid('destroy');
+//					}
+//				}
+//				
+//            	var coaComposerExt = new CoaComposerExt(gridContainer);
+//            });
 			
 		});
 		
