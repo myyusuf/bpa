@@ -1,4 +1,4 @@
-define(["bpaErrorWindow", "notificationWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", "jqxnotification"], function (ErrorWindow, NotificationWindow, CoaList, CoaEdit) {
+define(["notificationWindow", "view/accounting/CoaList", "view/accounting/CoaEdit", "jqxnotification"], function (NotificationWindow, CoaList, CoaEdit) {
 	
 	var CoaComposer = function(container){
 		
@@ -31,7 +31,8 @@ define(["bpaErrorWindow", "notificationWindow", "view/accounting/CoaList", "view
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new ErrorWindow(container, 'Error saving chart of account', 'Error status : '+ status + '<br>Error message : '+ error);
+					var _errorWindow = new NotificationWindow(container, {title:'Error saving chart of account', 
+						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
 				_sendData(updatedCoa, _requestType, _onSuccess, _onError);
@@ -60,7 +61,8 @@ define(["bpaErrorWindow", "notificationWindow", "view/accounting/CoaList", "view
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new ErrorWindow(container, 'Error saving chart of account', 'Error status : '+ status + '<br>Error message : '+ error);
+					var _errorWindow = new NotificationWindow(container, {title:'Error saving chart of account', 
+						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
 				_sendData(newCoa, _requestType, _onSuccess, _onError);
@@ -81,7 +83,7 @@ define(["bpaErrorWindow", "notificationWindow", "view/accounting/CoaList", "view
 				}
 				
 				var _onError = function(status, error){
-					var _deleteErrorWindow = new NotificationWindow(container, {title:'Error Deleting Chart of Account', 
+					var _errorWindow = new NotificationWindow(container, {title:'Error Deleting Chart of Account', 
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
