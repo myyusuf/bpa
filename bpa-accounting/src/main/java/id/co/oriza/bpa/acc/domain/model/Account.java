@@ -44,6 +44,8 @@ public class Account extends ConcurrencySafeEntity {
 		this.setDescription(aDescription);
 		this.setParent(aParent);
 		this.setCategory(aCategory);
+		
+		DomainEventPublisher.instance.publish(new AccountRegistered(aCode, aName, aParent.name()));
 	}
 	
 	private void setCategory(AccountCategory aCategory) {
