@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate Mapping DTD 3.0//EN" "http://hibernate.souceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-cascade="all">
+	<class name="id.co.oriza.bpa.acc.domain.model.Account" table="BPA_USER" lazy="true">
+		<id name="id" type="long" column="id" unsaved-value="-1">
+			<generator class="native"/>
+		</id>
+		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
+	</class> 
+</<hibernate-mapping>

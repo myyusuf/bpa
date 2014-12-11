@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+	<session-factory>
+		<mapping resource="id/co/oriza/bpa/acc/domain/model/Account.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>
