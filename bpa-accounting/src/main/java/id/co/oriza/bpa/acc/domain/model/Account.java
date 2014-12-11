@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.acc.domain.model;
 
 import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
+import id.co.oriza.bpa.base.domain.model.DomainEventPublisher;
 
 public class Account extends ConcurrencySafeEntity {
 
@@ -45,7 +46,7 @@ public class Account extends ConcurrencySafeEntity {
 		this.setParent(aParent);
 		this.setCategory(aCategory);
 		
-		DomainEventPublisher.instance.publish(new AccountRegistered(aCode, aName, aParent.name()));
+		DomainEventPublisher.instance().publish(new AccountRegistered(aCode, aName, aParent.code()));
 	}
 	
 	private void setCategory(AccountCategory aCategory) {
