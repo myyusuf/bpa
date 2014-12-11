@@ -1,5 +1,8 @@
 package id.co.oriza.bpa.base.domain.model;
 
-public class DomainEvent {
+import java.util.Date;
 
+public interface DomainEvent {
+	public int eventVersion();
+	public Date occuredOn();
 }
