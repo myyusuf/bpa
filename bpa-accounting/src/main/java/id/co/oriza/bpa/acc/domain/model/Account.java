@@ -75,6 +75,15 @@ public class Account extends ConcurrencySafeEntity {
 	protected Account() {
 		super();
 	}
+	
+	public void changeName(String aName){
+		this.setName(aName);
+	}
+	
+	public void changeDescription(String aDescription){
+		this.setDescription(aDescription);
+	}
+
 
 	@Override
 	public int hashCode() {
