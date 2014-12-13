@@ -52,7 +52,7 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-accounting/1.0/bpa-accounting-1.0.war" exported="true">
+	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-accounting/1.0/bpa-accounting-1.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
