@@ -17,11 +17,11 @@ public class AccountApplicationService {
 	@Autowired
 	private AccountGroupRepository accountGroupRepoitory;
 	
-	public Account newAccountWith(String aCode, String aName, String aDescription, String aParentAccountCode, String anAccountGroupCode){
+	public Account newAccountWith(NewAccountCommand aCommand){
 		
-		AccountGroup accountGroup = this.existingAccountGroup(anAccountGroupCode);
-		Account parentAccount = this.existingAccount(aParentAccountCode);
-		Account account = new Account(aCode, aName, aDescription, parentAccount, accountGroup);
+		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getAccountGroupCode());
+		Account parentAccount = this.existingAccount(aCommand.getParentAccountCode());
+		Account account = new Account(aCommand.getCode(), aCommand.getName(), aCommand.getDescription(), parentAccount, accountGroup);
 		
 		this.accountRepository().add(account);
 		
