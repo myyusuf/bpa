@@ -39,4 +39,12 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 		return query.list();
 	}
 
+	@Override
+	public Account accountWithCode(String aCode) {
+		Query query = this.session().createQuery("from id.co.oriza.bpa.acc.domain.model.Account as _obj_ "
+				+ "where _obj_.code = :aCode ");
+		query.setString("aCode", aCode);
+		return (Account) query.uniqueResult();
+	}
+
 }

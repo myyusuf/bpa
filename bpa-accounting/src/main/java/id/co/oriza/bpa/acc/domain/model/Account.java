@@ -36,7 +36,7 @@ public class Account extends ConcurrencySafeEntity {
 		return this.category;
 	}
 	
-	protected Account(String aCode, String aName, String aDescription, Account aParent, AccountCategory aCategory){
+	public Account(String aCode, String aName, String aDescription, Account aParent, AccountCategory aCategory){
 		
 		this();
 		
