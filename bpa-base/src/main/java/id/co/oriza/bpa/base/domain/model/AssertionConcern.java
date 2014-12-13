@@ -29,5 +29,12 @@ public class AssertionConcern {
 			throw new IllegalArgumentException(aMessage);
 		}
 	}
+	
+	protected void assertArgumentLength(String aString, int aMaximum, String aMessage){
+		int length = aString.trim().length();
+		if(length > aMaximum){
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
 
 }

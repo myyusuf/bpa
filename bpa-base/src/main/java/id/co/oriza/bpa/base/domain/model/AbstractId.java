@@ -31,6 +31,7 @@ public abstract class AbstractId extends AssertionConcern implements Identity, S
 
 	public void setId(String anId) {
 		this.assertArgumentNotEmpty(anId, "The basic identity is required.");
+		this.assertArgumentLength(anId, 36, "The basic identity must be 36 characters.");
 		this.validateId(anId);
 		this.id = anId;
 	}
