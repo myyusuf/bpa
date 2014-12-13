@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import id.co.oriza.bpa.acc.domain.model.Account;
-import id.co.oriza.bpa.acc.domain.model.AccountCategory;
+import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountRepository;
 
 @Transactional
@@ -13,7 +13,7 @@ public class AccountApplicationService {
 	@Autowired
 	private AccountRepository accountRepository;
 	
-	public Account registerAccount(String aCode, String aName, String aDescription, String aParentAccountCode, AccountCategory aCategory){
+	public Account registerAccount(String aCode, String aName, String aDescription, String aParentAccountCode, AccountGroup aCategory){
 		
 		Account parentAccount = this.existingAccount(aParentAccountCode);
 		Account account = new Account(aCode, aName, aDescription, parentAccount, aCategory);

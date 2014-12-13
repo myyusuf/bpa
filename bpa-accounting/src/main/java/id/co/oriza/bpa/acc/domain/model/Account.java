@@ -14,7 +14,7 @@ public class Account extends ConcurrencySafeEntity {
 	private String name;
 	private String description;
 	private Account parent;
-	private AccountCategory category;
+	private AccountGroup group;
 	
 	public String code() {
 		return code;
@@ -32,11 +32,11 @@ public class Account extends ConcurrencySafeEntity {
 		return this.parent;
 	}
 
-	public AccountCategory category() {
-		return this.category;
+	public AccountGroup group() {
+		return this.group;
 	}
 	
-	public Account(String aCode, String aName, String aDescription, Account aParent, AccountCategory aCategory){
+	public Account(String aCode, String aName, String aDescription, Account aParent, AccountGroup aGroup){
 		
 		this();
 		
@@ -44,14 +44,14 @@ public class Account extends ConcurrencySafeEntity {
 		this.setName(aName);
 		this.setDescription(aDescription);
 		this.setParent(aParent);
-		this.setCategory(aCategory);
+		this.setCategory(aGroup);
 		
 		DomainEventPublisher.instance().publish(new AccountRegistered(aCode, aName, aParent.code()));
 	}
 	
-	private void setCategory(AccountCategory aCategory) {
-		this.assertArgumentNotNull(aCategory, "The Category is required.");
-		this.category = aCategory;
+	private void setCategory(AccountGroup aGroup) {
+		this.assertArgumentNotNull(aGroup, "The Group is required.");
+		this.group = aGroup;
 	}
 
 	private void setParent(Account aParent) {
