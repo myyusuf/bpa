@@ -1,8 +1,11 @@
 package id.co.oriza.bpa.acc.interfaces.ws;
 
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
+import id.co.oriza.bpa.acc.domain.model.Account;
+import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountPresentationModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +30,20 @@ public class AccountController {
 		
 		printParams(params);
 		
+		List<AccountPresentationModel> accountModels = new ArrayList<AccountPresentationModel>();
+		Collection<Account> accounts = this.accountApplicationService().allSimilarlyCodedOrNamedAccounts("", "");
+		for (Account account : accounts) {
+			AccountPresentationModel accountModel = new AccountPresentationModel(account);
+			accountModels.add(accountModel);
+		}
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 //		List<User> users = userService.getUsers(start, limit);
 //		Long usersCount = userService.countUsers();
-//		result.put("num", usersCount);
-//		result.put("data", users);
-//		result.put("success", true);
+		result.put("num", 10);
+		result.put("data", accountModels);
+		result.put("success", true);
 		
 		return result;
 	}
@@ -44,6 +53,10 @@ public class AccountController {
 		for (String key : listKeys) {
 			System.out.println("key : " + key + ", value : " + params.get(key));
 		}
+	}
+
+	public AccountApplicationService accountApplicationService() {
+		return accountApplicationService;
 	}
 
 }
