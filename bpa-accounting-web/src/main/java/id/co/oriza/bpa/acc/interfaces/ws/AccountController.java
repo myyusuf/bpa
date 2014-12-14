@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AccountController {
 	
+	@Autowired
 	private AccountApplicationService accountApplicationService;
 	
-	@RequestMapping(value="/security/users", method=RequestMethod.GET, produces="application/json")
-	public Map<String, Object> getUserList(@RequestParam(required=false) Map<String, String> params){
+	@RequestMapping(value="/accounting/accounts", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> getAccountList(@RequestParam(required=false) Map<String, String> params){
 		
 		int limit = params.get("limit") != null ? Integer.parseInt(params.get("limit")) : 0;
 		int start = params.get("start") != null ? Integer.parseInt(params.get("start")) : 0;

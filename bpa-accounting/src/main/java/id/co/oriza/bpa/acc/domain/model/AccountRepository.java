@@ -4,8 +4,9 @@ import java.util.Collection;
 
 public interface AccountRepository {
 	
-	public void add(Account anAccount);
-	public Collection<Account> allSimilarlyCodeOrNameAccounts(String aCode, String aName);
-	public Account accountWithCode(String anAccountCode);
+	void add(Account anAccount);
+	Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName);
+	Account accountWithCode(String anAccountCode);
+	AccountId nextIdentity();
 
 }

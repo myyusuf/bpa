@@ -1,16 +1,23 @@
 package id.co.oriza.bpa.acc.infrastructure.persistence;
 
+import id.co.oriza.bpa.acc.domain.model.Account;
+import id.co.oriza.bpa.acc.domain.model.AccountId;
+import id.co.oriza.bpa.acc.domain.model.AccountRepository;
+import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
+
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.Query;
 
-import id.co.oriza.bpa.acc.domain.model.Account;
-import id.co.oriza.bpa.acc.domain.model.AccountRepository;
-import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
-
 public class HibernateAccountRepository extends AbstractHibernateSession implements AccountRepository {
+	
+	@Override
+    public AccountId nextIdentity() {
+        return new AccountId(UUID.randomUUID().toString().toUpperCase());
+    } 
 
 	@Override
 	public void add(Account anAccount) {
@@ -24,7 +31,7 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Account> allSimilarlyCodeOrNameAccounts(String aCode,
+	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode,
 			String aName) {
 		if(aCode.endsWith("%") || aName.endsWith("%")){
 			throw new IllegalArgumentException("Code or name prefixes must not include %");

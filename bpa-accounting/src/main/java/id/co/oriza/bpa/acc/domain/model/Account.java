@@ -10,11 +10,21 @@ public class Account extends ConcurrencySafeEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private AccountId accountId;
 	private String code;
 	private String name;
 	private String description;
 	private Account parent;
 	private AccountGroup group;
+	
+	public AccountId accountId(){
+		return this.accountId;
+	}
+	
+	private void setAccountId(AccountId anAccountId) {
+		this.assertArgumentNotNull(anAccountId, "The AccountId is required.");
+		this.accountId = anAccountId;
+	}
 	
 	public String code() {
 		return code;
@@ -36,10 +46,11 @@ public class Account extends ConcurrencySafeEntity {
 		return this.group;
 	}
 	
-	public Account(String aCode, String aName, String aDescription, Account aParent, AccountGroup aGroup){
+	public Account(AccountId anAccountId, String aCode, String aName, String aDescription, Account aParent, AccountGroup aGroup){
 		
 		this();
 		
+		this.setAccountId(anAccountId);
 		this.setCode(aCode);
 		this.setName(aName);
 		this.setDescription(aDescription);
