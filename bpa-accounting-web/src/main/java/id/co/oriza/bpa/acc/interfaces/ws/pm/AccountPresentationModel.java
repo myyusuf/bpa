@@ -24,7 +24,12 @@ public class AccountPresentationModel {
 	}
 	
 	public String getParentCode(){
-		return this.account.parent().code();
+		
+		String code = "";
+		if(this.account.parent() != null){
+			code = this.account.parent().code();
+		}
+		return code;
 	}
 
 }
