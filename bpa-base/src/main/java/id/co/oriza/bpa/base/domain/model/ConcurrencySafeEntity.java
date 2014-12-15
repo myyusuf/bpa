@@ -7,23 +7,23 @@ public class ConcurrencySafeEntity extends Entity{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int concurrenceyVersion;
+	private int concurrencyVersion;
 	
 	protected ConcurrencySafeEntity(){
 		super();
 	}
 	
-	public int concurrenceyVersion(){
-		return this.concurrenceyVersion;
+	public int concurrencyVersion(){
+		return this.concurrencyVersion;
 	}
 
-	public void setConcurrenceyVersion(int aVersion) {
+	public void setConcurrencyVersion(int aVersion) {
 		this.failWhenConcurrencyViolation(aVersion);
-		this.concurrenceyVersion = aVersion;
+		this.concurrencyVersion = aVersion;
 	}
 	
 	public void failWhenConcurrencyViolation(int aVersion){
-		if(aVersion != this.concurrenceyVersion){
+		if(aVersion != this.concurrencyVersion){
 			throw new IllegalStateException("Concurrency Violation : Stale data detected. Entity wal already modified");
 		}
 	}
