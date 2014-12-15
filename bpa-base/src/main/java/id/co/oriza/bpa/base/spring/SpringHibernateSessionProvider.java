@@ -44,4 +44,8 @@ public class SpringHibernateSessionProvider {
 		return threadBoundSession;
 	}
 
+	public void setSessionFactory(SessionFactory aSessionFactory) {
+		this.sessionFactory = aSessionFactory;
+	}
+
 }
