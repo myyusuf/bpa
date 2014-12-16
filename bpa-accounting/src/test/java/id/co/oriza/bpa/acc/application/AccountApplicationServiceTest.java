@@ -1,12 +1,16 @@
 package id.co.oriza.bpa.acc.application;
 
 import java.util.List;
+import java.util.UUID;
 
 import id.co.oriza.bpa.acc.domain.model.Account;
+import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
+import id.co.oriza.bpa.acc.domain.model.AccountId;
 import id.co.oriza.bpa.acc.domain.model.AccountRepository;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -22,6 +26,7 @@ public class AccountApplicationServiceTest {
 		accountApplicationService = new AccountApplicationService();
 	}
 	
+	@Test
 	public void testNewAccountWith(){
 		AccountRepository accountRepositoryMock = getAccountRepository();
 		AccountGroupRepository accountGroupRepositoryMock = getAccountGroupRepository();
@@ -40,12 +45,17 @@ public class AccountApplicationServiceTest {
 	}
 
 	private AccountGroupRepository getAccountGroupRepository() {
-		// TODO Auto-generated method stub
-		return null;
+		AccountGroupRepository accountGroupRepositoryMock = mock(AccountGroupRepository.class);
+		when(accountGroupRepositoryMock.accountGroupWithCode(anyString())).thenReturn(new AccountGroup());
+		return accountGroupRepositoryMock;
 	}
 
 	private AccountRepository getAccountRepository() {
 		AccountRepository accountRepositoryMock = mock(AccountRepository.class);
+		AccountId accountId = new AccountId(UUID.randomUUID().toString().toUpperCase());
+		AccountGroup accountGroup = new AccountGroup();
+		Account account = new Account(accountId, "1111", "Kas", "", null, accountGroup);
+		when(accountRepositoryMock.accountWithCode(anyString())).thenReturn(account );
 		return accountRepositoryMock;
 	}
 
