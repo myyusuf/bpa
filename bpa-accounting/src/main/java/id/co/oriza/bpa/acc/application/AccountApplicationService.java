@@ -18,7 +18,7 @@ public class AccountApplicationService {
 	private AccountRepository accountRepository;
 
 	@Autowired
-	private AccountGroupRepository accountGroupRepoitory;
+	private AccountGroupRepository accountGroupRepository;
 	
 	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName){
 		Collection<Account> accounts = this.accountRepository().allSimilarlyCodedOrNamedAccounts(aCode, aName);
@@ -53,7 +53,7 @@ public class AccountApplicationService {
 	}
 
 	private AccountGroupRepository accountGroupRepository() {
-		return this.accountGroupRepoitory;
+		return this.accountGroupRepository;
 	}
 
 	private Account existingAccount(String anAccountCode) {
