@@ -120,11 +120,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         _accountNormalComboBox.on('bindingComplete', function (event) {
         	
-        	_accountNormalComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0);
-        	
         	if(_editedAccountGroup.accountNormal != undefined && _editedAccountGroup.accountNormal != null){
-        		var _selectedParentItem = _accountNormalComboBox.jqxComboBox('getItemByValue', _editedAccountGroup.accountNormal.code);
-            	_accountNormalComboBox.jqxComboBox('selectItem', _selectedParentItem);
+        		var _selectedItem = _accountNormalComboBox.jqxComboBox('getItemByValue', _editedAccountGroup.accountNormal.code);
+            	_accountNormalComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
         	
         });

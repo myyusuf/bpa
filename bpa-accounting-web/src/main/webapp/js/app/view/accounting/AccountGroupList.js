@@ -22,6 +22,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             datafields: [
                 { name: 'code', type: 'string' },
                 { name: 'name', type: 'string' },
+                { name: 'accountNormal'},
                 { name: 'accountNormalCode', type: 'string', map: "accountNormal>code" },
                 { name: 'accountNormalName', type: 'string', map: "accountNormal>name" },
                 { name: 'description', type: 'string' }

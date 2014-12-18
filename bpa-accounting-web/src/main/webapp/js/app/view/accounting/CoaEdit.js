@@ -132,8 +132,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         _parentComboBox.on('bindingComplete', function (event) {
         	
-        	_parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0);
-        	
         	if(_editedCoa.parent != undefined && _editedCoa.parent != null){
         		var _selectedParentItem = _parentComboBox.jqxComboBox('getItemByValue', _editedCoa.parent.code);
             	_parentComboBox.jqxComboBox('selectItem', _selectedParentItem);
