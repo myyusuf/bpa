@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AccountController {
 	
+	private static final int MAX_LIMIT = 10000;
+	
 	@Autowired
 	private AccountApplicationService accountApplicationService;
 	
@@ -26,7 +28,7 @@ public class AccountController {
 	public Map<String, Object> getAccountList(@RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
-		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
 		
 		String codeOrNameStartsWith = params.get("codeOrNameStartsWith") != null ? params.get("codeOrNameStartsWith") : "";
 		
@@ -43,8 +45,6 @@ public class AccountController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-//		List<User> users = userService.getUsers(start, limit);
-//		Long usersCount = userService.countUsers();
 		result.put("num", accountsSize);
 		result.put("data", accountModels);
 		result.put("success", true);

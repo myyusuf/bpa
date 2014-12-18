@@ -86,6 +86,11 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	formatData: function (data) {
                    data.selfAccountCode = data.code;
                    return data;
+            }, 
+          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
+            beforeLoadComplete: function (records) {
+            	records.splice(0, 0, {code: '', name: '--Please Select--'});
+                return records;
             }
         	
         });
@@ -126,8 +131,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         });
         
         _parentComboBox.on('bindingComplete', function (event) {
-        	_dataAdapter.records.splice(0, 0, {code: '', name: '--Please Select--'});
-        	_parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0); 
+        	
+        	_parentComboBox.jqxComboBox('insertAt', {code: '0', name: 'Please Select'}, 0);
+        	
         	if(_editedCoa.parent != undefined && _editedCoa.parent != null){
         		var _selectedParentItem = _parentComboBox.jqxComboBox('getItemByValue', _editedCoa.parent.code);
             	_parentComboBox.jqxComboBox('selectItem', _selectedParentItem);
