@@ -1,1 +1,1 @@
-{"data" : [{"code":"G123", "name":"Liability", "normal":"Debit", "description":"Liability accoun group"}], "num" : "1"}
+{"data" : [{"code":"G123", "name":"Liability", "accountNormal": {"code":"DEBET", "name":"Debit"}, "description":"Liability account group"}], "num" : "1"}

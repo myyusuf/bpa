@@ -1,6 +1,8 @@
-define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function (Observable) {
+define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput",
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
+        ], function (Observable) {
 	
-	var AccountGroupList = function(container){
+	var AccountGroupList = function(container, options){
 		
 		var _self = this;
 		
@@ -20,12 +22,13 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             datafields: [
                 { name: 'code', type: 'string' },
                 { name: 'name', type: 'string' },
-                { name: 'normal', type: 'string' },
+                { name: 'accountNormalCode', type: 'string', map: "accountNormal>code" },
+                { name: 'accountNormalName', type: 'string', map: "accountNormal>name" },
                 { name: 'description', type: 'string' }
             ],
             id: 'code',
             beforeprocessing: function (data) {
-                source.totalrecords = data.num;
+                _source.totalrecords = data.num;
             },
             url: _url
         };
@@ -55,7 +58,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             columns: [
               { text: 'Code', datafield: 'code', width: '25%' },
               { text: 'Name', datafield: 'name', width: '25%' },
-              { text: 'normal', datafield: 'normal', width: '25%' },
+              { text: 'Normal', datafield: 'accountNormalName', width: '25%' },
               { text: 'Description', datafield: 'description', width: '25%' }
             ],
         	theme: 'metro',
@@ -67,14 +70,33 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         });
         
         _accountGroupListGrid.on('rowdoubleclick', function (event){ 
-//        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
-//            	var coaEdit = new CoaEdit(container);
-//            });   
+        	var _args = event.args, _row = _args.row, _key = _args.key, _dataField = _args.dataField;
+            _showEditPage(_row);
         });
         
-        container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+        var _showEditPage = function(rowData){
+        	Observable.prototype.publish.call(_self, _getAccountGroupFromRowData(rowData), "editrow");
+        }
+        
+        var _getAccountGroupFromRowData = function(rowData){
+        	var _accountGroup = {};
+        	
+        	if(rowData){
+        		_accountGroup.code = rowData.code;
+            	_accountGroup.name = rowData.name;
+            	_accountGroup.description = rowData.description;
+            	if(rowData.accountNormal){
+            		_accountGroup.accountNormal = {};
+            		_accountGroup.accountNormal.code = rowData.accountNormal.code;
+            	}
+        	}
+        	
+        	return _accountGroup;
+        }
         
 	}
+	
+	inheritPrototype(AccountGroupList, Observable);
 
     return AccountGroupList;
     
