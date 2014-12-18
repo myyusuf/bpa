@@ -1,4 +1,4 @@
-define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput",
+define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
         ], function (Observable) {
 	
@@ -70,8 +70,48 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         });
         
         _accountGroupListGrid.on('rowdoubleclick', function (event){ 
-        	var _args = event.args, _row = _args.row, _key = _args.key, _dataField = _args.dataField;
-            _showEditPage(_row);
+        	var _args = event.args, _rowindex = _args.rowindex;
+        	var _rowData = _accountGroupListGrid.jqxGrid('getrowdata', _rowindex);
+            _showEditPage(_rowData);
+        });
+        
+        var _gridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
+        _gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+        _gridContextMenu.on('itemclick', function (event){
+        	
+        	var _menuKey = $(event.target).data("menukey");
+        	
+        	var _rowData = "";
+        	
+        	var _rowindex = _accountGroupListGrid.jqxGrid('getselectedrowindex');
+        	var _rowData = _accountGroupListGrid.jqxGrid('getrowdata', _rowindex);
+        	
+	 		if("add" == _menuKey){
+	 			_showEditPage();
+	 		}else if("edit" == _menuKey){
+	 			_showEditPage(_rowData);
+	 		}else if("delete" == _menuKey){
+	 			_deleteRow(_rowData);
+	 		}
+        });
+        
+        _accountGroupListGrid.on('rowclick', function (event) {
+        	
+        	var _clickEvent = event.args.originalEvent;
+//            var rightClick = isRightClick(event) || $.jqx.mobile.isTouchDevice();
+        	var _rightClick = _isRightClick(_clickEvent);
+            if (_rightClick) {
+                var _scrollTop = $(window).scrollTop();
+                var _scrollLeft = $(window).scrollLeft();
+                _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                return false;
+            }else{
+            	_gridContextMenu.jqxMenu('close');
+            }
+        });
+        
+        _accountGroupListGrid.on('contextmenu', function (e) {
+            return false;
         });
         
         var _showEditPage = function(rowData){
@@ -92,6 +132,14 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	}
         	
         	return _accountGroup;
+        }
+        
+        var _isRightClick = function(event) {
+            var _rightclick;
+            if (!event) var event = window.event;
+            if (event.which) _rightclick = (event.which == 3);
+            else if (event.button) _rightclick = (event.button == 2);
+            return _rightclick;
         }
         
 	}
