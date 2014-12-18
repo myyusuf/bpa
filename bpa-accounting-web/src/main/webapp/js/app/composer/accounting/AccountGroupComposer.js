@@ -5,6 +5,8 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 		var _self = this;
 		
 		var _accountGroupListUrl = BPA.Constant.accounting.accountGroupUrl;
+		var _accountNormalUrl = BPA.Constant.accounting.accountNormalUrl;
+		
 		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
             width: 250, position: "top-right", opacity: 0.9,
             autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
@@ -44,7 +46,7 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 		var _onEditRow = function(editedAccountGroup){
 			
 			//Consider always new instance
-			var _accountGroupEdit = new AccountGroupEdit(container, {editedAccountGroup: editedAccountGroup, comboboxUrl: _accountGroupListUrl});
+			var _accountGroupEdit = new AccountGroupEdit(container, {editedAccountGroup: editedAccountGroup, comboboxUrl: _accountNormalUrl});
 			
 			var _onUpdateAccountGroup = _self.buildOnUpdateAccountGroup(_accountGroupList, _accountGroupEdit);
 			_accountGroupEdit.subscribe(_onUpdateAccountGroup, "updateaccountGroup");

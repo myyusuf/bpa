@@ -8,7 +8,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _editedAccountGroup = _options.editedAccountGroup || {};
 		
-		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.accountGroupUrl;
+		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.accountNormalUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -99,12 +99,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	renderer: function (index, label, value) {
                 var _item = _dataAdapter.records[index];
                 if (_item != null) {
-                	var _label = '';
-                	if(_item.code != ''){
-                		_label = _item.code + " (" + _item.name + ")";
-                	}else{
-                		_label = _item.name;
-                	}
+                	var _label = _item.name;
                 	return _label;
                 }
                 
@@ -114,15 +109,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             renderSelectedItem: function(index, item){
                 var _item = _dataAdapter.records[index];
                 if (_item != null) {
-                	
-                	var _label = '';
-                	if(_item.code != ''){
-                		_label = _item.code + " (" + _item.name + ")";
-                	}else{
-                		_label = _item.name;
-                	}
+                	var _label = _item.name;
                 	return _label;
-                    
                 }
                 
                 return '';   
