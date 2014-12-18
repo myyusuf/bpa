@@ -83,8 +83,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
         	var _rowData = "";
         	
-        	var _rowindex = _accountGroupListGrid.jqxGrid('getselectedrowindex');
-        	var _rowData = _accountGroupListGrid.jqxGrid('getrowdata', _rowindex);
+        	var _rowIndex = _accountGroupListGrid.jqxGrid('getselectedrowindex');
+        	var _rowData = _accountGroupListGrid.jqxGrid('getrowdata', _rowIndex);
         	
 	 		if("add" == _menuKey){
 	 			_showEditPage();
@@ -97,8 +97,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         
         _accountGroupListGrid.on('rowclick', function (event) {
         	
-        	var _clickEvent = event.args.originalEvent;
-//            var rightClick = isRightClick(event) || $.jqx.mobile.isTouchDevice();
+        	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
+        	
+        	_accountGroupListGrid.jqxGrid('selectrow', _rowIndex);
+        	
         	var _rightClick = _isRightClick(_clickEvent);
             if (_rightClick) {
                 var _scrollTop = $(window).scrollTop();
