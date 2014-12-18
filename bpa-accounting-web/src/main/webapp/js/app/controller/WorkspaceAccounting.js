@@ -28,6 +28,12 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 //            	var userListPage = new UserList(gridContainer);
 //            });
         	
+		});
+		
+		$.subscribe("viewCoaListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+        	
         	require(['./composer/accounting/CoaComposer'], function (CoaComposer) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxTreeGrid('destroy');
