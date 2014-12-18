@@ -3,6 +3,7 @@ var BPA = BPA || {};
 BPA.Constant = BPA.Constant || {};
 
 BPA.Constant.accounting = {
+	accountGroupUrl : 'service/accounting/accountgroups',
 	coaUrl : 'service/accounting/accounts',
 	journalUrl : 'service/accounting/journal',	
 	ledgerUrl : 'service/accounting/ledger',

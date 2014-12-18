@@ -5,6 +5,17 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 		$.subscribe("viewCoaListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
+        	
+        	require(['./composer/accounting/AccountGroupComposer'], function (AccountGroupComposer) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxTreeGrid('destroy');
+					if(container.children()[0] != undefined){
+						$(container.children()[0]).jqxGrid('destroy');
+					}
+				}
+				
+            	var accountGroupComposer = new AccountGroupComposer(gridContainer);
+            });
 			
 //			require(['./view/accounting/CoaList'], function (UserList) {
 //				if(container.children()[0] != undefined){

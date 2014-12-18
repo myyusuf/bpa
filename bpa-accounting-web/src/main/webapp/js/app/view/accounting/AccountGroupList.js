@@ -2,9 +2,9 @@ define(["jQuery", "jqxcore"], function () {
 	
 	var AccountGroupList = function(container){
 		
-		var url = BPA.Constant.accounting.accountGroupUrl;
+		var _url = BPA.Constant.accounting.accountGroupUrl;
         
-        var source =
+        var _source =
         {
             datatype: "json",
             datafields: [
@@ -17,10 +17,10 @@ define(["jQuery", "jqxcore"], function () {
             beforeprocessing: function (data) {
                 source.totalrecords = data.num;
             },
-            url: url
+            url: _url
         };
         
-        var dataAdapter = new $.jqx.dataAdapter(source, {
+        var _dataAdapter = new $.jqx.dataAdapter(_source, {
             downloadComplete: function (data, status, xhr) { 
             },
             loadComplete: function (data) { 
@@ -30,11 +30,11 @@ define(["jQuery", "jqxcore"], function () {
             loadError: function (xhr, status, error) { }
         });
         
-        var accountGroupListGrid = container.jqxGrid(
+        var _accountGroupListGrid = container.jqxGrid(
         {
             width: '100%',
             height: '100%',
-            source: dataAdapter,                
+            source: _dataAdapter,                
             pageable: true,
             autoheight: false,
             sortable: true,
@@ -52,11 +52,11 @@ define(["jQuery", "jqxcore"], function () {
         	pagesizeoptions: ['5', '10', '20', '100'],
         	virtualmode: true,
         	rendergridrows: function () {
-                return dataAdapter.records;
+                return _dataAdapter.records;
             }
         });
         
-        accountGroupListGrid.on('rowdoubleclick', function (event){ 
+        _accountGroupListGrid.on('rowdoubleclick', function (event){ 
 //        	require(['./view/accounting/CoaEdit'], function (CoaEdit) {
 //            	var coaEdit = new CoaEdit(container);
 //            });   
