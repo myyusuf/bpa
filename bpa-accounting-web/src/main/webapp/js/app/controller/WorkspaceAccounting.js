@@ -2,7 +2,7 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 	
 	var WorkspaceAccounting = function(container){
 		
-		$.subscribe("viewCoaListEvent", function(e, data){
+		$.subscribe("viewAccountGroupListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
         	

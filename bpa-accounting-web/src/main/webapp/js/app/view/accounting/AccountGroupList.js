@@ -1,9 +1,19 @@
-define(["jQuery", "jqxcore"], function () {
+define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function (Observable) {
 	
 	var AccountGroupList = function(container){
 		
+		var _self = this;
+		
+		var _options = options || {};
+		
 		var _url = BPA.Constant.accounting.accountGroupUrl;
-        
+		
+		var _subscribers = {
+			any:[]
+		};
+		
+		Observable.call(_self, _subscribers);
+		
         var _source =
         {
             datatype: "json",

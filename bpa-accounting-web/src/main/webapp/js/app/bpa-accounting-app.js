@@ -8,6 +8,11 @@
             $("#jqxMenu").css('visibility', 'visible');
             
             var registerMenu = function(){
+            	
+            	$("#accountGroupListMenu").click(function(){
+            		$.publish("viewAccountGroupListEvent", {name: "accountGroup"});
+            	});
+            	
             	$("#coaListMenu").click(function(){
             		$.publish("viewCoaListEvent", {name: "coa"});
             	});
