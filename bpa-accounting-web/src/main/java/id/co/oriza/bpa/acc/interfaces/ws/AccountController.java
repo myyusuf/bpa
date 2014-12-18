@@ -28,16 +28,18 @@ public class AccountController {
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
 		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : 0;
 		
+		String codeOrNameStartsWith = params.get("codeOrNameStartsWith") != null ? params.get("codeOrNameStartsWith") : "";
+		
 		printParams(params);
 		
 		List<AccountPresentationModel> accountModels = new ArrayList<AccountPresentationModel>();
-		Collection<Account> accounts = this.accountApplicationService().allSimilarlyCodedOrNamedAccounts("", "", start, limit);
+		Collection<Account> accounts = this.accountApplicationService().allSimilarlyCodedOrNamedAccounts(codeOrNameStartsWith, codeOrNameStartsWith, start, limit);
 		for (Account account : accounts) {
 			AccountPresentationModel accountModel = new AccountPresentationModel(account);
 			accountModels.add(accountModel);
 		}
 		
-		int accountsSize = accountApplicationService.allSimilarlyCodedOrNamedAccountsSize("", "");
+		int accountsSize = accountApplicationService.allSimilarlyCodedOrNamedAccountsSize(codeOrNameStartsWith, codeOrNameStartsWith);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
