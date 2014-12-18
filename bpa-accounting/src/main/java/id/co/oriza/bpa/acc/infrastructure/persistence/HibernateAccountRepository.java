@@ -32,7 +32,7 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode,
-			String aName) {
+			String aName, int aStart, int aLimit) {
 		if(aCode.endsWith("%") || aName.endsWith("%")){
 			throw new IllegalArgumentException("Code or name prefixes must not include %");
 		}
@@ -42,6 +42,8 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 				+ "or _obj_.name like :aName ");
 		query.setString("aCode", aCode + "%");
 		query.setString("aName", aName + "%");
+		query.setFirstResult(aStart);
+		query.setMaxResults(aLimit);
 		
 		return query.list();
 	}
@@ -52,6 +54,21 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 				+ "where _obj_.code = :aCode ");
 		query.setString("aCode", aCode);
 		return (Account) query.uniqueResult();
+	}
+
+	@Override
+	public int allSimilarlyCodedOrNamedAccountsSize(String aCode, String aName) {
+		if(aCode.endsWith("%") || aName.endsWith("%")){
+			throw new IllegalArgumentException("Code or name prefixes must not include %");
+		}
+		
+		Query query = this.session().createQuery("select count(_obj_) from id.co.oriza.bpa.acc.domain.model.Account as _obj_ "
+				+ "where _obj_.code like :aCode "
+				+ "or _obj_.name like :aName ");
+		query.setString("aCode", aCode + "%");
+		query.setString("aName", aName + "%");
+		
+		return ((Long)query.uniqueResult()).intValue();
 	}
 
 }

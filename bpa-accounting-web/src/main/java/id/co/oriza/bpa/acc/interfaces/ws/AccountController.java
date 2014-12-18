@@ -25,23 +25,25 @@ public class AccountController {
 	@RequestMapping(value="/accounting/accounts", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> getAccountList(@RequestParam(required=false) Map<String, String> params){
 		
-		int limit = params.get("limit") != null ? Integer.parseInt(params.get("limit")) : 0;
-		int start = params.get("start") != null ? Integer.parseInt(params.get("start")) : 0;
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : 0;
 		
 		printParams(params);
 		
 		List<AccountPresentationModel> accountModels = new ArrayList<AccountPresentationModel>();
-		Collection<Account> accounts = this.accountApplicationService().allSimilarlyCodedOrNamedAccounts("", "");
+		Collection<Account> accounts = this.accountApplicationService().allSimilarlyCodedOrNamedAccounts("", "", start, limit);
 		for (Account account : accounts) {
 			AccountPresentationModel accountModel = new AccountPresentationModel(account);
 			accountModels.add(accountModel);
 		}
 		
+		int accountsSize = accountApplicationService.allSimilarlyCodedOrNamedAccountsSize("", "");
+		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 //		List<User> users = userService.getUsers(start, limit);
 //		Long usersCount = userService.countUsers();
-		result.put("num", 10);
+		result.put("num", accountsSize);
 		result.put("data", accountModels);
 		result.put("success", true);
 		

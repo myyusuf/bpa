@@ -20,9 +20,14 @@ public class AccountApplicationService {
 	@Autowired
 	private AccountGroupRepository accountGroupRepository;
 	
-	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName){
-		Collection<Account> accounts = this.accountRepository().allSimilarlyCodedOrNamedAccounts(aCode, aName);
+	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName, int aStart, int aLimit){
+		Collection<Account> accounts = this.accountRepository().allSimilarlyCodedOrNamedAccounts(aCode, aName, aStart, aLimit);
 		return accounts;
+	}
+	
+	public int allSimilarlyCodedOrNamedAccountsSize(String aCode, String aName){
+		int accountsSize = this.accountRepository().allSimilarlyCodedOrNamedAccountsSize(aCode, aName);
+		return accountsSize;
 	}
 	
 	public Account newAccountWith(NewAccountCommand aCommand){
