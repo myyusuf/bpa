@@ -187,7 +187,16 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	arrow: false,
             rules: [
                     { input: "#" + _codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _accountNormalInput.attr("id"), message: 'Account normal is required', action: 'keyup, blur', 
+                    	rule: function(input){
+	                    	var _val = _accountNormalComboBox.jqxComboBox('val');
+	                    	if(_val==""){
+	                    		return false;
+	                    	}
+	                    	return true;
+                    	}
+                     }
                    
                    ]
         	});
@@ -195,11 +204,16 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _editForm.on('validationSuccess', function (event) { 
         	_saveAccountGroup();
         }); 
-        	
+        
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         _saveButton.click(function(event){
+        	//to close the validation message on cobo box value is set
+        	_accountNormalComboBox.on('change', function (event){
+            	_editForm.jqxValidator('validateInput', "#" + _accountNormalInput.attr("id"));
+    	    });
+        	
         	_editForm.jqxValidator('validate');
 		});
         
