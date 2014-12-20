@@ -125,6 +125,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             	_accountNormalComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
         	
+        	//to close the validation message on combobox when form first loaded
+        	_editForm.jqxValidator('hide');
+        	
         });
         
 		//------------------------------------------------------
@@ -205,15 +208,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_saveAccountGroup();
         }); 
         
+    	_accountNormalComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _accountNormalInput.attr("id"));
+	    });
+        
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         _saveButton.click(function(event){
-        	//to close the validation message on cobo box value is set
-        	_accountNormalComboBox.on('change', function (event){
-            	_editForm.jqxValidator('validateInput', "#" + _accountNormalInput.attr("id"));
-    	    });
-        	
         	_editForm.jqxValidator('validate');
 		});
         

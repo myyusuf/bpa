@@ -100,10 +100,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
         	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
         	
-        	_accountGroupListGrid.jqxGrid('selectrow', _rowIndex);
-        	
         	var _rightClick = _isRightClick(_clickEvent);
             if (_rightClick) {
+            	_accountGroupListGrid.jqxGrid('selectrow', _rowIndex);
                 var _scrollTop = $(window).scrollTop();
                 var _scrollLeft = $(window).scrollLeft();
                 _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
