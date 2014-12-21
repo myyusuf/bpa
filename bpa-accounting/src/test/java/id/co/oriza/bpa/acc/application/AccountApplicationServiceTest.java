@@ -8,6 +8,7 @@ import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
 import id.co.oriza.bpa.acc.domain.model.AccountId;
 import id.co.oriza.bpa.acc.domain.model.AccountRepository;
+import id.co.oriza.bpa.acc.domain.model.MovementType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,14 +47,14 @@ public class AccountApplicationServiceTest {
 
 	private AccountGroupRepository getAccountGroupRepository() {
 		AccountGroupRepository accountGroupRepositoryMock = mock(AccountGroupRepository.class);
-		when(accountGroupRepositoryMock.accountGroupWithCode(anyString())).thenReturn(new AccountGroup("", "", "", null));
+		when(accountGroupRepositoryMock.accountGroupWithCode(anyString())).thenReturn(new AccountGroup("111", "Liability", "", MovementType.DEBET));
 		return accountGroupRepositoryMock;
 	}
 
 	private AccountRepository getAccountRepository() {
 		AccountRepository accountRepositoryMock = mock(AccountRepository.class);
 		AccountId accountId = new AccountId(UUID.randomUUID().toString().toUpperCase());
-		AccountGroup accountGroup = new AccountGroup("", "", "", null);
+		AccountGroup accountGroup = new AccountGroup("111", "Liability", "", MovementType.DEBET);
 		Account account = new Account(accountId, "1111", "Kas", "", null, accountGroup);
 		when(accountRepositoryMock.accountWithCode(anyString())).thenReturn(account);
 		when(accountRepositoryMock.nextIdentity()).thenReturn(accountId);
