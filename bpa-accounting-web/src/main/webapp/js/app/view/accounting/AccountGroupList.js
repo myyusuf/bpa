@@ -120,6 +120,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	Observable.prototype.publish.call(_self, _getAccountGroupFromRowData(rowData), "editrow");
         }
         
+        var _deleteRow = function(rowData){
+        	Observable.prototype.publish.call(_self, _getAccountGroupFromRowData(rowData), "deleterow");
+        }
+        
         var _getAccountGroupFromRowData = function(rowData){
         	var _accountGroup = {};
         	
@@ -134,6 +138,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	}
         	
         	return _accountGroup;
+        }
+        
+        this.refreshGrid = function(){
+        	_accountGroupListGrid.jqxGrid('updatebounddata');
         }
         
         var _isRightClick = function(event) {

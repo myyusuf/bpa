@@ -33,7 +33,7 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new NotificationWindow(container, {title:'Error saving chart of account', 
+					var _errorWindow = new NotificationWindow(container, {title:'Saving Account Group', 
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
@@ -49,7 +49,7 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 			var _accountGroupEdit = new AccountGroupEdit(container, {editedAccountGroup: editedAccountGroup, comboboxUrl: _accountNormalUrl});
 			
 			var _onUpdateAccountGroup = _self.buildOnUpdateAccountGroup(_accountGroupList, _accountGroupEdit);
-			_accountGroupEdit.subscribe(_onUpdateAccountGroup, "updateaccountGroup");
+			_accountGroupEdit.subscribe(_onUpdateAccountGroup, "updateaccountgroup");
 			
 			//Because this listener always depends on _accountGroupEdit new instance, it must also always defined again
 			var _onAddNewAccountGroup = function(newAccountGroup){
@@ -63,13 +63,13 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new NotificationWindow(container, {title:'Error saving chart of account', 
+					var _errorWindow = new NotificationWindow(container, {title:'Error Saving Account Group', 
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
 				_sendData(newAccountGroup, _requestType, _onSuccess, _onError);
 			}
-			_accountGroupEdit.subscribe(_onAddNewAccountGroup, "addnewaccountGroup");
+			_accountGroupEdit.subscribe(_onAddNewAccountGroup, "addnewaccountgroup");
 
 			_accountGroupEdit.open();
 		};
@@ -85,14 +85,14 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new NotificationWindow(container, {title:'Error Deleting Chart of Account', 
+					var _errorWindow = new NotificationWindow(container, {title:'Error Deleting Account Group', 
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
 				_sendData(deletedAccountGroup, _requestType, _onSuccess, _onError);
 			}
 			
-			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Chart of Account', 
+			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Account Group', 
 			content: "Are you sure want to delete this account group : " + deletedAccountGroup.code + " (" + deletedAccountGroup.name + ") ?", type: 'info', onOk: _onOk});
 			
 			

@@ -236,9 +236,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_savedData.accountNormal.code = _item.value;
         	
         	if(_isEditForm){
-        		Observable.prototype.publish.call(_self, _savedData, "updateaccountGroup");
+        		Observable.prototype.publish.call(_self, _savedData, "updateaccountgroup");
         	}else{
-        		Observable.prototype.publish.call(_self, _savedData, "addnewaccountGroup");
+        		Observable.prototype.publish.call(_self, _savedData, "addnewaccountgroup");
         	}
         }
         
