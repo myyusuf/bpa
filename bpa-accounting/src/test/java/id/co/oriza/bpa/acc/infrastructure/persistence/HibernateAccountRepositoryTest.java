@@ -44,7 +44,7 @@ public class HibernateAccountRepositoryTest {
 	@Before
 	public void initiate(){
 		try {
-			connection = new OracleConnection(dataSource.getConnection(), "bpa-phase-1");
+			connection = new OracleConnection(dataSource.getConnection(), "bpa_phase_1");
 			DatabaseOperation.DELETE_ALL.execute(connection, getDataSet(DATASET_FILE_EMPTY));
 		} catch (DatabaseUnitException e) {
 			e.printStackTrace();
