@@ -24,8 +24,7 @@ public class HibernateAccountGroupRepository extends AbstractHibernateSession im
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<AccountGroup> allSimilarlyCodeOrNameAccountGroups(
-			String aCode, String aName) {
+	public Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups(String aCode, String aName, int aStart, int aLimit) {
 		if(aCode.endsWith("%") || aName.endsWith("%")){
 			throw new IllegalArgumentException("Code or name prefixes must not include %");
 		}
@@ -35,6 +34,8 @@ public class HibernateAccountGroupRepository extends AbstractHibernateSession im
 				+ "or _obj_.name like :aName ");
 		query.setString("aCode", aCode + "%");
 		query.setString("aName", aName + "%");
+		query.setFirstResult(aStart);
+		query.setMaxResults(aLimit);
 		
 		return query.list();
 	}

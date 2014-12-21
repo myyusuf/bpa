@@ -46,14 +46,14 @@ public class AccountApplicationServiceTest {
 
 	private AccountGroupRepository getAccountGroupRepository() {
 		AccountGroupRepository accountGroupRepositoryMock = mock(AccountGroupRepository.class);
-		when(accountGroupRepositoryMock.accountGroupWithCode(anyString())).thenReturn(new AccountGroup());
+		when(accountGroupRepositoryMock.accountGroupWithCode(anyString())).thenReturn(new AccountGroup("", "", "", null));
 		return accountGroupRepositoryMock;
 	}
 
 	private AccountRepository getAccountRepository() {
 		AccountRepository accountRepositoryMock = mock(AccountRepository.class);
 		AccountId accountId = new AccountId(UUID.randomUUID().toString().toUpperCase());
-		AccountGroup accountGroup = new AccountGroup();
+		AccountGroup accountGroup = new AccountGroup("", "", "", null);
 		Account account = new Account(accountId, "1111", "Kas", "", null, accountGroup);
 		when(accountRepositoryMock.accountWithCode(anyString())).thenReturn(account);
 		when(accountRepositoryMock.nextIdentity()).thenReturn(accountId);
