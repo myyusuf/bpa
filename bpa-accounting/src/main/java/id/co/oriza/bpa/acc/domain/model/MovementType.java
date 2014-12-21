@@ -1,13 +1,13 @@
 package id.co.oriza.bpa.acc.domain.model;
 
-public enum BalanceType {
+public enum MovementType {
 	
 	DEBET("DEBET", "Debet"), CREDIT("CREDIT", "Credit");
 	
 	private String code;
 	private String name;
 	
-	private BalanceType(String aCode, String aName){
+	private MovementType(String aCode, String aName){
 		this.code = aCode;
 		this.name = aName;
 	}
