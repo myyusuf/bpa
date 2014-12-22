@@ -8,7 +8,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _editedAccountGroup = _options.editedAccountGroup || {};
 		
-		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.accountNormalUrl;
+		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.defaultBalanceUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -64,13 +64,13 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		//------------------------------------------------------
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
-		var _accountNormalLabel = $('<td>Account Normal</td>');
-		_accountNormalLabel.appendTo(_newRow);
-		var _accountNormalInputColumn = $('<td></td>');
-		var _accountNormalInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
-		_accountNormalInput.attr("id", "accountNormalInput" + _randomId);
-		_accountNormalInput.appendTo(_accountNormalInputColumn);
-		_accountNormalInput.appendTo(_newRow);
+		var _defaultBalanceLabel = $('<td>Default Balance</td>');
+		_defaultBalanceLabel.appendTo(_newRow);
+		var _defaultBalanceInputColumn = $('<td></td>');
+		var _defaultBalanceInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		_defaultBalanceInput.attr("id", "defaultBalanceInput" + _randomId);
+		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
+		_defaultBalanceInput.appendTo(_newRow);
 		
         var _comboSource =
         {
@@ -94,7 +94,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             }
         	
         });
-        var _accountNormalComboBox = _accountNormalInput.jqxComboBox({ selectedIndex: 0, source: _dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        var _defaultBalanceComboBox = _defaultBalanceInput.jqxComboBox({ selectedIndex: 0, source: _dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
         	
         	renderer: function (index, label, value) {
                 var _item = _dataAdapter.records[index];
@@ -118,11 +118,11 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             theme: 'metro'
         });
         
-        _accountNormalComboBox.on('bindingComplete', function (event) {
+        _defaultBalanceComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedAccountGroup.accountNormal != undefined && _editedAccountGroup.accountNormal != null){
-        		var _selectedItem = _accountNormalComboBox.jqxComboBox('getItemByValue', _editedAccountGroup.accountNormal.code);
-            	_accountNormalComboBox.jqxComboBox('selectItem', _selectedItem);
+        	if(_editedAccountGroup.defaultBalance != undefined && _editedAccountGroup.defaultBalance != null){
+        		var _selectedItem = _defaultBalanceComboBox.jqxComboBox('getItemByValue', _editedAccountGroup.defaultBalance.code);
+            	_defaultBalanceComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
         	
         	//to close the validation message on combobox when form first loaded
@@ -191,9 +191,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             rules: [
                     { input: "#" + _codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
                     { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _accountNormalInput.attr("id"), message: 'Account normal is required', action: 'keyup, blur', 
+                    { input: "#" + _defaultBalanceInput.attr("id"), message: 'Default balance is required', action: 'keyup, blur', 
                     	rule: function(input){
-	                    	var _val = _accountNormalComboBox.jqxComboBox('val');
+	                    	var _val = _defaultBalanceComboBox.jqxComboBox('val');
 	                    	if(_val==""){
 	                    		return false;
 	                    	}
@@ -208,8 +208,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_saveAccountGroup();
         }); 
         
-    	_accountNormalComboBox.on('change', function (event){
-            _editForm.jqxValidator('validateInput', "#" + _accountNormalInput.attr("id"));
+    	_defaultBalanceComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _defaultBalanceInput.attr("id"));
 	    });
         
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
@@ -226,14 +226,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         var _saveAccountGroup = function(){
         	
-        	var _item = _accountNormalComboBox.jqxComboBox('getSelectedItem');
+        	var _item = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
         	
         	var _savedData = {};
         	_savedData.code = _codeInput.val();
         	_savedData.name = _nameInput.val();;
         	_savedData.description = _descriptionInput.val();
-        	_savedData.accountNormal = {};
-        	_savedData.accountNormal.code = _item.value;
+        	_savedData.defaultBalance = {};
+        	_savedData.defaultBalance.code = _item.value;
         	
         	if(_isEditForm){
         		Observable.prototype.publish.call(_self, _savedData, "updateaccountgroup");

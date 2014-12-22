@@ -134,9 +134,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         		_accountGroup.code = rowData.code;
             	_accountGroup.name = rowData.name;
             	_accountGroup.description = rowData.description;
-            	if(rowData.accountNormal){
-            		_accountGroup.accountNormal = {};
-            		_accountGroup.accountNormal.code = rowData.accountNormal.code;
+            	if(rowData.defaultBalance){
+            		_accountGroup.defaultBalance = {};
+            		_accountGroup.defaultBalance.code = rowData.defaultBalance.code;
             	}
         	}
         	
