@@ -1,7 +1,9 @@
 package id.co.oriza.bpa.acc.interfaces.ws.pm;
 
 import id.co.oriza.bpa.acc.domain.model.AccountGroup;
-import id.co.oriza.bpa.acc.domain.model.MovementType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AccountGroupPresentationModel {
 	
@@ -24,8 +26,11 @@ public class AccountGroupPresentationModel {
 		return this.accountGroup.description();
 	}
 	
-	public MovementType getDefaultBalance(){
-		return this.accountGroup.defaultBalance();
+	public Map<String, String> getDefaultBalance(){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("code", this.accountGroup.defaultBalance().getCode());
+		map.put("name", this.accountGroup.defaultBalance().getName());
+		return map;
 	}
 
 }

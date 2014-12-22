@@ -23,7 +23,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
                 { name: 'code', type: 'string' },
                 { name: 'name', type: 'string' },
                 { name: 'defaultBalance'},
-                { name: 'description', type: 'string' }
+                { name: 'description', type: 'string' },
                 { name: 'defaultBalanceCode', type: 'string', map: "defaultBalance>code" },
                 { name: 'defaultBalanceName', type: 'string', map: "defaultBalance>name" }
             ],
