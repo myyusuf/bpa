@@ -2,6 +2,7 @@ package id.co.oriza.bpa.acc.interfaces.ws;
 
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
 import id.co.oriza.bpa.acc.domain.model.AccountGroup;
+import id.co.oriza.bpa.acc.domain.model.MovementType;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountGroupPresentationModel;
 
 import java.util.ArrayList;
@@ -47,6 +48,28 @@ public class AccountGroupController {
 		
 		result.put("num", accountGroupsSize);
 		result.put("data", accountGroupModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/accounting/defaultbalances", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> getDefaultBalances(@RequestParam(required=false) Map<String, String> params){
+		
+		
+		MovementType[] values = MovementType.values();
+		List<Map<String, String>> movementTypeList = new ArrayList<Map<String,String>>();
+		for (MovementType movementType : values) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("code", movementType.getCode());
+			map.put("name", movementType.getName());
+			movementTypeList.add(map);
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", values.length);
+		result.put("data", movementTypeList);
 		result.put("success", true);
 		
 		return result;

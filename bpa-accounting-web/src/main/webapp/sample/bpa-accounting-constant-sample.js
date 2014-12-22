@@ -3,7 +3,8 @@ var BPA = BPA || {};
 BPA.Constant = BPA.Constant || {};
 
 BPA.Constant.accounting = {
-		defaultBalanceUrl : 'sample/defaultbalances.json',
+//	defaultBalanceUrl : 'sample/defaultbalances.json',
+	defaultBalanceUrl : 'service/accounting/defaultbalances',
 //	accountGroupUrl : 'sample/accountgroup.json',
 	accountGroupUrl : 'service/accounting/accountgroups',
 	coaUrl : 'sample/coa.json',
