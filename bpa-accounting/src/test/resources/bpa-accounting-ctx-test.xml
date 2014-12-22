@@ -24,8 +24,8 @@
 	<context:component-scan base-package="id.co.oriza.bpa">
 	</context:component-scan>
 	
-	<mvc:annotation-driven/>
-	<mvc:resources location="/resources/**" mapping="/resources/"/>
+	<!-- <mvc:annotation-driven/>
+	<mvc:resources location="/resources/**" mapping="/resources/"/> -->
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

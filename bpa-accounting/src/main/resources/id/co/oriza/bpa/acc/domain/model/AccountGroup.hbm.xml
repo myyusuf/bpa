@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-cascade="all">
+	<class name="id.co.oriza.bpa.acc.domain.model.AccountGroup" table="BPA_ACCOUNT_GROUP" lazy="true">
+		<id name="id" type="long" column="ID" unsaved-value="-1">
+			<generator class="native"/>
+		</id>
+		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
+		<property name="code" column="CODE" type="java.lang.String" />
+		<property name="name" column="NAME" type="java.lang.String" />
+	</class> 
+</hibernate-mapping>

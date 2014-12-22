@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:bpa-accounting-ctx-test.xml")
-public class HibernateAccountRepositoryTest {
+public class HibernateAccountGroupRepositoryTest {
 	
 	@Autowired
 	private DataSource dataSource;
@@ -38,8 +38,8 @@ public class HibernateAccountRepositoryTest {
 	
 	private IDatabaseConnection connection;
 	
-	private static final String DATASET_FILE_EMPTY = "/fixtures/account_empty.xml";
-	private static final String DATASET_FILE_CREATE = "/fixtures/account_create.xml";
+	private static final String DATASET_FILE_EMPTY = "/fixtures/account_group_empty.xml";
+	private static final String DATASET_FILE_CREATE = "/fixtures/account_group_create.xml";
 	
 	@Before
 	public void initiate(){

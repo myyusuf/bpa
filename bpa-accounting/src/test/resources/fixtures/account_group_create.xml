@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<dataset>
+	<bpa_account_group
+		CONCURRENCY_VERSION="1" 
+		ID="1"
+		CODE="1111"
+		NAME="Liability"
+	/>
+</dataset>
