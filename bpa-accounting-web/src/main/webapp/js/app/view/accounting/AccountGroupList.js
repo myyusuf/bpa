@@ -22,10 +22,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             datafields: [
                 { name: 'code', type: 'string' },
                 { name: 'name', type: 'string' },
-                { name: 'accountNormal'},
-                { name: 'accountNormalCode', type: 'string', map: "accountNormal>code" },
-                { name: 'accountNormalName', type: 'string', map: "accountNormal>name" },
+                { name: 'defaultBalance'},
                 { name: 'description', type: 'string' }
+                { name: 'defaultBalanceCode', type: 'string', map: "defaultBalance>code" },
+                { name: 'defaultBalanceName', type: 'string', map: "defaultBalance>name" }
             ],
             id: 'code',
             beforeprocessing: function (data) {
@@ -59,7 +59,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             columns: [
               { text: 'Code', datafield: 'code', width: '25%' },
               { text: 'Name', datafield: 'name', width: '25%' },
-              { text: 'Normal', datafield: 'accountNormalName', width: '25%' },
+              { text: 'Default Balance', datafield: 'defaultBalanceName', width: '25%' },
               { text: 'Description', datafield: 'description', width: '25%' }
             ],
         	theme: 'metro',

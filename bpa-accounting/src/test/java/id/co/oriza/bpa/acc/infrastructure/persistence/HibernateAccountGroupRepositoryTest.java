@@ -1,7 +1,9 @@
 package id.co.oriza.bpa.acc.infrastructure.persistence;
 
-import id.co.oriza.bpa.acc.domain.model.Account;
-import id.co.oriza.bpa.acc.domain.model.AccountRepository;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import id.co.oriza.bpa.acc.domain.model.AccountGroup;
+import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:bpa-accounting-ctx-test.xml")
 public class HibernateAccountGroupRepositoryTest {
@@ -34,7 +34,7 @@ public class HibernateAccountGroupRepositoryTest {
 	private DataSource dataSource;
 	
 	@Autowired
-	private AccountRepository accountRepository;
+	private AccountGroupRepository accountGroupRepository;
 	
 	private IDatabaseConnection connection;
 	
@@ -58,8 +58,8 @@ public class HibernateAccountGroupRepositoryTest {
 	@Test
 	public void testAllSimilarlyCodedOrNamedAccounts() throws Exception{
 		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
-		Collection<Account> allSimilarlyCodedOrNamedAccounts = accountRepository.allSimilarlyCodedOrNamedAccounts("", "", 0, 1);
-		assertEquals(1, allSimilarlyCodedOrNamedAccounts.size());
+		Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups = accountGroupRepository.allSimilarlyCodedOrNamedAccountGroups("", "", 0, 1);
+		assertEquals(1, allSimilarlyCodedOrNamedAccountGroups.size());
 		
 	}
 	

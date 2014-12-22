@@ -8,5 +8,12 @@
 		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
 		<property name="code" column="CODE" type="java.lang.String" />
 		<property name="name" column="NAME" type="java.lang.String" />
+		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<property name="defaultBalance" column="DEFAULT_BALANCE">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">id.co.oriza.bpa.acc.domain.model.MovementType</param>
+				<param name="type">12</param>
+			</type>
+		</property>
 	</class> 
 </hibernate-mapping>

@@ -5,5 +5,7 @@
 		ID="1"
 		CODE="1111"
 		NAME="Liability"
+		DESCRIPTION="Liability Account Group"
+		DEFAULT_BALANCE="DEBET"
 	/>
 </dataset>
