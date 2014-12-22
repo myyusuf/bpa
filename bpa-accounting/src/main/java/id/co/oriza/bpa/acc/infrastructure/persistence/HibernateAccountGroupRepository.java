@@ -39,6 +39,21 @@ public class HibernateAccountGroupRepository extends AbstractHibernateSession im
 		
 		return query.list();
 	}
+	
+	@Override
+	public int allSimilarlyCodedOrNamedAccountGroupsSize(String aCode, String aName) {
+		if(aCode.endsWith("%") || aName.endsWith("%")){
+			throw new IllegalArgumentException("Code or name prefixes must not include %");
+		}
+		
+		Query query = this.session().createQuery("select count(_obj_) from id.co.oriza.bpa.acc.domain.model.AccountGroup as _obj_ "
+				+ "where _obj_.code like :aCode "
+				+ "or _obj_.name like :aName ");
+		query.setString("aCode", aCode + "%");
+		query.setString("aName", aName + "%");
+		
+		return ((Long)query.uniqueResult()).intValue();
+	}
 
 	@Override
 	public AccountGroup accountGroupWithCode(String aCode) {

@@ -25,6 +25,11 @@ public class AccountApplicationService {
 		return accountGroups;
 	}
 	
+	public int allSimilarlyCodedOrNamedAccountGroupsSize(String aCode, String aName){
+		int accountGroupsSize = this.accountGroupRepository().allSimilarlyCodedOrNamedAccountGroupsSize(aCode, aName);
+		return accountGroupsSize;
+	}
+	
 	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName, int aStart, int aLimit){
 		Collection<Account> accounts = this.accountRepository().allSimilarlyCodedOrNamedAccounts(aCode, aName, aStart, aLimit);
 		return accounts;

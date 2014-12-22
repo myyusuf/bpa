@@ -41,11 +41,11 @@ public class AccountGroupController {
 			accountGroupModels.add(accountGroupModel);
 		}
 		
-		int accountsSize = 1;//accountApplicationService.allSimilarlyCodedOrNamedAccountsSize(codeOrNameStartsWith, codeOrNameStartsWith);
+		int accountGroupsSize = accountApplicationService.allSimilarlyCodedOrNamedAccountGroupsSize(codeOrNameStartsWith, codeOrNameStartsWith);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		result.put("num", accountsSize);
+		result.put("num", accountGroupsSize);
 		result.put("data", accountGroupModels);
 		result.put("success", true);
 		
