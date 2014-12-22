@@ -55,7 +55,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             altrows: true,
             enabletooltips: true,
             editable: false,
-            selectionmode: 'multiplerows',
+            selectionmode: 'singlerow',
             columns: [
               { text: 'Code', datafield: 'code', width: '25%' },
               { text: 'Name', datafield: 'name', width: '25%' },
@@ -102,7 +102,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
         	var _rightClick = _isRightClick(_clickEvent);
             if (_rightClick) {
-            	_accountGroupListGrid.jqxGrid('selectrow', _rowIndex);
+            	if(_accountGroupListGrid.jqxGrid('getselectedrowindex') === -1){
+            		_accountGroupListGrid.jqxGrid('selectrow', _rowIndex);
+            	}
+            	
                 var _scrollTop = $(window).scrollTop();
                 var _scrollLeft = $(window).scrollLeft();
                 _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
