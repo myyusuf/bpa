@@ -37,16 +37,17 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		
 		
-		//------------------------------------------------------
+		//Account Group Combo-----------------------------------------------
 		var _newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
-		var _accountGroupLabel = $('<td>Account Group</td>');
+		var _accountGroupLabel = $('<td style="width: 100px;">Account Group</td>');
 		_accountGroupLabel.appendTo(_newRow);
-		var _accountGroupInputColumn = $('<td></td>');
-		var _accountGroupInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		var _accountGroupInputColumn = $('<td style="width: 255px;"></td>');
+		var _accountGroupInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 0px; float: left;"></div>');
 		_accountGroupInput.attr("id", "accountGroupInput" + _randomId);
 		_accountGroupInput.appendTo(_accountGroupInputColumn);
-		_accountGroupInput.appendTo(_newRow);
+		$('<span style="color: red; font-weight: bold; float: left; margin-top: 10px; margin-left: 4px;">*</span>').appendTo(_accountGroupInputColumn);
+		_accountGroupInputColumn.appendTo(_newRow);
 		
         var _accountGroupComboSource =
         {
@@ -113,41 +114,18 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             	_accountGroupComboBox.jqxComboBox('selectItem', _selectedParentItem);
         	}
         	
+        	_editForm.jqxValidator('hide');
+        	
         });
         
+        _accountGroupComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _accountGroupInput.attr("id"));
+	    });
+        
 		//------------------------------------------------------
-		
-		
-		
-		
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _codeLabel = $('<td>Code</td>');
-		_codeLabel.appendTo(_newRow);
-		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
-		_codeInput.attr("id", "codeInput" + _randomId);
-		if(_isEditForm){
-			_codeInput.val(_editedCoa.code);
-		}
-		_codeInput.appendTo(_codeInputColumn);
-		_codeInputColumn.appendTo(_newRow);
-		
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _nameLabel = $('<td>Name</td>');
-		_nameLabel.appendTo(_newRow);
-		var _nameInputColumn = $('<td></td>');
-		var _nameInput = $('<input type="text" class="text-input" maxlength="50" />');
-		_nameInput.attr("id", "nameInput" + _randomId);
-		if(_isEditForm){
-			_nameInput.val(_editedCoa.name);
-		}
-		
-		_nameInput.appendTo(_nameInputColumn);
-		_nameInputColumn.appendTo(_newRow);
-		
-		//------------------------------------------------------
+        
+        
+        //Parent Combo------------------------------------------------------
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
 		var _parentLabel = $('<td>Parent</td>');
@@ -227,6 +205,38 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
 		//------------------------------------------------------
 		
+		
+		
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _codeLabel = $('<td>Code</td>');
+		_codeLabel.appendTo(_newRow);
+		var _codeInputColumn = $('<td></td>');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
+		_codeInput.attr("id", "codeInput" + _randomId);
+		if(_isEditForm){
+			_codeInput.val(_editedCoa.code);
+		}
+		_codeInput.appendTo(_codeInputColumn);
+		_codeInputColumn.appendTo(_newRow);
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _nameLabel = $('<td>Name</td>');
+		_nameLabel.appendTo(_newRow);
+		var _nameInputColumn = $('<td></td>');
+		var _nameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		_nameInput.attr("id", "nameInput" + _randomId);
+		if(_isEditForm){
+			_nameInput.val(_editedCoa.name);
+		}
+		
+		_nameInput.appendTo(_nameInputColumn);
+		_nameInputColumn.appendTo(_newRow);
+		
+		
+		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
 		var _descriptionLabel = $('<td>Description</td>');
@@ -265,7 +275,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 302, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 307, width: 394,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -285,7 +295,16 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	arrow: false,
             rules: [
                     { input: "#" + _codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _accountGroupInput.attr("id"), message: 'Account Group is required', action: 'keyup, blur', 
+                    	rule: function(input){
+	                    	var _val = _accountGroupComboBox.jqxComboBox('val');
+	                    	if(_val==""){
+	                    		return false;
+	                    	}
+	                    	return true;
+                    	}
+                     }
                    
                    ]
         	});
