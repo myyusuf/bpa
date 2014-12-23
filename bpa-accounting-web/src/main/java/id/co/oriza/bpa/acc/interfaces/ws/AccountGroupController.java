@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.acc.interfaces.ws;
 
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
+import id.co.oriza.bpa.acc.application.ChangeAccountGroupInfoCommand;
 import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.MovementType;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountGroupPresentationModel;
@@ -82,13 +83,20 @@ public class AccountGroupController {
 	@RequestMapping(value="/accounting/accountgroups", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> changeAccountGroupInfo(@RequestParam(required=false) Map<String, String> params){
 		
+		logger.debug("update account group");
 		
 		printParams(params);
 		
+		String code = params.get("code");
+		String name = params.get("name");
+		String description = params.get("description");
+		
+		ChangeAccountGroupInfoCommand command = new ChangeAccountGroupInfoCommand(code, name, description);
+		this.accountApplicationService().changeAccountGroupInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-//		result.put("num", accountsSize);
+		result.put("num", 0);
 //		result.put("data", accountModels);
 		result.put("success", true);
 		
@@ -98,7 +106,7 @@ public class AccountGroupController {
 	private void printParams(Map<String, String> params){
 		List<String> listKeys = new ArrayList<String>(params.keySet());
 		for (String key : listKeys) {
-			System.out.println("key : " + key + ", value : " + params.get(key));
+			logger.debug("key : " + key + ", value : " + params.get(key));
 		}
 	}
 
