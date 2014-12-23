@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AccountGroupController {
 	
 	private static final int MAX_LIMIT = 10000;
+	
+	final Logger logger = LoggerFactory.getLogger(AccountGroupController.class);
 	
 	@Autowired
 	private AccountApplicationService accountApplicationService;
@@ -70,6 +74,22 @@ public class AccountGroupController {
 		
 		result.put("num", values.length);
 		result.put("data", movementTypeList);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/accounting/accountgroups", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> changeAccountGroupInfo(@RequestParam(required=false) Map<String, String> params){
+		
+		
+		printParams(params);
+		
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+//		result.put("num", accountsSize);
+//		result.put("data", accountModels);
 		result.put("success", true);
 		
 		return result;

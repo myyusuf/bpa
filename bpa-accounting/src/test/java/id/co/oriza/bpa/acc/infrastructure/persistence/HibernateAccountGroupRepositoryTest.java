@@ -8,16 +8,14 @@ import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.sql.DataSource;
 
-import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.ext.oracle.OracleConnection;
+import org.dbunit.ext.mysql.MySqlConnection;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,19 +40,11 @@ public class HibernateAccountGroupRepositoryTest {
 	private static final String DATASET_FILE_CREATE = "/fixtures/account_group_create.xml";
 	
 	@Before
-	public void initiate(){
-		try {
-			connection = new OracleConnection(dataSource.getConnection(), "bpa_phase_1");
-			DatabaseOperation.DELETE_ALL.execute(connection, getDataSet(DATASET_FILE_EMPTY));
-		} catch (DatabaseUnitException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+    public void setUp() throws Exception {
+        connection = new MySqlConnection(dataSource.getConnection(), null);
+        DatabaseOperation.DELETE_ALL.execute(connection, getDataSet(DATASET_FILE_EMPTY));
+    }
+
 	@Test
 	public void testAllSimilarlyCodedOrNamedAccounts() throws Exception{
 		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
@@ -63,11 +53,11 @@ public class HibernateAccountGroupRepositoryTest {
 		
 	}
 	
-	protected IDataSet getDataSet(String name) throws Exception {
-		InputStream inputStream = getClass().getResourceAsStream(name);
-		assertNotNull("file"+name+" not found in classpath", inputStream);
+	protected IDataSet getDataSet(String userDataSet) throws Exception {
+		InputStream inputStream = getClass().getResourceAsStream(userDataSet);
+		assertNotNull("File : " + userDataSet + " not found in classpath", inputStream);
 		Reader reader = new InputStreamReader(inputStream);
-		FlatXmlDataSet dataset = new FlatXmlDataSet(reader);
-		return dataset;
+		FlatXmlDataSet dataSet = new FlatXmlDataSet(reader);
+		return dataSet;
 	}
 }

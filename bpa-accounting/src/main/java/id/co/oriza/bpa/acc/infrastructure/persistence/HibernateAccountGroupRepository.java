@@ -9,9 +9,13 @@ import java.util.Collection;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HibernateAccountGroupRepository extends AbstractHibernateSession implements AccountGroupRepository {
-
+	
+	final Logger logger = LoggerFactory.getLogger(HibernateAccountGroupRepository.class);
+	
 	@Override
 	public void add(AccountGroup anAccountGroup) {
 		try{
@@ -25,6 +29,9 @@ public class HibernateAccountGroupRepository extends AbstractHibernateSession im
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups(String aCode, String aName, int aStart, int aLimit) {
+		
+		logger.debug("allSimilarlyCodedOrNamedAccountGroups");
+		
 		if(aCode.endsWith("%") || aName.endsWith("%")){
 			throw new IllegalArgumentException("Code or name prefixes must not include %");
 		}
