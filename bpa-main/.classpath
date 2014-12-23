@@ -52,7 +52,7 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-base/1.0/bpa-base-1.0.war" exported="true">
+	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-base/1.0/bpa-base-1.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -62,7 +62,12 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-accounting/1.0/bpa-accounting-1.0.war" exported="true">
+	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-workflow/1.0/bpa-workflow-1.0.war" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="E:/maven/repo/id/co/oriza/bpa/bpa-accounting/1.0/bpa-accounting-1.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -102,7 +107,7 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="E:/gradle/caches/modules-2/files-2.1/junit/junit/4.12-beta-3/5c08dba94dd98c6aba3d80edea9e34f1e84f2629/junit-4.12-beta-3-sources.jar" kind="lib" path="E:/gradle/caches/modules-2/files-2.1/junit/junit/4.12-beta-3/c3b3e612612fcbb9faa46d10d2d69e3b21a062fe/junit-4.12-beta-3.jar" exported="true">
+	<classpathentry sourcepath="E:/gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar" kind="lib" path="E:/gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -158,6 +163,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="E:/gradle/caches/modules-2/files-2.1/org.jboss.logging/jboss-logging/3.1.0.CR2/53dd1691828c99b7e7b353c9b0ad374fe7d73ef5/jboss-logging-3.1.0.CR2-sources.jar" kind="lib" path="E:/gradle/caches/modules-2/files-2.1/org.jboss.logging/jboss-logging/3.1.0.CR2/28725380c07f917ace4e511db21cc45e9ae5a72b/jboss-logging-3.1.0.CR2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="E:/gradle/caches/modules-2/files-2.1/aspectj/aspectjweaver/1.5.2/515c8bdbe4b425c41c8139e5f6216efc9e8b5d03/aspectjweaver-1.5.2.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
