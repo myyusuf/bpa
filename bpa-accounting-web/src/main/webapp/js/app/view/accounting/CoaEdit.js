@@ -43,7 +43,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _accountGroupLabel = $('<td style="width: 100px;">Account Group</td>');
 		_accountGroupLabel.appendTo(_newRow);
 		var _accountGroupInputColumn = $('<td style="width: 255px;"></td>');
-		var _accountGroupInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 0px; float: left;"></div>');
+		var _accountGroupInput = $('<div style="margin-top: 3px; margin-bottom: 0px; margin-left: 0px; float: left;"></div>');
 		_accountGroupInput.attr("id", "accountGroupInput" + _randomId);
 		_accountGroupInput.appendTo(_accountGroupInputColumn);
 		$('<span style="color: red; font-weight: bold; float: left; margin-top: 10px; margin-left: 4px;">*</span>').appendTo(_accountGroupInputColumn);
@@ -131,7 +131,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _parentLabel = $('<td>Parent</td>');
 		_parentLabel.appendTo(_newRow);
 		var _parentInputColumn = $('<td></td>');
-		var _parentInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		var _parentInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
 		_parentInput.attr("id", "parentInput" + _randomId);
 		_parentInput.appendTo(_parentInputColumn);
 		_parentInputColumn.appendTo(_newRow);

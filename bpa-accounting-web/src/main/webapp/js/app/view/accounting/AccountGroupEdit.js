@@ -68,7 +68,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _defaultBalanceLabel = $('<td>Default Balance</td>');
 		_defaultBalanceLabel.appendTo(_newRow);
 		var _defaultBalanceInputColumn = $('<td></td>');
-		var _defaultBalanceInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		var _defaultBalanceInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
 		_defaultBalanceInput.attr("id", "defaultBalanceInput" + _randomId);
 		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
 		_defaultBalanceInputColumn.appendTo(_newRow);
