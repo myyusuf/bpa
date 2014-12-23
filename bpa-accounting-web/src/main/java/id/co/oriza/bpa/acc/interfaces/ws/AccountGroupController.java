@@ -3,6 +3,7 @@ package id.co.oriza.bpa.acc.interfaces.ws;
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
 import id.co.oriza.bpa.acc.application.ChangeAccountGroupInfoCommand;
 import id.co.oriza.bpa.acc.application.NewAccountGroupCommand;
+import id.co.oriza.bpa.acc.application.RemoveAccountGroupCommand;
 import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.MovementType;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountGroupPresentationModel;
@@ -106,7 +107,7 @@ public class AccountGroupController {
 	@RequestMapping(value="/accounting/accountgroups", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createAccountGroup(@RequestBody(required=false) Map<String, Object> params){
 		
-		logger.debug("update account group");
+		logger.debug("create account group");
 		
 		String code = (String) params.get("code");
 		String name = (String) params.get("name");
@@ -122,6 +123,22 @@ public class AccountGroupController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/accounting/accountgroups", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deleteAccountGroup(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("delete account group");
+		
+		String code = (String) params.get("code");
+		
+		RemoveAccountGroupCommand command = new RemoveAccountGroupCommand(code);
+		this.accountApplicationService().removeAccountGroup(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;

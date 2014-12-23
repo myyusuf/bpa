@@ -48,15 +48,20 @@ public class AccountApplicationService {
 		accountGroup.changeDescription(aCommand.getDescription());
 	}
 	
+	@Transactional
 	public AccountGroup newAccountGroupWith(NewAccountGroupCommand aCommand){
 		
 		MovementType movementType = MovementType.valueOf(aCommand.getMovementTypeCode());
 		AccountGroup accountGroup = new AccountGroup(aCommand.getCode(), aCommand.getName(), aCommand.getDescription(), movementType);
-		
 		this.accountGroupRepository.add(accountGroup);
 		
 		return accountGroup;
-		
+	}
+	
+	@Transactional
+	public void removeAccountGroup(RemoveAccountGroupCommand aCommand){
+		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getCode());
+		this.accountGroupRepository().remove(accountGroup);
 	}
 	
 	public Account newAccountWith(NewAccountCommand aCommand){
@@ -70,7 +75,6 @@ public class AccountApplicationService {
 		this.accountRepository().add(account);
 		
 		return account;
-		
 	}
 
 	private AccountGroup existingAccountGroup(String anAccountGroupCode) {
