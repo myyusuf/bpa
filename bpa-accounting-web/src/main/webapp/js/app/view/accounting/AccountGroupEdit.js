@@ -44,6 +44,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_codeInput.attr("id", "codeInput" + _randomId);
 		if(_isEditForm){
 			_codeInput.val(_editedAccountGroup.code);
+			_codeInput.jqxInput({disabled: true});
 		}
 		_codeInput.appendTo(_codeInputColumn);
 		_codeInputColumn.appendTo(_newRow);
@@ -229,8 +230,13 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	var _item = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
         	
         	var _savedData = {};
-        	_savedData.code = _codeInput.val();
-        	_savedData.name = _nameInput.val();;
+        	
+        	if(_isEditForm){
+        		_savedData.code = _editedAccountGroup.code;
+        	}else{
+        		_savedData.code = _codeInput.val();
+        	}
+        	_savedData.name = _nameInput.val();
         	_savedData.description = _descriptionInput.val();
         	_savedData.defaultBalance = {};
         	_savedData.defaultBalance.code = _item.value;
