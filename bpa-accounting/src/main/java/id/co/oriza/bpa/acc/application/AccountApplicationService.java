@@ -40,6 +40,13 @@ public class AccountApplicationService {
 		return accountsSize;
 	}
 	
+	@Transactional
+	public void changeAccountGroupInfo(ChangeAccountGroupInfoCommand aCommand){
+		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getCode());
+		accountGroup.changeName(aCommand.getName());
+		accountGroup.changeDescription(aCommand.getDescription());
+	}
+	
 	public Account newAccountWith(NewAccountCommand aCommand){
 		
 		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getAccountGroupCode());
