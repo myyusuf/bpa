@@ -35,7 +35,92 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _editTable = $('<table class="edit-table"></table>');
 		_editTable.appendTo(_editForm);
 		
+		
+		
+		//------------------------------------------------------
 		var _newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _accountGroupLabel = $('<td>Account Group</td>');
+		_accountGroupLabel.appendTo(_newRow);
+		var _accountGroupInputColumn = $('<td></td>');
+		var _accountGroupInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
+		_accountGroupInput.attr("id", "accountGroupInput" + _randomId);
+		_accountGroupInput.appendTo(_accountGroupInputColumn);
+		_accountGroupInput.appendTo(_newRow);
+		
+        var _accountGroupComboSource =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'code' },
+                { name: 'name' }
+            ],
+            url: BPA.Constant.accounting.accountGroupUrl
+        };
+        var _accountGroupDataAdapter = new $.jqx.dataAdapter(_accountGroupComboSource,{
+        	
+        	formatData: function (data) {
+                   data.selfAccountCode = data.code;
+                   return data;
+            }, 
+          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
+            beforeLoadComplete: function (records) {
+            	records.splice(0, 0, {code: '', name: '--Please Select--'});
+                return records;
+            }
+        	
+        });
+        var _accountGroupComboBox = _accountGroupInput.jqxComboBox({ selectedIndex: 0, source: _accountGroupDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        	
+        	renderer: function (index, label, value) {
+                var _item = _accountGroupDataAdapter.records[index];
+                if (_item != null) {
+                	var _label = '';
+                	if(_item.code != ''){
+                		_label = _item.code + " (" + _item.name + ")";
+                	}else{
+                		_label = _item.name;
+                	}
+                	return _label;
+                }
+                
+                return '';
+            },
+            
+            renderSelectedItem: function(index, item){
+                var _item = _accountGroupDataAdapter.records[index];
+                if (_item != null) {
+                	
+                	var _label = '';
+                	if(_item.code != ''){
+                		_label = _item.code + " (" + _item.name + ")";
+                	}else{
+                		_label = _item.name;
+                	}
+                	return _label;
+                    
+                }
+                
+                return '';   
+            },
+            theme: 'metro'
+        });
+        
+        _accountGroupComboBox.on('bindingComplete', function (event) {
+        	
+        	if(_editedCoa.accountGroup != undefined && _editedCoa.accountGroup != null){
+        		var _selectedParentItem = _accountGroupComboBox.jqxComboBox('getItemByValue', _editedCoa.accountGroup.code);
+            	_accountGroupComboBox.jqxComboBox('selectItem', _selectedParentItem);
+        	}
+        	
+        });
+        
+		//------------------------------------------------------
+		
+		
+		
+		
+		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
 		var _codeLabel = $('<td>Code</td>');
 		_codeLabel.appendTo(_newRow);
@@ -61,6 +146,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		_nameInput.appendTo(_nameInputColumn);
 		_nameInputColumn.appendTo(_newRow);
+		
 		//------------------------------------------------------
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
@@ -179,7 +265,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 302, width: 375,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
