@@ -134,7 +134,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _parentInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
 		_parentInput.attr("id", "parentInput" + _randomId);
 		_parentInput.appendTo(_parentInputColumn);
-		_parentInput.appendTo(_newRow);
+		_parentInputColumn.appendTo(_newRow);
 		
         var _comboSource =
         {
@@ -213,12 +213,13 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _codeLabel = $('<td>Code</td>');
 		_codeLabel.appendTo(_newRow);
 		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="5" style="float: left;"/>');
 		_codeInput.attr("id", "codeInput" + _randomId);
 		if(_isEditForm){
 			_codeInput.val(_editedCoa.code);
 		}
 		_codeInput.appendTo(_codeInputColumn);
+		$('<span style="color: red; font-weight: bold; float: left; margin-top: 8px; margin-left: 4px;">*</span>').appendTo(_codeInputColumn);
 		_codeInputColumn.appendTo(_newRow);
 		
 		_newRow = $('<tr></tr>');
@@ -226,13 +227,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _nameLabel = $('<td>Name</td>');
 		_nameLabel.appendTo(_newRow);
 		var _nameInputColumn = $('<td></td>');
-		var _nameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		var _nameInput = $('<input type="text" class="text-input" maxlength="50" style="float: left;"/>');
 		_nameInput.attr("id", "nameInput" + _randomId);
 		if(_isEditForm){
 			_nameInput.val(_editedCoa.name);
 		}
 		
 		_nameInput.appendTo(_nameInputColumn);
+		$('<span style="color: red; font-weight: bold; float: left; margin-top: 8px; margin-left: 4px;">*</span>').appendTo(_nameInputColumn);
 		_nameInputColumn.appendTo(_newRow);
 		
 		

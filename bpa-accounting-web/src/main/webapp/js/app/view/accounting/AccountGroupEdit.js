@@ -71,7 +71,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _defaultBalanceInput = $('<div style="margin-top: 3px; margin-bottom: 3px; margin-left: 2px;"></div>');
 		_defaultBalanceInput.attr("id", "defaultBalanceInput" + _randomId);
 		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
-		_defaultBalanceInput.appendTo(_newRow);
+		_defaultBalanceInputColumn.appendTo(_newRow);
 		
         var _comboSource =
         {
