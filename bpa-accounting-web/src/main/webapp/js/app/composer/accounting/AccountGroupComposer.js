@@ -24,7 +24,7 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 		AccountGroupComposer.prototype.buildOnUpdateAccountGroup = function(accountGroupList, accountGroupEdit){
 			var _onUpdateAccountGroup = function(updatedAccountGroup){
 				
-				var _requestType = "POST";
+				var _requestType = "PUT";
 				
 				var _onSuccess = function(result){// Depends on new _accountGroupEdit instance
 					accountGroupEdit.close();//new _accountGroupEdit instance
@@ -33,7 +33,7 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 				}
 				
 				var _onError = function(status, error){
-					var _errorWindow = new NotificationWindow(container, {title:'Saving Account Group', 
+					var _errorWindow = new NotificationWindow(container, {title:'Error Saving Account Group', 
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
@@ -54,7 +54,7 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 			//Because this listener always depends on _accountGroupEdit new instance, it must also always defined again
 			var _onAddNewAccountGroup = function(newAccountGroup){
 				
-				var _requestType = "PUT";
+				var _requestType = "POST";
 				
 				var _onSuccess = function(result){// Depends on new _accountGroupEdit instance
 					_accountGroupEdit.close();//new _accountGroupEdit instance
@@ -103,7 +103,11 @@ define(["notificationWindow", "view/accounting/AccountGroupList", "view/accounti
 			$.ajax({
 			    url: _accountGroupListUrl,
 			    type: requestType,
-			    data: data,
+			    data: JSON.stringify(data),
+			    beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
 			    success: function(result) {
 			    	onSuccess(result);
 			    },

@@ -8,5 +8,6 @@ public interface AccountGroupRepository {
 	public Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups(String aCode, String aName, int aStart, int aLimit);
 	int allSimilarlyCodedOrNamedAccountGroupsSize(String aCode, String aName);
 	public AccountGroup accountGroupWithCode(String aCode);
+	void remove(AccountGroup anAccountGroup);
 
 }

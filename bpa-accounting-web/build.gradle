@@ -46,6 +46,7 @@ dependencies {
 			"mysql:mysql-connector-java:5.1.6",
 			"org.slf4j:slf4j-api:1.7.7",
 			"org.slf4j:slf4j-log4j12:1.7.7",
+			"log4j:log4j:1.2.17",
 			"aspectj:aspectjweaver:1.5.2",
 			"id.co.oriza.bpa:bpa-base-web:1.0@war"
 			

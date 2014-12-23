@@ -22,7 +22,7 @@ define(["notificationWindow", "view/accounting/CoaList", "view/accounting/CoaEdi
 		CoaComposer.prototype.buildOnUpdateCoa = function(coaList, coaEdit){
 			var _onUpdateCoa = function(updatedCoa){
 				
-				var _requestType = "POST";
+				var _requestType = "PUT";
 				
 				var _onSuccess = function(result){// Depends on new _coaEdit instance
 					coaEdit.close();//new _coaEdit instance
@@ -52,7 +52,7 @@ define(["notificationWindow", "view/accounting/CoaList", "view/accounting/CoaEdi
 			//Because this listener always depends on _coaEdit new instance, it must also always defined again
 			var _onAddNewCoa = function(newCoa){
 				
-				var _requestType = "PUT";
+				var _requestType = "POST";
 				
 				var _onSuccess = function(result){// Depends on new _coaEdit instance
 					_coaEdit.close();//new _coaEdit instance

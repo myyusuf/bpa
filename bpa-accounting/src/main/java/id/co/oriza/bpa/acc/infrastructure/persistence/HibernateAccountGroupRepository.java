@@ -70,4 +70,10 @@ public class HibernateAccountGroupRepository extends AbstractHibernateSession im
 		return (AccountGroup) query.uniqueResult();
 	}
 
+	@Override
+	public void remove(AccountGroup anAccountGroup) {
+		this.session().delete(anAccountGroup);
+		
+	}
+
 }

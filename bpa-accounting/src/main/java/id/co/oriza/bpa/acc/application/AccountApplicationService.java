@@ -10,6 +10,7 @@ import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
 import id.co.oriza.bpa.acc.domain.model.AccountId;
 import id.co.oriza.bpa.acc.domain.model.AccountRepository;
+import id.co.oriza.bpa.acc.domain.model.MovementType;
 
 @Transactional
 public class AccountApplicationService {
@@ -45,6 +46,17 @@ public class AccountApplicationService {
 		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getCode());
 		accountGroup.changeName(aCommand.getName());
 		accountGroup.changeDescription(aCommand.getDescription());
+	}
+	
+	public AccountGroup newAccountGroupWith(NewAccountGroupCommand aCommand){
+		
+		MovementType movementType = MovementType.valueOf(aCommand.getMovementTypeCode());
+		AccountGroup accountGroup = new AccountGroup(aCommand.getCode(), aCommand.getName(), aCommand.getDescription(), movementType);
+		
+		this.accountGroupRepository.add(accountGroup);
+		
+		return accountGroup;
+		
 	}
 	
 	public Account newAccountWith(NewAccountCommand aCommand){
