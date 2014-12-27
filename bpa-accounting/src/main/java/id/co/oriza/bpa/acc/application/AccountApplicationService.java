@@ -59,6 +59,13 @@ public class AccountApplicationService {
 	}
 	
 	@Transactional
+	public void changeAccountInfo(ChangeAccountInfoCommand aCommand){
+		Account account = this.existingAccount(aCommand.getCode());
+		account.changeName(aCommand.getName());
+		account.changeDescription(aCommand.getDescription());
+	}
+	
+	@Transactional
 	public void removeAccountGroup(RemoveAccountGroupCommand aCommand){
 		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getCode());
 		this.accountGroupRepository().remove(accountGroup);

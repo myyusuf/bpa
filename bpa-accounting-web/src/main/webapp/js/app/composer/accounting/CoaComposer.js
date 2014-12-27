@@ -101,7 +101,11 @@ define(["notificationWindow", "view/accounting/CoaList", "view/accounting/CoaEdi
 			$.ajax({
 			    url: _coaListUrl,
 			    type: requestType,
-			    data: data,
+			    data: JSON.stringify(data),
+			    beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
 			    success: function(result) {
 			    	onSuccess(result);
 			    },

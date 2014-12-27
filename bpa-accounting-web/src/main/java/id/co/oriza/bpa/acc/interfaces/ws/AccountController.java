@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.acc.interfaces.ws;
 
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
+import id.co.oriza.bpa.acc.application.ChangeAccountInfoCommand;
 import id.co.oriza.bpa.acc.domain.model.Account;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountPresentationModel;
 
@@ -10,14 +11,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AccountController {
+	
+	final Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
 	private static final int MAX_LIMIT = 10000;
 	
@@ -32,7 +38,7 @@ public class AccountController {
 		
 		String codeOrNameStartsWith = params.get("codeOrNameStartsWith") != null ? params.get("codeOrNameStartsWith") : "";
 		
-		printParams(params);
+		printParamsString(params);
 		
 		List<AccountPresentationModel> accountModels = new ArrayList<AccountPresentationModel>();
 		Collection<Account> accounts = this.accountApplicationService().allSimilarlyCodedOrNamedAccounts(codeOrNameStartsWith, codeOrNameStartsWith, start, limit);
@@ -52,7 +58,35 @@ public class AccountController {
 		return result;
 	}
 	
-	private void printParams(Map<String, String> params){
+	@RequestMapping(value="/accounting/accounts", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changeAccountInfo(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("update account");
+		
+		printParams(params);
+		
+		String code = (String) params.get("code");
+		String name = (String) params.get("name");
+		String description = (String) params.get("description");
+		
+		ChangeAccountInfoCommand command = new ChangeAccountInfoCommand(code, name, description);
+		this.accountApplicationService().changeAccountInfo(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	private void printParams(Map<String, Object> params){
+		List<String> listKeys = new ArrayList<String>(params.keySet());
+		for (String key : listKeys) {
+			System.out.println("key : " + key + ", value : " + params.get(key));
+		}
+	}
+	
+	private void printParamsString(Map<String, String> params){
 		List<String> listKeys = new ArrayList<String>(params.keySet());
 		for (String key : listKeys) {
 			System.out.println("key : " + key + ", value : " + params.get(key));

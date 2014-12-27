@@ -277,7 +277,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 307, width: 394,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 298, width: 394,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
