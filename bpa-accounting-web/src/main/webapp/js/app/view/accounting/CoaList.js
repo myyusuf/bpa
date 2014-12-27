@@ -21,7 +21,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
                 { name: 'code', type: 'string' },
                 { name: 'name', type: 'string' },
                 { name: 'description', type: 'string' },
-                { name: 'parentCode', type: 'string' }
+                { name: 'parentCode', type: 'string' },
+                { name: 'accountGroup'}
             ],
             hierarchy:
             {
@@ -188,6 +189,13 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         		_coa.code = rowData.code;
             	_coa.name = rowData.name;
             	_coa.description = rowData.description;
+            	
+            	if(rowData.accountGroup){
+            		_coa.accountGroup = {};
+            		_coa.accountGroup.code = rowData.accountGroup.code;
+            		_coa.accountGroup.name = rowData.accountGroup.name;
+            	}
+            	
             	if(rowData.parent){
             		_coa.parent = {};
             		_coa.parent.code = rowData.parent.code;

@@ -329,14 +329,19 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         var _saveCoa = function(){
         	
-        	var _item = _parentComboBox.jqxComboBox('getSelectedItem');
+        	var _accountGroupComboItem = _accountGroupComboBox.jqxComboBox('getSelectedItem');
+        	var _parentComboItem = _parentComboBox.jqxComboBox('getSelectedItem');
         	
         	var _savedData = {};
         	_savedData.code = _codeInput.val();
         	_savedData.name = _nameInput.val();;
         	_savedData.description = _descriptionInput.val();
+        	
+        	_savedData.accountGroup = {};
+        	_savedData.accountGroup.code = _accountGroupComboItem.value;
+        	
         	_savedData.parent = {};
-        	_savedData.parent.code = _item.value;
+        	_savedData.parent.code = _parentComboItem.value;
         	
         	if(_isEditForm){
         		Observable.prototype.publish.call(_self, _savedData, "updatecoa");
