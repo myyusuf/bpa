@@ -1,10 +1,5 @@
 package id.co.oriza.bpa.acc.application;
 
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import id.co.oriza.bpa.acc.domain.model.Account;
 import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
@@ -12,8 +7,18 @@ import id.co.oriza.bpa.acc.domain.model.AccountId;
 import id.co.oriza.bpa.acc.domain.model.AccountRepository;
 import id.co.oriza.bpa.acc.domain.model.MovementType;
 
+import java.util.Collection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 @Transactional
 public class AccountApplicationService {
+	
+	final Logger logger = LoggerFactory.getLogger(AccountApplicationService.class);
 	
 	@Autowired
 	private AccountRepository accountRepository;
@@ -74,7 +79,11 @@ public class AccountApplicationService {
 	public Account newAccountWith(NewAccountCommand aCommand){
 		
 		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getAccountGroupCode());
-		Account parentAccount = this.existingAccount(aCommand.getParentAccountCode());
+		
+		Account parentAccount = null;
+		if(!StringUtils.isEmpty(aCommand.getParentAccountCode())){
+			parentAccount = this.existingAccount(aCommand.getParentAccountCode());
+		}
 		
 		AccountId accountId = this.accountRepository().nextIdentity();
 		Account account = new Account(accountId, aCommand.getCode(), aCommand.getName(), aCommand.getDescription(), parentAccount, accountGroup);

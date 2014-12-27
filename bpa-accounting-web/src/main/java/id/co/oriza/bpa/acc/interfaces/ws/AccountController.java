@@ -2,6 +2,7 @@ package id.co.oriza.bpa.acc.interfaces.ws;
 
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
 import id.co.oriza.bpa.acc.application.ChangeAccountInfoCommand;
+import id.co.oriza.bpa.acc.application.NewAccountCommand;
 import id.co.oriza.bpa.acc.domain.model.Account;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountPresentationModel;
 
@@ -71,6 +72,33 @@ public class AccountController {
 		
 		ChangeAccountInfoCommand command = new ChangeAccountInfoCommand(code, name, description);
 		this.accountApplicationService().changeAccountInfo(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/accounting/accounts", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createAccount(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("create account");
+		
+		String code = (String) params.get("code");
+		String name = (String) params.get("name");
+		String description = (String) params.get("description");
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> accountGroupMap = (Map<String, String>) params.get("accountGroup");
+		String accountGroupCode = accountGroupMap.get("code");
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> parentMap = (Map<String, String>) params.get("parent");
+		String parentCode = parentMap.get("code");
+		
+		NewAccountCommand command = new NewAccountCommand(code, name, description, accountGroupCode, parentCode);
+		this.accountApplicationService().newAccountWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
