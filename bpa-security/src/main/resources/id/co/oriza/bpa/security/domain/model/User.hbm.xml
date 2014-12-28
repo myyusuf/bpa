@@ -11,6 +11,12 @@
 		<property name="lastName" column="LAST_NAME" type="java.lang.String" />
 		<property name="description" column="DESCRIPTION" type="java.lang.String" />
 		<property name="email" column="EMAIL" type="java.lang.String" />
+		<component name="contactInformation" class="id.co.oriza.bpa.security.domain.model.ContactInformation">
+			<property name="emailAddress" column="EMAIL_ADDRESS" type="java.lang.String" />
+			<property name="primaryTelephone" column="PRIMARY_TELEPHONE" type="java.lang.String" />
+			<property name="secondaryTelephone" column="SECONDARY_TELEPHONE" type="java.lang.String" />
+			<property name="streetAddress" column="STREET_ADDRESS" type="java.lang.String" />
+		</component>
 		
 	</class> 
 </hibernate-mapping>

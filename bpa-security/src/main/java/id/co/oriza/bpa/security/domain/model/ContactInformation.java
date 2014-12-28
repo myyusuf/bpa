@@ -16,6 +16,10 @@ public class ContactInformation extends AssertionConcern implements Serializable
 	private String secondaryTelephone;
 	private String streetAddress;
 	
+	public ContactInformation() {
+		super();
+	}
+	
 	public ContactInformation(String anEmailAddress, String aPrimaryTelephone,
 			String aSecondaryTelephone, String aStreetAddress) {
 		super();
@@ -33,19 +37,19 @@ public class ContactInformation extends AssertionConcern implements Serializable
 		return new ContactInformation(this.emailAddress(), this.primaryTelephone(), this.secondaryTelephone(), aStreetAddress);
 	}
 
-	public void setEmailAddress(String anEmailAddress) {
+	private void setEmailAddress(String anEmailAddress) {
 		this.emailAddress = anEmailAddress;
 	}
 
-	public void setPrimaryTelephone(String aPrimaryTelephone) {
+	private void setPrimaryTelephone(String aPrimaryTelephone) {
 		this.primaryTelephone = aPrimaryTelephone;
 	}
 
-	public void setSecondaryTelephone(String aSecondaryTelephone) {
+	private void setSecondaryTelephone(String aSecondaryTelephone) {
 		this.secondaryTelephone = aSecondaryTelephone;
 	}
 
-	public void setStreetAddress(String aStreetAddress) {
+	private void setStreetAddress(String aStreetAddress) {
 		this.streetAddress = aStreetAddress;
 	}
 
