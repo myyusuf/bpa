@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<dataset>
+	<bpa_user
+		CONCURRENCY_VERSION="1" 
+		ID="1"
+		USERNAME="admin"
+		PASSWORD="admin123"
+		FIRST_NAME="firstName"
+		LAST_NAME="lastName"
+	/>
+</dataset>

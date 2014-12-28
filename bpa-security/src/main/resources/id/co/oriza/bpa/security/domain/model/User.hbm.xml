@@ -6,11 +6,11 @@
 			<generator class="native"/>
 		</id>
 		<version name="concurrencyVersion" column="CONCURRENCY_VERSION" type="int" />
-		<property name="usename" column="USERNAME" type="java.lang.String" />
-		<property name="fitstName" column="FIRST_NAME" type="java.lang.String" />
+		<property name="username" column="USERNAME" type="java.lang.String" />
+		<property name="password" column="PASSWORD" type="java.lang.String" />
+		<property name="firstName" column="FIRST_NAME" type="java.lang.String" />
 		<property name="lastName" column="LAST_NAME" type="java.lang.String" />
 		<property name="description" column="DESCRIPTION" type="java.lang.String" />
-		<property name="email" column="EMAIL" type="java.lang.String" />
 		<component name="contactInformation" class="id.co.oriza.bpa.security.domain.model.ContactInformation">
 			<property name="emailAddress" column="EMAIL_ADDRESS" type="java.lang.String" />
 			<property name="primaryTelephone" column="PRIMARY_TELEPHONE" type="java.lang.String" />

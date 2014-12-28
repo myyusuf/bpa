@@ -26,7 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:bpa-user-ctx-test.xml")
+@ContextConfiguration("classpath:bpa-security-ctx-test.xml")
 public class HibernateUserRepositoryTest {
 	
 	@Autowired
@@ -37,8 +37,8 @@ public class HibernateUserRepositoryTest {
 	
 	private IDatabaseConnection connection;
 	
-	private static final String DATASET_FILE_EMPTY = "/fixtures/account_empty.xml";
-	private static final String DATASET_FILE_CREATE = "/fixtures/account_create.xml";
+	private static final String DATASET_FILE_EMPTY = "/fixtures/user_empty.xml";
+	private static final String DATASET_FILE_CREATE = "/fixtures/user_create.xml";
 	
 	@Before
     public void setUp() throws Exception {
@@ -52,7 +52,7 @@ public class HibernateUserRepositoryTest {
     }
 	
 	@Test
-	public void testAllSimilarlyCodedOrNamedAccounts() throws Exception{
+	public void testAllSimilarlyNamedUsers() throws Exception{
 		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
 		Collection<User> allSimilarlyCodedOrNamedAccounts = userRepository.allSimilarlyNamedUsers("", 0, 1);
 		assertEquals(1, allSimilarlyCodedOrNamedAccounts.size());
