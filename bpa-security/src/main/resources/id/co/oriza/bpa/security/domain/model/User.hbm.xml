@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+	<class name="id.co.oriza.bpa.security.domain.model.User" table="BPA_USER" lazy="true">
+		<id name="id" type="long" column="ID" unsaved-value="-1">
+			<generator class="native"/>
+		</id>
+		<version name="concurrencyVersion" column="CONCURRENCY_VERSION" type="int" />
+		<property name="usename" column="USERNAME" type="java.lang.String" />
+		<property name="fitstName" column="FIRST_NAME" type="java.lang.String" />
+		<property name="lastName" column="LAST_NAME" type="java.lang.String" />
+		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<property name="email" column="EMAIL" type="java.lang.String" />
+		
+	</class> 
+</hibernate-mapping>
