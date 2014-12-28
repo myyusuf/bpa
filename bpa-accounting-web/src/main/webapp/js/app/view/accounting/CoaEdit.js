@@ -122,6 +122,10 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             _editForm.jqxValidator('validateInput', "#" + _accountGroupInput.attr("id"));
 	    });
         
+        if(_isEditForm){
+        	_accountGroupComboBox.jqxComboBox({ disabled: true }); 
+        }
+        
 		//------------------------------------------------------
         
         
@@ -203,6 +207,10 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	
         });
         
+        if(_isEditForm){
+        	_parentComboBox.jqxComboBox({ disabled: true }); 
+        }
+        
 		//------------------------------------------------------
 		
 		
@@ -217,6 +225,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_codeInput.attr("id", "codeInput" + _randomId);
 		if(_isEditForm){
 			_codeInput.val(_editedCoa.code);
+			_codeInput.jqxInput({disabled: true});
 		}
 		_codeInput.appendTo(_codeInputColumn);
 		$('<span style="color: red; font-weight: bold; float: left; margin-top: 8px; margin-left: 4px;">*</span>').appendTo(_codeInputColumn);

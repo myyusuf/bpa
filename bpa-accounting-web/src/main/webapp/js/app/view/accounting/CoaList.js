@@ -117,6 +117,19 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         
         _coaListGrid.on('bindingComplete', function (event) { 
         	_searchInput.focus();
+        	
+        	var rows = _coaListGrid.jqxTreeGrid('getRows');
+        	var traverseTree = function(rows) {
+        		for(var i = 0; i < rows.length; i++){
+        			if (rows[i].records){
+        				idValue = rows[i][idColumn];
+        				_coaListGrid.jqxTreeGrid('expandRow', idValue);
+        				traverseTree(rows[i].records);
+        			}
+        		}
+        	};
+        	var idColumn = _coaListGrid.jqxTreeGrid('source')._source.id;
+        	traverseTree(rows);
         });
         
         _coaListGrid.on('rowDoubleClick', function (event){ 

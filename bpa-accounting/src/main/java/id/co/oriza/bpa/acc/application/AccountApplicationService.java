@@ -36,6 +36,7 @@ public class AccountApplicationService {
 		return accountGroupsSize;
 	}
 	
+	@Transactional
 	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName, int aStart, int aLimit){
 		Collection<Account> accounts = this.accountRepository().allSimilarlyCodedOrNamedAccounts(aCode, aName, aStart, aLimit);
 		return accounts;
