@@ -8,6 +8,7 @@ import id.co.oriza.bpa.acc.domain.model.AccountRepository;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.sql.Statement;
 import java.util.Collection;
 
 import javax.sql.DataSource;
@@ -42,7 +43,12 @@ public class HibernateAccountRepositoryTest {
 	@Before
     public void setUp() throws Exception {
         connection = new MySqlConnection(dataSource.getConnection(), null);
+        Statement statement = connection.getConnection().createStatement();
+        statement.addBatch("SET FOREIGN_KEY_CHECKS=0");
+        statement.executeBatch();
         DatabaseOperation.DELETE_ALL.execute(connection, getDataSet(DATASET_FILE_EMPTY));
+        statement.addBatch("SET FOREIGN_KEY_CHECKS=1");
+        statement.executeBatch();
     }
 	
 	@Test

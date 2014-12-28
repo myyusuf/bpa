@@ -10,5 +10,6 @@
 		<property name="name" column="NAME" type="java.lang.String" />
 		<property name="description" column="DESCRIPTION" type="java.lang.String" />
 		<many-to-one name="group" class="id.co.oriza.bpa.acc.domain.model.AccountGroup" column="GROUP_ID"/>
+		<many-to-one name="parent" class="id.co.oriza.bpa.acc.domain.model.Account" column="PARENT_ID"/>
 	</class> 
 </hibernate-mapping>

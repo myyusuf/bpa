@@ -1,9 +1,19 @@
 <?xml version="1.0"?>
 <dataset>
+
+	<bpa_account_group
+		CONCURRENCY_VERSION="1" 
+		ID="1"
+		CODE="L"
+		NAME="Liability"
+		DEFAULT_BALANCE="DEBET"
+	/>
+	
 	<bpa_account
 		CONCURRENCY_VERSION="1" 
 		ID="1"
 		CODE="1111"
 		NAME="Cash"
+		GROUP_ID="1"
 	/>
 </dataset>

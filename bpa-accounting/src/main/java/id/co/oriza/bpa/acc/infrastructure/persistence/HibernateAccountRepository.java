@@ -38,6 +38,7 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 		}
 		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.acc.domain.model.Account as _obj_ "
+				+ "left join fetch _obj_.parent as _parent_ "
 				+ "where _obj_.code like :aCode "
 				+ "or _obj_.name like :aName ");
 		query.setString("aCode", aCode + "%");
