@@ -26,22 +26,25 @@ public class AccountApplicationService {
 	@Autowired
 	private AccountGroupRepository accountGroupRepository;
 	
+	@Transactional(readOnly=true)
 	public Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups(String aCode, String aName, int aStart, int aLimit){
 		Collection<AccountGroup> accountGroups = this.accountGroupRepository().allSimilarlyCodedOrNamedAccountGroups(aCode, aName, aStart, aLimit);
 		return accountGroups;
 	}
 	
+	@Transactional(readOnly=true)
 	public int allSimilarlyCodedOrNamedAccountGroupsSize(String aCode, String aName){
 		int accountGroupsSize = this.accountGroupRepository().allSimilarlyCodedOrNamedAccountGroupsSize(aCode, aName);
 		return accountGroupsSize;
 	}
 	
-	@Transactional
+	@Transactional(readOnly=true)
 	public Collection<Account> allSimilarlyCodedOrNamedAccounts(String aCode, String aName, int aStart, int aLimit){
 		Collection<Account> accounts = this.accountRepository().allSimilarlyCodedOrNamedAccounts(aCode, aName, aStart, aLimit);
 		return accounts;
 	}
 	
+	@Transactional(readOnly=true)
 	public int allSimilarlyCodedOrNamedAccountsSize(String aCode, String aName){
 		int accountsSize = this.accountRepository().allSimilarlyCodedOrNamedAccountsSize(aCode, aName);
 		return accountsSize;
@@ -77,6 +80,13 @@ public class AccountApplicationService {
 		this.accountGroupRepository().remove(accountGroup);
 	}
 	
+	@Transactional
+	public void removeAccount(RemoveAccountCommand aCommand){
+		Account account = this.existingAccount(aCommand.getCode());
+		this.accountRepository().remove(account);
+	}
+	
+	@Transactional
 	public Account newAccountWith(NewAccountCommand aCommand){
 		
 		AccountGroup accountGroup = this.existingAccountGroup(aCommand.getAccountGroupCode());

@@ -3,6 +3,7 @@ package id.co.oriza.bpa.acc.interfaces.ws;
 import id.co.oriza.bpa.acc.application.AccountApplicationService;
 import id.co.oriza.bpa.acc.application.ChangeAccountInfoCommand;
 import id.co.oriza.bpa.acc.application.NewAccountCommand;
+import id.co.oriza.bpa.acc.application.RemoveAccountCommand;
 import id.co.oriza.bpa.acc.domain.model.Account;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountPresentationModel;
 
@@ -102,6 +103,22 @@ public class AccountController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/accounting/accounts", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deleteAccount(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("delete account");
+		
+		String code = (String) params.get("code");
+		
+		RemoveAccountCommand command = new RemoveAccountCommand(code);
+		this.accountApplicationService().removeAccount(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;

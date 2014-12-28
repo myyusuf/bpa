@@ -73,4 +73,9 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 		return ((Long)query.uniqueResult()).intValue();
 	}
 
+	@Override
+	public void remove(Account anAccount) {
+		this.session().delete(anAccount);
+	}
+
 }

@@ -9,5 +9,6 @@ public interface AccountRepository {
 	Account accountWithCode(String anAccountCode);
 	AccountId nextIdentity();
 	int allSimilarlyCodedOrNamedAccountsSize(String aCode, String aName);
+	void remove(Account account);
 
 }
