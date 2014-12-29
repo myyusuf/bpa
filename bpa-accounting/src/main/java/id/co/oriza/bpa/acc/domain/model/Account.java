@@ -16,6 +16,7 @@ public class Account extends ConcurrencySafeEntity {
 	private String description;
 	private Account parent;
 	private AccountGroup group;
+	private MovementType defaultBalance;
 	
 	public AccountId accountId(){
 		return this.accountId;
@@ -46,7 +47,7 @@ public class Account extends ConcurrencySafeEntity {
 		return this.group;
 	}
 	
-	public Account(AccountId anAccountId, String aCode, String aName, String aDescription, Account aParent, AccountGroup aGroup){
+	public Account(AccountId anAccountId, String aCode, String aName, String aDescription, Account aParent, AccountGroup aGroup, MovementType aDefaultBalance){
 		
 		this();
 		
@@ -55,32 +56,33 @@ public class Account extends ConcurrencySafeEntity {
 		this.setName(aName);
 		this.setDescription(aDescription);
 		this.setParent(aParent);
-		this.setCategory(aGroup);
+		this.setGroup(aGroup);
+		this.setDefaultBalance(aDefaultBalance);
 		
 		String parentCode = aParent != null ? aParent.code : "";
 		DomainEventPublisher.instance().publish(new AccountRegistered(aCode, aName, parentCode));
 	}
 	
-	private void setCategory(AccountGroup aGroup) {
+	protected void setGroup(AccountGroup aGroup) {
 		this.assertArgumentNotNull(aGroup, "The Group is required.");
 		this.group = aGroup;
 	}
 
-	private void setParent(Account aParent) {
+	protected void setParent(Account aParent) {
 		this.parent = aParent;
 	}
 
-	private void setCode(String aCode) {
+	protected void setCode(String aCode) {
 		this.assertArgumentNotEmpty(aCode, "The Code is required.");
 		this.code = aCode;
 	}
 	
-	private void setName(String aName) {
+	protected void setName(String aName) {
 		this.assertArgumentNotEmpty(aName, "The Name is required.");
 		this.name = aName;
 	}
 	
-	private void setDescription(String aDescription) {
+	protected void setDescription(String aDescription) {
 		this.description = aDescription;
 	}
 	
@@ -120,6 +122,15 @@ public class Account extends ConcurrencySafeEntity {
 		} else if (!code.equals(other.code))
 			return false;
 		return true;
+	}
+
+	public MovementType defaultBalance() {
+		return defaultBalance;
+	}
+
+	protected void setDefaultBalance(MovementType aDefaultBalance) {
+		this.assertArgumentNotNull(aDefaultBalance, "The Default Balance is required.");
+		this.defaultBalance = aDefaultBalance;
 	}
 
 }

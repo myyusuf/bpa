@@ -96,8 +96,10 @@ public class AccountApplicationService {
 			parentAccount = this.existingAccount(aCommand.getParentAccountCode());
 		}
 		
+		MovementType movementType = MovementType.valueOf(aCommand.getMovementTypeCode());
+		
 		AccountId accountId = this.accountRepository().nextIdentity();
-		Account account = new Account(accountId, aCommand.getCode(), aCommand.getName(), aCommand.getDescription(), parentAccount, accountGroup);
+		Account account = new Account(accountId, aCommand.getCode(), aCommand.getName(), aCommand.getDescription(), parentAccount, accountGroup, movementType);
 		
 		this.accountRepository().add(account);
 		

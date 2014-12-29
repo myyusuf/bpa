@@ -35,7 +35,7 @@ public class AccountApplicationServiceTest {
 		ReflectionTestUtils.setField(accountApplicationService, "accountRepository", accountRepositoryMock);
 		ReflectionTestUtils.setField(accountApplicationService, "accountGroupRepository", accountGroupRepositoryMock);
 		
-		NewAccountCommand aCommand = new NewAccountCommand("1111", "Kas", "", "", "");
+		NewAccountCommand aCommand = new NewAccountCommand("1111", "Kas", "", "", "", "");
 		accountApplicationService.newAccountWith(aCommand );
 		
 		ArgumentCaptor<Account> accountCaptor = ArgumentCaptor.forClass(Account.class);
@@ -55,7 +55,7 @@ public class AccountApplicationServiceTest {
 		AccountRepository accountRepositoryMock = mock(AccountRepository.class);
 		AccountId accountId = new AccountId(UUID.randomUUID().toString().toUpperCase());
 		AccountGroup accountGroup = new AccountGroup("111", "Liability", "", MovementType.DEBET);
-		Account account = new Account(accountId, "1111", "Kas", "", null, accountGroup);
+		Account account = new Account(accountId, "1111", "Kas", "", null, accountGroup, MovementType.DEBET);
 		when(accountRepositoryMock.accountWithCode(anyString())).thenReturn(account);
 		when(accountRepositoryMock.nextIdentity()).thenReturn(accountId);
 		return accountRepositoryMock;

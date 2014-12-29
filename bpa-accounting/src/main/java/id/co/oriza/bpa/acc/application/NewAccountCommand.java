@@ -7,15 +7,18 @@ public class NewAccountCommand {
 	private String description;
 	private String accountGroupCode;
 	private String parentAccountCode;
+	private String movementTypeCode;
 
 	public NewAccountCommand(String code, String name, String description,
-			String accountGroupCode, String parentAccountCode) {
+			String accountGroupCode, String parentAccountCode,
+			String movementTypeCode) {
 		super();
 		this.code = code;
 		this.name = name;
 		this.description = description;
 		this.accountGroupCode = accountGroupCode;
 		this.parentAccountCode = parentAccountCode;
+		this.movementTypeCode = movementTypeCode;
 	}
 
 	public String getCode() {
@@ -56,6 +59,14 @@ public class NewAccountCommand {
 
 	public void setParentAccountCode(String parentAccountCode) {
 		this.parentAccountCode = parentAccountCode;
+	}
+
+	public String getMovementTypeCode() {
+		return movementTypeCode;
+	}
+
+	public void setMovementTypeCode(String movementTypeCode) {
+		this.movementTypeCode = movementTypeCode;
 	}
 
 }

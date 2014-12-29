@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping default-access="field">
-	<class name="id.co.oriza.bpa.acc.domain.model.Account" table="BPA_ACCOUNT" lazy="true">
+	<class name="id.co.oriza.bpa.acc.domain.model.Account" table="BPA_ACCOUNT" discriminator-value="MEMBER">
 		<id name="id" type="long" column="ID" unsaved-value="-1">
 			<generator class="native"/>
 		</id>
+		<discriminator column="ACCOUNT_TYPE" type="string"></discriminator>
+		
 		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
 		<property name="code" column="CODE" type="java.lang.String" />
 		<property name="name" column="NAME" type="java.lang.String" />
 		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<property name="defaultBalance" column="DEFAULT_BALANCE">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">id.co.oriza.bpa.acc.domain.model.MovementType</param>
+				<param name="type">12</param>
+			</type>
+		</property>
 		<many-to-one name="group" class="id.co.oriza.bpa.acc.domain.model.AccountGroup" column="GROUP_ID"/>
 		<many-to-one name="parent" class="id.co.oriza.bpa.acc.domain.model.Account" column="PARENT_ID"/>
+		
+		<subclass name="id.co.oriza.bpa.acc.domain.model.AccountGroup" discriminator-value="GROUP">
+			<property name="test" column="TEST" type="java.lang.String" />
+		</subclass>
 	</class> 
 </hibernate-mapping>

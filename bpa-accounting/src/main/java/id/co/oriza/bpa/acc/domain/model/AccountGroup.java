@@ -1,18 +1,15 @@
 package id.co.oriza.bpa.acc.domain.model;
 
-import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 import id.co.oriza.bpa.base.domain.model.DomainEventPublisher;
 
-public class AccountGroup extends ConcurrencySafeEntity {
+public class AccountGroup extends Account {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String code;
-	private String name;
-	private String description;
-	private MovementType defaultBalance;
+	
+	private String test;
 	
 	public AccountGroup(String aCode, String aName, String aDescription, MovementType aDefaultBalance){
 		
@@ -30,47 +27,14 @@ public class AccountGroup extends ConcurrencySafeEntity {
 		super();
 	}
 
-	private void setCode(String aCode) {
-		this.assertArgumentNotEmpty(aCode, "The Code is required.");
-		this.code = aCode;
+	public String getTest() {
+		return test;
 	}
 
-	private void setName(String aName) {
-		this.assertArgumentNotEmpty(aName, "The Name is required.");
-		this.name = aName;
+	public void setTest(String test) {
+		this.test = test;
 	}
 
-	private void setDescription(String description) {
-		this.description = description;
-	}
-
-	private void setDefaultBalance(MovementType aDefaultBalance) {
-		this.assertArgumentNotNull(aDefaultBalance, "The Default Balance is required.");
-		this.defaultBalance = aDefaultBalance;
-	}
-
-	public String code() {
-		return code;
-	}
-
-	public String name() {
-		return name;
-	}
-
-	public String description() {
-		return description;
-	}
-
-	public MovementType defaultBalance() {
-		return defaultBalance;
-	}
 	
-	public void changeName(String aName){
-		this.setName(aName);
-	}
-	
-	public void changeDescription(String aDescription){
-		this.setDescription(aDescription);
-	}
 
 }
