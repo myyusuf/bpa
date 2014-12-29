@@ -54,7 +54,7 @@ public class HibernateAccountGroupRepositoryTest {
 	@Test
 	public void testAllSimilarlyCodedOrNamedAccounts() throws Exception{
 		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
-		Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups = accountGroupRepository.allSimilarlyCodedOrNamedAccountGroups("", "", 0, 1);
+		Collection<AccountGroup> allSimilarlyCodedOrNamedAccountGroups = accountGroupRepository.allSimilarlyCodedOrNamedAccountGroups("", "", 0, 10);
 		assertEquals(1, allSimilarlyCodedOrNamedAccountGroups.size());
 		
 	}
