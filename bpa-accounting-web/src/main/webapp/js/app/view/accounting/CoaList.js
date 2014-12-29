@@ -107,7 +107,16 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             {
             },
             columns: [
-              { text: 'Code', datafield: 'code', width: '33.3%' },
+              { text: 'Code', datafield: 'code', width: '33.3%', 
+            	  cellsRenderer: function (row, dataField, cellValue, rowData, cellText) {
+            		  if(rowData.parent){
+            			  return '<span>'+ cellValue +'</span>';
+            		  }else{
+            			  return '<span style="font-weight: bold;">'+ cellValue +'</span>';
+            		  }
+            		  
+            	  } 
+              },
               { text: 'Name', datafield: 'name', width: '33.3%' },
               { text: 'Description', datafield: 'description', width: '33.3%' }
             ],
