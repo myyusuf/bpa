@@ -23,7 +23,6 @@
 		<many-to-one name="parent" class="id.co.oriza.bpa.acc.domain.model.Account" column="PARENT_ID"/>
 		
 		<subclass name="id.co.oriza.bpa.acc.domain.model.AccountGroup" discriminator-value="GROUP">
-			<property name="test" column="TEST" type="java.lang.String" />
 		</subclass>
 	</class> 
 </hibernate-mapping>

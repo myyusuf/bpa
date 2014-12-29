@@ -98,7 +98,11 @@ public class AccountController {
 		Map<String, String> parentMap = (Map<String, String>) params.get("parent");
 		String parentCode = parentMap.get("code");
 		
-		NewAccountCommand command = new NewAccountCommand(code, name, description, accountGroupCode, parentCode);
+		@SuppressWarnings("unchecked")
+		Map<String, String> defaultBalanceMap = (Map<String, String>) params.get("defaultBalance");
+		String movementTypeCode = defaultBalanceMap.get("code");
+		
+		NewAccountCommand command = new NewAccountCommand(code, name, description, accountGroupCode, parentCode, movementTypeCode);
 		this.accountApplicationService().newAccountWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
