@@ -2,6 +2,7 @@
     paths: {
         "jQuery": "../jquery/1.11.1/jquery.min",
         "tinypubsub": "../tinypubsub/ba-tiny-pubsub",
+        "i18next": "../i18next/i18next-1.7.7.min",
         "jqxcore": "../jqwidgets/3.5.0/jqxcore",
         "jqxtabs": "../jqwidgets/3.5.0/jqxtabs",
         "jqxbuttons": "../jqwidgets/3.5.0/jqxbuttons",
@@ -36,6 +37,10 @@
     //waitSeconds: 60,
     shim: {
     	"tinypubsub": {
+            export: "$",
+            deps: ['jQuery']
+        },
+        "i18next": {
             export: "$",
             deps: ['jQuery']
         },
