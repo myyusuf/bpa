@@ -67,7 +67,32 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	virtualmode: true,
         	rendergridrows: function () {
                 return _dataAdapter.records;
-            }
+            },
+            showtoolbar: true,
+            toolbarheight: 40,
+            rendertoolbar: function(toolbar)
+            {
+            	toolbar.empty();
+            	
+                var _searchContainer = $("<div style='float: left; margin: 5px; text-align: right;'></div>");
+                var _searchTable = $('<table></table>');
+                _searchTable.appendTo(_searchContainer);
+        		
+        		var _newRow = $('<tr></tr>');
+        		_newRow.appendTo(_searchTable);
+        		var _newColumn = $('<td></td>');
+        		_newColumn.appendTo(_newRow);
+        		var _addButton = $('<div style="margin-left: 7px;">New Account Group</div>');
+        		_addButton.appendTo(_newColumn);
+        		
+                toolbar.append(_searchContainer);
+                
+                _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+                           
+                _addButton.click(function(event){
+                	_showEditPage();
+                });
+            },
         });
         
         _accountGroupListGrid.on('rowdoubleclick', function (event){ 
