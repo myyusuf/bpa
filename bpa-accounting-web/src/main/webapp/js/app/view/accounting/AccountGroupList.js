@@ -82,7 +82,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         		_newRow.appendTo(_searchTable);
         		var _newColumn = $('<td></td>');
         		_newColumn.appendTo(_newRow);
-        		var _addButton = $('<div style="margin-left: 7px;">New Account Group</div>');
+        		var _addButton = $('<div style="margin-left: 2px;">New Account Group</div>');
         		_addButton.appendTo(_newColumn);
         		
                 toolbar.append(_searchContainer);

@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
+define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow", "jqxmaskedinput"], function (Observable) {
 	
 	var AccountGroupEdit = function(container, options){
 		
@@ -182,7 +182,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_editWindow.jqxWindow('destroy');
         });
         
-        _codeInput.jqxInput({ theme: 'metro' });
+//        _codeInput.jqxInput({ theme: 'metro' });
+        _codeInput.jqxMaskedInput({ mask: '###.###', theme: 'metro' });
         _nameInput.jqxInput({ theme: 'metro' });
         _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
@@ -217,6 +218,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         _saveButton.click(function(event){
+        	_codeInput.jqxMaskedInput({value: "123456" })
+        	console.log("_codeInput : " + _codeInput.jqxMaskedInput('value'));
         	_editForm.jqxValidator('validate');
 		});
         
