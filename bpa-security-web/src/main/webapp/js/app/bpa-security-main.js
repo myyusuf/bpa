@@ -2,6 +2,7 @@
     paths: {
         "jQuery": "../jquery/1.11.1/jquery.min",
         "tinypubsub": "../tinypubsub/ba-tiny-pubsub",
+        "i18next": "../i18next/i18next-1.7.7.min",
         "jqxcore": "../jqwidgets/3.5.0/jqxcore",
         "jqxtabs": "../jqwidgets/3.5.0/jqxtabs",
         "jqxbuttons": "../jqwidgets/3.5.0/jqxbuttons",
@@ -20,11 +21,26 @@
         "jqxdropdownlist": "../jqwidgets/3.5.0/jqxdropdownlist",
         "jqxlistbox": "../jqwidgets/3.5.0/jqxlistbox",
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
-        "jqxdata": "../jqwidgets/3.5.0/jqxdata"
+        "jqxdata": "../jqwidgets/3.5.0/jqxdata",
+        "jqxtreegrid": "../jqwidgets/3.5.0/jqxtreegrid",
+        "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
+        "jqxwindow": "../jqwidgets/3.5.0/jqxwindow",
+        "jqxinput": "../jqwidgets/3.5.0/jqxinput",
+        "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
+        "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
+        "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
+        
+        "notificationWindow": "../app/component/base/NotificationWindow",
+        "bpaObservable": "../app/component/base/Observable"
+        	
     },
     //waitSeconds: 60,
     shim: {
     	"tinypubsub": {
+            export: "$",
+            deps: ['jQuery']
+        },
+        "i18next": {
             export: "$",
             deps: ['jQuery']
         },
@@ -99,7 +115,45 @@
         "jqxdata": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
+        },
+        "jqxtreegrid": {
+            export: "$",
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar", "jqxdatatable"]
+        },
+        "jqxdatatable": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxwindow": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxinput": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxvalidator": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxcombobox": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxnotification": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "bpaErrorWindow": {
+            export: "ErrorWindow"
+        },
+        "notificationWindow": {
+            export: "NotificationWindow"
+        },
+        "bpaObservable": {
+            export: "Observable"
         }
+        
     }
 });
 require(["bpa-security-app"], function (App) {
