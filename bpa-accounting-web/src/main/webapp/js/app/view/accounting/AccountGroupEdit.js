@@ -10,6 +10,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.defaultBalanceUrl;
 		
+		var _codePattern = BPA.Constant.accounting.accountCodePattern;
+		
 		var _subscribers = {
 			any:[]
 		};
@@ -42,8 +44,12 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _codeInputColumn = $('<td></td>');
 		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
 		_codeInput.attr("id", "codeInput" + _randomId);
+		
+		_codeInput.jqxMaskedInput({ mask: _codePattern, theme: 'metro' });
+		
 		if(_isEditForm){
-			_codeInput.val(_editedAccountGroup.code);
+			//_codeInput.val(_editedAccountGroup.code);
+			_codeInput.jqxMaskedInput({value: _editedAccountGroup.code})
 			_codeInput.jqxInput({disabled: true});
 		}
 		_codeInput.appendTo(_codeInputColumn);
@@ -183,7 +189,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         });
         
 //        _codeInput.jqxInput({ theme: 'metro' });
-        _codeInput.jqxMaskedInput({ mask: '###.###', theme: 'metro' });
         _nameInput.jqxInput({ theme: 'metro' });
         _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
@@ -218,8 +223,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         _saveButton.click(function(event){
-        	_codeInput.jqxMaskedInput({value: "123456" })
-        	console.log("_codeInput : " + _codeInput.jqxMaskedInput('value'));
         	_editForm.jqxValidator('validate');
 		});
         
@@ -237,7 +240,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	if(_isEditForm){
         		_savedData.code = _editedAccountGroup.code;
         	}else{
-        		_savedData.code = _codeInput.val();
+        		_savedData.code = _codeInput.val().replace(/-/g, "");
         	}
         	_savedData.name = _nameInput.val();
         	_savedData.description = _descriptionInput.val();

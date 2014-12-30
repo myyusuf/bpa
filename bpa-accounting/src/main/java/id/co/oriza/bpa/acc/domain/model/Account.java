@@ -132,5 +132,9 @@ public class Account extends ConcurrencySafeEntity {
 		this.assertArgumentNotNull(aDefaultBalance, "The Default Balance is required.");
 		this.defaultBalance = aDefaultBalance;
 	}
+	
+	public boolean isAccountGroup(){
+		return false;
+	}
 
 }

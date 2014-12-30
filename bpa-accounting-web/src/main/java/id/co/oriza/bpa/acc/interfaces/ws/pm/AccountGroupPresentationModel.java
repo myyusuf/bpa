@@ -32,5 +32,9 @@ public class AccountGroupPresentationModel {
 		map.put("name", this.accountGroup.defaultBalance().getName());
 		return map;
 	}
+	
+	public boolean isGroup(){
+		return this.accountGroup.isAccountGroup();
+	}
 
 }

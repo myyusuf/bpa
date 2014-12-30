@@ -45,5 +45,9 @@ public class AccountPresentationModel {
 			return null;
 		}
 	}
+	
+	public boolean isGroup(){
+		return this.account.isAccountGroup();
+	}
 
 }

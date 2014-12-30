@@ -24,5 +24,10 @@ public class AccountGroup extends Account {
 	protected AccountGroup() {
 		super();
 	}
+	
+	@Override
+	public boolean isAccountGroup(){
+		return true;
+	}
 
 }

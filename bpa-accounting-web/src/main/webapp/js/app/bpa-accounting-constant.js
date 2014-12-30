@@ -8,5 +8,6 @@ BPA.Constant.accounting = {
 	coaUrl : 'service/accounting/accounts',
 	journalUrl : 'service/accounting/journal',	
 	ledgerUrl : 'service/accounting/ledger',
-	balanceSheetUrl : 'service/accounting/balancesheet'
+	balanceSheetUrl : 'service/accounting/balancesheet',
+	accountCodePattern : '##-###-###'
 };

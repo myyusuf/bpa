@@ -22,6 +22,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
                 { name: 'name', type: 'string' },
                 { name: 'description', type: 'string' },
                 { name: 'parentCode', type: 'string' },
+                { name: 'group', type: 'boolean'},
                 { name: 'accountGroup'}
             ],
             hierarchy:
@@ -109,10 +110,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             columns: [
               { text: 'Code', datafield: 'code', width: '33.3%', 
             	  cellsRenderer: function (row, dataField, cellValue, rowData, cellText) {
-            		  if(rowData.parent){
-            			  return '<span>'+ cellValue +'</span>';
-            		  }else{
+            		  if(rowData.group){
             			  return '<span style="font-weight: bold;">'+ cellValue +'</span>';
+            		  }else{
+            			  return '<span>'+ cellValue +'</span>';
             		  }
             		  
             	  } 
