@@ -1,14 +1,14 @@
 define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
 	
-	var CoaEdit = function(container, options){
+	var AccountEdit = function(container, options){
 		
 		var _self = this;
 		
 		var _options = options || {};
 		
-		var _editedCoa = _options.editedCoa || {};
+		var _editedAccount = _options.editedAccount || {};
 		
-		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.coaUrl;
+		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.accountUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -16,11 +16,11 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		Observable.call(_self, _subscribers);
 		
-		var _isEditForm = _editedCoa.code != undefined && _editedCoa.code != null;
+		var _isEditForm = _editedAccount.code != undefined && _editedAccount.code != null;
 		
-		var _randomId = BPA.Util.getRandomId("coaEdit");
+		var _randomId = BPA.Util.getRandomId("accountEdit");
         
-		var _editWindow = $('<div id="coaEditWindow"></div>');
+		var _editWindow = $('<div id="accountEditWindow"></div>');
 		var _windowHeader = "";
 		if(_isEditForm){
 			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Chart of Account Edit</span></td></tr></table></div>');
@@ -109,8 +109,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         _accountGroupComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedCoa.accountGroup != undefined && _editedCoa.accountGroup != null){
-        		var _selectedParentItem = _accountGroupComboBox.jqxComboBox('getItemByValue', _editedCoa.accountGroup.code);
+        	if(_editedAccount.accountGroup != undefined && _editedAccount.accountGroup != null){
+        		var _selectedParentItem = _accountGroupComboBox.jqxComboBox('getItemByValue', _editedAccount.accountGroup.code);
             	_accountGroupComboBox.jqxComboBox('selectItem', _selectedParentItem);
         	}
         	
@@ -200,8 +200,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         _parentComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedCoa.parent != undefined && _editedCoa.parent != null){
-        		var _selectedParentItem = _parentComboBox.jqxComboBox('getItemByValue', _editedCoa.parent.code);
+        	if(_editedAccount.parent != undefined && _editedAccount.parent != null){
+        		var _selectedParentItem = _parentComboBox.jqxComboBox('getItemByValue', _editedAccount.parent.code);
             	_parentComboBox.jqxComboBox('selectItem', _selectedParentItem);
         	}
         	
@@ -224,7 +224,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _codeInput = $('<input type="text" class="text-input" maxlength="5" style="float: left;"/>');
 		_codeInput.attr("id", "codeInput" + _randomId);
 		if(_isEditForm){
-			_codeInput.val(_editedCoa.code);
+			_codeInput.val(_editedAccount.code);
 			_codeInput.jqxInput({disabled: true});
 		}
 		_codeInput.appendTo(_codeInputColumn);
@@ -239,12 +239,84 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _nameInput = $('<input type="text" class="text-input" maxlength="50" style="float: left;"/>');
 		_nameInput.attr("id", "nameInput" + _randomId);
 		if(_isEditForm){
-			_nameInput.val(_editedCoa.name);
+			_nameInput.val(_editedAccount.name);
 		}
 		
 		_nameInput.appendTo(_nameInputColumn);
 		$('<span style="color: red; font-weight: bold; float: left; margin-top: 8px; margin-left: 4px;">*</span>').appendTo(_nameInputColumn);
 		_nameInputColumn.appendTo(_newRow);
+		
+		
+		//Default Balance------------------------------------------------------
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _defaultBalanceLabel = $('<td>Default Balance</td>');
+		_defaultBalanceLabel.appendTo(_newRow);
+		var _defaultBalanceInputColumn = $('<td></td>');
+		var _defaultBalanceInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
+		_defaultBalanceInput.attr("id", "defaultBalanceInput" + _randomId);
+		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
+		_defaultBalanceInputColumn.appendTo(_newRow);
+		
+        var _defaultBalanceComboSource =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'code' },
+                { name: 'name' }
+            ],
+            url: _comboboxUrl
+        };
+        var _defaultBalanceDataAdapter = new $.jqx.dataAdapter(_defaultBalanceComboSource,{
+        	
+        	formatData: function (data) {
+                   data.selfAccountCode = data.code;
+                   return data;
+            }, 
+          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
+            beforeLoadComplete: function (records) {
+            	records.splice(0, 0, {code: '', name: '--Please Select--'});
+                return records;
+            }
+        	
+        });
+        var _defaultBalanceComboBox = _defaultBalanceInput.jqxComboBox({ selectedIndex: 0, source: _defaultBalanceDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        	
+        	renderer: function (index, label, value) {
+                var _item = _defaultBalanceDataAdapter.records[index];
+                if (_item != null) {
+                	var _label = _item.name;
+                	return _label;
+                }
+                
+                return '';
+            },
+            
+            renderSelectedItem: function(index, item){
+                var _item = _defaultBalanceDataAdapter.records[index];
+                if (_item != null) {
+                	var _label = _item.name;
+                	return _label;
+                }
+                
+                return '';   
+            },
+            theme: 'metro'
+        });
+        
+        _defaultBalanceComboBox.on('bindingComplete', function (event) {
+        	
+        	if(_editedAccount.defaultBalance != undefined && _editedAccount.defaultBalance != null){
+        		var _selectedItem = _defaultBalanceComboBox.jqxComboBox('getItemByValue', _editedAccountGroup.defaultBalance.code);
+            	_defaultBalanceComboBox.jqxComboBox('selectItem', _selectedItem);
+        	}
+        	
+        	//to close the validation message on combobox when form first loaded
+        	_editForm.jqxValidator('hide');
+        	
+        });
+        
+		//------------------------------------------------------
 		
 		
 		
@@ -256,7 +328,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
 		_descriptionInput.attr("id", "descriptionInput" + _randomId);
 		if(_isEditForm){
-			_descriptionInput.val(_editedCoa.description);
+			_descriptionInput.val(_editedAccount.description);
 		}
 		_descriptionInput.appendTo(_descriptionInputColumn);
 		_descriptionInputColumn.appendTo(_newRow);
@@ -286,7 +358,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 298, width: 394,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 326, width: 394,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -321,7 +393,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	});
         
         _editForm.on('validationSuccess', function (event) { 
-        	_saveCoa();
+        	_saveAccount();
         }); 
         	
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
@@ -336,7 +408,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_editWindow.jqxWindow('destroy');
         });
         
-        var _saveCoa = function(){
+        var _saveAccount = function(){
         	
         	var _accountGroupComboItem = _accountGroupComboBox.jqxComboBox('getSelectedItem');
         	var _parentComboItem = _parentComboBox.jqxComboBox('getSelectedItem');
@@ -353,9 +425,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_savedData.parent.code = _parentComboItem.value;
         	
         	if(_isEditForm){
-        		Observable.prototype.publish.call(_self, _savedData, "updatecoa");
+        		Observable.prototype.publish.call(_self, _savedData, "updateaccount");
         	}else{
-        		Observable.prototype.publish.call(_self, _savedData, "addnewcoa");
+        		Observable.prototype.publish.call(_self, _savedData, "addnewaccount");
         	}
         }
         
@@ -370,9 +442,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
 	}
 	
-	inheritPrototype(CoaEdit, Observable);
+	inheritPrototype(AccountEdit, Observable);
 
-    return CoaEdit;
+    return AccountEdit;
     
 });
 

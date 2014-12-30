@@ -29,8 +29,8 @@
                 		$.publish("viewAccountGroupListEvent", {name: "accountGroup"});
                 	});
                 	
-                	$("#coaListMenu").click(function(){
-                		$.publish("viewCoaListEvent", {name: "coa"});
+                	$("#accountListMenu").click(function(){
+                		$.publish("viewAccountListEvent", {name: "account"});
                 	});
                 	
                 	$("#journalListMenu").click(function(){

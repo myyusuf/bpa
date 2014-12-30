@@ -1,12 +1,12 @@
 define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreegrid", "jqxinput"], function (Observable) {
 	
-	var CoaList = function(container, options){
+	var AccountList = function(container, options){
 		
 		var _self = this;
 		
 		var _options = options || {};
 		
-		var _url = _options.url || BPA.Constant.accounting.coaUrl;
+		var _url = _options.url || BPA.Constant.accounting.accountUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -52,7 +52,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             loadError: function (xhr, status, error) { }
         });
         
-        var _coaListGrid = container.jqxTreeGrid(
+        var _accountListGrid = container.jqxTreeGrid(
         {
             width: '100%',
             height: '100%',
@@ -92,11 +92,11 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
                 _addButton.jqxButton({ width: '80', height: '16', theme: 'metro' });
                 
                 _searchButton.click(function(event){
-                	_coaListGrid.jqxTreeGrid('updateBoundData');
+                	_accountListGrid.jqxTreeGrid('updateBoundData');
                 });
                 _searchInput.on('keypress', function(event){
                 	if(13 == event.charCode){
-                		_coaListGrid.jqxTreeGrid('updateBoundData');
+                		_accountListGrid.jqxTreeGrid('updateBoundData');
                 	}
                 });
                 
@@ -125,24 +125,24 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	
         });
         
-        _coaListGrid.on('bindingComplete', function (event) { 
+        _accountListGrid.on('bindingComplete', function (event) { 
         	_searchInput.focus();
         	
-        	var rows = _coaListGrid.jqxTreeGrid('getRows');
+        	var rows = _accountListGrid.jqxTreeGrid('getRows');
         	var traverseTree = function(rows) {
         		for(var i = 0; i < rows.length; i++){
         			if (rows[i].records){
         				idValue = rows[i][idColumn];
-        				_coaListGrid.jqxTreeGrid('expandRow', idValue);
+        				_accountListGrid.jqxTreeGrid('expandRow', idValue);
         				traverseTree(rows[i].records);
         			}
         		}
         	};
-        	var idColumn = _coaListGrid.jqxTreeGrid('source')._source.id;
+        	var idColumn = _accountListGrid.jqxTreeGrid('source')._source.id;
         	traverseTree(rows);
         });
         
-//        _coaListGrid.on('rowDoubleClick', function (event){ 
+//        _accountListGrid.on('rowDoubleClick', function (event){ 
 //        	var _args = event.args, _row = _args.row, _key = _args.key, _dataField = _args.dataField;
 //            _showEditPage(_row);
 //        });
@@ -156,7 +156,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	var _rowData = "";
         	
         	if("edit" == _menuKey || "delete" == _menuKey){
-        		var _selection = _coaListGrid.jqxTreeGrid('getSelection');
+        		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
         		for (var i = 0; i < _selection.length; i++) {
             		_rowData = _selection[i];
             	}
@@ -181,7 +181,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	var _rowData = "";
         	
 //        	if("edit" == _menuKey || "delete" == _menuKey){
-//        		var _selection = _coaListGrid.jqxTreeGrid('getSelection');
+//        		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
 //        		for (var i = 0; i < _selection.length; i++) {
 //            		_rowData = _selection[i];
 //            	}
@@ -191,7 +191,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         });
         //-----------------------------------
         
-        _coaListGrid.on('rowClick', function (event) {
+        _accountListGrid.on('rowClick', function (event) {
         	
         	var _clickEvent = event.args.originalEvent;
         	var _account = event.args.row;
@@ -217,7 +217,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             }
         });
         
-        _coaListGrid.on('contextmenu', function (e) {
+        _accountListGrid.on('contextmenu', function (e) {
             return false;
         });
         var _isRightClick = function(event) {
@@ -229,47 +229,47 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         }
         
         var _showEditPage = function(rowData){
-        	Observable.prototype.publish.call(_self, _getCoaFromRowData(rowData), "editrow");
+        	Observable.prototype.publish.call(_self, _getAccountFromRowData(rowData), "editrow");
         }
         
         var _deleteRow = function(rowData){
-        	Observable.prototype.publish.call(_self, _getCoaFromRowData(rowData), "deleterow");
+        	Observable.prototype.publish.call(_self, _getAccountFromRowData(rowData), "deleterow");
         }
         
-        var _getCoaFromRowData = function(rowData){
-        	var _coa = {};
+        var _getAccountFromRowData = function(rowData){
+        	var _account = {};
         	
         	if(rowData){
-        		_coa.code = rowData.code;
-            	_coa.name = rowData.name;
-            	_coa.description = rowData.description;
+        		_account.code = rowData.code;
+            	_account.name = rowData.name;
+            	_account.description = rowData.description;
             	
             	if(rowData.accountGroup){
-            		_coa.accountGroup = {};
-            		_coa.accountGroup.code = rowData.accountGroup.code;
-            		_coa.accountGroup.name = rowData.accountGroup.name;
+            		_account.accountGroup = {};
+            		_account.accountGroup.code = rowData.accountGroup.code;
+            		_account.accountGroup.name = rowData.accountGroup.name;
             	}
             	
             	if(rowData.parent){
-            		_coa.parent = {};
-            		_coa.parent.code = rowData.parent.code;
-            		_coa.parent.name = rowData.parent.name;
+            		_account.parent = {};
+            		_account.parent.code = rowData.parent.code;
+            		_account.parent.name = rowData.parent.name;
             	}
-            	_coa.parentCode = rowData.parentCode;
+            	_account.parentCode = rowData.parentCode;
         	}
         	
-        	return _coa;
+        	return _account;
         }
         
         this.refreshGrid = function(){
-        	_coaListGrid.jqxTreeGrid('updateBoundData');
+        	_accountListGrid.jqxTreeGrid('updateBoundData');
         }
         
 	}
 	
-	inheritPrototype(CoaList, Observable);
+	inheritPrototype(AccountList, Observable);
 
-    return CoaList;
+    return AccountList;
     
 });
 

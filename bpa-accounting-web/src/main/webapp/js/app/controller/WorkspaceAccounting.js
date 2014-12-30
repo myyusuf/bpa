@@ -17,7 +17,7 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
             	var accountGroupComposer = new AccountGroupComposer(gridContainer);
             });
 			
-//			require(['./view/accounting/CoaList'], function (UserList) {
+//			require(['./view/accounting/AccountList'], function (UserList) {
 //				if(container.children()[0] != undefined){
 //					$(container.children()[0]).jqxTreeGrid('destroy');
 //					if(container.children()[0] != undefined){
@@ -30,11 +30,11 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
         	
 		});
 		
-		$.subscribe("viewCoaListEvent", function(e, data){
+		$.subscribe("viewAccountListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
         	
-        	require(['./composer/accounting/CoaComposer'], function (CoaComposer) {
+        	require(['./composer/accounting/AccountComposer'], function (AccountComposer) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxTreeGrid('destroy');
 					if(container.children()[0] != undefined){
@@ -42,10 +42,10 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 					}
 				}
 				
-            	var coaComposer = new CoaComposer(gridContainer);
+            	var accountComposer = new AccountComposer(gridContainer);
             });
         	
-//        	require(['./composer/accounting/CoaComposerExt'], function (CoaComposerExt) {
+//        	require(['./composer/accounting/AccountComposerExt'], function (AccountComposerExt) {
 //				if(container.children()[0] != undefined){
 //					$(container.children()[0]).jqxTreeGrid('destroy');
 //					if(container.children()[0] != undefined){
@@ -53,7 +53,7 @@ define(["jQuery", "jqxcore", "jqxgrid", "jqxtreegrid"], function () {
 //					}
 //				}
 //				
-//            	var coaComposerExt = new CoaComposerExt(gridContainer);
+//            	var accountComposerExt = new AccountComposerExt(gridContainer);
 //            });
 			
 		});
