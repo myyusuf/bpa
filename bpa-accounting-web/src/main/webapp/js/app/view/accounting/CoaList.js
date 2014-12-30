@@ -142,10 +142,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	traverseTree(rows);
         });
         
-        _coaListGrid.on('rowDoubleClick', function (event){ 
-        	var _args = event.args, _row = _args.row, _key = _args.key, _dataField = _args.dataField;
-            _showEditPage(_row);
-        });
+//        _coaListGrid.on('rowDoubleClick', function (event){ 
+//        	var _args = event.args, _row = _args.row, _key = _args.key, _dataField = _args.dataField;
+//            _showEditPage(_row);
+//        });
         
         var _gridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
         _gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
@@ -171,18 +171,49 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
 	 		}
         });
         
+        //Group context menu-----------------
+        var _groupGridContextMenu = $('<div><ul><li data-menukey="add">Add New</li></ul></div>');
+        _groupGridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+        _groupGridContextMenu.on('itemclick', function (event){
+        	
+        	var _menuKey = $(event.target).data("menukey");
+        	
+        	var _rowData = "";
+        	
+//        	if("edit" == _menuKey || "delete" == _menuKey){
+//        		var _selection = _coaListGrid.jqxTreeGrid('getSelection');
+//        		for (var i = 0; i < _selection.length; i++) {
+//            		_rowData = _selection[i];
+//            	}
+//        	}
+        	
+	 		_showEditPage();
+        });
+        //-----------------------------------
+        
         _coaListGrid.on('rowClick', function (event) {
         	
         	var _clickEvent = event.args.originalEvent;
+        	var _account = event.args.row;
 //            var rightClick = isRightClick(event) || $.jqx.mobile.isTouchDevice();
         	var _rightClick = _isRightClick(_clickEvent);
             if (_rightClick) {
                 var _scrollTop = $(window).scrollTop();
                 var _scrollLeft = $(window).scrollLeft();
-                _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                
+                _gridContextMenu.jqxMenu('close');
+            	_groupGridContextMenu.jqxMenu('close');
+            	
+                if(_account.group){
+                	_groupGridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                }else{
+                	_gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                }
+                
                 return false;
             }else{
             	_gridContextMenu.jqxMenu('close');
+            	_groupGridContextMenu.jqxMenu('close');
             }
         });
         
