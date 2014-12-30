@@ -1,4 +1,4 @@
-define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow", "jqxmaskedinput"], function (Observable, DefaultBalanceComboBox) {
+define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, DefaultBalanceComboBox) {
 	
 	var AccountGroupEdit = function(container, options){
 		
@@ -42,14 +42,11 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		var _codeLabel = $('<td>Code</td>');
 		_codeLabel.appendTo(_newRow);
 		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="5" />');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="8" />');
 		_codeInput.attr("id", "codeInput" + _randomId);
 		
-		_codeInput.jqxMaskedInput({ mask: _codePattern, theme: 'metro' });
-		
 		if(_isEditForm){
-			//_codeInput.val(_editedAccountGroup.code);
-			_codeInput.jqxMaskedInput({value: _editedAccountGroup.code})
+			_codeInput.val(_editedAccountGroup.code);
 			_codeInput.jqxInput({disabled: true});
 		}
 		_codeInput.appendTo(_codeInputColumn);
@@ -144,7 +141,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         	_editWindow.jqxWindow('destroy');
         });
         
-//        _codeInput.jqxInput({ theme: 'metro' });
+        _codeInput.jqxInput({ theme: 'metro' });
         _nameInput.jqxInput({ theme: 'metro' });
         _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         

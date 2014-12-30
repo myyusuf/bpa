@@ -12,5 +12,5 @@ BPA.Constant.accounting = {
 	journalUrl : 'sample/journal.json',
 	ledgerUrl : 'sample/ledger.json',
 	balanceSheetUrl : 'sample/balancesheet.json',
-	accountCodePattern : '##-###-###'
+	accountCodePattern : '########'
 };

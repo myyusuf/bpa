@@ -24,7 +24,7 @@ define(["jqxcombobox"], function () {
             }, 
           //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
             beforeLoadComplete: function (records) {
-            	records.splice(0, 0, {code: '', name: '--Please Selectx--'});
+            	records.splice(0, 0, {code: '', name: '--Please Select--'});
                 return records;
             }
         	
