@@ -8,7 +8,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		
 		var _editedAccount = _options.editedAccount || {};
 		
-		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.accountUrl;
+		var _parentComboBoxUrl = _options.parentComboBoxUrl || BPA.Constant.accounting.accountUrl;
 		var _defaultBalanceComboboxUrl = _options.defaultBalanceComboboxUrl || BPA.Constant.accounting.defaultBalanceUrl;
 		
 		var _subscribers = {
@@ -61,11 +61,6 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         };
         var _accountGroupDataAdapter = new $.jqx.dataAdapter(_accountGroupComboSource,{
         	
-        	formatData: function (data) {
-                   data.selfAccountCode = data.code;
-                   return data;
-            }, 
-          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
             beforeLoadComplete: function (records) {
             	records.splice(0, 0, {code: '', name: '--Please Select--'});
                 return records;
@@ -136,37 +131,42 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		var _parentLabel = $('<td>Parent</td>');
 		_parentLabel.appendTo(_newRow);
 		var _parentInputColumn = $('<td></td>');
-		var _parentInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
+		var _parentInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; float: left;"></div>');
 		_parentInput.attr("id", "parentInput" + _randomId);
 		_parentInput.appendTo(_parentInputColumn);
+		$('<span style="color: red; font-weight: bold; float: left; margin-top: 10px; margin-left: 4px;">*</span>').appendTo(_parentInputColumn);
 		_parentInputColumn.appendTo(_newRow);
 		
-        var _comboSource =
+        var _parentComboSource =
         {
             datatype: "json",
             datafields: [
                 { name: 'code' },
                 { name: 'name' }
             ],
-            url: _comboboxUrl
+            url: _parentComboBoxUrl
         };
-        var _dataAdapter = new $.jqx.dataAdapter(_comboSource,{
+        
+        var _parentDataAdapter = {};
+        /*var _parentDataAdapter = new $.jqx.dataAdapter(_parentComboSource,{
         	
         	formatData: function (data) {
                    data.selfAccountCode = data.code;
                    return data;
             }, 
-          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
             beforeLoadComplete: function (records) {
             	records.splice(0, 0, {code: '', name: '--Please Select--'});
                 return records;
             }
         	
-        });
-        var _parentComboBox = _parentInput.jqxComboBox({ selectedIndex: 0, source: _dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
-        	
+        });*/
+        var _parentComboBox = _parentInput.jqxComboBox({ selectedIndex: 0, 
+        	//source: _parentDataAdapter, 
+        	displayMember: "code", valueMember: "code", 
+        	width: 233, height: 21,
+        	promptText: "Select Parent Account...",
         	renderer: function (index, label, value) {
-                var _item = _dataAdapter.records[index];
+                var _item = _parentDataAdapter.records[index];
                 if (_item != null) {
                 	var _label = '';
                 	if(_item.code != ''){
@@ -181,7 +181,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
             },
             
             renderSelectedItem: function(index, item){
-                var _item = _dataAdapter.records[index];
+                var _item = _parentDataAdapter.records[index];
                 if (_item != null) {
                 	
                 	var _label = '';
@@ -213,6 +213,18 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         }
         
 		//------------------------------------------------------
+        
+        _accountGroupComboBox.bind('select', function(event){
+			if (event.args){
+				var _groupCode = event.args.item.value;
+				if(_groupCode){
+					_parentComboBox.jqxComboBox({ disabled: false});
+					_parentComboSource.data = {groupCode: _groupCode, selfAccountCode: _editedAccount.code};
+					_parentDataAdapter = new $.jqx.dataAdapter(_parentComboSource);
+					_parentComboBox.jqxComboBox({source: _parentDataAdapter});
+				}
+			}
+		});   
 		
 		
 		
@@ -315,7 +327,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 326, width: 394,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 328, width: 394,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -344,7 +356,16 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 	                    	}
 	                    	return true;
                     	}
-                     }
+                     },
+                     { input: "#" + _parentInput.attr("id"), message: 'Parent Account is required', action: 'keyup, blur', 
+                     	rule: function(input){
+ 	                    	var _val = _parentComboBox.jqxComboBox('val');
+ 	                    	if(_val==""){
+ 	                    		return false;
+ 	                    	}
+ 	                    	return true;
+                     	}
+                      }
                    
                    ]
         	});
