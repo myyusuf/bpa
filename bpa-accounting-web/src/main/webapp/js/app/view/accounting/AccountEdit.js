@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
+define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, DefaultBalanceComboBox) {
 	
 	var AccountEdit = function(container, options){
 		
@@ -9,6 +9,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _editedAccount = _options.editedAccount || {};
 		
 		var _comboboxUrl = _options.comboboxUrl || BPA.Constant.accounting.accountUrl;
+		var _defaultBalanceComboboxUrl = _options.defaultBalanceComboboxUrl || BPA.Constant.accounting.defaultBalanceUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -258,14 +259,16 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
 		_defaultBalanceInputColumn.appendTo(_newRow);
 		
-        var _defaultBalanceComboSource =
+		var _defaultBalanceComboBox = new DefaultBalanceComboBox(_defaultBalanceInput,{});
+		
+/*        var _defaultBalanceComboSource =
         {
             datatype: "json",
             datafields: [
                 { name: 'code' },
                 { name: 'name' }
             ],
-            url: _comboboxUrl
+            url: _defaultBalanceComboboxUrl
         };
         var _defaultBalanceDataAdapter = new $.jqx.dataAdapter(_defaultBalanceComboSource,{
         	
@@ -302,7 +305,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
                 return '';   
             },
             theme: 'metro'
-        });
+        });*/
         
         _defaultBalanceComboBox.on('bindingComplete', function (event) {
         	
