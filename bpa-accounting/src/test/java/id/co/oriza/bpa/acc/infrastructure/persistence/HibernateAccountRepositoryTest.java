@@ -56,7 +56,13 @@ public class HibernateAccountRepositoryTest {
 		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
 		Collection<Account> allSimilarlyCodedOrNamedAccounts = accountRepository.allSimilarlyCodedOrNamedAccounts("", "", 0, 10);
 		assertEquals(2, allSimilarlyCodedOrNamedAccounts.size());
-		
+	}
+	
+	@Test
+	public void allAccountParents() throws Exception{
+		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
+		Collection<Account> accounts = accountRepository.allAccountParents("", "");
+		assertEquals(0, accounts.size());
 	}
 	
 	protected IDataSet getDataSet(String userDataSet) throws Exception {

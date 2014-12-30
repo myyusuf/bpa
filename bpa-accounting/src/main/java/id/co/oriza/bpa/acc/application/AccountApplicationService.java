@@ -105,6 +105,12 @@ public class AccountApplicationService {
 		
 		return account;
 	}
+	
+	@Transactional(readOnly=true)
+	public Collection<Account> allAccountParents(String groupCode, String selfCode){
+		Collection<Account> accounts = this.accountRepository().allAccountParents(groupCode, selfCode);
+		return accounts;
+	}
 
 	private AccountGroup existingAccountGroup(String anAccountGroupCode) {
 		AccountGroup accountGroup = this.accountGroup(anAccountGroupCode);

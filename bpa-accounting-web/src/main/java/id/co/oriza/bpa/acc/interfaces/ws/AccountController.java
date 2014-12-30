@@ -60,6 +60,29 @@ public class AccountController {
 		return result;
 	}
 	
+	@RequestMapping(value="/accounting/accounts/parents", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> getAccountParentList(@RequestParam(required=false) Map<String, String> params){
+		
+		String groupCode = params.get("groupCode") != null ? params.get("groupCode") : "";
+		String selfAccountCode = params.get("selfAccountCode") != null ? params.get("selfAccountCode") : "";
+		
+		printParamsString(params);
+		
+		List<AccountPresentationModel> accountModels = new ArrayList<AccountPresentationModel>();
+		Collection<Account> accounts = this.accountApplicationService().allAccountParents(groupCode, selfAccountCode);
+		for (Account account : accounts) {
+			AccountPresentationModel accountModel = new AccountPresentationModel(account);
+			accountModels.add(accountModel);
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("data", accountModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
 	@RequestMapping(value="/accounting/accounts", method=RequestMethod.PUT, produces="application/json")
 	public Map<String, Object> changeAccountInfo(@RequestBody(required=false) Map<String, Object> params){
 		

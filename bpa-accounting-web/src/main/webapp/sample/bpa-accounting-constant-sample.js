@@ -9,6 +9,7 @@ BPA.Constant.accounting = {
 	accountGroupUrl : 'service/accounting/accountgroups',
 //	accountUrl : 'sample/account.json',
 	accountUrl : 'service/accounting/accounts',
+	accountParentUrl : 'service/accounting/accounts/parents',
 	journalUrl : 'sample/journal.json',
 	ledgerUrl : 'sample/ledger.json',
 	balanceSheetUrl : 'sample/balancesheet.json',

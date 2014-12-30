@@ -8,7 +8,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		
 		var _editedAccount = _options.editedAccount || {};
 		
-		var _parentComboBoxUrl = _options.parentComboBoxUrl || BPA.Constant.accounting.accountUrl;
+		var _parentComboBoxUrl = _options.parentComboBoxUrl || BPA.Constant.accounting.accountParentUrl;
 		var _defaultBalanceComboboxUrl = _options.defaultBalanceComboboxUrl || BPA.Constant.accounting.defaultBalanceUrl;
 		
 		var _subscribers = {

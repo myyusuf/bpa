@@ -78,4 +78,17 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 		this.session().delete(anAccount);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Account> allAccountParents(String aGroupCode,
+			String aSelfCode) {
+		Query query = this.session().createQuery("from id.co.oriza.bpa.acc.domain.model.Account as _obj_ "
+				+ "where _obj_.group.code = :aGroupCode "
+				+ "and _obj_.code <> :aSelfCode ");
+		query.setString("aGroupCode", aGroupCode);
+		query.setString("aSelfCode", aSelfCode);
+		
+		return query.list();
+	}
+
 }

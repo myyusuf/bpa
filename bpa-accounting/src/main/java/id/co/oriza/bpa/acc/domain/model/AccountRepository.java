@@ -10,5 +10,6 @@ public interface AccountRepository {
 	AccountId nextIdentity();
 	int allSimilarlyCodedOrNamedAccountsSize(String aCode, String aName);
 	void remove(Account account);
+	Collection<Account> allAccountParents(String groupCode, String selfCode);
 
 }
