@@ -260,52 +260,6 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		_defaultBalanceInputColumn.appendTo(_newRow);
 		
 		var _defaultBalanceComboBox = new DefaultBalanceComboBox(_defaultBalanceInput,{});
-		
-/*        var _defaultBalanceComboSource =
-        {
-            datatype: "json",
-            datafields: [
-                { name: 'code' },
-                { name: 'name' }
-            ],
-            url: _defaultBalanceComboboxUrl
-        };
-        var _defaultBalanceDataAdapter = new $.jqx.dataAdapter(_defaultBalanceComboSource,{
-        	
-        	formatData: function (data) {
-                   data.selfAccountCode = data.code;
-                   return data;
-            }, 
-          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
-            beforeLoadComplete: function (records) {
-            	records.splice(0, 0, {code: '', name: '--Please Select--'});
-                return records;
-            }
-        	
-        });
-        var _defaultBalanceComboBox = _defaultBalanceInput.jqxComboBox({ selectedIndex: 0, source: _defaultBalanceDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
-        	
-        	renderer: function (index, label, value) {
-                var _item = _defaultBalanceDataAdapter.records[index];
-                if (_item != null) {
-                	var _label = _item.name;
-                	return _label;
-                }
-                
-                return '';
-            },
-            
-            renderSelectedItem: function(index, item){
-                var _item = _defaultBalanceDataAdapter.records[index];
-                if (_item != null) {
-                	var _label = _item.name;
-                	return _label;
-                }
-                
-                return '';   
-            },
-            theme: 'metro'
-        });*/
         
         _defaultBalanceComboBox.on('bindingComplete', function (event) {
         	

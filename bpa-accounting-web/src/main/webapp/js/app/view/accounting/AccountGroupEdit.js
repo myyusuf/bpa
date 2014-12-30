@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow", "jqxmaskedinput"], function (Observable) {
+define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow", "jqxmaskedinput"], function (Observable, DefaultBalanceComboBox) {
 	
 	var AccountGroupEdit = function(container, options){
 		
@@ -79,51 +79,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
 		_defaultBalanceInputColumn.appendTo(_newRow);
 		
-        var _comboSource =
-        {
-            datatype: "json",
-            datafields: [
-                { name: 'code' },
-                { name: 'name' }
-            ],
-            url: _comboboxUrl
-        };
-        var _dataAdapter = new $.jqx.dataAdapter(_comboSource,{
-        	
-        	formatData: function (data) {
-                   data.selfAccountCode = data.code;
-                   return data;
-            }, 
-          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
-            beforeLoadComplete: function (records) {
-            	records.splice(0, 0, {code: '', name: '--Please Select--'});
-                return records;
-            }
-        	
-        });
-        var _defaultBalanceComboBox = _defaultBalanceInput.jqxComboBox({ selectedIndex: 0, source: _dataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
-        	
-        	renderer: function (index, label, value) {
-                var _item = _dataAdapter.records[index];
-                if (_item != null) {
-                	var _label = _item.name;
-                	return _label;
-                }
-                
-                return '';
-            },
-            
-            renderSelectedItem: function(index, item){
-                var _item = _dataAdapter.records[index];
-                if (_item != null) {
-                	var _label = _item.name;
-                	return _label;
-                }
-                
-                return '';   
-            },
-            theme: 'metro'
-        });
+		var _defaultBalanceComboBox = new DefaultBalanceComboBox(_defaultBalanceInput,{});
         
         _defaultBalanceComboBox.on('bindingComplete', function (event) {
         	
