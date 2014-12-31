@@ -33,7 +33,7 @@ public class AccountGroupPresentationModel {
 		return map;
 	}
 	
-	public boolean isGroup(){
+	public boolean getIsGroup(){
 		return this.accountGroup.isAccountGroup();
 	}
 

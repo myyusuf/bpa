@@ -35,11 +35,18 @@ public class AccountPresentationModel {
 		return code;
 	}
 	
-	public Map<String, String> getAccountGroup(){
+	public Map<String, Object> getAccountGroup(){
 		if( this.account.group() != null){
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("code", this.account.group().code());
 			map.put("name", this.account.group().name());
+			
+			Map<String, String> defaultBalanceMap = new HashMap<String, String>();
+			defaultBalanceMap.put("code", this.account.group().defaultBalance().getCode());
+			defaultBalanceMap.put("name", this.account.group().defaultBalance().getName());
+			
+			map.put("defaultBalance", defaultBalanceMap);
+			
 			return map;
 		}else{
 			return null;
@@ -53,7 +60,7 @@ public class AccountPresentationModel {
 		return map;
 	}
 	
-	public boolean isGroup(){
+	public boolean getIsGroup(){
 		return this.account.isAccountGroup();
 	}
 

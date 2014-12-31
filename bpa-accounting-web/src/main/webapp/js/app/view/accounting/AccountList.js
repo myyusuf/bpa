@@ -22,7 +22,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
                 { name: 'name', type: 'string' },
                 { name: 'description', type: 'string' },
                 { name: 'parentCode', type: 'string' },
-                { name: 'group', type: 'boolean'},
+                { name: 'isGroup', type: 'boolean'},
                 { name: 'accountGroup'},
                 { name: 'defaultBalance'}
             ],
@@ -111,7 +111,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             columns: [
               { text: 'Code', datafield: 'code', width: '33.3%', 
             	  cellsRenderer: function (row, dataField, cellValue, rowData, cellText) {
-            		  if(rowData.group){
+            		  if(rowData.isGroup){
             			  return '<span style="font-weight: bold;">'+ cellValue +'</span>';
             		  }else{
             			  return '<span>'+ cellValue +'</span>';
@@ -156,15 +156,13 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	
         	var _rowData = "";
         	
-        	if("edit" == _menuKey || "delete" == _menuKey){
-        		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
-        		for (var i = 0; i < _selection.length; i++) {
-            		_rowData = _selection[i];
-            	}
+    		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
+    		for (var i = 0; i < _selection.length; i++) {
+        		_rowData = _selection[i];
         	}
         	
 	 		if("add" == _menuKey){
-	 			_showEditPage();
+	 			_showEditPageForCreateAccount(_rowData);
 	 		}else if("edit" == _menuKey){
 	 			_showEditPage(_rowData);
 	 		}else if("delete" == _menuKey){
@@ -181,14 +179,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	
         	var _rowData = "";
         	
-//        	if("edit" == _menuKey || "delete" == _menuKey){
-//        		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
-//        		for (var i = 0; i < _selection.length; i++) {
-//            		_rowData = _selection[i];
-//            	}
-//        	}
+    		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
+    		for (var i = 0; i < _selection.length; i++) {
+        		_rowData = _selection[i];
+        	}
         	
-	 		_showEditPage();
+        	_showEditPageForCreateAccount(_rowData);
         });
         //-----------------------------------
         
@@ -205,7 +201,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
                 _gridContextMenu.jqxMenu('close');
             	_groupGridContextMenu.jqxMenu('close');
             	
-                if(_account.group){
+                if(_account.isGroup){
                 	_groupGridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
                 }else{
                 	_gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
@@ -231,6 +227,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         
         var _showEditPage = function(rowData){
         	Observable.prototype.publish.call(_self, _getAccountFromRowData(rowData), "editrow");
+        }
+        
+        var _showEditPageForCreateAccount = function(rowData){
+        	Observable.prototype.publish.call(_self, _createAccountFromRowData(rowData), "editrow");
         }
         
         var _deleteRow = function(rowData){
@@ -262,6 +262,33 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             		_account.defaultBalance = {};
             		_account.defaultBalance.code = rowData.defaultBalance.code;
             	}
+        	}
+        	
+        	return _account;
+        }
+        
+        var _createAccountFromRowData = function(rowData){
+        	var _account = {};
+        	
+        	if(rowData){
+            	
+            	if(rowData.isGroup){
+            		_account.accountGroup = {};
+            		_account.accountGroup.code = rowData.code;
+            		
+            		_account.defaultBalance = {};
+                	_account.defaultBalance.code = rowData.defaultBalance.code;
+            	}else{
+            		_account.accountGroup = {};
+            		_account.accountGroup.code = rowData.accountGroup.code;
+            		_account.parent = {};
+            		_account.parent.code = rowData.code;
+            		
+            		_account.defaultBalance = {};
+                	_account.defaultBalance.code = rowData.accountGroup.defaultBalance.code;
+            	}
+            	
+            	
         	}
         	
         	return _account;
