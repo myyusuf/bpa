@@ -208,6 +208,10 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         	
         });
         
+        _parentComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _parentInput.attr("id"));
+	    });
+        
         if(_isEditForm){
         	_parentComboBox.jqxComboBox({ disabled: true }); 
         }
