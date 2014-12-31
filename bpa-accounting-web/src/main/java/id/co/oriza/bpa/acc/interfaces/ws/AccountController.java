@@ -28,7 +28,7 @@ public class AccountController {
 	
 	final Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
-	private static final int MAX_LIMIT = 10000;
+	private static final int MAX_LIMIT = 100000;
 	
 	@Autowired
 	private AccountApplicationService accountApplicationService;
