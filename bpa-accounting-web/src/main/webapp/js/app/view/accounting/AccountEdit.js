@@ -222,7 +222,6 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 			if (event.args){
 				var _groupCode = event.args.item.value;
 				if(_groupCode){
-					_parentComboBox.jqxComboBox({ disabled: false});
 					_parentComboSource.data = {groupCode: _groupCode, selfAccountCode: _editedAccount.code};
 					_parentDataAdapter = new $.jqx.dataAdapter(_parentComboSource);
 					_parentComboBox.jqxComboBox({source: _parentDataAdapter});
@@ -238,7 +237,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		var _codeLabel = $('<td>Code</td>');
 		_codeLabel.appendTo(_newRow);
 		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="5" style="float: left;"/>');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="8" style="float: left;"/>');
 		_codeInput.attr("id", "codeInput" + _randomId);
 		if(_isEditForm){
 			_codeInput.val(_editedAccount.code);
@@ -270,9 +269,10 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		var _defaultBalanceLabel = $('<td>Default Balance</td>');
 		_defaultBalanceLabel.appendTo(_newRow);
 		var _defaultBalanceInputColumn = $('<td></td>');
-		var _defaultBalanceInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
+		var _defaultBalanceInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; float: left;"></div>');
 		_defaultBalanceInput.attr("id", "defaultBalanceInput" + _randomId);
 		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
+		$('<span style="color: red; font-weight: bold; float: left; margin-top: 10px; margin-left: 4px;">*</span>').appendTo(_defaultBalanceInputColumn);
 		_defaultBalanceInputColumn.appendTo(_newRow);
 		
 		var _defaultBalanceComboBox = new DefaultBalanceComboBox(_defaultBalanceInput,{});
@@ -292,6 +292,10 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         if(_isEditForm){
         	_defaultBalanceComboBox.jqxComboBox({ disabled: true }); 
         }
+        
+        _defaultBalanceComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _defaultBalanceInput.attr("id"));
+	    });
         
 		//------------------------------------------------------
 		
@@ -373,7 +377,16 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
  	                    	}
  	                    	return true;
                      	}
-                      }
+                      },
+                      { input: "#" + _defaultBalanceInput.attr("id"), message: 'Default balance is required', action: 'keyup, blur', 
+                      	rule: function(input){
+  	                    	var _val = _defaultBalanceComboBox.jqxComboBox('val');
+  	                    	if(_val==""){
+  	                    		return false;
+  	                    	}
+  	                    	return true;
+                      	}
+                       }
                    
                    ]
         	});
