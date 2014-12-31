@@ -157,17 +157,21 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	var _rowData = "";
         	
     		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
-    		for (var i = 0; i < _selection.length; i++) {
-        		_rowData = _selection[i];
-        	}
-        	
-	 		if("add" == _menuKey){
-	 			_showEditPageForCreateAccount(_rowData);
-	 		}else if("edit" == _menuKey){
-	 			_showEditPage(_rowData);
-	 		}else if("delete" == _menuKey){
-	 			_deleteRow(_rowData);
-	 		}
+    		
+    		if(_selection){
+    			for (var i = 0; i < _selection.length; i++) {
+            		_rowData = _selection[i];
+            	}
+            	
+    	 		if("add" == _menuKey){
+    	 			_showEditPageForCreateAccount(_rowData);
+    	 		}else if("edit" == _menuKey){
+    	 			_showEditPage(_rowData);
+    	 		}else if("delete" == _menuKey){
+    	 			_deleteRow(_rowData);
+    	 		}
+    		}
+    		
         });
         
         //Group context menu-----------------
@@ -180,11 +184,14 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
         	var _rowData = "";
         	
     		var _selection = _accountListGrid.jqxTreeGrid('getSelection');
-    		for (var i = 0; i < _selection.length; i++) {
-        		_rowData = _selection[i];
-        	}
-        	
-        	_showEditPageForCreateAccount(_rowData);
+    		if(_selection){
+    			for (var i = 0; i < _selection.length; i++) {
+            		_rowData = _selection[i];
+            	}
+            	
+            	_showEditPageForCreateAccount(_rowData);
+    		}
+    		
         });
         //-----------------------------------
         
