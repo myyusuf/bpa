@@ -237,7 +237,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		var _codeLabel = $('<td>Code</td>');
 		_codeLabel.appendTo(_newRow);
 		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="8" style="float: left;"/>');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px; float: left;"/>');
 		_codeInput.attr("id", "codeInput" + _randomId);
 		if(_isEditForm){
 			_codeInput.val(_editedAccount.code);
@@ -252,7 +252,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
 		var _nameLabel = $('<td>Name</td>');
 		_nameLabel.appendTo(_newRow);
 		var _nameInputColumn = $('<td></td>');
-		var _nameInput = $('<input type="text" class="text-input" maxlength="50" style="float: left;"/>');
+		var _nameInput = $('<input type="text" class="text-input" maxlength="50" style="width: 233px; float: left;"/>');
 		_nameInput.attr("id", "nameInput" + _randomId);
 		if(_isEditForm){
 			_nameInput.val(_editedAccount.name);

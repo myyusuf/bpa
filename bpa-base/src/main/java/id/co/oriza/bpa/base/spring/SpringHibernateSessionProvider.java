@@ -35,13 +35,14 @@ public class SpringHibernateSessionProvider {
 	}
 	
 	public Session session(){
-		Session threadBoundSession = sessionHolder.get();
-		if(threadBoundSession == null){
-			threadBoundSession = this.sessionFactory.openSession();
-			sessionHolder.set(threadBoundSession);
-		}
-		
-		return threadBoundSession;
+//		Session threadBoundSession = sessionHolder.get();
+//		if(threadBoundSession == null){
+//			threadBoundSession = this.sessionFactory.openSession();
+//			sessionHolder.set(threadBoundSession);
+//		}
+//		
+//		return threadBoundSession;
+		return this.sessionFactory.getCurrentSession();
 	}
 
 	public void setSessionFactory(SessionFactory aSessionFactory) {
