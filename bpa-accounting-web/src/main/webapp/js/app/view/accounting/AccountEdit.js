@@ -218,7 +218,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         
 		//------------------------------------------------------
         
-        _accountGroupComboBox.bind('select', function(event){
+        _accountGroupComboBox.bind('change', function(event){
 			if (event.args){
 				var _groupCode = event.args.item.value;
 				if(_groupCode){
