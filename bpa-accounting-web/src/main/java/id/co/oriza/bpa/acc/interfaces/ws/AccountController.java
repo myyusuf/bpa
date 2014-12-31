@@ -5,6 +5,7 @@ import id.co.oriza.bpa.acc.application.ChangeAccountInfoCommand;
 import id.co.oriza.bpa.acc.application.NewAccountCommand;
 import id.co.oriza.bpa.acc.application.RemoveAccountCommand;
 import id.co.oriza.bpa.acc.domain.model.Account;
+import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountParentPresentationModel;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountPresentationModel;
 
 import java.util.ArrayList;
@@ -68,10 +69,10 @@ public class AccountController {
 		
 		printParamsString(params);
 		
-		List<AccountPresentationModel> accountModels = new ArrayList<AccountPresentationModel>();
+		List<AccountParentPresentationModel> accountModels = new ArrayList<AccountParentPresentationModel>();
 		Collection<Account> accounts = this.accountApplicationService().allAccountParents(groupCode, selfAccountCode);
 		for (Account account : accounts) {
-			AccountPresentationModel accountModel = new AccountPresentationModel(account);
+			AccountParentPresentationModel accountModel = new AccountParentPresentationModel(account);
 			accountModels.add(accountModel);
 		}
 		

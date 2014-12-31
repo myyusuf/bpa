@@ -1,9 +1,9 @@
 package id.co.oriza.bpa.acc.interfaces.ws.pm;
 
+import id.co.oriza.bpa.acc.domain.model.Account;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import id.co.oriza.bpa.acc.domain.model.Account;
 
 public class AccountPresentationModel {
 	
@@ -32,6 +32,7 @@ public class AccountPresentationModel {
 		if(this.account.parent() != null){
 			code = this.account.parent().code();
 		}
+		
 		return code;
 	}
 	
