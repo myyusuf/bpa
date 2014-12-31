@@ -6,6 +6,7 @@ import id.co.oriza.bpa.acc.domain.model.AccountRepository;
 import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.ConstraintViolationException;
@@ -82,13 +83,22 @@ public class HibernateAccountRepository extends AbstractHibernateSession impleme
 	@Override
 	public Collection<Account> allAccountParents(String aGroupCode,
 			String aSelfCode) {
+		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.acc.domain.model.Account as _obj_ "
+				+ "where _obj_.code = :aGroupCode ");
+		query.setString("aGroupCode", aGroupCode);
+		
+		List<Account> result = query.list();
+		
+		query = this.session().createQuery("from id.co.oriza.bpa.acc.domain.model.Account as _obj_ "
 				+ "where _obj_.group.code = :aGroupCode "
 				+ "and _obj_.code <> :aSelfCode ");
 		query.setString("aGroupCode", aGroupCode);
 		query.setString("aSelfCode", aSelfCode);
 		
-		return query.list();
+		result.addAll(query.list());
+		
+		return result;
 	}
 
 }
