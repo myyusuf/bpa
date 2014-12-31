@@ -37,7 +37,8 @@ public class AccountController {
 	public Map<String, Object> getAccountList(@RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
-		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+//		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		int limit = MAX_LIMIT;
 		
 		String codeOrNameStartsWith = params.get("codeOrNameStartsWith") != null ? params.get("codeOrNameStartsWith") : "";
 		

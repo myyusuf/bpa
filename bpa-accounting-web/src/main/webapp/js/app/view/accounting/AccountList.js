@@ -60,8 +60,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             source: _dataAdapter,                
             pageable: true,
             pagerMode: 'advanced',
-            showToolbar: true,
+            showToolbar: false,
             toolbarheight: 40,
+            sortable: true,
+            filterable: true,
             renderToolbar: function(toolbar)
             {
             	toolbar.empty();
