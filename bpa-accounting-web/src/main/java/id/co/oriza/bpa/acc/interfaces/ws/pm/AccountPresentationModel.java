@@ -46,6 +46,13 @@ public class AccountPresentationModel {
 		}
 	}
 	
+	public Map<String, String> getDefaultBalance(){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("code", this.account.defaultBalance().getCode());
+		map.put("name", this.account.defaultBalance().getName());
+		return map;
+	}
+	
 	public boolean isGroup(){
 		return this.account.isAccountGroup();
 	}

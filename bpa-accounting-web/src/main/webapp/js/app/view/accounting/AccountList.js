@@ -23,7 +23,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
                 { name: 'description', type: 'string' },
                 { name: 'parentCode', type: 'string' },
                 { name: 'group', type: 'boolean'},
-                { name: 'accountGroup'}
+                { name: 'accountGroup'},
+                { name: 'defaultBalance'}
             ],
             hierarchy:
             {
@@ -256,6 +257,11 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxtreeg
             		_account.parent.name = rowData.parent.name;
             	}
             	_account.parentCode = rowData.parentCode;
+            	
+            	if(rowData.defaultBalance){
+            		_account.defaultBalance = {};
+            		_account.defaultBalance.code = rowData.defaultBalance.code;
+            	}
         	}
         	
         	return _account;

@@ -61,14 +61,14 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         };
         var _accountGroupDataAdapter = new $.jqx.dataAdapter(_accountGroupComboSource,{
         	
-            beforeLoadComplete: function (records) {
+            /*beforeLoadComplete: function (records) {
             	records.splice(0, 0, {code: '', name: '--Please Select--'});
                 return records;
-            }
+            }*/
         	
         });
         var _accountGroupComboBox = _accountGroupInput.jqxComboBox({ selectedIndex: 0, source: _accountGroupDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
-        	
+        	promptText: "Select Account Group...",
         	renderer: function (index, label, value) {
                 var _item = _accountGroupDataAdapter.records[index];
                 if (_item != null) {
@@ -280,7 +280,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         _defaultBalanceComboBox.on('bindingComplete', function (event) {
         	
         	if(_editedAccount.defaultBalance != undefined && _editedAccount.defaultBalance != null){
-        		var _selectedItem = _defaultBalanceComboBox.jqxComboBox('getItemByValue', _editedAccountGroup.defaultBalance.code);
+        		var _selectedItem = _defaultBalanceComboBox.jqxComboBox('getItemByValue', _editedAccount.defaultBalance.code);
             	_defaultBalanceComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
         	
@@ -288,6 +288,10 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         	_editForm.jqxValidator('hide');
         	
         });
+        
+        if(_isEditForm){
+        	_defaultBalanceComboBox.jqxComboBox({ disabled: true }); 
+        }
         
 		//------------------------------------------------------
 		
@@ -394,6 +398,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         	
         	var _accountGroupComboItem = _accountGroupComboBox.jqxComboBox('getSelectedItem');
         	var _parentComboItem = _parentComboBox.jqxComboBox('getSelectedItem');
+        	var _defaultBalanceComboItem = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
         	
         	var _savedData = {};
         	_savedData.code = _codeInput.val();
@@ -405,6 +410,9 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
         	
         	_savedData.parent = {};
         	_savedData.parent.code = _parentComboItem.value;
+        	
+        	_savedData.defaultBalance = {};
+        	_savedData.defaultBalance.code = _defaultBalanceComboItem.value;
         	
         	if(_isEditForm){
         		Observable.prototype.publish.call(_self, _savedData, "updateaccount");
