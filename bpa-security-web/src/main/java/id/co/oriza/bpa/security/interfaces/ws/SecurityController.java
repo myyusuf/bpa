@@ -29,7 +29,7 @@ public class SecurityController {
 	private SecurityApplicationService securityApplicationService;
 	
 	@RequestMapping(value="/security/users", method=RequestMethod.GET, produces="application/json")
-	public Map<String, Object> getAccountGroups(@RequestParam(required=false) Map<String, String> params){
+	public Map<String, Object> getUsers(@RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
 		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
