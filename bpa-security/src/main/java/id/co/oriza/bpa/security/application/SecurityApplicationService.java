@@ -23,6 +23,16 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		Collection<User> users = this.userRepository().allSimilarlyNamedUsers(aName, aStart, aLimit);
 		return users;
 	}
+	
+	@Transactional
+	public User newUserWith(NewUserCommand aCommand){
+		
+		User user = new User(aCommand.getUsername(), "", aCommand.getFirstName(), aCommand.getLastName(), 
+				aCommand.getDescription(), null);
+		this.userRepository().add(user);
+		
+		return user;
+	}
 
 	public UserRepository userRepository() {
 		return userRepository;

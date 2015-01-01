@@ -1,5 +1,6 @@
 package id.co.oriza.bpa.security.interfaces.ws;
 
+import id.co.oriza.bpa.security.application.NewUserCommand;
 import id.co.oriza.bpa.security.application.SecurityApplicationService;
 import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.interfaces.pm.UserPresentationModel;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,6 +53,26 @@ public class SecurityController {
 		
 		result.put("num", usersSize);
 		result.put("data", userModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/users", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createAccountGroup(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("create user");
+		
+		String username = (String) params.get("username");
+		String firstName = (String) params.get("firstName");
+		String lastName = (String) params.get("lastName");
+		String description = (String) params.get("description");
+		
+		NewUserCommand command = new NewUserCommand(username, firstName, lastName, description);
+		this.securityApplicationService().newUserWith(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("success", true);
 		
 		return result;

@@ -6,6 +6,8 @@ import id.co.oriza.bpa.security.domain.model.UserRepository;
 
 import java.util.Collection;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,16 @@ import org.slf4j.LoggerFactory;
 public class HibernateUserRepository extends AbstractHibernateSession implements UserRepository{
 	
 	final Logger logger = LoggerFactory.getLogger(HibernateUserRepository.class);
+	
+	@Override
+	public void add(User aUser) {
+		try{
+			this.session().saveOrUpdate(aUser);
+		}catch(ConstraintViolationException e){
+			throw new IllegalStateException("User is not unique.", e);
+		}
+
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

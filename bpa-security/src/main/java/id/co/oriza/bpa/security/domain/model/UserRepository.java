@@ -4,6 +4,7 @@ import java.util.Collection;
 
 public interface UserRepository {
 	
+	void add(User user);
 	public Collection<User> allSimilarlyNamedUsers(String aName, int aStart, int aLimit);
 
 }
