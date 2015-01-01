@@ -4,7 +4,7 @@ define(["notificationWindow", "view/security/UserList", "view/security/UserEdit"
 		
 		var _self = this;
 		
-		var _userListUrl = BPA.Constant.security.userUrl;
+		var _userListUrl = BPA.Constant.security.usersUrl;
 		
 		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
             width: 250, position: "top-right", opacity: 0.9,

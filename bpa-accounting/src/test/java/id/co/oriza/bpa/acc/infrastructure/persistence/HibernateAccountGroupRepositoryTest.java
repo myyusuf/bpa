@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountGroupRepository;
+import id.co.oriza.bpa.base.persistence.RepositoryHibernateTest;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.ext.mysql.MySqlConnection;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:bpa-accounting-ctx-test.xml")
-public class HibernateAccountGroupRepositoryTest {
+public class HibernateAccountGroupRepositoryTest extends RepositoryHibernateTest{
 	
 	@Autowired
 	private DataSource dataSource;
@@ -42,6 +44,7 @@ public class HibernateAccountGroupRepositoryTest {
 	
 	@Before
     public void setUp() throws Exception {
+		super.setUp();
         connection = new MySqlConnection(dataSource.getConnection(), null);
         Statement statement = connection.getConnection().createStatement();
         statement.addBatch("SET FOREIGN_KEY_CHECKS=0");
@@ -49,6 +52,11 @@ public class HibernateAccountGroupRepositoryTest {
         DatabaseOperation.DELETE_ALL.execute(connection, getDataSet(DATASET_FILE_EMPTY));
         statement.addBatch("SET FOREIGN_KEY_CHECKS=1");
         statement.executeBatch();
+    }
+	
+	@After
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
 	@Test
