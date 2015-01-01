@@ -6,12 +6,12 @@ define(["jQuery", "jqxcore"], function () {
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
 			
-			require(['./view/security/UserList'], function (UserList) {
+			require(['./composer/security/UserComposer'], function (UserComposer) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxGrid('destroy');
 				}
 				
-            	var userListPage = new UserList(gridContainer);
+            	var _userComposer = new UserComposer(gridContainer);
             });
 		});
 		

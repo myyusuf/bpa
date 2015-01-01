@@ -135,19 +135,15 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	closeOnClick: true,
         	arrow: false,
             rules: [
-                    { input: "#" + _usernameInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _firstNameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _lastNameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + _usernameInput.attr("id"), message: 'Username is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _firstNameInput.attr("id"), message: 'First Name is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _lastNameInput.attr("id"), message: 'Last Name is required', action: 'keyup, blur', rule: 'required' }
                    ]
         	});
         
         _editForm.on('validationSuccess', function (event) { 
         	_saveUser();
         }); 
-        
-    	_defaultBalanceComboBox.on('change', function (event){
-            _editForm.jqxValidator('validateInput', "#" + _defaultBalanceInput.attr("id"));
-	    });
         
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
@@ -162,8 +158,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         });
         
         var _saveUser = function(){
-        	
-        	var _item = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
         	
         	var _savedData = {};
         	

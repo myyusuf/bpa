@@ -110,7 +110,7 @@
         },
         "jqxgrid": {
             export: "$",
-            deps: ['jQuery', "jqxcore", "jqxdropdownlist"]
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar"]
         },
         "jqxdata": {
             export: "$",
