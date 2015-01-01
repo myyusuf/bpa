@@ -2,6 +2,7 @@ package id.co.oriza.bpa.security.infrastructure.persistence;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import id.co.oriza.bpa.base.persistence.RepositoryHibernateTest;
 import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.domain.model.UserRepository;
 
@@ -18,6 +19,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.ext.mysql.MySqlConnection;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:bpa-security-ctx-test.xml")
-public class HibernateUserRepositoryTest {
+public class HibernateUserRepositoryTest extends RepositoryHibernateTest{
 	
 	@Autowired
 	private DataSource dataSource;
@@ -42,6 +44,7 @@ public class HibernateUserRepositoryTest {
 	
 	@Before
     public void setUp() throws Exception {
+		super.setUp();
         connection = new MySqlConnection(dataSource.getConnection(), null);
         Statement statement = connection.getConnection().createStatement();
         statement.addBatch("SET FOREIGN_KEY_CHECKS=0");
@@ -51,11 +54,16 @@ public class HibernateUserRepositoryTest {
         statement.executeBatch();
     }
 	
+	@After
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
+	
 	@Test
 	public void testAllSimilarlyNamedUsers() throws Exception{
 		DatabaseOperation.INSERT.execute(connection, getDataSet(DATASET_FILE_CREATE));
-		Collection<User> allSimilarlyCodedOrNamedAccounts = userRepository.allSimilarlyNamedUsers("", 0, 1);
-		assertEquals(1, allSimilarlyCodedOrNamedAccounts.size());
+		Collection<User> allSimilarlyNamedUsers = userRepository.allSimilarlyNamedUsers("", 0, 1);
+		assertEquals(1, allSimilarlyNamedUsers.size());
 		
 	}
 	
