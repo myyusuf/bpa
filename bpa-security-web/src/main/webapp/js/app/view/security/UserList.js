@@ -154,13 +154,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	var _user = {};
         	
         	if(rowData){
-        		_user.code = rowData.code;
-            	_user.name = rowData.name;
+        		_user.username = rowData.username;
+            	_user.firstName = rowData.firstName;
+            	_user.lastName = rowData.lastName;
             	_user.description = rowData.description;
-            	if(rowData.defaultBalance){
-            		_user.defaultBalance = {};
-            		_user.defaultBalance.code = rowData.defaultBalance.code;
-            	}
         	}
         	
         	return _user;
