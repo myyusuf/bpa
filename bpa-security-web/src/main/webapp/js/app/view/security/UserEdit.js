@@ -38,7 +38,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _usernameLabel = $('<td>Username</td>');
 		_usernameLabel.appendTo(_newRow);
 		var _usernameInputColumn = $('<td></td>');
-		var _usernameInput = $('<input type="text" class="text-input" maxlength="15" />');
+		var _usernameInput = $('<input type="text" class="text-input" maxlength="15" style="width: 233px; float: left;"/>');
 		_usernameInput.attr("id", "usernameInput" + _randomId);
 		
 		if(_isEditForm){
@@ -46,6 +46,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 			_usernameInput.jqxInput({disabled: true});
 		}
 		_usernameInput.appendTo(_usernameInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_usernameInputColumn);
 		_usernameInputColumn.appendTo(_newRow);
 		
 		
@@ -54,7 +55,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _passwordLabel = $('<td>Password</td>');
 		_passwordLabel.appendTo(_newRow);
 		var _passwordInputColumn = $('<td></td>');
-		var _passwordInput = $('<input type="text" class="text-input" maxlength="8" />');
+		var _passwordInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px; float: left;"/>');
 		_passwordInput.attr("id", "passwordInput" + _randomId);
 		if(_isEditForm){
 			_passwordInput.val(_editedUser.password);
@@ -69,13 +70,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _firstNameLabel = $('<td>First Name</td>');
 		_firstNameLabel.appendTo(_newRow);
 		var _firstNameInputColumn = $('<td></td>');
-		var _firstNameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		var _firstNameInput = $('<input type="text" class="text-input" maxlength="50" style="width: 233px; float: left;"/>');
 		_firstNameInput.attr("id", "firstNameInput" + _randomId);
 		if(_isEditForm){
 			_firstNameInput.val(_editedUser.firstName);
 		}
 		
 		_firstNameInput.appendTo(_firstNameInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_firstNameInputColumn);
 		_firstNameInputColumn.appendTo(_newRow);
 		
 		_newRow = $('<tr></tr>');
@@ -83,13 +85,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _lastNameLabel = $('<td>Last Name</td>');
 		_lastNameLabel.appendTo(_newRow);
 		var _lastNameInputColumn = $('<td></td>');
-		var _lastNameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		var _lastNameInput = $('<input type="text" class="text-input" maxlength="50" style="width: 233px; float: left;"/>');
 		_lastNameInput.attr("id", "lastNameInput" + _randomId);
 		if(_isEditForm){
 			_lastNameInput.val(_editedUser.lastName);
 		}
 		
 		_lastNameInput.appendTo(_lastNameInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_lastNameInputColumn);
 		_lastNameInputColumn.appendTo(_newRow);
 
 		
@@ -131,7 +134,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 297, width: 375,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -143,6 +146,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         });
         
         _usernameInput.jqxInput({ theme: 'metro' });
+        _passwordInput.jqxInput({ theme: 'metro' });
         _firstNameInput.jqxInput({ theme: 'metro' });
         _lastNameInput.jqxInput({ theme: 'metro' });
         _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
@@ -181,6 +185,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         		_savedData.username = _editedUser.username;
         	}else{
         		_savedData.username = _usernameInput.val();
+        		_savedData.password = _passwordInput.val();
         	}
         	_savedData.firstName = _firstNameInput.val();
         	_savedData.lastName = _lastNameInput.val();

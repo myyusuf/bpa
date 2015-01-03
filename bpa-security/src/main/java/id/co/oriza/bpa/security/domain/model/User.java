@@ -43,6 +43,20 @@ public class User extends ConcurrencySafeEntity {
 		this.setLastName(aLastName);
 		this.setDescription(aDescription);
 	}
+	
+	public void changePassword(String aCurrentPassword, String aChangedPassword) {
+        this.assertArgumentNotEmpty(
+                aCurrentPassword,
+                "Current and new password must be provided.");
+
+        this.assertArgumentEquals(
+                this.password(),
+                this.asEncryptedValue(aCurrentPassword),
+                "Current password not confirmed.");
+
+        this.protectPassword(aCurrentPassword, aChangedPassword);
+
+    }
 
 	public String firstName() {
 		return firstName;
@@ -115,7 +129,7 @@ public class User extends ConcurrencySafeEntity {
         return encryptedValue;
     }
 
-	protected String getPassword() {
+	protected String password() {
 		return password;
 	}
 	
