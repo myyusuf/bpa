@@ -27,7 +27,9 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 	@Transactional
 	public User newUserWith(NewUserCommand aCommand){
 		
-		User user = new User(aCommand.getUsername(), "", aCommand.getFirstName(), aCommand.getLastName(), 
+		String randomPassword = "admin123!";
+		
+		User user = new User(aCommand.getUsername(), randomPassword, aCommand.getFirstName(), aCommand.getLastName(), 
 				aCommand.getDescription(), null);
 		this.userRepository().add(user);
 		

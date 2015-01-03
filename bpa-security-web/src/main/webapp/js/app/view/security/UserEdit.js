@@ -48,6 +48,22 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_usernameInput.appendTo(_usernameInputColumn);
 		_usernameInputColumn.appendTo(_newRow);
 		
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _passwordLabel = $('<td>Password</td>');
+		_passwordLabel.appendTo(_newRow);
+		var _passwordInputColumn = $('<td></td>');
+		var _passwordInput = $('<input type="text" class="text-input" maxlength="8" />');
+		_passwordInput.attr("id", "passwordInput" + _randomId);
+		if(_isEditForm){
+			_passwordInput.val(_editedUser.password);
+		}
+		
+		_passwordInput.appendTo(_passwordInputColumn);
+		_passwordInputColumn.appendTo(_newRow);
+		
+		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
 		var _firstNameLabel = $('<td>First Name</td>');

@@ -65,6 +65,8 @@
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	
 	<bean id="sessionProvider" class="id.co.oriza.bpa.base.spring.SpringHibernateSessionProvider" autowire="byName"/>
+	<bean id="domainRegistry" class="id.co.oriza.bpa.security.domain.model.DomainRegistry" autowire="byName"/>
+	<bean id="passwordService" class="id.co.oriza.bpa.security.domain.model.PasswordService" autowire="byName"/>
 	<bean id="securityApplicationService" class="id.co.oriza.bpa.security.application.SecurityApplicationService" autowire="byName"/>
 	<bean id="encryptionService" class="id.co.oriza.bpa.security.infrastructure.services.MD5EncryptionService" autowire="byName"/>
 	<bean id="hibernateUserRepository" class="id.co.oriza.bpa.security.infrastructure.persistence.HibernateUserRepository" autowire="byName"/>

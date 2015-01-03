@@ -8,7 +8,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		var _options = options || {};
 		
-		var _url = BPA.Constant.security.userUrl;
+		var _url = BPA.Constant.security.usersUrl;
 		
 		var _subscribers = {
 			any:[]
