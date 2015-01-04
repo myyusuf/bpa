@@ -6,7 +6,7 @@ public interface RoleRepository {
 	
 	void add(Role role);
 	public Collection<Role> allSimilarlyNamedRoles(String aName, int aStart, int aLimit);
-	Role roleWithName(String aRolename);
+	Role roleWithCode(String aRolename);
 	void remove(Role aRole);
 	long allSimilarlyNamedRolesSize(String aName);
 
