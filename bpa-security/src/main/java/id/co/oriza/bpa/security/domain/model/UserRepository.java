@@ -6,5 +6,6 @@ public interface UserRepository {
 	
 	void add(User user);
 	public Collection<User> allSimilarlyNamedUsers(String aName, int aStart, int aLimit);
+	User userWithUsername(String aUsername);
 
 }

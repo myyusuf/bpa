@@ -136,5 +136,17 @@ public class User extends ConcurrencySafeEntity {
 	public void changeContactInformation(ContactInformation aContactInformation) {
 		this.setContactInformation(aContactInformation);
 	}
+	
+	public void changeFirstName(String aFirstName) {
+		this.setFirstName(aFirstName);
+	}
+
+	public void changeLastName(String aLastName) {
+		this.setLastName(aLastName);
+	}
+
+	public void changeDescription(String aDescription) {
+		this.setDescription(aDescription);
+	}
 
 }

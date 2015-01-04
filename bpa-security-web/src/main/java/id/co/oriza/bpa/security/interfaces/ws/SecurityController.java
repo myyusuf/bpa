@@ -1,5 +1,6 @@
 package id.co.oriza.bpa.security.interfaces.ws;
 
+import id.co.oriza.bpa.security.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.security.application.NewUserCommand;
 import id.co.oriza.bpa.security.application.SecurityApplicationService;
 import id.co.oriza.bpa.security.domain.model.User;
@@ -70,6 +71,28 @@ public class SecurityController {
 		
 		NewUserCommand command = new NewUserCommand(username, firstName, lastName, description);
 		this.securityApplicationService().newUserWith(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/users", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changeUserInfo(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("update user");
+		
+		printParams(params);
+		
+		String username = (String) params.get("username");
+		String firstName = (String) params.get("firstName");
+		String lastName = (String) params.get("lastName");
+		String description = (String) params.get("description");
+		
+		ChangeUserInfoCommand command = new ChangeUserInfoCommand(username, firstName, lastName, description);
+		this.securityApplicationService().changeUserInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		

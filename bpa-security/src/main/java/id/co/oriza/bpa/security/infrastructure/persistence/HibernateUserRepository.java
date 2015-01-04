@@ -46,4 +46,14 @@ public class HibernateUserRepository extends AbstractHibernateSession implements
 		return query.list();
 	}
 
+	
+	@Override
+	public User userWithUsername(String aUsername) {
+		Query query = this.session().createQuery("from id.co.oriza.bpa.security.domain.model.User as _obj_ "
+				+ "where _obj_.username = :aUsername ");
+		query.setString("aUsername", aUsername);
+		return (User) query.uniqueResult();
+	}
+
+
 }

@@ -35,6 +35,28 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		
 		return user;
 	}
+	
+	@Transactional
+	public void changeUserInfo(ChangeUserInfoCommand aCommand){
+		User user = this.existingUser(aCommand.getUsername());
+		user.changeFirstName(aCommand.getFirstName());
+		user.changeLastName(aCommand.getLastName());
+		user.changeDescription(aCommand.getDescription());
+	}
+	
+	private User existingUser(String aUsername) {
+		User user = this.user(aUsername);
+		
+		if(user == null){
+			throw new IllegalArgumentException("User does not exist for : " + aUsername);
+		}
+		return user;
+	}
+
+	private User user(String aUsername) {
+		User user = this.userRepository().userWithUsername(aUsername);
+		return user;
+	}
 
 	public UserRepository userRepository() {
 		return userRepository;
