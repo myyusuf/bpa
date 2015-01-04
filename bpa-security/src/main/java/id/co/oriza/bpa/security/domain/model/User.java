@@ -36,7 +36,7 @@ public class User extends ConcurrencySafeEntity {
 	public User(String aUsername, String aPassword, String aFirstName,
 			String aLastName, String aDescription,
 			ContactInformation aContactInformation) {
-		super();
+		this();
 		this.setUsername(aUsername);
 		this.protectPassword("", aPassword);
 		this.setFirstName(aFirstName);
