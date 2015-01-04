@@ -6,7 +6,7 @@
 			<generator class="native"/>
 		</id>
 		<version name="concurrencyVersion" column="CONCURRENCY_VERSION" type="int" />
-		<property name="username" column="USERNAME" type="java.lang.String" />
+		<property name="username" column="USERNAME" type="java.lang.String" unique="true"/>
 		<property name="password" column="PASSWORD" type="java.lang.String" />
 		<property name="firstName" column="FIRST_NAME" type="java.lang.String" />
 		<property name="lastName" column="LAST_NAME" type="java.lang.String" />

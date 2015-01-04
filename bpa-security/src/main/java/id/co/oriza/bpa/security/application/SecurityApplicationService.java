@@ -24,6 +24,12 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		return users;
 	}
 	
+	@Transactional(readOnly=true)
+	public long allSimilarlyNamedUsersSize(String aName){
+		long usersSize = this.userRepository().allSimilarlyNamedUsersSize(aName);
+		return usersSize;
+	}
+	
 	@Transactional
 	public User newUserWith(NewUserCommand aCommand){
 		
@@ -42,6 +48,12 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		user.changeFirstName(aCommand.getFirstName());
 		user.changeLastName(aCommand.getLastName());
 		user.changeDescription(aCommand.getDescription());
+	}
+	
+	@Transactional
+	public void removeUser(RemoveUserCommand aCommand){
+		User user = this.existingUser(aCommand.getUsername());
+		this.userRepository().remove(user);
 	}
 	
 	private User existingUser(String aUsername) {

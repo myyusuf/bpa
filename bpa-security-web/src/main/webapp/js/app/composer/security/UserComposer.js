@@ -92,7 +92,7 @@ define(["notificationWindow", "view/security/UserList", "view/security/UserEdit"
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete User', 
-			content: "Are you sure want to delete this user : " + deletedUser.code + " (" + deletedUser.name + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this user : " + deletedUser.username + " (" + deletedUser.firstName + ") ?", type: 'info', onOk: _onOk});
 			
 			
 		};

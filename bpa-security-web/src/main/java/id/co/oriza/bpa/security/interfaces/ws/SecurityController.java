@@ -2,6 +2,7 @@ package id.co.oriza.bpa.security.interfaces.ws;
 
 import id.co.oriza.bpa.security.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.security.application.NewUserCommand;
+import id.co.oriza.bpa.security.application.RemoveUserCommand;
 import id.co.oriza.bpa.security.application.SecurityApplicationService;
 import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.interfaces.pm.UserPresentationModel;
@@ -48,7 +49,7 @@ public class SecurityController {
 			userModels.add(userModel);
 		}
 		
-		int usersSize = 1;
+		long usersSize = this.securityApplicationService().allSimilarlyNamedUsersSize(nameStartsWith);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
@@ -96,6 +97,22 @@ public class SecurityController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/users", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deleteUser(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("delete user");
+		
+		String username = (String) params.get("username");
+		
+		RemoveUserCommand command = new RemoveUserCommand(username);
+		this.securityApplicationService().removeUser(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;

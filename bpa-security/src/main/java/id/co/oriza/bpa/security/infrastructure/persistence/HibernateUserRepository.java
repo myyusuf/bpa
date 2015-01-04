@@ -45,6 +45,22 @@ public class HibernateUserRepository extends AbstractHibernateSession implements
 		
 		return query.list();
 	}
+	
+	@Override
+	public long allSimilarlyNamedUsersSize(String aName) {
+		logger.debug("allSimilarlyNamedUsers");
+		
+		if(aName.endsWith("%")){
+			throw new IllegalArgumentException("Name prefixes must not include %");
+		}
+		
+		Query query = this.session().createQuery("select count(_obj_) from id.co.oriza.bpa.security.domain.model.User as _obj_ "
+				+ "where _obj_.firstName like :aName "
+				+ "or _obj_.lastName like :aName ");
+		query.setString("aName", aName + "%");
+		
+		return (Long)query.uniqueResult();
+	}
 
 	
 	@Override
@@ -55,5 +71,9 @@ public class HibernateUserRepository extends AbstractHibernateSession implements
 		return (User) query.uniqueResult();
 	}
 
+	@Override
+	public void remove(User aUser) {
+		this.session().delete(aUser);
+	}
 
 }
