@@ -70,5 +70,6 @@
 	<bean id="securityApplicationService" class="id.co.oriza.bpa.security.application.SecurityApplicationService" autowire="byName"/>
 	<bean id="encryptionService" class="id.co.oriza.bpa.security.infrastructure.services.MD5EncryptionService" autowire="byName"/>
 	<bean id="hibernateUserRepository" class="id.co.oriza.bpa.security.infrastructure.persistence.HibernateUserRepository" autowire="byName"/>
+	<bean id="hibernateRoleRepository" class="id.co.oriza.bpa.security.infrastructure.persistence.HibernateRoleRepository" autowire="byName"/>
 
 </beans>

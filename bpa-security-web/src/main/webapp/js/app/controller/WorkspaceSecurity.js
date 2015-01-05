@@ -19,12 +19,12 @@ define(["jQuery", "jqxcore"], function () {
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
 			
-			require(['./view/security/RoleList'], function (RoleList) {
+			require(['./composer/security/RoleComposer'], function (RoleComposer) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxGrid('destroy');
 				}
 				
-            	var roleListPage = new RoleList(gridContainer);
+            	var _roleComposer = new RoleComposer(gridContainer);
             });
 		});
 		

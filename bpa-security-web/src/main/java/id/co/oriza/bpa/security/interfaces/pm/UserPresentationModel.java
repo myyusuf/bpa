@@ -7,6 +7,7 @@ public class UserPresentationModel {
 	private User user;
 
 	public UserPresentationModel(User user) {
+		super();
 		this.user = user;
 	}
 

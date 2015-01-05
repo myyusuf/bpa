@@ -11,6 +11,7 @@ public class Role extends ConcurrencySafeEntity {
 
 	private String code;
 	private String name;
+	private String description;
 
 	public String code() {
 		return code;
@@ -28,14 +29,23 @@ public class Role extends ConcurrencySafeEntity {
 		this.name = aName;
 	}
 
-	public Role(String aCode, String aName) {
+	public Role(String aCode, String aName, String aDescription) {
 		this();
 		this.setCode(aCode);
 		this.setName(aName);
+		this.setDescription(aDescription);
 	}
 	
 	public Role() {
 		super();
+	}
+
+	public String description() {
+		return description;
+	}
+
+	public void setDescription(String aDescription) {
+		this.description = aDescription;
 	}
 
 }

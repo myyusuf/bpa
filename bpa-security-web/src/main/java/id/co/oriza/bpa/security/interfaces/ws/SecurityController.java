@@ -4,7 +4,9 @@ import id.co.oriza.bpa.security.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.security.application.NewUserCommand;
 import id.co.oriza.bpa.security.application.RemoveUserCommand;
 import id.co.oriza.bpa.security.application.SecurityApplicationService;
+import id.co.oriza.bpa.security.domain.model.Role;
 import id.co.oriza.bpa.security.domain.model.User;
+import id.co.oriza.bpa.security.interfaces.pm.RolePresentationModel;
 import id.co.oriza.bpa.security.interfaces.pm.UserPresentationModel;
 
 import java.util.ArrayList;
@@ -113,6 +115,34 @@ public class SecurityController {
 		this.securityApplicationService().removeUser(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/roles", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> getRoles(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		String nameStartsWith = params.get("nameStartsWith") != null ? params.get("nameStartsWith") : "";
+		
+		printParamsString(params);
+		
+		List<RolePresentationModel> roleModels = new ArrayList<RolePresentationModel>();
+		Collection<Role> roles = this.securityApplicationService().allSimilarlyNamedRoles(nameStartsWith, start, limit);
+		for (Role role : roles) {
+			RolePresentationModel roleModel = new RolePresentationModel(role);
+			roleModels.add(roleModel);
+		}
+		
+		long rolesSize = this.securityApplicationService().allSimilarlyNamedRolesSize(nameStartsWith);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", rolesSize);
+		result.put("data", roleModels);
 		result.put("success", true);
 		
 		return result;

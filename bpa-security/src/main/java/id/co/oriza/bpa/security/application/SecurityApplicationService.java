@@ -1,5 +1,7 @@
 package id.co.oriza.bpa.security.application;
 
+import id.co.oriza.bpa.security.domain.model.Role;
+import id.co.oriza.bpa.security.domain.model.RoleRepository;
 import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.domain.model.UserRepository;
 
@@ -17,6 +19,9 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Transactional(readOnly=true)
 	public Collection<User> allSimilarlyNamedUsers(String aName, int aStart, int aLimit){
@@ -56,6 +61,18 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		this.userRepository().remove(user);
 	}
 	
+	@Transactional(readOnly=true)
+	public Collection<Role> allSimilarlyNamedRoles(String aName, int aStart, int aLimit){
+		Collection<Role> roles = this.roleRepository().allSimilarlyNamedRoles(aName, aStart, aLimit);
+		return roles;
+	}
+	
+	@Transactional(readOnly=true)
+	public long allSimilarlyNamedRolesSize(String aName){
+		long rolesSize = this.roleRepository().allSimilarlyNamedRolesSize(aName);
+		return rolesSize;
+	}
+	
 	private User existingUser(String aUsername) {
 		User user = this.user(aUsername);
 		
@@ -72,6 +89,10 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 
 	public UserRepository userRepository() {
 		return userRepository;
+	}
+
+	public RoleRepository roleRepository() {
+		return roleRepository;
 	}
 
 }

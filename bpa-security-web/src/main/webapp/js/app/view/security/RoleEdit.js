@@ -104,7 +104,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 297, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 238, width: 375,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -123,8 +123,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	closeOnClick: true,
         	arrow: false,
             rules: [
-                    { input: "#" + _codeInput.attr("id"), message: 'Rolename is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _nameInput.attr("id"), message: 'First Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + _codeInput.attr("id"), message: 'Code is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
                    ]
         	});
         
