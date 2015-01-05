@@ -73,6 +73,22 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		return rolesSize;
 	}
 	
+	@Transactional
+	public Role newRoleWith(NewRoleCommand aCommand){
+		
+		Role role = new Role(aCommand.getCode(), aCommand.getName(), aCommand.getDescription());
+		this.roleRepository().add(role);
+		
+		return role;
+	}
+	
+	@Transactional
+	public void changeRoleInfo(ChangeRoleInfoCommand aCommand){
+		Role role = this.existingRole(aCommand.getCode());
+		role.changeName(aCommand.getName());
+		role.changeDescription(aCommand.getDescription());
+	}
+	
 	private User existingUser(String aUsername) {
 		User user = this.user(aUsername);
 		
@@ -81,10 +97,24 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		}
 		return user;
 	}
+	
+	private Role existingRole(String aCode) {
+		Role role = this.role(aCode);
+		
+		if(role == null){
+			throw new IllegalArgumentException("Role does not exist for : " + aCode);
+		}
+		return role;
+	}
 
 	private User user(String aUsername) {
 		User user = this.userRepository().userWithUsername(aUsername);
 		return user;
+	}
+	
+	private Role role(String aCode) {
+		Role role = this.roleRepository().roleWithCode(aCode);
+		return role;
 	}
 
 	public UserRepository userRepository() {

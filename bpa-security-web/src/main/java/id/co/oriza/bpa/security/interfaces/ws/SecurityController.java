@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.security.interfaces.ws;
 
 import id.co.oriza.bpa.security.application.ChangeUserInfoCommand;
+import id.co.oriza.bpa.security.application.NewRoleCommand;
 import id.co.oriza.bpa.security.application.NewUserCommand;
 import id.co.oriza.bpa.security.application.RemoveUserCommand;
 import id.co.oriza.bpa.security.application.SecurityApplicationService;
@@ -63,7 +64,7 @@ public class SecurityController {
 	}
 	
 	@RequestMapping(value="/security/users", method=RequestMethod.POST, produces="application/json")
-	public Map<String, Object> createAccountGroup(@RequestBody(required=false) Map<String, Object> params){
+	public Map<String, Object> createUser(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("create user");
 		
@@ -143,6 +144,25 @@ public class SecurityController {
 		
 		result.put("num", rolesSize);
 		result.put("data", roleModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/roles", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createRole(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("create role");
+		
+		String code = (String) params.get("code");
+		String name = (String) params.get("name");
+		String description = (String) params.get("description");
+		
+		NewRoleCommand command = new NewRoleCommand(code, name, description);
+		this.securityApplicationService().newRoleWith(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("success", true);
 		
 		return result;

@@ -44,8 +44,16 @@ public class Role extends ConcurrencySafeEntity {
 		return description;
 	}
 
-	public void setDescription(String aDescription) {
+	protected void setDescription(String aDescription) {
 		this.description = aDescription;
+	}
+	
+	public void changeName(String aName) {
+		this.setName(aName);
+	}
+	
+	public void changeDescription(String aDescription) {
+		this.setDescription(aDescription);
 	}
 
 }
