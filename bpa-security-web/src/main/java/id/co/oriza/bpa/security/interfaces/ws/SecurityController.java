@@ -1,8 +1,10 @@
 package id.co.oriza.bpa.security.interfaces.ws;
 
+import id.co.oriza.bpa.security.application.ChangeRoleInfoCommand;
 import id.co.oriza.bpa.security.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.security.application.NewRoleCommand;
 import id.co.oriza.bpa.security.application.NewUserCommand;
+import id.co.oriza.bpa.security.application.RemoveRoleCommand;
 import id.co.oriza.bpa.security.application.RemoveUserCommand;
 import id.co.oriza.bpa.security.application.SecurityApplicationService;
 import id.co.oriza.bpa.security.domain.model.Role;
@@ -163,6 +165,43 @@ public class SecurityController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/roles", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changeRoleInfo(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("update role");
+		
+		printParams(params);
+		
+		String code = (String) params.get("code");
+		String name = (String) params.get("name");
+		String description = (String) params.get("description");
+		
+		ChangeRoleInfoCommand command = new ChangeRoleInfoCommand(code, name, description);
+		this.securityApplicationService().changeRoleInfo(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/security/roles", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deleteRole(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("delete role");
+		
+		String code = (String) params.get("code");
+		
+		RemoveRoleCommand command = new RemoveRoleCommand(code);
+		this.securityApplicationService().removeRole(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;

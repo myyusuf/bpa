@@ -14,7 +14,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		Observable.call(_self, _subscribers);
 		
-		var _isEditForm = _editedRole.rolename != undefined && _editedRole.rolename != null;
+		var _isEditForm = _editedRole.code != undefined && _editedRole.code != null;
 		
 		var _randomId = BPA.Util.getRandomId("roleEdit");
         

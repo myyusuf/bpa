@@ -92,7 +92,7 @@ define(["notificationWindow", "view/security/RoleList", "view/security/RoleEdit"
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Role', 
-			content: "Are you sure want to delete this role : " + deletedRole.rolename + " (" + deletedRole.firstName + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this role : " + deletedRole.code + " (" + deletedRole.name + ") ?", type: 'info', onOk: _onOk});
 			
 			
 		};

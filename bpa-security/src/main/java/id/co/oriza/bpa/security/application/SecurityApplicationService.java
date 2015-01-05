@@ -89,6 +89,12 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		role.changeDescription(aCommand.getDescription());
 	}
 	
+	@Transactional
+	public void removeRole(RemoveRoleCommand aCommand){
+		Role role = this.existingRole(aCommand.getCode());
+		this.roleRepository().remove(role);
+	}
+	
 	private User existingUser(String aUsername) {
 		User user = this.user(aUsername);
 		
