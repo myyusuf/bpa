@@ -74,8 +74,13 @@ public class SecurityController {
 		String firstName = (String) params.get("firstName");
 		String lastName = (String) params.get("lastName");
 		String description = (String) params.get("description");
+		@SuppressWarnings("unchecked")
+		List<String> roleCodes = (List<String>) params.get("roles");
+		for (String roleCode : roleCodes) {
+			System.out.println("roleCode : " + roleCode);
+		}
 		
-		NewUserCommand command = new NewUserCommand(username, firstName, lastName, description);
+		NewUserCommand command = new NewUserCommand(username, firstName, lastName, description, roleCodes);
 		this.securityApplicationService().newUserWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -103,7 +108,7 @@ public class SecurityController {
 			System.out.println("roleCode : " + roleCode);
 		}
 		
-		ChangeUserInfoCommand command = new ChangeUserInfoCommand(username, firstName, lastName, description);
+		ChangeUserInfoCommand command = new ChangeUserInfoCommand(username, firstName, lastName, description, roleCodes);
 		this.securityApplicationService().changeUserInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();

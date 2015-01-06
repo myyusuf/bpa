@@ -6,6 +6,9 @@ import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.domain.model.UserRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +42,18 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 	public User newUserWith(NewUserCommand aCommand){
 		
 		String randomPassword = "admin123!";
+		List<String> roleCodes = aCommand.getRoleCodes();
+		
+		Set<Role> roles = new HashSet<Role>();
+		if(roleCodes != null){
+			for (String roleCode : roleCodes) {
+				Role role = this.roleRepository().roleWithCode(roleCode);
+				roles.add(role);
+			}
+		}
 		
 		User user = new User(aCommand.getUsername(), randomPassword, aCommand.getFirstName(), aCommand.getLastName(), 
-				aCommand.getDescription(), null);
+				aCommand.getDescription(), null, roles);
 		this.userRepository().add(user);
 		
 		return user;
@@ -53,6 +65,17 @@ final Logger logger = LoggerFactory.getLogger(SecurityApplicationService.class);
 		user.changeFirstName(aCommand.getFirstName());
 		user.changeLastName(aCommand.getLastName());
 		user.changeDescription(aCommand.getDescription());
+		
+		List<String> roleCodes = aCommand.getRoleCodes();
+		Set<Role> roles = new HashSet<Role>();
+		if(roleCodes != null){
+			for (String roleCode : roleCodes) {
+				Role role = this.roleRepository().roleWithCode(roleCode);
+				roles.add(role);
+			}
+		}
+		
+		user.changeRoles(roles);
 	}
 	
 	@Transactional

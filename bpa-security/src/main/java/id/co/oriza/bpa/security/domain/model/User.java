@@ -41,13 +41,14 @@ public class User extends ConcurrencySafeEntity {
 
 	public User(String aUsername, String aPassword, String aFirstName,
 			String aLastName, String aDescription,
-			ContactInformation aContactInformation) {
+			ContactInformation aContactInformation, Set<Role> aRoles) {
 		this();
 		this.setUsername(aUsername);
 		this.protectPassword("", aPassword);
 		this.setFirstName(aFirstName);
 		this.setLastName(aLastName);
 		this.setDescription(aDescription);
+		this.roles().addAll(aRoles);
 	}
 	
 	public void changePassword(String aCurrentPassword, String aChangedPassword) {
@@ -161,6 +162,11 @@ public class User extends ConcurrencySafeEntity {
 
 	protected void setRoles(Set<Role> aRoles) {
 		this.roles = aRoles;
+	}
+
+	public void changeRoles(Set<Role> aRoles) {
+		this.roles().clear();
+		this.roles().addAll(aRoles);
 	}
 
 }
