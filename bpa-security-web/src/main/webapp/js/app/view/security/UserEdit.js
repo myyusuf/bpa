@@ -109,10 +109,15 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         _roleComboBox.on('bindingComplete', function (event) {
         	
-        	/*if(_editedUser.role != undefined && _editedUser.role != null){
-        		var _selectedItem = _roleComboBox.jqxComboBox('getItemByValue', _editedUser.role.code);
-            	_roleComboBox.jqxComboBox('selectItem', _selectedItem);
-        	}*/
+        	var _roles = _editedUser.roles;
+        	
+        	if(_roles != undefined && _roles != null){
+        		for(var i = 0; i < _roles.length; i++){
+        			var _selectedItem = _roleComboBox.jqxComboBox('getItemByValue', _roles[i].code);
+                	_roleComboBox.jqxComboBox('selectItem', _selectedItem);
+        		}
+        		
+        	}
         	
 //        	Sample multiple Set
         	

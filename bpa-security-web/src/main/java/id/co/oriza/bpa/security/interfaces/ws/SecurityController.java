@@ -97,6 +97,12 @@ public class SecurityController {
 		String lastName = (String) params.get("lastName");
 		String description = (String) params.get("description");
 		
+		@SuppressWarnings("unchecked")
+		List<String>roleCodes = (List<String>) params.get("roles");
+		for (String roleCode : roleCodes) {
+			System.out.println("roleCode : " + roleCode);
+		}
+		
 		ChangeUserInfoCommand command = new ChangeUserInfoCommand(username, firstName, lastName, description);
 		this.securityApplicationService().changeUserInfo(command);
 		

@@ -23,7 +23,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
                 { name: 'username', type: 'string' },
                 { name: 'firstName', type: 'string' },
                 { name: 'lastName', type: 'string' },
-                { name: 'description', type: 'string' }
+                { name: 'description', type: 'string' },
+                { name: 'roles' }
             ],
             id: 'username',
             beforeprocessing: function (data) {
@@ -158,6 +159,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	_user.firstName = rowData.firstName;
             	_user.lastName = rowData.lastName;
             	_user.description = rowData.description;
+            	_user.roles = rowData.roles;
         	}
         	
         	return _user;
