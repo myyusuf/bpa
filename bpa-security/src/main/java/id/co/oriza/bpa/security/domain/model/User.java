@@ -1,5 +1,8 @@
 package id.co.oriza.bpa.security.domain.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
 public class User extends ConcurrencySafeEntity {
@@ -16,6 +19,8 @@ public class User extends ConcurrencySafeEntity {
 	private String description;
 	
 	private ContactInformation contactInformation;
+	
+	private Set<Role> roles;
 
 	public String username() {
 		return username;
@@ -29,8 +34,9 @@ public class User extends ConcurrencySafeEntity {
 		this.password = aPassword;
 	}
 	
-	public User(){
+	protected User(){
 		super();
+		this.setRoles(new HashSet<Role>(0));
 	}
 
 	public User(String aUsername, String aPassword, String aFirstName,
@@ -147,6 +153,14 @@ public class User extends ConcurrencySafeEntity {
 
 	public void changeDescription(String aDescription) {
 		this.setDescription(aDescription);
+	}
+
+	public Set<Role> roles() {
+		return roles;
+	}
+
+	protected void setRoles(Set<Role> aRoles) {
+		this.roles = aRoles;
 	}
 
 }
