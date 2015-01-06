@@ -6,7 +6,7 @@ define(["jqxcombobox"], function () {
 		var _options = options || {};
 		
 		var _simpleComboBoxUrl = _options.simpleComboBoxUrl;
-		if(_simpleComboBoxUrl){
+		if(!_simpleComboBoxUrl){
 			throw "Parameter simpleComboBoxUrl is required";
 		}
 		
@@ -33,7 +33,7 @@ define(["jqxcombobox"], function () {
         	
         });
         var _simpleComboBox = container.jqxComboBox({ selectedIndex: 0, source: _simpleDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
-        	
+        	multiSelect: true,
         	renderer: function (index, label, value) {
                 var _item = _simpleDataAdapter.records[index];
                 if (_item != null) {

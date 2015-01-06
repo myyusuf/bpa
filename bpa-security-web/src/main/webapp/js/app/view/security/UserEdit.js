@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
+define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleComboBox) {
 	
 	var UserEdit = function(container, options){
 		
@@ -94,6 +94,30 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_lastNameInput.appendTo(_lastNameInputColumn);
 		$(BPA.Constant.requiredFieldSymbol).appendTo(_lastNameInputColumn);
 		_lastNameInputColumn.appendTo(_newRow);
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _roleLabel = $('<td>Roles</td>');
+		_roleLabel.appendTo(_newRow);
+		var _roleInputColumn = $('<td></td>');
+		var _roleInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
+		_roleInput.attr("id", "roleInput" + _randomId);
+		_roleInput.appendTo(_roleInputColumn);
+		_roleInputColumn.appendTo(_newRow);
+		
+		var _roleComboBox = new SimpleComboBox(_roleInput,{simpleComboBoxUrl: BPA.Constant.security.rolesUrl});
+        
+        _roleComboBox.on('bindingComplete', function (event) {
+        	
+        	/*if(_editedUser.role != undefined && _editedUser.role != null){
+        		var _selectedItem = _roleComboBox.jqxComboBox('getItemByValue', _editedUser.role.code);
+            	_roleComboBox.jqxComboBox('selectItem', _selectedItem);
+        	}*/
+        	
+        	//to close the validation message on combobox when form first loaded
+        	_editForm.jqxValidator('hide');
+        	
+        });
 
 		
 		_newRow = $('<tr></tr>');
@@ -108,6 +132,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		}
 		_descriptionInput.appendTo(_descriptionInputColumn);
 		_descriptionInputColumn.appendTo(_newRow);
+		
+		
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
@@ -134,7 +160,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 297, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 330, width: 375,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
