@@ -37,6 +37,7 @@ public class HibernateUserRepository extends AbstractHibernateSession implements
 		}
 		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.security.domain.model.User as _obj_ "
+				+ "left join fetch _obj_.roles _roles_ "
 				+ "where _obj_.firstName like :aName "
 				+ "or _obj_.lastName like :aName ");
 		query.setString("aName", aName + "%");

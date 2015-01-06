@@ -114,6 +114,25 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
             	_roleComboBox.jqxComboBox('selectItem', _selectedItem);
         	}*/
         	
+//        	Sample multiple Set
+        	
+//        	$("#jqxComboBox").jqxComboBox('selectItem', 'United States');
+//          $("#jqxComboBox").jqxComboBox('selectItem', 'Germany');
+        	
+//        	Sample multiple Get
+        	
+//        	$("#jqxComboBox").on('change', function (event) {
+//                var items = $("#jqxComboBox").jqxComboBox('getSelectedItems');
+//                var selectedItems = "Selected Items: ";
+//                $.each(items, function (index) {
+//                    selectedItems += this.label;
+//                    if (items.length - 1 != index) {
+//                        selectedItems += ", ";
+//                    }
+//                });
+//                $("#log").text(selectedItems);
+//            });
+        	
         	//to close the validation message on combobox when form first loaded
         	_editForm.jqxValidator('hide');
         	
@@ -216,6 +235,15 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         	_savedData.firstName = _firstNameInput.val();
         	_savedData.lastName = _lastNameInput.val();
         	_savedData.description = _descriptionInput.val();
+        	
+        	var _roles = [];
+        	
+        	var _items = _roleComboBox.jqxComboBox('getSelectedItems');
+        	$.each(_items, function (index) {
+        		_roles.push(this.value);
+        	});
+        	
+        	_savedData.roles = _roles;
         	
         	if(_isEditForm){
         		Observable.prototype.publish.call(_self, _savedData, "updateuser");
