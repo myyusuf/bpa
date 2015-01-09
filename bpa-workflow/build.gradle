@@ -33,7 +33,9 @@ dependencies {
 			"$springGroup:spring-webmvc:$springVersion",
 			"$springGroup:spring-test:$springVersion",
 			"org.hibernate:hibernate-annotations:3.5.6-Final",
-			"org.hibernate:hibernate-validator:4.3.1.Final"
+			"org.hibernate:hibernate-validator:4.3.1.Final",
+			"org.activiti:activiti-engine:5.15.1",
+			"org.activiti:activiti-spring:5.15.1"
 			
 			
 	runtime "commons-dbcp:commons-dbcp:1.4",
