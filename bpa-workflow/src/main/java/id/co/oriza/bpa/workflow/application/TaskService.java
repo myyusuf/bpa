@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.repository.Deployment;
+
 public interface TaskService {
 	
 	List<ProcessDefinition> getProcessDefinitions(int start, int limit);
@@ -18,6 +20,6 @@ public interface TaskService {
 	InputStream getWorkflowDiagram(String processDefinitionId,
 			String processInstanceId);
 
-	void getDeployments();
+	List<Deployment> getDeployments();
 
 }

@@ -30,15 +30,15 @@ public class TaskServiceActiviti implements TaskService {
 	private RuntimeService runtimeService;
 
 	@Override
-	public void getDeployments(){
+	public List<Deployment> getDeployments(){
 		
-		//TODO For later purpose
+		List<Deployment> deployments = processEngine.getRepositoryService().createDeploymentQuery().list();
 		
-		List<Deployment> list = processEngine.getRepositoryService().createDeploymentQuery().list();
-		
-		for (Deployment deployment : list) {
+		for (Deployment deployment : deployments) {
 			System.out.println(deployment.getId());
 		}
+		
+		return deployments;
 	}
 
 	@Override
