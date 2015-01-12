@@ -20,9 +20,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
 public class TaskServiceActiviti implements TaskService {
 	
 	@Autowired
@@ -31,6 +29,7 @@ public class TaskServiceActiviti implements TaskService {
 	@Autowired
 	private RuntimeService runtimeService;
 
+	@Override
 	public void getDeployments(){
 		
 		//TODO For later purpose

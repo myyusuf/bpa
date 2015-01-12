@@ -18,4 +18,6 @@ public interface TaskService {
 	InputStream getWorkflowDiagram(String processDefinitionId,
 			String processInstanceId);
 
+	void getDeployments();
+
 }
