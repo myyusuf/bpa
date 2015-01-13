@@ -23,6 +23,14 @@
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
         "jqxdata": "../jqwidgets/3.5.0/jqxdata",
         "jqxslider": "../jqwidgets/3.5.0/jqxslider",
+        "jqxtreegrid": "../jqwidgets/3.5.0/jqxtreegrid",
+        "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
+        "jqxwindow": "../jqwidgets/3.5.0/jqxwindow",
+        "jqxinput": "../jqwidgets/3.5.0/jqxinput",
+        "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
+        "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
+        "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
+        "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
         "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
         
         "notificationWindow": "../app/component/base/NotificationWindow",
@@ -104,13 +112,37 @@
         },
         "jqxgrid": {
             export: "$",
-            deps: ['jQuery', "jqxcore", "jqxdropdownlist"]
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar"]
         },
         "jqxdata": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },
-        "jqxslider": {
+        "jqxtreegrid": {
+            export: "$",
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar", "jqxdatatable"]
+        },
+        "jqxdatatable": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxwindow": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxinput": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxvalidator": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxcombobox": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxnotification": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },

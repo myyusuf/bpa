@@ -43,7 +43,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         {
             width: '100%',
             height: '100%',
-            source: dataAdapter,                
+            source: _dataAdapter,                
             pageable: true,
             autoheight: false,
             sortable: true,
@@ -58,7 +58,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	pagesizeoptions: ['5', '10', '20', '100'],
         	virtualmode: true,
         	rendergridrows: function () {
-                return dataAdapter.records;
+                return _dataAdapter.records;
             },
             showtoolbar: true,
             toolbarheight: 40,
