@@ -63,9 +63,15 @@ buildscript {
 	}
 }
 
-task copyTask(type: Copy) {
+task copyWebFiles(type: Copy) {
 	from 'src/main/webapp'
 	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-workflow-web-1.0.war')
+	exclude 'WEB-INF'
+}
+
+task copyClassFiles(type: Copy) {
+	from 'build/classes/main'
+	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-workflow-web-1.0.war/WEB-INF/classes')
 	exclude 'WEB-INF'
 }
 
