@@ -2,6 +2,7 @@
     paths: {
         "jQuery": "../jquery/1.11.1/jquery.min",
         "tinypubsub": "../tinypubsub/ba-tiny-pubsub",
+        "i18next": "../i18next/i18next-1.7.7.min",
         "jqxcore": "../jqwidgets/3.5.0/jqxcore",
         "jqxtabs": "../jqwidgets/3.5.0/jqxtabs",
         "jqxbuttons": "../jqwidgets/3.5.0/jqxbuttons",
@@ -22,11 +23,18 @@
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
         "jqxdata": "../jqwidgets/3.5.0/jqxdata",
         "jqxslider": "../jqwidgets/3.5.0/jqxslider",
-        "bpmn/Bpmn" : "../bpmnjs/bpmn.min"
+        "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
+        
+        "notificationWindow": "../app/component/base/NotificationWindow",
+        "bpaObservable": "../app/component/base/Observable"
     },
     //waitSeconds: 60,
     shim: {
     	"tinypubsub": {
+            export: "$",
+            deps: ['jQuery']
+        },
+        "i18next": {
             export: "$",
             deps: ['jQuery']
         },
@@ -105,6 +113,12 @@
         "jqxslider": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
+        },
+        "notificationWindow": {
+            export: "NotificationWindow"
+        },
+        "bpaObservable": {
+            export: "Observable"
         }
     },
     packages: [

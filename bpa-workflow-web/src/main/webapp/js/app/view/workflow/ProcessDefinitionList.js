@@ -1,10 +1,22 @@
-define(["jQuery", "jqxcore"], function () {
+define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
+        ], function (Observable) {
 	
-	var ProcessDefinitionList = function(container){
+	var ProcessDefinitionList = function(container, options){
 		
-		var url = BPA.Constant.workflow.processDefinitionsUrl;
-        
-        var source =
+		var _self = this;
+		
+		var _options = options || {};
+		
+		var _url = BPA.Constant.workflow.processDefinitionsUrl;
+		
+		var _subscribers = {
+			any:[]
+		};
+		
+		Observable.call(_self, _subscribers);
+		
+        var _source =
         {
             datatype: "json",
             datafields: [
@@ -12,12 +24,12 @@ define(["jQuery", "jqxcore"], function () {
             ],
             id: 'code',
             beforeprocessing: function (data) {
-                source.totalrecords = data.num;
+                _source.totalrecords = data.num;
             },
-            url: url
+            url: _url
         };
         
-        var dataAdapter = new $.jqx.dataAdapter(source, {
+        var _dataAdapter = new $.jqx.dataAdapter(_source, {
             downloadComplete: function (data, status, xhr) { 
             },
             loadComplete: function (data) { 
@@ -27,7 +39,7 @@ define(["jQuery", "jqxcore"], function () {
             loadError: function (xhr, status, error) { }
         });
         
-        container.jqxGrid(
+        var _processDefinitionListGrid = container.jqxGrid(
         {
             width: '100%',
             height: '100%',
@@ -75,7 +87,15 @@ define(["jQuery", "jqxcore"], function () {
             }
         });
         
-        container.css({marginLeft: "-2px", borderTop: "0px", borderBottom: "0px", marginTop: "-1px"});
+        var _showAddDiagramPage = function(rowData){
+        	Observable.prototype.publish.call(_self, {}, "adddiagram");
+        }
+        
+        this.refreshGrid = function(){
+        	_processDefinitionListGrid.jqxGrid('updatebounddata');
+        }
+        
+        inheritPrototype(ProcessDefinitionList, Observable);
         
 	}
 

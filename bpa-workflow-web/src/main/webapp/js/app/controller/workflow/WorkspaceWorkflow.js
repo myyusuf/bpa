@@ -6,12 +6,12 @@ define(["jQuery", "jqxcore"], function () {
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);
 			
-			require(['./view/workflow/ProcessDefinitionList'], function (ProcessDefinitionList) {
+			require(['./composer/workflow/ProcessDefinitionComposer'], function (ProcessDefinitionComposer) {
 				if(container.children()[0] != undefined){
 					$(container.children()[0]).jqxGrid('destroy');
 				}
 				
-            	var processDefinitionListPage = new ProcessDefinitionList(gridContainer);
+            	var _processDefinitionComposer = new ProcessDefinitionComposer(gridContainer);
             });
 		});
 		
