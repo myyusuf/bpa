@@ -82,12 +82,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
                 _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
                            
                 _addButton.click(function(event){
-                	_showEditPage();
+                	_showAddDiagramPage();
                 });
             }
         });
         
-        var _showAddDiagramPage = function(rowData){
+        var _showAddDiagramPage = function(){
         	Observable.prototype.publish.call(_self, {}, "adddiagram");
         }
         
@@ -95,9 +95,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	_processDefinitionListGrid.jqxGrid('updatebounddata');
         }
         
-        inheritPrototype(ProcessDefinitionList, Observable);
-        
 	}
+	
+	inheritPrototype(ProcessDefinitionList, Observable);
 
     return ProcessDefinitionList;
     

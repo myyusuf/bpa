@@ -21,6 +21,15 @@ define(["notificationWindow", "view/workflow/ProcessDefinitionList", "view/workf
 		var _processDefinitionList = new ProcessDefinitionList(container, _options);
 		
 		
+		var _onAddDiagram = function(){
+			
+			//Consider always new instance
+			var _processDefinitionUpload = new ProcessDefinitionUpload(container, {});
+			_processDefinitionUpload.open();
+		};
+		_processDefinitionList.subscribe(_onAddDiagram, "adddiagram");
+		
+		
 		var _sendData = function(data, requestType, onSuccess, onError){
 			$.ajax({
 			    url: _processDefinitonListUrl,
