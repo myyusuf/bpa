@@ -52,6 +52,16 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		_fileInput.appendTo(_fileInputColumn);
 		_fileInputColumn.appendTo(_newRow);
+		
+		var _files;
+		_fileInput.on('change', function(event){
+			_files = event.target.files;
+			var data = new FormData();
+		    $.each(_files, function(key, value)
+		    {
+		        data.append(key, value);
+		    });
+		});
         
         
         _editWindow.jqxWindow('resizable', true);
