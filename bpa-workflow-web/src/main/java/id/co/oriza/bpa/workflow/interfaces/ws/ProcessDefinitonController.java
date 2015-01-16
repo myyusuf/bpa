@@ -1,5 +1,10 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,6 +43,7 @@ public class ProcessDefinitonController {
 				
 				MultipartFile file = multipartRequest.getFile(fileName);
 				System.out.println("file.getName() : " + file.getName());
+				writeFile(file);
 			}
 			result.put("success", true);
 		}catch(Exception e){
@@ -46,6 +52,43 @@ public class ProcessDefinitonController {
 		}
 		
 		return result;
+	}
+	
+	private void writeFile(MultipartFile multipartFile) {
+
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		
+		String extension = ".txt";
+		if("image/jpeg".equals(multipartFile.getContentType())){
+			extension = ".jpg";
+		}
+		
+		try {
+			inputStream = multipartFile.getInputStream();
+
+			String userImageFolder = "E:\\tests\\bpaupload\\result";
+			File newFile = new File(userImageFolder + extension);
+			if (!newFile.exists()) {
+				newFile.createNewFile();
+			}
+			outputStream = new FileOutputStream(userImageFolder + extension);
+			int read = 0;
+			byte[] bytes = new byte[256];
+
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+			
+			System.out.println("end write file");
+			
+			outputStream.flush();
+			outputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
