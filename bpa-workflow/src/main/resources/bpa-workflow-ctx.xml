@@ -32,12 +32,12 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/bpa_phase_1?autoReconnect=true" />
+		<property name="url" value="jdbc:mysql://localhost:3306/bpa_phase_1_test?autoReconnect=true" />
 		<property name="username" value="root" />
 		<property name="password" value="admin" />
 	</bean>
 	
-	<!-- <bean id="sessionFactory" 
+	<bean id="sessionFactory" 
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
@@ -56,7 +56,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/> -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	
 	<bean id="sessionProvider" class="id.co.oriza.bpa.base.spring.SpringHibernateSessionProvider" autowire="byName"/>
 	<bean id="taskServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.TaskServiceActiviti" autowire="byName"/>

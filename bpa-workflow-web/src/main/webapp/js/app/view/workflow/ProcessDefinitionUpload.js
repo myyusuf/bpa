@@ -44,6 +44,16 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
+		var _descriptionLabel = $('<td>Description</td>');
+		_descriptionLabel.appendTo(_newRow);
+		var _descriptionInputColumn = $('<td></td>');
+		var _descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
+		_descriptionInput.attr("id", "descriptionInput" + _randomId);
+		_descriptionInput.appendTo(_descriptionInputColumn);
+		_descriptionInputColumn.appendTo(_newRow);
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
 		var _fileLabel = $('<td>BPMN File</td>');
 		_fileLabel.appendTo(_newRow);
 		var _fileInputColumn = $('<td></td>');
@@ -56,11 +66,33 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _files;
 		_fileInput.on('change', function(event){
 			_files = event.target.files;
-			var data = new FormData();
+		});
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		
+		var _saveButtonLabel = $('<td></td>');
+		_saveButtonLabel.appendTo(_newRow);
+		var _buttonColumn = $('<td colspan="2"></td>');
+		var _saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
+		_saveButton.appendTo(_buttonColumn);
+		
+		var _cancelButton = $('<input type="button" value="Cancel"/>');
+		_cancelButton.appendTo(_buttonColumn);
+		
+		_buttonColumn.appendTo(_newRow);
+		
+		_saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        
+        _saveButton.click(function(event){
+        	var _formData = new FormData();
 		    $.each(_files, function(key, value)
 		    {
-		        data.append(key, value);
+		    	_formData.append(key, value);
 		    });
+		    
+		    _sendData(_formData, 'POST', function(){console.log('success');}, null);
 		});
         
         
@@ -71,7 +103,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 220, width: 347,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -90,6 +122,28 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_editWindow.jqxWindow('close');
         	_editWindow.jqxWindow('destroy');
         }
+        
+        var _sendData = function(data, requestType, onSuccess, onError){
+			$.ajax({
+			    url: 'service/workflow/processdefinitions',
+			    type: requestType,
+			    data: data,
+			    cache: false,
+		        dataType: 'json',
+		        processData: false, // Don't process the files
+		        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+			    beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+			    success: function(result) {
+			    	onSuccess(result);
+			    },
+			    error: function(jqXHR, status, error){
+			    	onError(jqXHR.status, error);
+			    }
+			});
+		};
 		
 	}
 	
