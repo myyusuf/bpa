@@ -132,10 +132,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		        dataType: 'json',
 		        processData: false, // Don't process the files
 		        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-			    beforeSend: function(xhr) {
-		            xhr.setRequestHeader("Accept", "application/json");
-		            xhr.setRequestHeader("Content-Type", "application/json");
-		        },
+			    
 			    success: function(result) {
 			    	onSuccess(result);
 			    },
