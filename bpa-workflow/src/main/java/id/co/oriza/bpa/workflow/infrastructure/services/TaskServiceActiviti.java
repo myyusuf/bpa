@@ -28,11 +28,28 @@ public class TaskServiceActiviti implements TaskService {
 
 	@Autowired
 	private RuntimeService runtimeService;
+	
+	RepositoryService repositoryService;
+	
+	@Override
+	public void createDeployment(String resourceName, InputStream inputStream) {
+		repositoryService = processEngine.getRepositoryService();
+		repositoryService.createDeployment()
+				.addInputStream(resourceName, inputStream)
+				.deploy();
+	}
 
 	@Override
-	public List<Deployment> getDeployments(){
+	public void deleteDeployment(String deploymentId) {
+		repositoryService = processEngine.getRepositoryService();
+		repositoryService.deleteDeployment(deploymentId);
 		
-		List<Deployment> deployments = processEngine.getRepositoryService().createDeploymentQuery().list();
+	}
+
+	@Override
+	public List<Deployment> allDeployments(int start, int limit){
+		
+		List<Deployment> deployments = processEngine.getRepositoryService().createDeploymentQuery().listPage(start, limit);
 		
 		for (Deployment deployment : deployments) {
 			System.out.println(deployment.getId());
@@ -40,9 +57,15 @@ public class TaskServiceActiviti implements TaskService {
 		
 		return deployments;
 	}
+	
+	@Override
+	public Long allDeploymentsSize() {
+		long count = processEngine.getRepositoryService().createDeploymentQuery().count();
+		return count;
+	}
 
 	@Override
-	public List<ProcessDefinition> getProcessDefinitions(int start, int limit) {
+	public List<ProcessDefinition> allProcessDefinitions(int start, int limit) {
 		List<ProcessDefinition> processList = new ArrayList<ProcessDefinition>();
 		
 		List<org.activiti.engine.repository.ProcessDefinition> processDefinitionList = processEngine.getRepositoryService()
@@ -56,7 +79,7 @@ public class TaskServiceActiviti implements TaskService {
 	}
 
 	@Override
-	public Long getProcessDefinitionsCount() {
+	public Long allProcessDefinitionsSize() {
 		long count = processEngine.getRepositoryService()
 		.createProcessDefinitionQuery().count();
 		return count;
@@ -128,6 +151,6 @@ public class TaskServiceActiviti implements TaskService {
 //			getHighLightedFlows(processDefinition.getActivities(), historicActivityInstanceList, highLightedFlows);
 		 
 	}
-	
+
 
 }

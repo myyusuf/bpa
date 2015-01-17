@@ -10,9 +10,10 @@ import org.activiti.engine.repository.Deployment;
 
 public interface TaskService {
 	
-	List<ProcessDefinition> getProcessDefinitions(int start, int limit);
+	
+	List<ProcessDefinition> allProcessDefinitions(int start, int limit);
 
-	Long getProcessDefinitionsCount();
+	Long allProcessDefinitionsSize();
 
 	String startProcess(String userId, String processInstanceKey,
 			Map<String, Object> params);
@@ -20,6 +21,9 @@ public interface TaskService {
 	InputStream getWorkflowDiagram(String processDefinitionId,
 			String processInstanceId);
 
-	List<Deployment> getDeployments();
+	List<Deployment> allDeployments(int start, int limit);
+	Long allDeploymentsSize();
+	void deleteDeployment(String deploymentId);
+	void createDeployment(String resourceName, InputStream inputStream);
 
 }

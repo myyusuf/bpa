@@ -97,6 +97,11 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		    _sendData(_formData, 'POST', function(){console.log('success');}, null);
 		});
         
+        _cancelButton.click(function(event){
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
+        });
+        
         
         _editWindow.jqxWindow('resizable', true);
         _editWindow.jqxWindow('draggable', true);
@@ -124,8 +129,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         }
         
         this.close = function(){
-        	_editWindow.jqxWindow('close');
-        	_editWindow.jqxWindow('destroy');
+        	_self.close();
         }
         
         var _sendData = function(data, requestType, onSuccess, onError){
