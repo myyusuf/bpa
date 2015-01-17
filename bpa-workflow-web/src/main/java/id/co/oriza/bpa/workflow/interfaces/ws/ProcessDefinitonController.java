@@ -1,17 +1,25 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
+import id.co.oriza.bpa.workflow.application.TaskService;
+import id.co.oriza.bpa.workflow.interfaces.ws.pm.DeploymentPresentationModel;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.activiti.engine.repository.Deployment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +31,39 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @Controller
 public class ProcessDefinitonController {
 	
-	@RequestMapping(value="/workflow/processdefinitions", method=RequestMethod.POST, produces="application/json")
-	public Map<String, Object> saveUser(@RequestParam(required=false) Map<String, String> params, HttpServletRequest request){
+	private static final int MAX_LIMIT = 10000;
+	
+	@Autowired
+	private TaskService taskService;
+
+	@RequestMapping(value="/workflow/deployments", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> allDeployments(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		printParamsString(params);
+		
+		List<DeploymentPresentationModel> deploymentModels = new ArrayList<DeploymentPresentationModel>();
+		Collection<Deployment> deployments = this.taskService().allDeployments(start, limit);
+		for (Deployment deployment : deployments) {
+			DeploymentPresentationModel deploymentModel = new DeploymentPresentationModel(deployment);
+			deploymentModels.add(deploymentModel);
+		}
+		
+		Long deploymentsSize = this.taskService().allDeploymentsSize();
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", deploymentsSize);
+		result.put("data", deploymentModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/deployments", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createDeployment(@RequestParam(required=false) Map<String, String> params, HttpServletRequest request){
 //		System.out.println(ServletFileUpload.isMultipartContent(request));
 		ServletContext servletContext = request.getSession().getServletContext();
 		
@@ -90,6 +129,24 @@ public class ProcessDefinitonController {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void printParams(Map<String, Object> params){
+		List<String> listKeys = new ArrayList<String>(params.keySet());
+		for (String key : listKeys) {
+			System.out.println("key : " + key + ", value : " + params.get(key));
+		}
+	}
+	
+	private void printParamsString(Map<String, String> params){
+		List<String> listKeys = new ArrayList<String>(params.keySet());
+		for (String key : listKeys) {
+			System.out.println("key : " + key + ", value : " + params.get(key));
+		}
+	}
+
+	public TaskService taskService() {
+		return taskService;
 	}
 
 }
