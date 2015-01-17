@@ -28,7 +28,7 @@ public class TaskServiceActivitiTest {
 	
 	@Test
 	public void testGetDeployments(){
-		List<Deployment> deployments = taskService.getDeployments(0, 1);
+		List<Deployment> deployments = taskService.allDeployments(0, 1);
 		assertNotNull(deployments);
 	}
 	
