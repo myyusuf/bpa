@@ -31,7 +31,8 @@ public class ProcessDefinitonController {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(servletContext);
 		MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
 		
-//		String username = (String) multipartRequest.getParameter("username");
+		String code = (String) multipartRequest.getParameter("code");
+		System.out.println("code : " + code);
 		
 		
 		Map<String, Object> result = new HashMap<String, Object>();

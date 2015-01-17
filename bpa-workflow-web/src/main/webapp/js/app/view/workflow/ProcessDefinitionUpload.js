@@ -35,7 +35,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _codeLabel = $('<td>Code</td>');
 		_codeLabel.appendTo(_newRow);
 		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="8" />');
+		var _codeInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px;"/>');
 		_codeInput.attr("id", "codeInput" + _randomId);
 		
 		_codeInput.appendTo(_codeInputColumn);
@@ -92,6 +92,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		    	_formData.append(key, value);
 		    });
 		    
+		    _formData.append("code", _codeInput.val());
+		    
 		    _sendData(_formData, 'POST', function(){console.log('success');}, null);
 		});
         
@@ -109,6 +111,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             },
             theme: 'metro'
         });
+        
+        _codeInput.jqxInput({ theme: 'metro' });
+        _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
         _editWindow.on('close', function (event) { 
         	_editWindow.jqxWindow('destroy');
@@ -132,13 +137,25 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		        dataType: 'json',
 		        processData: false, // Don't process the files
 		        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-			    
-			    success: function(result) {
-			    	onSuccess(result);
-			    },
-			    error: function(jqXHR, status, error){
-			    	onError(jqXHR.status, error);
-			    }
+		        success: function(data, textStatus, jqXHR)
+		        {
+		            if(typeof data.error === 'undefined')
+		            {
+		                // Success so call function to process the form
+		                //submitForm(event, data);
+		            	console.log('success upload file');
+		            }
+		            else
+		            {
+		                // Handle errors here
+		                console.log('ERRORS: ' + data.error);
+		            }
+		        },
+		        error: function(jqXHR, textStatus, errorThrown)
+		        {
+		            // Handle errors here
+		            console.log('ERRORS: ' + textStatus);
+		        }
 			});
 		};
 		
