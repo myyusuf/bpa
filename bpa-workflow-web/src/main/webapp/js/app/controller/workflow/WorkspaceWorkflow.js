@@ -2,6 +2,19 @@ define(["jQuery", "jqxcore"], function () {
 	
 	var WorkspaceWorkflow = function(container){
 		
+		$.subscribe("viewDeploymentListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+			
+			require(['./composer/workflow/DeploymentComposer'], function (DeploymentComposer) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var _deploymentComposer = new DeploymentComposer(gridContainer);
+            });
+		});
+		
 		$.subscribe("viewProcessDefinitionListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);

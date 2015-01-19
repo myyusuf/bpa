@@ -8,6 +8,11 @@
             $("#jqxMenu").css('visibility', 'visible');
             
             var registerMenu = function(){
+            	
+            	$("#deploymentListMenu").click(function(){
+            		$.publish("viewDeploymentListEvent", {name: "deployment"});
+            	});
+            	
             	$("#processDefinitionListMenu").click(function(){
             		$.publish("viewProcessDefinitionListEvent", {name: "process definition"});
             	});

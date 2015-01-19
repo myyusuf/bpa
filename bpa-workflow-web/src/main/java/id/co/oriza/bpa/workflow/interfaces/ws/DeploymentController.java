@@ -29,14 +29,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Controller
-public class ProcessDefinitonController {
+public class DeploymentController {
 	
 	private static final int MAX_LIMIT = 10000;
 	
 	@Autowired
 	private TaskService taskService;
 
-//	@RequestMapping(value="/workflow/deployments", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/workflow/deployments", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allDeployments(@RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
@@ -62,7 +62,7 @@ public class ProcessDefinitonController {
 		return result;
 	}
 	
-//	@RequestMapping(value="/workflow/deployments", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/workflow/deployments", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createDeployment(@RequestParam(required=false) Map<String, String> params, HttpServletRequest request){
 //		System.out.println(ServletFileUpload.isMultipartContent(request));
 		ServletContext servletContext = request.getSession().getServletContext();
