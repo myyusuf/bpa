@@ -20,9 +20,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         {
             datatype: "json",
             datafields: [
-                { name: 'deploymentKey', type: 'string' }
+                { name: 'id', type: 'string' },         
+                { name: 'name', type: 'string' }
             ],
-            id: 'code',
+            id: 'id',
             beforeprocessing: function (data) {
                 _source.totalrecords = data.num;
             },
@@ -52,7 +53,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             editable: false,
             selectionmode: 'multiplerows',
             columns: [
-              { text: 'Process Definition Key', datafield: 'deploymentKey', width: '100%' }
+              { text: 'Id', datafield: 'id', width: '50%' },
+              { text: 'Name', datafield: 'name', width: '50%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],
