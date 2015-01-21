@@ -129,7 +129,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         }
         
         this.close = function(){
-        	_self.close();
+        	_editWindow.jqxWindow('close');
         }
         
 	}

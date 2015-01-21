@@ -26,9 +26,9 @@ define(["notificationWindow", "view/workflow/DeploymentList", "view/workflow/Dep
 			//Consider always new instance
 			var _deploymentUpload = new DeploymentUpload(container, {});
 			
-			var _onUploadDiagram = function(formData, innerDeploymentUpload){
+			var _onUploadDiagram = function(formData){
 				_sendFile(formData, 'POST', function(result){
-					innerDeploymentUpload.close();//new _accountGroupEdit instance
+					_deploymentUpload.close();//new _accountGroupEdit instance
 					_deploymentList.refreshGrid();
 					_successNotification.jqxNotification("open");
 				}, null);
