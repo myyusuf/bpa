@@ -89,12 +89,12 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	var _formData = new FormData();
 		    $.each(_files, function(key, value)
 		    {
-		    	_formData.append(key, value);
+		    	_formData.append(value.name, value);
 		    });
 		    
 		    _formData.append("code", _codeInput.val());
 		    
-		    _sendData(_formData, 'POST', function(){console.log('success');}, null);
+		    Observable.prototype.publish.call(_self, _formData, "uploaddiagram");
 		});
         
         _cancelButton.click(function(event){
@@ -132,37 +132,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_self.close();
         }
         
-        var _sendData = function(data, requestType, onSuccess, onError){
-			$.ajax({
-			    url: 'service/workflow/deployments',
-			    type: requestType,
-			    data: data,
-			    cache: false,
-		        dataType: 'json',
-		        processData: false, // Don't process the files
-		        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-		        success: function(data, textStatus, jqXHR)
-		        {
-		            if(typeof data.error === 'undefined')
-		            {
-		                // Success so call function to process the form
-		                //submitForm(event, data);
-		            	console.log('success upload file');
-		            }
-		            else
-		            {
-		                // Handle errors here
-		                console.log('ERRORS: ' + data.error);
-		            }
-		        },
-		        error: function(jqXHR, textStatus, errorThrown)
-		        {
-		            // Handle errors here
-		            console.log('ERRORS: ' + textStatus);
-		        }
-			});
-		};
-		
 	}
 	
 	inheritPrototype(DeploymentUpload, Observable);

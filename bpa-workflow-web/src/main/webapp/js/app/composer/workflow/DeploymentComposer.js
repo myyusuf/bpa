@@ -25,6 +25,16 @@ define(["notificationWindow", "view/workflow/DeploymentList", "view/workflow/Dep
 			
 			//Consider always new instance
 			var _deploymentUpload = new DeploymentUpload(container, {});
+			
+			var _onUploadDiagram = function(formData, innerDeploymentUpload){
+				_sendFile(formData, 'POST', function(result){
+					innerDeploymentUpload.close();//new _accountGroupEdit instance
+					_deploymentList.refreshGrid();
+					_successNotification.jqxNotification("open");
+				}, null);
+			};
+			_deploymentUpload.subscribe(_onUploadDiagram, "uploaddiagram");
+			
 			_deploymentUpload.open();
 		};
 		_deploymentList.subscribe(_onAddDiagram, "adddiagram");
@@ -45,6 +55,38 @@ define(["notificationWindow", "view/workflow/DeploymentList", "view/workflow/Dep
 			    error: function(jqXHR, status, error){
 			    	onError(jqXHR.status, error);
 			    }
+			});
+		};
+		
+		var _sendFile = function(data, requestType, onSuccess, onError){
+			$.ajax({
+			    url: BPA.Constant.workflow.deploymentsUrl,
+			    type: requestType,
+			    data: data,
+			    cache: false,
+		        dataType: 'json',
+		        processData: false, // Don't process the files
+		        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+		        success: function(data, textStatus, jqXHR)
+		        {
+		            if(typeof data.error === 'undefined')
+		            {
+		                // Success so call function to process the form
+		                //submitForm(event, data);
+		            	onSuccess(data);
+		            	console.log('success upload file');
+		            }
+		            else
+		            {
+		                // Handle errors here
+		                console.log('ERRORS: ' + data.error);
+		            }
+		        },
+		        error: function(jqXHR, textStatus, errorThrown)
+		        {
+		            // Handle errors here
+		            console.log('ERRORS: ' + textStatus);
+		        }
 			});
 		};
 		
