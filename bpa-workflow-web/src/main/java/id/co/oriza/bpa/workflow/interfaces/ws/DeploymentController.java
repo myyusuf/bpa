@@ -83,8 +83,8 @@ public class DeploymentController {
 				
 				MultipartFile file = multipartRequest.getFile(fileName);
 				System.out.println("file.getName() : " + file.getName());
-//				writeFile(file);
-//				taskService.createDeployment(file.getName(), "Deploy BPA", file.getInputStream());
+				writeFile(file);
+				taskService.createDeployment(file.getName(), "Deploy BPA", file.getInputStream());
 			}
 			result.put("success", true);
 		}catch(Exception e){
@@ -102,20 +102,22 @@ public class DeploymentController {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		
-		String extension = ".txt";
-		if("image/jpeg".equals(multipartFile.getContentType())){
-			extension = ".jpg";
-		}
+//		String extension = ".txt";
+//		if("image/jpeg".equals(multipartFile.getContentType())){
+//			extension = ".jpg";
+//		}
 		
 		try {
 			inputStream = multipartFile.getInputStream();
 
-			String userImageFolder = "E:\\tests\\bpaupload\\result";
-			File newFile = new File(userImageFolder + extension);
+			String userImageFolder = "E:\\tests\\bpaupload\\";
+//			File newFile = new File(userImageFolder + extension);
+			File newFile = new File(userImageFolder + multipartFile.getName());
 			if (!newFile.exists()) {
 				newFile.createNewFile();
 			}
-			outputStream = new FileOutputStream(userImageFolder + extension);
+//			outputStream = new FileOutputStream(userImageFolder + extension);
+			outputStream = new FileOutputStream(userImageFolder + multipartFile.getName());
 			int read = 0;
 			byte[] bytes = new byte[256];
 
