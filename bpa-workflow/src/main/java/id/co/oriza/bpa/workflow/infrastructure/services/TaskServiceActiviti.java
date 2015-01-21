@@ -32,10 +32,11 @@ public class TaskServiceActiviti implements TaskService {
 	RepositoryService repositoryService;
 	
 	@Override
-	public void createDeployment(String resourceName, InputStream inputStream) {
+	public void createDeployment(String name, String resourceName, InputStream inputStream) {
 		repositoryService = processEngine.getRepositoryService();
 		repositoryService.createDeployment()
 				.addInputStream(resourceName, inputStream)
+				.name(name)
 				.deploy();
 	}
 

@@ -24,6 +24,6 @@ public interface TaskService {
 	List<Deployment> allDeployments(int start, int limit);
 	Long allDeploymentsSize();
 	void deleteDeployment(String deploymentId);
-	void createDeployment(String resourceName, InputStream inputStream);
+	void createDeployment(String name, String resourceName, InputStream inputStream);
 
 }

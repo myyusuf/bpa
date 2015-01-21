@@ -134,7 +134,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         var _sendData = function(data, requestType, onSuccess, onError){
 			$.ajax({
-			    url: 'service/workflow/processdefinitions',
+			    url: 'service/workflow/deployments',
 			    type: requestType,
 			    data: data,
 			    cache: false,

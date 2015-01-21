@@ -83,13 +83,16 @@ public class DeploymentController {
 				
 				MultipartFile file = multipartRequest.getFile(fileName);
 				System.out.println("file.getName() : " + file.getName());
-				writeFile(file);
+//				writeFile(file);
+//				taskService.createDeployment(file.getName(), "Deploy", file.getInputStream());
 			}
 			result.put("success", true);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+		
+		
 		
 		return result;
 	}
