@@ -28,4 +28,6 @@ public interface TaskService {
 
 	InputStream getResourceAsStream(String deploymentId, String resourceName);
 
+	List<String> getDeploymentResourceNames(String deploymentId);
+
 }

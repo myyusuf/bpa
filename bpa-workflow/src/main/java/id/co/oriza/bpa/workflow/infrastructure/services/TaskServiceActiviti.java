@@ -114,6 +114,12 @@ public class TaskServiceActiviti implements TaskService {
 		return repositoryService.getResourceAsStream(deploymentId, resourceName);
 	}
 	
+	@Override
+	public List<String> getDeploymentResourceNames(String deploymentId) {
+		repositoryService = processEngine.getRepositoryService();
+		return repositoryService.getDeploymentResourceNames(deploymentId);
+	}
+	
 	
 	@Override
 	public InputStream getWorkflowDiagram(String processDefinitionId, String processInstanceId){

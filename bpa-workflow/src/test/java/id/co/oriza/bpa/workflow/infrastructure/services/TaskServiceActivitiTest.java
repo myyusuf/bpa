@@ -42,7 +42,12 @@ public class TaskServiceActivitiTest {
 	
 	@Test
 	public void testGetResourceAsStream(){
-		InputStream resourceAsStream = taskService.getResourceAsStream("101", "Deploy");
+		String deploymentId = "1";
+		List<String> deploymentResourceNames = taskService.getDeploymentResourceNames(deploymentId);
+		for (String deploymentResourceName : deploymentResourceNames) {
+			System.out.println(deploymentResourceName);
+		}
+		InputStream resourceAsStream = taskService.getResourceAsStream(deploymentId, "bpmn/SampleWorkflow.bpmn");
 		assertNotNull(resourceAsStream);
 	}
 	
