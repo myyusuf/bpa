@@ -30,4 +30,6 @@ public interface TaskService {
 
 	List<String> getDeploymentResourceNames(String deploymentId);
 
+	InputStream getBpmnResourceAsStream(String deploymentId);
+
 }

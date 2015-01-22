@@ -17,6 +17,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,6 +135,56 @@ public class DeploymentController {
 			e.printStackTrace();
 		}
 
+	}
+	
+	@RequestMapping(value="/workflow/diagram", method=RequestMethod.GET, produces="application/json")
+	public void getDiagram(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(required=false) Map<String, String> params){
+		
+		printParamsString(params);
+		String deploymentId = params.get("deploymentId") != null ? params.get("deploymentId") : "";
+		
+		InputStream is = taskService.getBpmnResourceAsStream(deploymentId);
+		try {
+			writeToOutputStream(is, response.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void writeToOutputStream(InputStream inputStream, OutputStream outputStream){
+		try {
+	 
+			int read = 0;
+			byte[] bytes = new byte[1024];
+	 
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+	 
+			System.out.println("Done!");
+	 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (outputStream != null) {
+				try {
+					// outputStream.flush();
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 	
 	private void printParams(Map<String, Object> params){

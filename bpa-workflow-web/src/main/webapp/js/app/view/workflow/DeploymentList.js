@@ -40,6 +40,39 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             loadError: function (xhr, status, error) { }
         });
         
+        
+        var _initRowDetails = function (index, parentElement, gridElement, record) {
+        	
+        	var _grid = $($(parentElement).children()[0]);
+        	var _id = record.id;
+        	
+//        	_grid.html('<div style="height: 100%;" id="myslider_'+ _id + '"></div><div style="height: 100%;" id="diagram_' + _id + '"></div>');
+        	
+        	_grid.html('<div style="height: 100%;" id="diagram_' + _id + '"></div>');
+        	
+        	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
+        	      new Bpmn().renderUrl("service/workflow/diagram?deploymentId=1", {
+        	        diagramElement : "diagram_" + _id,
+        	        overlayHtml : '<div style="position: relative; top:100%"></div>'
+        	      }).then(function (bpmn){
+        	        //bpmn.zoom(0.8);
+        	        bpmn.annotation("usertask1").addClasses(["highlight"]);
+        			
+        	        $('div[id="diagram_'+ _id + '"] div[data-activity-id="usertask1"]').click(function(){
+        				console.log("userTask clicked..");
+        			});
+        	        
+//        	        var mySlider = $('#myslider_' + _id).jqxSlider({ min: 1, max: 10, ticksFrequency: 1, value: 10, step: 1});
+//        	        $('#myslider_' + _id).on('change', function (event) {
+//                        bpmn.zoom(mySlider.jqxSlider('value') /10);
+//                    });
+        			
+        	      });
+        	    });
+        	
+        }
+        
+        
         var _deploymentListGrid = container.jqxGrid(
         {
             width: '100%',
@@ -64,6 +97,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             },
             showtoolbar: true,
             toolbarheight: 40,
+            
+            rowdetails: true,
+            initrowdetails: _initRowDetails,
+            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: silver;'></div>", rowdetailshidden: false },
+//            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailshidden: false },
+            
             rendertoolbar: function(toolbar)
             {
             	toolbar.empty();

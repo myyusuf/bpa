@@ -120,6 +120,20 @@ public class TaskServiceActiviti implements TaskService {
 		return repositoryService.getDeploymentResourceNames(deploymentId);
 	}
 	
+	@Override
+	public InputStream getBpmnResourceAsStream(String deploymentId) {
+		List<String> deploymentResourceNames = getDeploymentResourceNames(deploymentId);
+		String bpmnResourceName = "";
+		for (String deploymentResource : deploymentResourceNames) {
+			
+			if(deploymentResource.contains(".bpmn")){
+				bpmnResourceName = deploymentResource;
+				break;
+			}
+		}
+		return getResourceAsStream(deploymentId, bpmnResourceName);
+	}
+	
 	
 	@Override
 	public InputStream getWorkflowDiagram(String processDefinitionId, String processInstanceId){
