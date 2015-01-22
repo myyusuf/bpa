@@ -2,7 +2,9 @@ package id.co.oriza.bpa.workflow.infrastructure.services;
 
 import static org.junit.Assert.assertNotNull;
 import id.co.oriza.bpa.workflow.application.TaskService;
+import id.co.oriza.bpa.workflow.domain.model.ProcessDefinition;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.activiti.engine.ProcessEngine;
@@ -30,6 +32,18 @@ public class TaskServiceActivitiTest {
 	public void testGetDeployments(){
 		List<Deployment> deployments = taskService.allDeployments(0, 1);
 		assertNotNull(deployments);
+	}
+	
+	@Test
+	public void testGetProcessDefinitions(){
+		List<ProcessDefinition> allProcessDefinitions = taskService.allProcessDefinitions(0, 1000);
+		assertNotNull(allProcessDefinitions);
+	}
+	
+	@Test
+	public void testGetResourceAsStream(){
+		InputStream resourceAsStream = taskService.getResourceAsStream("101", "Deploy");
+		assertNotNull(resourceAsStream);
 	}
 	
 //	@Before

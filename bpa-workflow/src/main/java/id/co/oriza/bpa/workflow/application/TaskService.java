@@ -26,4 +26,6 @@ public interface TaskService {
 	void deleteDeployment(String deploymentId);
 	void createDeployment(String name, String resourceName, InputStream inputStream);
 
+	InputStream getResourceAsStream(String deploymentId, String resourceName);
+
 }
