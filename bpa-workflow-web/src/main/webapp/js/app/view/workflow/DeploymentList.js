@@ -184,9 +184,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	return _deployment;
         }
         
-//        _deploymentListGrid.on('contextmenu', function (e) {
-//            return false;
-//        });
+        _deploymentListGrid.on('contextmenu', function (e) {
+            return false;
+        });
         var _isRightClick = function(event) {
             var _rightclick;
             if (!event) var event = window.event;
