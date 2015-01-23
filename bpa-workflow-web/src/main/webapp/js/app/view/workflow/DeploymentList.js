@@ -128,12 +128,40 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             }
         });
         
+        var _gridContextMenu = $('<div><ul><li data-menukey="delete">Delete</li></ul></div>');
+        _gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+        _gridContextMenu.on('itemclick', function (event){
+        	
+        	var _menuKey = $(event.target).data("menukey");
+        	
+        	var _rowData = "";
+        	
+        	var _rowIndex = _deploymentListGrid.jqxGrid('getselectedrowindex');
+        	var _rowData = _deploymentListGrid.jqxGrid('getrowdata', _rowIndex);
+        	
+	 		_deleteRow(_rowData);
+        });
+        
         var _showAddDiagramPage = function(){
         	Observable.prototype.publish.call(_self, {}, "adddiagram");
         }
         
         this.refreshGrid = function(){
         	_deploymentListGrid.jqxGrid('updatebounddata');
+        }
+        
+        var _deleteRow = function(rowData){
+        	Observable.prototype.publish.call(_self, _getDeploymentFromRowData(rowData), "deleterow");
+        }
+        
+        var _getDeploymentFromRowData = function(rowData){
+        	var _deployment = {};
+        	
+        	if(rowData){
+        		_deployment.id = rowData.id;
+        	}
+        	
+        	return _deployment;
         }
         
 	}

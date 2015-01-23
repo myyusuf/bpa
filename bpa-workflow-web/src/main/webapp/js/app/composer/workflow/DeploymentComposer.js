@@ -10,7 +10,7 @@ define(["notificationWindow", "view/workflow/DeploymentList", "view/workflow/Dep
             width: 250, position: "top-right", opacity: 0.9,
             autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
         });
-		var _successUnDeployNotification = $('<div>Data successfully deleted</div>').jqxNotification({
+		var _successDeleteNotification = $('<div>Data successfully deleted</div>').jqxNotification({
             width: 250, position: "top-right", opacity: 0.9,
             autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
         });
@@ -40,9 +40,34 @@ define(["notificationWindow", "view/workflow/DeploymentList", "view/workflow/Dep
 		_deploymentList.subscribe(_onAddDiagram, "adddiagram");
 		
 		
+		var _onDeleteRow = function(deletedDeployment){
+			
+			var _onOk = function(){
+				var _requestType = "DELETE";
+				var _onSuccess = function(result){
+					_deploymentList.refreshGrid();
+					_successDeleteNotification.jqxNotification("open");
+				}
+				
+				var _onError = function(status, error){
+					var _errorWindow = new NotificationWindow(container, {title:'Error Deleting Deployment', 
+						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
+				}
+				
+				_sendData(deletedDeployment, _requestType, _onSuccess, _onError);
+			}
+			
+			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Deployment', 
+			content: "Are you sure want to delete this deployment : " + deletedDeployment.id + " (" + deletedDeployment.name + ") ?", type: 'info', onOk: _onOk});
+			
+			
+		};
+		_accountGroupList.subscribe(_onDeleteRow, "deleterow");
+		
+		
 		var _sendData = function(data, requestType, onSuccess, onError){
 			$.ajax({
-			    url: _processDefinitonListUrl,
+			    url: BPA.Constant.workflow.deploymentsUrl,
 			    type: requestType,
 			    data: JSON.stringify(data),
 			    beforeSend: function(xhr) {
