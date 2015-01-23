@@ -1,5 +1,5 @@
 define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
-        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxslider"
         ], function (Observable) {
 	
 	var DeploymentList = function(container, options){
@@ -48,7 +48,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
 //        	_grid.html('<div style="height: 100%;" id="myslider_'+ _id + '"></div><div style="height: 100%;" id="diagram_' + _id + '"></div>');
         	
-        	_grid.html('<div style="height: 100%;" id="diagram_' + _id + '"></div>');
+        	_grid.html('<table style="width: calc(100% - 2px); border: 1px solid silver; padding: 0px;"><tr><td><div style="height: 30px; width: 100%;" id="myslider_'+ _id + '">xxx</div></td></tr><tr><td><div style="height: 100%;" id="diagram_' + _id + '"></div></td></tr></table>');
         	
         	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
         	      new Bpmn().renderUrl("service/workflow/diagram?deploymentId=" + _id, {
@@ -62,10 +62,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         				console.log("userTask clicked..");
         			});
         	        
-//        	        var mySlider = $('#myslider_' + _id).jqxSlider({ min: 1, max: 10, ticksFrequency: 1, value: 10, step: 1});
-//        	        $('#myslider_' + _id).on('change', function (event) {
-//                        bpmn.zoom(mySlider.jqxSlider('value') /10);
-//                    });
+        	        var mySlider = $('#myslider_' + _id).jqxSlider({ min: 1, max: 10, ticksFrequency: 1, value: 10, step: 1});
+        	        $('#myslider_' + _id).on('change', function (event) {
+                        bpmn.zoom(mySlider.jqxSlider('value') /10);
+                    });
         			
         	      });
         	    });
@@ -100,7 +100,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             
             rowdetails: true,
             initrowdetails: _initRowDetails,
-            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: silver;'></div>", rowdetailshidden: true },
+            rowdetailstemplate: { rowdetails: "<div style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: #fefefe;'></div>", rowdetailshidden: true },
 //            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailshidden: false },
             
             rendertoolbar: function(toolbar)
@@ -184,9 +184,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	return _deployment;
         }
         
-        _deploymentListGrid.on('contextmenu', function (e) {
-            return false;
-        });
+//        _deploymentListGrid.on('contextmenu', function (e) {
+//            return false;
+//        });
         var _isRightClick = function(event) {
             var _rightclick;
             if (!event) var event = window.event;
