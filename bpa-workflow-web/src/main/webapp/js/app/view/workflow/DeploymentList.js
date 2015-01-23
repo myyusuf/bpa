@@ -51,7 +51,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	_grid.html('<div style="height: 100%;" id="diagram_' + _id + '"></div>');
         	
         	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
-        	      new Bpmn().renderUrl("service/workflow/diagram?deploymentId=1", {
+        	      new Bpmn().renderUrl("service/workflow/diagram?deploymentId=" + _id, {
         	        diagramElement : "diagram_" + _id,
         	        overlayHtml : '<div style="position: relative; top:100%"></div>'
         	      }).then(function (bpmn){
