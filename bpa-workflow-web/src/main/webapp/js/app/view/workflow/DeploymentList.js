@@ -100,7 +100,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             
             rowdetails: true,
             initrowdetails: _initRowDetails,
-            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: silver;'></div>", rowdetailshidden: false },
+            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: silver;'></div>", rowdetailshidden: true },
 //            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailshidden: false },
             
             rendertoolbar: function(toolbar)
@@ -142,6 +142,25 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 	 		_deleteRow(_rowData);
         });
         
+        _deploymentListGrid.on('rowclick', function (event) {
+        	
+        	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
+        	
+        	var _rightClick = _isRightClick(_clickEvent);
+            if (_rightClick) {
+            	if(_deploymentListGrid.jqxGrid('getselectedrowindex') === -1){
+            		_deploymentListGrid.jqxGrid('selectrow', _rowIndex);
+            	}
+            	
+                var _scrollTop = $(window).scrollTop();
+                var _scrollLeft = $(window).scrollLeft();
+                _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                return false;
+            }else{
+            	_gridContextMenu.jqxMenu('close');
+            }
+        });
+        
         var _showAddDiagramPage = function(){
         	Observable.prototype.publish.call(_self, {}, "adddiagram");
         }
@@ -159,9 +178,21 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
         	if(rowData){
         		_deployment.id = rowData.id;
+        		_deployment.name = rowData.name;
         	}
         	
         	return _deployment;
+        }
+        
+        _deploymentListGrid.on('contextmenu', function (e) {
+            return false;
+        });
+        var _isRightClick = function(event) {
+            var _rightclick;
+            if (!event) var event = window.event;
+            if (event.which) _rightclick = (event.which == 3);
+            else if (event.button) _rightclick = (event.button == 2);
+            return _rightclick;
         }
         
 	}

@@ -20,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.repository.Deployment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +36,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class DeploymentController {
 	
 	private static final int MAX_LIMIT = 10000;
+	
+	final Logger logger = LoggerFactory.getLogger(DeploymentController.class);
 	
 	@Autowired
 	private TaskService taskService;
@@ -85,7 +90,7 @@ public class DeploymentController {
 				MultipartFile file = multipartRequest.getFile(fileName);
 				System.out.println("file.getName() : " + file.getName());
 				writeFile(file);
-				taskService.createDeployment(file.getName(), "Deploy BPA", file.getInputStream());
+				this.taskService().createDeployment(file.getName(), "Deploy BPA", file.getInputStream());
 			}
 			result.put("success", true);
 		}catch(Exception e){
@@ -93,7 +98,20 @@ public class DeploymentController {
 			e.printStackTrace();
 		}
 		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/deployments", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deleteDeployment(@RequestBody(required=false) Map<String, Object> params){
 		
+		logger.debug("delete deployment");
+		
+		String deploymentId = (String) params.get("id");
+		
+		this.taskService().deleteDeployment(deploymentId);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("success", true);
 		
 		return result;
 	}

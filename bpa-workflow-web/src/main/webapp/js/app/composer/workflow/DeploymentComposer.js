@@ -62,7 +62,7 @@ define(["notificationWindow", "view/workflow/DeploymentList", "view/workflow/Dep
 			
 			
 		};
-		_accountGroupList.subscribe(_onDeleteRow, "deleterow");
+		_deploymentList.subscribe(_onDeleteRow, "deleterow");
 		
 		
 		var _sendData = function(data, requestType, onSuccess, onError){
