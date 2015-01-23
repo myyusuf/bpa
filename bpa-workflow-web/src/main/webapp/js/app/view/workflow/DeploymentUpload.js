@@ -32,14 +32,15 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
-		var _codeLabel = $('<td>Code</td>');
-		_codeLabel.appendTo(_newRow);
-		var _codeInputColumn = $('<td></td>');
-		var _codeInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px;"/>');
-		_codeInput.attr("id", "codeInput" + _randomId);
+		var _nameLabel = $('<td>Name</td>');
+		_nameLabel.appendTo(_newRow);
+		var _nameInputColumn = $('<td></td>');
+		var _nameInput = $('<input type="text" class="text-input" maxlength="20" style="width: 233px; float: left;"/>');
+		_nameInput.attr("id", "nameInput" + _randomId);
 		
-		_codeInput.appendTo(_codeInputColumn);
-		_codeInputColumn.appendTo(_newRow);
+		_nameInput.appendTo(_nameInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_nameInputColumn);
+		_nameInputColumn.appendTo(_newRow);
 		
 		
 		_newRow = $('<tr></tr>');
@@ -86,21 +87,37 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         
         _saveButton.click(function(event){
-        	var _formData = new FormData();
-		    $.each(_files, function(key, value)
-		    {
-		    	_formData.append(value.name, value);
-		    });
-		    
-		    _formData.append("code", _codeInput.val());
-		    
-		    Observable.prototype.publish.call(_self, _formData, "uploaddiagram");
+        	_editForm.jqxValidator('validate');
 		});
         
         _cancelButton.click(function(event){
         	_editWindow.jqxWindow('close');
         	_editWindow.jqxWindow('destroy');
         });
+        
+        _editForm.jqxValidator({
+        	closeOnClick: true,
+        	arrow: false,
+            rules: [
+                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' }
+                   ]
+        });
+        
+        _editForm.on('validationSuccess', function (event) { 
+        	_saveDeployment();
+        }); 
+        
+        var _saveDeployment = function(){
+        	var _formData = new FormData();
+		    $.each(_files, function(key, value)
+		    {
+		    	_formData.append(value.name, value);
+		    });
+		    
+		    _formData.append("name", _nameInput.val());
+		    
+		    Observable.prototype.publish.call(_self, _formData, "uploaddiagram");
+        }
         
         
         _editWindow.jqxWindow('resizable', true);
@@ -110,14 +127,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 220, width: 347,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 239, width: 350,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
             theme: 'metro'
         });
         
-        _codeInput.jqxInput({ theme: 'metro' });
+        _nameInput.jqxInput({ theme: 'metro' });
         _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
         _editWindow.on('close', function (event) { 

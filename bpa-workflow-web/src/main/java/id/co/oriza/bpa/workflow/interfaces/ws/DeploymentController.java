@@ -76,8 +76,8 @@ public class DeploymentController {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(servletContext);
 		MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
 		
-		String code = (String) multipartRequest.getParameter("code");
-		System.out.println("code : " + code);
+		String name = (String) multipartRequest.getParameter("name");
+		System.out.println("name : " + name);
 		
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -89,8 +89,8 @@ public class DeploymentController {
 				
 				MultipartFile file = multipartRequest.getFile(fileName);
 				System.out.println("file.getName() : " + file.getName());
-				writeFile(file);
-				this.taskService().createDeployment(file.getName(), "Deploy BPA", file.getInputStream());
+//				writeFile(file);
+				this.taskService().createDeployment(name, file.getName(), file.getInputStream());
 			}
 			result.put("success", true);
 		}catch(Exception e){
