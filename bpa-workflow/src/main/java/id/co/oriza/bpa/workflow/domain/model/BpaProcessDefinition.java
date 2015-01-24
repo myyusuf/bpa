@@ -2,7 +2,7 @@ package id.co.oriza.bpa.workflow.domain.model;
 
 import java.io.Serializable;
 
-public class ProcessDefinition implements Serializable {
+public class BpaProcessDefinition implements Serializable {
 
 	/**
 	 * 
@@ -11,9 +11,13 @@ public class ProcessDefinition implements Serializable {
 
 	private String id;
 	private String key;
-
-	public ProcessDefinition(String id, String key) {
+	
+	protected BpaProcessDefinition(){
 		super();
+	}
+
+	public BpaProcessDefinition(String id, String key) {
+		this();
 		this.id = id;
 		this.key = key;
 	}
@@ -29,4 +33,5 @@ public class ProcessDefinition implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 }

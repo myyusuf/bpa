@@ -2,7 +2,7 @@ package id.co.oriza.bpa.workflow.infrastructure.services;
 
 
 import id.co.oriza.bpa.workflow.application.TaskService;
-import id.co.oriza.bpa.workflow.domain.model.ProcessDefinition;
+import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -66,15 +66,15 @@ public class TaskServiceActiviti implements TaskService {
 	}
 
 	@Override
-	public List<ProcessDefinition> allProcessDefinitions(int start, int limit) {
-		List<ProcessDefinition> processList = new ArrayList<ProcessDefinition>();
+	public List<BpaProcessDefinition> allProcessDefinitions(int start, int limit) {
+		List<BpaProcessDefinition> processList = new ArrayList<BpaProcessDefinition>();
 		
 		List<org.activiti.engine.repository.ProcessDefinition> processDefinitionList = processEngine.getRepositoryService()
 				.createProcessDefinitionQuery().listPage(start, limit);
 		for (org.activiti.engine.repository.ProcessDefinition processDefinition : processDefinitionList) {
-			ProcessDefinition process = new ProcessDefinition(processDefinition.getId(), processDefinition.getKey());
+			BpaProcessDefinition process = new BpaProcessDefinition(processDefinition.getId(), processDefinition.getKey());
 			processList.add(process);
-		}
+		} 
 		
 		return processList;
 	}

@@ -1,6 +1,6 @@
 package id.co.oriza.bpa.workflow.application;
 
-import id.co.oriza.bpa.workflow.domain.model.ProcessDefinition;
+import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
 
 import java.io.InputStream;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.activiti.engine.repository.Deployment;
 public interface TaskService {
 	
 	
-	List<ProcessDefinition> allProcessDefinitions(int start, int limit);
+	List<BpaProcessDefinition> allProcessDefinitions(int start, int limit);
 
 	Long allProcessDefinitionsSize();
 

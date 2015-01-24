@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.workflow.application.TaskService;
+import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
 import id.co.oriza.bpa.workflow.domain.model.ProcessDefinition;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessDefinitionPresentationModel;
 
@@ -32,8 +33,8 @@ public class ProcessDefinitonController {
 		printParamsString(params);
 		
 		List<ProcessDefinitionPresentationModel> processDefinitionModels = new ArrayList<ProcessDefinitionPresentationModel>();
-		List<ProcessDefinition> allProcessDefinitions = this.taskService().allProcessDefinitions(start, limit);
-		for (ProcessDefinition processDefinition : allProcessDefinitions) {
+		List<BpaProcessDefinition> allProcessDefinitions = this.taskService().allProcessDefinitions(start, limit);
+		for (BpaProcessDefinition processDefinition : allProcessDefinitions) {
 			ProcessDefinitionPresentationModel processDefinitionPresentationModel = new ProcessDefinitionPresentationModel(processDefinition);
 			processDefinitionModels.add(processDefinitionPresentationModel);
 		}
