@@ -136,7 +136,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         });
         
         var _showStartProcessPage = function(){
-        	Observable.prototype.publish.call(_self, {}, "startprocess");
+        	var _rowIndex = _processDefinitionListGrid.jqxGrid('getselectedrowindex');
+        	if(_rowIndex != -1){
+        		var _rowData = _processDefinitionListGrid.jqxGrid('getrowdata', _rowIndex);
+            	Observable.prototype.publish.call(_self, {processDefinitionKey: _rowData.key}, "startprocess");
+        	}
+        	
         }
         
         this.refreshGrid = function(){
