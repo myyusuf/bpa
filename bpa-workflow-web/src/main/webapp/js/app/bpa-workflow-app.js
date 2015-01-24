@@ -12,7 +12,7 @@
     		};
         	
         	i18n.init(_languangeOptions, function(t){
-        		var _x = i18n.t("base.save");
+        		var _x = i18n.t("workflow:workflow.startProcess");
             	console.log("_x --> " + _x);
             	_initializeWorkspace();
         	});
