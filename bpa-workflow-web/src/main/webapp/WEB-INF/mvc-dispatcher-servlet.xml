@@ -47,4 +47,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		<property name="ignoreAcceptHeader" value="true" />
 	</bean>
 	
+	<bean id="workflowUserAccessor" class="id.co.oriza.bpa.workflow.interfaces.ws.WorkflowUserAccessorImpl" autowire="byName"/>
+	
 </beans>

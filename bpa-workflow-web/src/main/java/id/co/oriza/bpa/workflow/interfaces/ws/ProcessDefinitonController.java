@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.workflow.application.TaskService;
+import id.co.oriza.bpa.workflow.application.WorkflowUserAccessor;
 import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessDefinitionPresentationModel;
 
@@ -23,6 +24,9 @@ public class ProcessDefinitonController {
 	
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired(required=false)
+	private WorkflowUserAccessor workflowUserAccessor;
 
 	@RequestMapping(value="/workflow/processdefinitions", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allProcessDefinitions(@RequestParam(required=false) Map<String, String> params){
@@ -56,8 +60,10 @@ public class ProcessDefinitonController {
 		
 		printParams(params);
 		
+		String userId = workflowUserAccessor.getActiveUser();
+		
 		String processDefinitionKey = (String) params.get("processDefinitionKey");
-		this.taskService().startProcess("kermit", processDefinitionKey, new HashMap<String, Object>());
+		this.taskService().startProcess(userId, processDefinitionKey, new HashMap<String, Object>());
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
