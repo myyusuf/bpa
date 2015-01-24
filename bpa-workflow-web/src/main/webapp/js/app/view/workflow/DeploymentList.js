@@ -48,7 +48,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
 //        	_grid.html('<div style="height: 100%;" id="myslider_'+ _id + '"></div><div style="height: 100%;" id="diagram_' + _id + '"></div>');
         	
-        	_grid.html('<table style="width: calc(100% - 2px); border: 1px solid silver; padding: 0px;"><tr><td><div style="height: 30px; width: 100%;" id="myslider_'+ _id + '">xxx</div></td></tr><tr><td><div style="height: 100%;" id="diagram_' + _id + '"></div></td></tr></table>');
+        	_grid.html('<table style="width: calc(100% - 2px); border: 1px solid silver; padding: 0px;"><tr><td><div style="height: 30px; width: 100%;" id="myslider_'+ _id + '"></div></td></tr><tr><td><div style="height: 100%;" id="diagram_' + _id + '"></div></td></tr></table>');
         	
         	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
         	      new Bpmn().renderUrl("service/workflow/diagram?deploymentId=" + _id, {
