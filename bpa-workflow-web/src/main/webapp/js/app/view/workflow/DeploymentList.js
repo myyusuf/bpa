@@ -103,7 +103,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             
             rowdetails: true,
             initrowdetails: _initRowDetails,
-            rowdetailstemplate: { rowdetails: "<div style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: #fefefe;'></div>", rowdetailshidden: true, rowdetailsheight: 400 },
+            rowdetailstemplate: { rowdetails: "<div style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: #fefefe;'></div>", rowdetailshidden: true, rowdetailsheight: 350 },
 //            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailshidden: false },
             
             rendertoolbar: function(toolbar)

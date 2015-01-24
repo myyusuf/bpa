@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,29 @@ public class ProcessDefinitonController {
 		result.put("success", true);
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/workflow/processdefinitions/startprocess", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> startProcess(@RequestBody(required=false) Map<String, Object> params){
+		
+		
+		printParams(params);
+		
+		String processDefinitionKey = (String) params.get("processDefinitionKey");
+		this.taskService().startProcess("kermit", processDefinitionKey, new HashMap<String, Object>());
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	private void printParams(Map<String, Object> params){
+		List<String> listKeys = new ArrayList<String>(params.keySet());
+		for (String key : listKeys) {
+			System.out.println("key : " + key + ", value : " + params.get(key));
+		}
 	}
 	
 	private void printParamsString(Map<String, String> params){

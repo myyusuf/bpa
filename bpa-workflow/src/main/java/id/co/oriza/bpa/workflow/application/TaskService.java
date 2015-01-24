@@ -15,7 +15,7 @@ public interface TaskService {
 
 	Long allProcessDefinitionsSize();
 
-	String startProcess(String userId, String processInstanceKey,
+	String startProcess(String userId, String processDefinitionKey,
 			Map<String, Object> params);
 
 	InputStream getWorkflowDiagram(String processDefinitionId,

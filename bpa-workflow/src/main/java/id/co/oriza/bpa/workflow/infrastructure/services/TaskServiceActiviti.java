@@ -92,14 +92,14 @@ public class TaskServiceActiviti implements TaskService {
 
 
 	@Override
-	public String startProcess(String userId, String processInstanceKey, Map<String, Object> params) {
+	public String startProcess(String userId, String processDefinitionKey, Map<String, Object> params) {
 		
 		
 		IdentityService identityService = processEngine.getIdentityService();
 		identityService.setAuthenticatedUserId(userId);
 		
 		ProcessInstance processInstance = runtimeService
-				.startProcessInstanceByKey(processInstanceKey, params);
+				.startProcessInstanceByKey(processDefinitionKey, params);
 		
 		// Add candidate group
 //		org.activiti.engine.TaskService taskService = processEngine.getTaskService();
