@@ -1,5 +1,5 @@
 define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
-        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxslider"
         ], function (Observable) {
 	
 	var ProcessDefinitionList = function(container, options){
@@ -15,6 +15,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		};
 		
 		Observable.call(_self, _subscribers);
+		
+		var _randomId = BPA.Util.getRandomId("processDefinitionList");
 		
         var _source =
         {
@@ -43,6 +45,39 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             loadError: function (xhr, status, error) { }
         });
         
+        var _initRowDetails = function (index, parentElement, gridElement, record) {
+        	
+        	var _grid = $($(parentElement).children()[0]);
+        	var _id = record.deploymentId;
+        	var _diagramId = (_randomId + '_' + _id);
+        	
+//        	_grid.html('<div style="height: 100%;" id="myslider_'+ _id + '"></div><div style="height: 100%;" id="diagram_' + _id + '"></div>');
+        	
+        	_grid.html('<table style="width: calc(100% - 2px); border: 1px solid silver; padding: 0px;"><tr><td><div style="height: 30px; width: 100%;" id="myslider_'+ _diagramId + '"></div></td></tr><tr><td><div style="height: 100%;" id="diagram_' + _diagramId + '"></div></td></tr></table>');
+        	
+        	require(["bpmn/Bpmn", "dojo/domReady!"], function(Bpmn) {
+        	      new Bpmn().renderUrl("service/workflow/diagram?deploymentId=" + _id, {
+        	        diagramElement : "diagram_" + _diagramId,
+        	        overlayHtml : '<div style="position: relative; top:100%"></div>'
+        	      }).then(function (bpmn){
+        	        //bpmn.zoom(0.8);
+        	        bpmn.annotation("usertask1").addClasses(["highlight"]);
+        			
+        	        $('div[id="diagram_'+ _diagramId + '"] div[data-activity-id="usertask1"]').click(function(){
+        				console.log("userTask clicked..");
+        			});
+        	        
+        	        var mySlider = $('#myslider_' + _diagramId).jqxSlider({ min: 1, max: 10, ticksFrequency: 1, value: 10, step: 1});
+        	        $('#myslider_' + _diagramId).on('change', function (event) {
+                        bpmn.zoom(mySlider.jqxSlider('value') /10);
+                    });
+        			
+        	      });
+        	});
+        	
+        }
+
+        
         var _processDefinitionListGrid = container.jqxGrid(
         {
             width: '100%',
@@ -68,6 +103,11 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	rendergridrows: function () {
                 return _dataAdapter.records;
             },
+            
+            rowdetails: true,
+            initrowdetails: _initRowDetails,
+            rowdetailstemplate: { rowdetails: "<div style='margin: 10px; overflow: scroll; width: calc(100% - 30px); height: calc(100% - 10px); background-color: #fefefe;'></div>", rowdetailshidden: true, rowdetailsheight: 350 },
+            
             showtoolbar: true,
             toolbarheight: 40,
             rendertoolbar: function(toolbar)
