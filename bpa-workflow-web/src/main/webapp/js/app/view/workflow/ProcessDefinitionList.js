@@ -50,7 +50,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             altrows: true,
             enabletooltips: true,
             editable: false,
-            selectionmode: 'multiplerows',
+            selectionmode: 'singlerow',
             columns: [
               { text: 'Process Definition Key', datafield: 'processDefinitionKey', width: '100%' }
             ],
@@ -74,21 +74,21 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         		_newRow.appendTo(_searchTable);
         		var _newColumn = $('<td></td>');
         		_newColumn.appendTo(_newRow);
-        		var _addButton = $('<div style="margin-left: 2px;">New BPMN Diagram</div>');
-        		_addButton.appendTo(_newColumn);
+        		var _startProcessButton = $('<div style="margin-left: 2px;">Start Process</div>');
+        		_startProcessButton.appendTo(_newColumn);
         		
                 toolbar.append(_searchContainer);
                 
-                _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+                _startProcessButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
                            
-                _addButton.click(function(event){
-                	_showAddDiagramPage();
+                _startProcessButton.click(function(event){
+                	_showStartProcessPage();
                 });
             }
         });
         
-        var _showAddDiagramPage = function(){
-        	Observable.prototype.publish.call(_self, {}, "adddiagram");
+        var _showStartProcessPage = function(){
+        	Observable.prototype.publish.call(_self, {}, "startprocess");
         }
         
         this.refreshGrid = function(){

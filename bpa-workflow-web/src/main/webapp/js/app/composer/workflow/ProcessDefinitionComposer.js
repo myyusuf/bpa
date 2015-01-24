@@ -21,13 +21,13 @@ define(["notificationWindow", "view/workflow/ProcessDefinitionList", "view/workf
 		var _processDefinitionList = new ProcessDefinitionList(container, _options);
 		
 		
-		var _onAddDiagram = function(){
+		var _onStartProcess = function(){
 			
 			//Consider always new instance
-			var _processDefinitionUpload = new ProcessDefinitionUpload(container, {});
-			_processDefinitionUpload.open();
+//			var _processDefinitionUpload = new ProcessDefinitionUpload(container, {});
+//			_processDefinitionUpload.open();
 		};
-		_processDefinitionList.subscribe(_onAddDiagram, "adddiagram");
+		_processDefinitionList.subscribe(_onStartProcess, "startprocess");
 		
 		
 		var _sendData = function(data, requestType, onSuccess, onError){
