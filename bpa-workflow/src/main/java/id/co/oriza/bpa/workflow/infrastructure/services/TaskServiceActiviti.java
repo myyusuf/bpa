@@ -72,7 +72,11 @@ public class TaskServiceActiviti implements TaskService {
 		List<org.activiti.engine.repository.ProcessDefinition> processDefinitionList = processEngine.getRepositoryService()
 				.createProcessDefinitionQuery().listPage(start, limit);
 		for (org.activiti.engine.repository.ProcessDefinition processDefinition : processDefinitionList) {
-			BpaProcessDefinition process = new BpaProcessDefinition(processDefinition.getId(), processDefinition.getKey());
+			BpaProcessDefinition process = new BpaProcessDefinition(processDefinition.getId(), 
+					processDefinition.getKey(),
+					processDefinition.getName(),
+					processDefinition.getResourceName(),
+					processDefinition.getDeploymentId());
 			processList.add(process);
 		} 
 		

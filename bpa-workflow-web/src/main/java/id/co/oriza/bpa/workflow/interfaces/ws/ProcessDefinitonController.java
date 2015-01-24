@@ -2,7 +2,6 @@ package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.workflow.application.TaskService;
 import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
-import id.co.oriza.bpa.workflow.domain.model.ProcessDefinition;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessDefinitionPresentationModel;
 
 import java.util.ArrayList;

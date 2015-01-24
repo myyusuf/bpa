@@ -21,7 +21,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             datatype: "json",
             datafields: [
                 { name: 'id', type: 'string' },
-                { name: 'key', type: 'string' }
+                { name: 'key', type: 'string' },
+                { name: 'name', type: 'string' },
+                { name: 'resourceName', type: 'string' },
+                { name: 'deploymentId', type: 'string' }
             ],
             id: 'id',
             beforeprocessing: function (data) {
@@ -53,8 +56,11 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-              { text: 'Process Definition Id', datafield: 'id', width: '50%' },
-              { text: 'Process Definition Key', datafield: 'key', width: '50%' }
+              { text: 'Id', datafield: 'id', width: '20%' },
+              { text: 'Key', datafield: 'key', width: '20%' },
+              { text: 'Name', datafield: 'name', width: '20%' },
+              { text: 'Resource Name', datafield: 'resourceName', width: '20%' },
+              { text: 'Deployment Id', datafield: 'deploymentId', width: '20%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],

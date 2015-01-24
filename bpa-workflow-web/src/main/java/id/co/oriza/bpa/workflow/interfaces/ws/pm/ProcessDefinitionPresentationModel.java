@@ -11,11 +11,23 @@ public class ProcessDefinitionPresentationModel {
 	}
 	
 	public String getId() {
-		return processDefinition.getId();
+		return processDefinition.id();
 	}
 
 	public String getKey() {
-		return processDefinition.getKey();
+		return processDefinition.key();
+	}
+	
+	public String getName() {
+		return processDefinition.name();
+	}
+	
+	public String getDeploymentId() {
+		return processDefinition.deploymentId();
+	}
+	
+	public String getResourceName() {
+		return processDefinition.resourceName();
 	}
 
 }
