@@ -58,7 +58,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _fileLabel = $('<td>BPMN File</td>');
 		_fileLabel.appendTo(_newRow);
 		var _fileInputColumn = $('<td></td>');
-		var _fileInput = $('<input type="file" class="text-input" />');
+		var _fileInput = $('<input type="file" class="text-input" style="width: 233px;"/>');
 		_fileInput.attr("id", "fileInput" + _randomId);
 		
 		_fileInput.appendTo(_fileInputColumn);
