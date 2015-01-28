@@ -31,7 +31,7 @@ public class User extends AssertionConcern implements Serializable {
 		this.setPassword(password);
 	}
 
-	public User() {
+	protected User() {
 		super();
 		this.setGroups(new HashSet<Group>(0));
 	}
