@@ -47,4 +47,19 @@ public class IdentityServiceActiviti implements IdentityService{
 		return this.processEngine.getIdentityService();
 	}
 
+	@Override
+	public List<Group> allGroups(int start, int limit) {
+		GroupQuery groupQuery = this.activitiIdentityService().createGroupQuery();
+		List<org.activiti.engine.identity.Group> activitiGroups = groupQuery.listPage(start, limit);
+		List<Group> groups = new ArrayList<Group>();
+		for (org.activiti.engine.identity.Group activitiGroup : activitiGroups) {
+			String id = activitiGroup.getId();
+			String name = activitiGroup.getName();
+			
+			Group group = new Group(id, name);
+			groups.add(group);
+		}
+		return groups;
+	}
+
 }
