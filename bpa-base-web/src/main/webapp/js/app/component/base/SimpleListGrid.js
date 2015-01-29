@@ -2,13 +2,14 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
         ], function (Observable) {
 	
-	var GroupList = function(container, options){
+	var SimpleListGrid = function(container, options){
 		
 		var _self = this;
 		
 		var _options = options || {};
 		
-		var _url = BPA.Constant.workflow.identity.groupsUrl;
+		var _url = options.url || throw "url is required";
+		var _datafields = options.datafields || throw "datafields is required";
 		
 		var _subscribers = {
 			any:[]
@@ -171,9 +172,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         
 	}
 	
-	inheritPrototype(GroupList, Observable);
+	inheritPrototype(SimpleListGrid, Observable);
 
-    return GroupList;
+    return SimpleListGrid;
     
 });
 
