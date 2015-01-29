@@ -35,7 +35,8 @@ dependencies {
 			"org.hibernate:hibernate-annotations:3.5.6-Final",
 			"org.hibernate:hibernate-validator:4.3.1.Final",
 			"org.activiti:activiti-engine:5.15.1",
-			"org.activiti:activiti-spring:5.15.1"
+			"org.activiti:activiti-spring:5.15.1",
+			"id.co.oriza.bpa:bpa-base:1.0"
 			
 			
 	runtime "commons-dbcp:commons-dbcp:1.4",
@@ -43,8 +44,7 @@ dependencies {
 			"javassist:javassist:3.12.1.GA",
 			"mysql:mysql-connector-java:5.1.6",
 			"org.slf4j:slf4j-api:1.7.7",
-			"org.slf4j:slf4j-log4j12:1.7.7",
-			"id.co.oriza.bpa:bpa-base:1.0"
+			"org.slf4j:slf4j-log4j12:1.7.7"
 			
 	testCompile group: 'junit', name: 'junit', version: '4.+'
 	

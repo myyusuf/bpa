@@ -1,10 +1,9 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
+import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workflow.application.TaskService;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.DeploymentPresentationModel;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,7 +32,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Controller
-public class DeploymentController {
+public class DeploymentController extends CommonController {
 	
 	private static final int MAX_LIMIT = 10000;
 	
@@ -116,45 +115,6 @@ public class DeploymentController {
 		return result;
 	}
 	
-	private void writeFile(MultipartFile multipartFile) {
-
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-		
-//		String extension = ".txt";
-//		if("image/jpeg".equals(multipartFile.getContentType())){
-//			extension = ".jpg";
-//		}
-		
-		try {
-			inputStream = multipartFile.getInputStream();
-
-			String userImageFolder = "E:\\tests\\bpaupload\\";
-//			File newFile = new File(userImageFolder + extension);
-			File newFile = new File(userImageFolder + multipartFile.getName());
-			if (!newFile.exists()) {
-				newFile.createNewFile();
-			}
-//			outputStream = new FileOutputStream(userImageFolder + extension);
-			outputStream = new FileOutputStream(userImageFolder + multipartFile.getName());
-			int read = 0;
-			byte[] bytes = new byte[256];
-
-			while ((read = inputStream.read(bytes)) != -1) {
-				outputStream.write(bytes, 0, read);
-			}
-			
-			System.out.println("end write file");
-			
-			outputStream.flush();
-			outputStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
 	@RequestMapping(value="/workflow/diagram", method=RequestMethod.GET, produces="application/json")
 	public void getDiagram(HttpServletRequest request, HttpServletResponse response, 
 			@RequestParam(required=false) Map<String, String> params){
@@ -203,20 +163,6 @@ public class DeploymentController {
 			}
 		}
 		
-	}
-	
-	private void printParams(Map<String, Object> params){
-		List<String> listKeys = new ArrayList<String>(params.keySet());
-		for (String key : listKeys) {
-			System.out.println("key : " + key + ", value : " + params.get(key));
-		}
-	}
-	
-	private void printParamsString(Map<String, String> params){
-		List<String> listKeys = new ArrayList<String>(params.keySet());
-		for (String key : listKeys) {
-			System.out.println("key : " + key + ", value : " + params.get(key));
-		}
 	}
 
 	public TaskService taskService() {
