@@ -16,9 +16,9 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _isEditForm = _editedUser.userId != undefined && _editedUser.userId != null;
 		
-		var _randomId = BPA.Util.getRandomId("userEdit");
+		var _randomId = BPA.Util.getRandomId("workflow_userEdit");
         
-		var _editWindow = $('<div id="userEditWindow"></div>');
+		var _editWindow = $('<div id="workflow_userEditWindow"></div>');
 		var _windowHeader = "";
 		if(_isEditForm){
 			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Account Group Edit</span></td></tr></table></div>');
@@ -38,7 +38,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _userIdLabel = $('<td>User Id</td>');
 		_userIdLabel.appendTo(_newRow);
 		var _userIdInputColumn = $('<td></td>');
-		var _userIdInput = $('<input type="text" class="text-input" maxlength="8" />');
+		var _userIdInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px; float: left;"/>');
 		_userIdInput.attr("id", "userIdInput" + _randomId);
 		
 		if(_isEditForm){
@@ -46,60 +46,64 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 			_userIdInput.jqxInput({disabled: true});
 		}
 		_userIdInput.appendTo(_userIdInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_userIdInputColumn);
 		_userIdInputColumn.appendTo(_newRow);
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
-		var _nameLabel = $('<td>Name</td>');
-		_nameLabel.appendTo(_newRow);
-		var _nameInputColumn = $('<td></td>');
-		var _nameInput = $('<input type="text" class="text-input" maxlength="50" />');
-		_nameInput.attr("id", "nameInput" + _randomId);
+		var _passwordLabel = $('<td>Password</td>');
+		_passwordLabel.appendTo(_newRow);
+		var _passwordInputColumn = $('<td></td>');
+		var _passwordInput = $('<input type="text" class="text-input" maxlength="20" style="width: 233px; float: left;"/>');
+		_passwordInput.attr("id", "passwordInput" + _randomId);
 		if(_isEditForm){
-			_nameInput.val(_editedUser.name);
+			_passwordInput.val(_editedUser.password);
 		}
-		
-		_nameInput.appendTo(_nameInputColumn);
-		_nameInputColumn.appendTo(_newRow);
-		//------------------------------------------------------
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _defaultBalanceLabel = $('<td>Default Balance</td>');
-		_defaultBalanceLabel.appendTo(_newRow);
-		var _defaultBalanceInputColumn = $('<td></td>');
-		var _defaultBalanceInput = $('<div style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;"></div>');
-		_defaultBalanceInput.attr("id", "defaultBalanceInput" + _randomId);
-		_defaultBalanceInput.appendTo(_defaultBalanceInputColumn);
-		_defaultBalanceInputColumn.appendTo(_newRow);
-		
-		var _defaultBalanceComboBox = new DefaultBalanceComboBox(_defaultBalanceInput,{});
-        
-        _defaultBalanceComboBox.on('bindingComplete', function (event) {
-        	
-        	if(_editedUser.defaultBalance != undefined && _editedUser.defaultBalance != null){
-        		var _selectedItem = _defaultBalanceComboBox.jqxComboBox('getItemByValue', _editedUser.defaultBalance.userId);
-            	_defaultBalanceComboBox.jqxComboBox('selectItem', _selectedItem);
-        	}
-        	
-        	//to close the validation message on combobox when form first loaded
-        	_editForm.jqxValidator('hide');
-        	
-        });
-        
-		//------------------------------------------------------
+		_passwordInput.appendTo(_passwordInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_passwordInputColumn);
+		_passwordInputColumn.appendTo(_newRow);
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
-		var _descriptionLabel = $('<td>Description</td>');
-		_descriptionLabel.appendTo(_newRow);
-		var _descriptionInputColumn = $('<td></td>');
-		var _descriptionInput = $('<textarea rows="5" cols="30" maxlength="250"></textarea>');
-		_descriptionInput.attr("id", "descriptionInput" + _randomId);
+		var _firstNameLabel = $('<td>First Name</td>');
+		_firstNameLabel.appendTo(_newRow);
+		var _firstNameInputColumn = $('<td></td>');
+		var _firstNameInput = $('<input type="text" class="text-input" maxlength="30" style="width: 233px; float: left;"/>');
+		_firstNameInput.attr("id", "firstNameInput" + _randomId);
 		if(_isEditForm){
-			_descriptionInput.val(_editedUser.description);
+			_firstNameInput.val(_editedUser.firstName);
 		}
-		_descriptionInput.appendTo(_descriptionInputColumn);
-		_descriptionInputColumn.appendTo(_newRow);
+		_firstNameInput.appendTo(_firstNameInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_firstNameInputColumn);
+		_firstNameInputColumn.appendTo(_newRow);
+		
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _lastNameLabel = $('<td>Last Name</td>');
+		_lastNameLabel.appendTo(_newRow);
+		var _lastNameInputColumn = $('<td></td>');
+		var _lastNameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		_lastNameInput.attr("id", "lastNameInput" + _randomId);
+		if(_isEditForm){
+			_lastNameInput.val(_editedUser.lastName);
+		}
+		_lastNameInput.appendTo(_lastNameInputColumn);
+		_lastNameInputColumn.appendTo(_newRow);
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _emailLabel = $('<td>Email</td>');
+		_emailLabel.appendTo(_newRow);
+		var _emailInputColumn = $('<td></td>');
+		var _emailInput = $('<input type="text" class="text-input" maxlength="50" />');
+		_emailInput.attr("id", "emailInput" + _randomId);
+		if(_isEditForm){
+			_emailInput.val(_editedUser.email);
+		}
+		_emailInput.appendTo(_emailInputColumn);
+		_emailInputColumn.appendTo(_newRow);
+		
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
@@ -138,24 +142,18 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         });
         
         _userIdInput.jqxInput({ theme: 'metro' });
-        _nameInput.jqxInput({ theme: 'metro' });
-        _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
+        _passwordInput.jqxInput({ theme: 'metro' });
+        _firstNameInput.jqxInput({ theme: 'metro' });
+        _lastNameInput.jqxInput({ theme: 'metro' });
+        _emailInput.jqxInput({ theme: 'metro' });
         
         _editForm.jqxValidator({
         	closeOnClick: true,
         	arrow: false,
             rules: [
                     { input: "#" + _userIdInput.attr("id"), message: 'User Id is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _nameInput.attr("id"), message: 'Name is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _defaultBalanceInput.attr("id"), message: 'Default balance is required', action: 'keyup, blur', 
-                    	rule: function(input){
-	                    	var _val = _defaultBalanceComboBox.jqxComboBox('val');
-	                    	if(_val==""){
-	                    		return false;
-	                    	}
-	                    	return true;
-                    	}
-                     }
+                    { input: "#" + _passwordInput.attr("id"), message: 'Password is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _firstNameInput.attr("id"), message: 'First Name is required', action: 'keyup, blur', rule: 'required' }
                    
                    ]
         	});
@@ -163,10 +161,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _editForm.on('validationSuccess', function (event) { 
         	_saveUser();
         }); 
-        
-    	_defaultBalanceComboBox.on('change', function (event){
-            _editForm.jqxValidator('validateInput', "#" + _defaultBalanceInput.attr("id"));
-	    });
         
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
@@ -182,8 +176,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         var _saveUser = function(){
         	
-        	var _item = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
-        	
         	var _savedData = {};
         	
         	if(_isEditForm){
@@ -191,15 +183,15 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	}else{
         		_savedData.userId = _userIdInput.val().replace(/-/g, "");
         	}
-        	_savedData.name = _nameInput.val();
-        	_savedData.description = _descriptionInput.val();
-        	_savedData.defaultBalance = {};
-        	_savedData.defaultBalance.userId = _item.value;
+        	_savedData.password = _passwordInput.val();
+        	_savedData.firstName = _firstNameInput.val();
+        	_savedData.lastName = _lastNameInput.val();
+        	_savedData.email = _emailInput.val();
         	
         	if(_isEditForm){
-        		Observable.prototype.publish.call(_self, _savedData, "updateaccountgroup");
+        		Observable.prototype.publish.call(_self, _savedData, "updateuser");
         	}else{
-        		Observable.prototype.publish.call(_self, _savedData, "addnewaccountgroup");
+        		Observable.prototype.publish.call(_self, _savedData, "addnewuser");
         	}
         }
         
