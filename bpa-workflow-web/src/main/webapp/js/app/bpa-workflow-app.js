@@ -33,6 +33,10 @@
                 		$.publish("viewProcessDefinitionListEvent", {name: "process definition"});
                 	});
                 	
+                	$("#userListMenu").click(function(){
+                		$.publish("viewUserListEvent", {name: "user"});
+                	});
+                	
                 	$("#taskListMenu").click(function(){
                 		$.publish("viewTaskListEvent", {name: "task"});
                 	});

@@ -28,6 +28,19 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewUserListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+			
+			require(['./composer/workflow/identity/UserComposer'], function (UserComposer) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var _userComposer = new UserComposer(gridContainer);
+            });
+		});
+		
 		$.subscribe("viewTaskListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);

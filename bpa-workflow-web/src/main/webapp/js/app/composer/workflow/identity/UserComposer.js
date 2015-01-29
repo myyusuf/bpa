@@ -45,7 +45,7 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 		var _onEditRow = function(editedUser){
 			
 			//Consider always new instance
-			var _userEdit = new UserEdit(container, {editedUser: editedUser, comboboxUrl: _accountNormalUrl});
+			var _userEdit = new UserEdit(container, {editedUser: editedUser});
 			
 			var _onUpdateUser = _self.buildOnUpdateUser(_userList, _userEdit);
 			_userEdit.subscribe(_onUpdateUser, "updateuser");
@@ -92,7 +92,7 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete User', 
-			content: "Are you sure want to delete this account group : " + deletedUser.code + " (" + deletedUser.name + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this user : " + deletedUser.code + " (" + deletedUser.firstName + ") ?", type: 'info', onOk: _onOk});
 			
 			
 		};

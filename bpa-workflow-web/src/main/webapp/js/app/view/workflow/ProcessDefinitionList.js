@@ -122,7 +122,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         		_newRow.appendTo(_searchTable);
         		var _newColumn = $('<td></td>');
         		_newColumn.appendTo(_newRow);
-        		var _startProcessButton = $('<div style="margin-left: 2px;">Start Process</div>');
+        		var _startProcessButton = $('<div style="margin-left: 2px;">' + i18n.t("workflow:workflow.startProcess") +'</div>');
         		_startProcessButton.appendTo(_newColumn);
         		
                 toolbar.append(_searchContainer);
