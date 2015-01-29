@@ -8,7 +8,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		var _options = options || {};
 		
-		var _url = BPA.Constant.workflow.identity.userUrl;
+		var _url = BPA.Constant.workflow.identity.usersUrl;
 		
 		var _subscribers = {
 			any:[]
