@@ -83,7 +83,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _lastNameLabel = $('<td>Last Name</td>');
 		_lastNameLabel.appendTo(_newRow);
 		var _lastNameInputColumn = $('<td></td>');
-		var _lastNameInput = $('<input type="text" class="text-input" maxlength="50" />');
+		var _lastNameInput = $('<input type="text" class="text-input" maxlength="30" style="width: 233px;"/>');
 		_lastNameInput.attr("id", "lastNameInput" + _randomId);
 		if(_isEditForm){
 			_lastNameInput.val(_editedUser.lastName);
@@ -96,12 +96,13 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _emailLabel = $('<td>Email</td>');
 		_emailLabel.appendTo(_newRow);
 		var _emailInputColumn = $('<td></td>');
-		var _emailInput = $('<input type="text" class="text-input" maxlength="50" />');
+		var _emailInput = $('<input type="text" class="text-input" maxlength="30" style="width: 233px; float: left;"/>');
 		_emailInput.attr("id", "emailInput" + _randomId);
 		if(_isEditForm){
 			_emailInput.val(_editedUser.email);
 		}
 		_emailInput.appendTo(_emailInputColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_emailInputColumn);
 		_emailInputColumn.appendTo(_newRow);
 		
 		
@@ -130,7 +131,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 236, width: 346,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -153,7 +154,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             rules: [
                     { input: "#" + _userIdInput.attr("id"), message: 'User Id is required', action: 'keyup, blur', rule: 'required' },
                     { input: "#" + _passwordInput.attr("id"), message: 'Password is required', action: 'keyup, blur', rule: 'required' },
-                    { input: "#" + _firstNameInput.attr("id"), message: 'First Name is required', action: 'keyup, blur', rule: 'required' }
+                    { input: "#" + _firstNameInput.attr("id"), message: 'First Name is required', action: 'keyup, blur', rule: 'required' },
+                    { input: "#" + _emailInput.attr("id"), message: 'Email is required', action: 'keyup, blur', rule: 'required' }
                    
                    ]
         	});
