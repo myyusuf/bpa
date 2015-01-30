@@ -8,6 +8,7 @@ BPA.Constant.workflow = {
 	startProcessUrl : 'service/workflow/processdefinitions/startprocess',
 	identity: {
 		usersUrl : 'service/workflow/identity/users',
+		groupsUrl : 'service/workflow/identity/groups'
 	},
 	tasksUrl : 'service/workflow/tasks'
 };

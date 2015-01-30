@@ -1,6 +1,6 @@
-define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleGridList", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
-        ], function (Observable) {
+        ], function (Observable, SimpleGridList) {
 	
 	var GroupList = function(container, options){
 		
@@ -8,15 +8,28 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		var _options = options || {};
 		
-		var _url = BPA.Constant.workflow.identity.groupsUrl;
-		
 		var _subscribers = {
 			any:[]
 		};
 		
 		Observable.call(_self, _subscribers);
 		
-        var _source =
+		_options.dataFields = [
+		                       { name: 'id', type: 'string' },
+		                       { name: 'name', type: 'string' }
+		                   ];
+		_options.dataFieldId = "id";
+		
+		_options.url = BPA.Constant.workflow.identity.groupsUrl;
+		
+		_options.columns: [
+		                   { text: 'Id', datafield: 'id', width: '25%' },
+		                   { text: 'Name', datafield: 'name', width: '25%' }
+		                 ];
+		
+		var _simpleListGrid = new SimpleListGrid(container, _options);
+		
+        /*var _source =
         {
             datatype: "json",
             datafields: [
@@ -38,9 +51,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	
             },
             loadError: function (xhr, status, error) { }
-        });
+        });*/
         
-        var _groupListGrid = container.jqxGrid(
+        /*var _groupListGrid = container.jqxGrid(
         {
             width: '100%',
             height: '100%',
@@ -155,18 +168,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	}
         	
         	return _group;
-        }
+        }*/
         
         this.refreshGrid = function(){
-        	_groupListGrid.jqxGrid('updatebounddata');
-        }
-        
-        var _isRightClick = function(event) {
-            var _rightclick;
-            if (!event) var event = window.event;
-            if (event.which) _rightclick = (event.which == 3);
-            else if (event.button) _rightclick = (event.button == 2);
-            return _rightclick;
+        	_simpleListGrid.refreshGrid();
         }
         
 	}

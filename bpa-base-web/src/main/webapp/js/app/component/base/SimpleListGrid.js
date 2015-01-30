@@ -11,7 +11,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		var _url = options.url || throw "url is required";
 		var _dataFields = options.dataFields || throw "dataFields is required";
 		var _dataFieldId = options.dataFieldId || throw "dataFieldId is required";
-		var _selectionMode = options.selectionMode || throw "datafieldId is required";
+		var _selectionMode = options.selectionMode || "singlerow";
 		var _columns = options.columns || throw "columns is required";
 		var _theme = options.theme || "metro";
 		var _pageSizeOptions = options.pageSizeOptions || ['5', '10', '20', '100'];

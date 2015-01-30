@@ -2,7 +2,9 @@ package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workflow.application.IdentityService;
+import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
+import id.co.oriza.bpa.workflow.interfaces.ws.pm.GroupPresentationModel;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.UserPresentationModel;
 
 import java.util.ArrayList;
@@ -50,6 +52,32 @@ public class IdentityController extends CommonController{
 		
 		result.put("num", usersSize);
 		result.put("data", userModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> allGroups(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		printParamsString(params);
+		
+		List<GroupPresentationModel> groupModels = new ArrayList<GroupPresentationModel>();
+		Collection<Group> groups = this.identityService().allGroups(start, limit);
+		for (Group group : groups) {
+			GroupPresentationModel groupModel = new GroupPresentationModel(group);
+			groupModels.add(groupModel);
+		}
+		
+		Long groupsSize = 10l;//this.identityService().allGroupsSize();
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", groupsSize);
+		result.put("data", groupModels);
 		result.put("success", true);
 		
 		return result;
