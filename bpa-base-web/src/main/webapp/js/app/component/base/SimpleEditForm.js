@@ -6,7 +6,17 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _options = options || {};
 		
-		var _dataId = _options.dataId || {};
+		var _dataId = _options.dataId;
+		if(!_dataId) throw "dataId is required";
+		
+		var _formName = _options.formName;
+		if(!_formName) throw "formName is required";
+		
+		var _caption = _options.caption;
+		if(!_caption) throw "caption is required";
+		
+		var _formFields =  _options.formFields;
+		if(!_formFields) throw "formFields is required";
 		
 		var _subscribers = {
 			any:[]
@@ -16,95 +26,47 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _isEditForm = _dataId != undefined && _dataId != null;
 		
-		var _randomId = BPA.Util.getRandomId("workflow_groupEdit");
+		var _randomId = BPA.Util.getRandomId(_formName);
         
-		var _editWindow = $('<div id="workflow_groupEditWindow"></div>');
-		var _windowHeader = "";
-		if(_isEditForm){
-			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Account Group Edit</span></td></tr></table></div>');
-		}else{
-			_windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">New Account Group</span></td></tr></table></div>');
-		}
+		var _editWindow = $('<div id="'+ _formName + '_Window"></div>');
+		var _windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">' + _caption + '</span></td></tr></table></div>');
 		
 		var _windowContent = $('<div></div>');
 		
 		var _editForm = $('<form></form>');
 		_editForm.appendTo(_windowContent);
 		var _editTable = $('<table class="edit-table"></table>');
-		_editTable.appendTo(_editForm);
 		
-		var _newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _groupIdLabel = $('<td>Group Id</td>');
-		_groupIdLabel.appendTo(_newRow);
-		var _groupIdInputColumn = $('<td></td>');
-		var _groupIdInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px; float: left;"/>');
-		_groupIdInput.attr("id", "groupIdInput" + _randomId);
-		
-		if(_isEditForm){
-			_groupIdInput.val(_editedGroup.groupId);
-			_groupIdInput.jqxInput({disabled: true});
+		for(i=0; i<_formFields.length; i++){
+			
+			var _newRow = $('<tr></tr>');
+			_newRow.appendTo(_editTable);
+			var _fieldLabel = $('<td>'+_formFields[i].label+'</td>');
+			_fieldLabel.appendTo(_newRow);
+			var _fieldInputColumn = $('<td></td>');
+			var _fieldInput = '';
+			if(_formFields[i].required){
+				_fieldInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px; float: left;"/>');
+			}else{
+				_fieldInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px;"/>');
+			}
+			_fieldInput.attr("id", _formFields[i].name + "_Input_" + _randomId);
+			_fieldInput.jqxInput({ theme: 'metro' });
+			
+			if(_isEditForm){
+				_fieldInput.val(_editedGroup.groupId);
+				if(_formFields[i].isKey){
+					_fieldInput.jqxInput({disabled: true});
+				}
+			}
+			_fieldInput.appendTo(_fieldInputColumn);
+			if(_formFields[i].required){
+				$(BPA.Constant.requiredFieldSymbol).appendTo(_fieldInputColumn);
+			}
+			
+			_fieldInputColumn.appendTo(_newRow);
+			
 		}
-		_groupIdInput.appendTo(_groupIdInputColumn);
-		$(BPA.Constant.requiredFieldSymbol).appendTo(_groupIdInputColumn);
-		_groupIdInputColumn.appendTo(_newRow);
-		
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _passwordLabel = $('<td>Password</td>');
-		_passwordLabel.appendTo(_newRow);
-		var _passwordInputColumn = $('<td></td>');
-		var _passwordInput = $('<input type="text" class="text-input" maxlength="20" style="width: 233px; float: left;"/>');
-		_passwordInput.attr("id", "passwordInput" + _randomId);
-		if(_isEditForm){
-			_passwordInput.val(_editedGroup.password);
-		}
-		_passwordInput.appendTo(_passwordInputColumn);
-		$(BPA.Constant.requiredFieldSymbol).appendTo(_passwordInputColumn);
-		_passwordInputColumn.appendTo(_newRow);
-		
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _firstNameLabel = $('<td>First Name</td>');
-		_firstNameLabel.appendTo(_newRow);
-		var _firstNameInputColumn = $('<td></td>');
-		var _firstNameInput = $('<input type="text" class="text-input" maxlength="30" style="width: 233px; float: left;"/>');
-		_firstNameInput.attr("id", "firstNameInput" + _randomId);
-		if(_isEditForm){
-			_firstNameInput.val(_editedGroup.firstName);
-		}
-		_firstNameInput.appendTo(_firstNameInputColumn);
-		$(BPA.Constant.requiredFieldSymbol).appendTo(_firstNameInputColumn);
-		_firstNameInputColumn.appendTo(_newRow);
-		
-		
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _lastNameLabel = $('<td>Last Name</td>');
-		_lastNameLabel.appendTo(_newRow);
-		var _lastNameInputColumn = $('<td></td>');
-		var _lastNameInput = $('<input type="text" class="text-input" maxlength="30" style="width: 233px;"/>');
-		_lastNameInput.attr("id", "lastNameInput" + _randomId);
-		if(_isEditForm){
-			_lastNameInput.val(_editedGroup.lastName);
-		}
-		_lastNameInput.appendTo(_lastNameInputColumn);
-		_lastNameInputColumn.appendTo(_newRow);
-		
-		_newRow = $('<tr></tr>');
-		_newRow.appendTo(_editTable);
-		var _emailLabel = $('<td>Email</td>');
-		_emailLabel.appendTo(_newRow);
-		var _emailInputColumn = $('<td></td>');
-		var _emailInput = $('<input type="text" class="text-input" maxlength="30" style="width: 233px; float: left;"/>');
-		_emailInput.attr("id", "emailInput" + _randomId);
-		if(_isEditForm){
-			_emailInput.val(_editedGroup.email);
-		}
-		_emailInput.appendTo(_emailInputColumn);
-		$(BPA.Constant.requiredFieldSymbol).appendTo(_emailInputColumn);
-		_emailInputColumn.appendTo(_newRow);
-		
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
@@ -142,13 +104,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	_editWindow.jqxWindow('destroy');
         });
         
-        _groupIdInput.jqxInput({ theme: 'metro' });
-        _passwordInput.jqxInput({ theme: 'metro' });
-        _firstNameInput.jqxInput({ theme: 'metro' });
-        _lastNameInput.jqxInput({ theme: 'metro' });
-        _emailInput.jqxInput({ theme: 'metro' });
-        
-        _editForm.jqxValidator({
+        /*_editForm.jqxValidator({
         	closeOnClick: true,
         	arrow: false,
             rules: [
@@ -195,7 +151,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	}else{
         		Observable.prototype.publish.call(_self, _savedData, "addnewgroup");
         	}
-        }
+        }*/
         
         this.open = function(){
         	_editWindow.jqxWindow('open');
