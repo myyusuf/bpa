@@ -18,6 +18,11 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _formFields =  _options.formFields;
 		if(!_formFields) throw "formFields is required";
 		
+		var _validationRules = options.validationRules;
+		
+		var _width = _options.width || 346;
+		var _height = _options.height || 236; 
+		
 		var _subscribers = {
 			any:[]
 		};
@@ -36,6 +41,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _editForm = $('<form></form>');
 		_editForm.appendTo(_windowContent);
 		var _editTable = $('<table class="edit-table"></table>');
+		_editTable.appendTo(_editForm);
 		
 		for(i=0; i<_formFields.length; i++){
 			
@@ -76,11 +82,21 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _buttonColumn = $('<td colspan="2"></td>');
 		var _saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
 		_saveButton.appendTo(_buttonColumn);
+		_saveButton.click(function(event){
+        	_editForm.jqxValidator('validate');
+		});
 		
 		var _cancelButton = $('<input type="button" value="Cancel"/>');
 		_cancelButton.appendTo(_buttonColumn);
+		_cancelButton.click(function(event){
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
+        });
 		
 		_buttonColumn.appendTo(_newRow);
+		
+		_saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
 		
 		_windowHeader.appendTo(_editWindow);
 		_windowContent.appendTo(_editWindow);
@@ -93,7 +109,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 236, width: 346,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: _height, width: _width,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -103,6 +119,25 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _editWindow.on('close', function (event) { 
         	_editWindow.jqxWindow('destroy');
         });
+        
+        var _rules = [];
+        if(_validationRules){
+        	for(j=0; j<_validationRules.length; j++){
+        		var _validationInputId = "#" + _validationRules[j].fieldName + "_Input_" + _randomId;
+        		var _rule = {input: _validationInputId, message: _validationRules[j].message, action: _validationRules[j].action, rule: _validationRules[j].rule};
+        		_rules.push(_rule);
+        	}
+        }
+        
+        _editForm.jqxValidator({
+        	closeOnClick: true,
+        	arrow: false,
+            rules: _rules
+        	});
+        
+        _editForm.on('validationSuccess', function (event) { 
+        	_saveGroup();
+        }); 
         
         /*_editForm.jqxValidator({
         	closeOnClick: true,

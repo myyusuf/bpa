@@ -20,7 +20,12 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		_options.caption = "Test Form";
 		
-		_options.formFields = [{label: "Id", value: "1234"}];
+		_options.formFields = [{name: "id", label: "Id", value: "1234", required: true}];
+		
+		_options.validationRules = [
+                { fieldName: "id", message: 'Group Id is required', action: 'keyup, blur', rule: 'required' }
+               ]
+
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
