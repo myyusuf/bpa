@@ -37,6 +37,10 @@
                 		$.publish("viewUserListEvent", {name: "user"});
                 	});
                 	
+                	$("#groupListMenu").click(function(){
+                		$.publish("viewGroupListEvent", {name: "group"});
+                	});
+                	
                 	$("#taskListMenu").click(function(){
                 		$.publish("viewTaskListEvent", {name: "task"});
                 	});

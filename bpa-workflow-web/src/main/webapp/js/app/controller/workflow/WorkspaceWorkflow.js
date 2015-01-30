@@ -41,6 +41,19 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewGroupListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+			
+			require(['./composer/workflow/identity/GroupComposer'], function (GroupComposer) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var _groupComposer = new GroupComposer(gridContainer);
+            });
+		});
+		
 		$.subscribe("viewTaskListEvent", function(e, data){
 			var gridContainer = $('<div></div>');
         	gridContainer.appendTo(container);

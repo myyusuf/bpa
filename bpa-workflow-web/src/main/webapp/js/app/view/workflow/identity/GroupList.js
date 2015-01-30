@@ -1,6 +1,6 @@
-define(["bpaObservable", "component/base/SimpleGridList", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
-        ], function (Observable, SimpleGridList) {
+        ], function (Observable, SimpleListGrid) {
 	
 	var GroupList = function(container, options){
 		
@@ -22,9 +22,9 @@ define(["bpaObservable", "component/base/SimpleGridList", "jQuery", "jqxcore", "
 		
 		_options.url = BPA.Constant.workflow.identity.groupsUrl;
 		
-		_options.columns: [
-		                   { text: 'Id', datafield: 'id', width: '25%' },
-		                   { text: 'Name', datafield: 'name', width: '25%' }
+		_options.columns = [
+		                   { text: 'Id', datafield: 'id', width: '50%' },
+		                   { text: 'Name', datafield: 'name', width: '50%' }
 		                 ];
 		
 		var _simpleListGrid = new SimpleListGrid(container, _options);

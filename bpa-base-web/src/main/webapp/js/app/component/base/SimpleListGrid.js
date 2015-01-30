@@ -8,15 +8,24 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		var _options = options || {};
 		
-		var _url = options.url || throw "url is required";
-		var _dataFields = options.dataFields || throw "dataFields is required";
-		var _dataFieldId = options.dataFieldId || throw "dataFieldId is required";
-		var _selectionMode = options.selectionMode || "singlerow";
-		var _columns = options.columns || throw "columns is required";
-		var _theme = options.theme || "metro";
-		var _pageSizeOptions = options.pageSizeOptions || ['5', '10', '20', '100'];
-		var _toolbarButtons = options.toolbarButtons;
-		var _gridContextMenu = options.gridContextMenu; 
+		var _url = _options.url; 
+		if(!_url) throw "url is required";
+		
+		var _dataFields = _options.dataFields;
+		if(!_dataFields) throw "dataFields is required";
+		
+		var _dataFieldId = _options.dataFieldId;
+		if(!_dataFieldId) throw "dataFieldId is required";
+		
+		var _selectionMode = _options.selectionMode || "singlerow";
+		
+		var _columns = _options.columns;
+		if(!_columns) throw "columns is required";
+		
+		var _theme = _options.theme || "metro";
+		var _pageSizeOptions = _options.pageSizeOptions || ['5', '10', '20', '100'];
+		var _toolbarButtons = _options.toolbarButtons;
+		var _gridContextMenu = _options.gridContextMenu; 
 		
 		var _subscribers = {
 			any:[]
