@@ -14,22 +14,28 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		Observable.call(_self, _subscribers);
 		
-		_options.dataId = "1";
-		
 		_options.formName = "workflowGroupEdit";
 		
-		_options.caption = "Test Form";
+		if(_editedGroup.id){
+			_options.isEditForm = true;
+			_options.caption = "Edit Group";
+		}else{
+			_options.isEditForm = false;
+			_options.caption = "Add New Group";
+		}
 		
-		_options.formFields = [{name: "id", label: "Id", value: "1234", required: true}];
+		
+		_options.formFields = [{name: "id", label: "Id", value: _editedGroup.id, required: true},
+		                       {name: "name", label: "Name", value: _editedGroup.name, required: true}
+		                       ];
 		
 		_options.validationRules = [
-                { fieldName: "id", message: 'Group Id is required', action: 'keyup, blur', rule: 'required' }
+                { fieldName: "id", message: 'Id is required', action: 'keyup, blur', rule: 'required' },
+                { fieldName: "name", message: 'Name is required', action: 'keyup, blur', rule: 'required' }
                ]
 
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
-		
-		
 		
 		
 		

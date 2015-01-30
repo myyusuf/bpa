@@ -6,9 +6,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		var _options = options || {};
 		
-		var _dataId = _options.dataId;
-		if(!_dataId) throw "dataId is required";
-		
 		var _formName = _options.formName;
 		if(!_formName) throw "formName is required";
 		
@@ -29,7 +26,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		Observable.call(_self, _subscribers);
 		
-		var _isEditForm = _dataId != undefined && _dataId != null;
+		var _isEditForm = _options.isEditForm || false;
 		
 		var _randomId = BPA.Util.getRandomId(_formName);
         
