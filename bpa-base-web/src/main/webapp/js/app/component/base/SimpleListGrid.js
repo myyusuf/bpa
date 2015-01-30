@@ -9,7 +9,14 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		var _options = options || {};
 		
 		var _url = options.url || throw "url is required";
-		var _datafields = options.datafields || throw "datafields is required";
+		var _dataFields = options.dataFields || throw "dataFields is required";
+		var _dataFieldId = options.dataFieldId || throw "dataFieldId is required";
+		var _selectionMode = options.selectionMode || throw "datafieldId is required";
+		var _columns = options.columns || throw "columns is required";
+		var _theme = options.theme || "metro";
+		var _pageSizeOptions = options.pageSizeOptions || ['5', '10', '20', '100'];
+		var _toolbarButtons = options.toolbarButtons;
+		var _gridContextMenu = options.gridContextMenu; 
 		
 		var _subscribers = {
 			any:[]
@@ -20,11 +27,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         var _source =
         {
             datatype: "json",
-            datafields: [
-                { name: 'id', type: 'string' },
-                { name: 'name', type: 'string' }
-            ],
-            id: 'id',
+            datafields: _dataFields,
+            id: _dataFieldId,
             beforeprocessing: function (data) {
                 _source.totalrecords = data.num;
             },
@@ -52,13 +56,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             altrows: true,
             enabletooltips: true,
             editable: false,
-            selectionmode: 'singlerow',
-            columns: [
-              { text: 'Id', datafield: 'id', width: '25%' },
-              { text: 'Name', datafield: 'name', width: '25%' }
-            ],
-        	theme: 'metro',
-        	pagesizeoptions: ['5', '10', '20', '100'],
+            selectionmode: _selectionMode,
+            columns: _columns,
+        	theme: _theme,
+        	pagesizeoptions: _pageSizeOptions,
         	virtualmode: true,
         	rendergridrows: function () {
                 return _dataAdapter.records;
@@ -75,46 +76,44 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         		
         		var _newRow = $('<tr></tr>');
         		_newRow.appendTo(_searchTable);
-        		var _newColumn = $('<td></td>');
-        		_newColumn.appendTo(_newRow);
-        		var _addButton = $('<div style="margin-left: 2px;">New Group</div>');
-        		_addButton.appendTo(_newColumn);
+        		
+        		if(_toolbarButtons){
+        			for(i=0; i<_toolbarButtons.length; i++){
+        				var _newColumn = $('<td></td>');
+                		_newColumn.appendTo(_newRow);
+                		_toolbarButtons[i].appendTo(_newColumn);
+        			}
+        		}
         		
                 toolbar.append(_searchContainer);
                 
-                _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
-                           
-                _addButton.click(function(event){
-                	_showEditPage();
-                });
             },
         });
         
         _groupListGrid.on('rowdoubleclick', function (event){ 
         	var _args = event.args, _rowindex = _args.rowindex;
         	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowindex);
-            _showEditPage(_rowData);
+        	Observable.prototype.publish.call(_self, _rowData, "onRowDoubleClick");
         });
         
-        var _gridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
-        _gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
-        _gridContextMenu.on('itemclick', function (event){
-        	
-        	var _menuKey = $(event.target).data("menukey");
-        	
-        	var _rowData = "";
-        	
-        	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
-        	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
-        	
-	 		if("add" == _menuKey){
-	 			_showEditPage();
-	 		}else if("edit" == _menuKey){
-	 			_showEditPage(_rowData);
-	 		}else if("delete" == _menuKey){
-	 			_deleteRow(_rowData);
-	 		}
-        });
+        if(!_gridContextMenu){
+        	var _defaultGridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
+            _defaultGridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+            _defaultGridContextMenu.on('itemclick', function (event){
+            	
+            	var _menuKey = $(event.target).data("menukey");
+            	
+            	var _rowData = "";
+            	
+            	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
+            	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
+            	
+            	var _command = "";
+    	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
+            });
+            
+            _gridContextMenu = _defaultGridContextMenu;
+        }
         
         _groupListGrid.on('rowclick', function (event) {
         	
@@ -145,17 +144,6 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         
         var _deleteRow = function(rowData){
         	Observable.prototype.publish.call(_self, _getGroupFromRowData(rowData), "deleterow");
-        }
-        
-        var _getGroupFromRowData = function(rowData){
-        	var _group = {};
-        	
-        	if(rowData){
-        		_group.id = rowData.id;
-            	_group.name = rowData.name;
-        	}
-        	
-        	return _group;
         }
         
         this.refreshGrid = function(){
