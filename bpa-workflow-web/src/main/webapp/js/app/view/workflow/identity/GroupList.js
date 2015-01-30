@@ -27,7 +27,21 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		                   { text: 'Name', datafield: 'name', width: '50%' }
 		                 ];
 		
+		var _addButton = $('<div style="margin-left: 2px;">New Group</div>');
+		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+		_addButton.click(function(event){
+			Observable.prototype.publish.call(_self, {}, "onAddGroup");
+        });
+		
+		_options.toolbarButtons = [_addButton];
+		
 		var _simpleListGrid = new SimpleListGrid(container, _options);
+		
+		var _onContextMenuClick = function(commandObject){
+			console.log(commandObject.command);
+		}
+		
+		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
 		
         /*var _source =
         {

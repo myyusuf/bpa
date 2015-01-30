@@ -216,6 +216,14 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
         	_editWindow.jqxWindow('close');
         	_editWindow.jqxWindow('destroy');
         }*/
+		
+		this.open = function(){
+			_simpleEditForm.open();
+        }
+        
+        this.close = function(){
+        	_simpleEditForm.close();
+        }
         
 	}
 	

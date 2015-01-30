@@ -20,6 +20,13 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 		
 		var _groupList = new GroupList(container, _options);
 		
+		var _onAddGroup = function(editedGroup){
+			//Consider always new instance
+			var _groupEdit = new GroupEdit(container, {editedGroup: editedGroup});
+			_groupEdit.open();
+		}
+		_groupList.subscribe(_onAddGroup, "onAddGroup");
+		
 		GroupComposer.prototype.buildOnUpdateGroup = function(groupList, groupEdit){
 			var _onUpdateGroup = function(updatedGroup){
 				
@@ -73,6 +80,7 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 			_groupEdit.open();
 		};
 		_groupList.subscribe(_onEditRow, "editrow");
+		
 		
 		var _onDeleteRow = function(deletedGroup){
 			
