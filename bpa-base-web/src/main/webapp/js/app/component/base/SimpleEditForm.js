@@ -54,7 +54,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 			_fieldInput.jqxInput({ theme: 'metro' });
 			
 			if(_isEditForm){
-				_fieldInput.val(_editedGroup.groupId);
+				_fieldInput.val(_formFields[i].value);
 				if(_formFields[i].isKey){
 					_fieldInput.jqxInput({disabled: true});
 				}

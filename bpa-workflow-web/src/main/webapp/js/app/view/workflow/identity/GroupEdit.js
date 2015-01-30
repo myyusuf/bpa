@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
+define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm) {
 	
 	var GroupEdit = function(container, options){
 		
@@ -14,10 +14,21 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		
 		Observable.call(_self, _subscribers);
 		
-		var _isEditForm = _editedGroup.groupId != undefined && _editedGroup.groupId != null;
+		_options.dataId = "1";
 		
-		var _randomId = BPA.Util.getRandomId("workflow_groupEdit");
-        
+		_options.formName = "workflowGroupEdit";
+		
+		_options.caption = "Test Form";
+		
+		_options.formFields = [{label: "Id", value: "1234"}];
+		
+		var _simpleEditForm = new SimpleEditForm(container, _options);
+		
+		
+		
+		
+		
+/*        
 		var _editWindow = $('<div id="workflow_groupEditWindow"></div>');
 		var _windowHeader = "";
 		if(_isEditForm){
@@ -204,7 +215,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         this.close = function(){
         	_editWindow.jqxWindow('close');
         	_editWindow.jqxWindow('destroy');
-        }
+        }*/
         
 	}
 	
