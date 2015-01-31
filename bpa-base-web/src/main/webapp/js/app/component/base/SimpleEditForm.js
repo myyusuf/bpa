@@ -40,7 +40,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _editTable = $('<table class="edit-table"></table>');
 		_editTable.appendTo(_editForm);
 		
-		for(i=0; i<_formFields.length; i++){
+		for(var i=0; i<_formFields.length; i++){
 			
 			var _newRow = $('<tr></tr>');
 			_newRow.appendTo(_editTable);
@@ -119,7 +119,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
         var _rules = [];
         if(_validationRules){
-        	for(j=0; j<_validationRules.length; j++){
+        	for(var j=0; j<_validationRules.length; j++){
         		var _validationInputId = "#" + _validationRules[j].fieldName + "_Input_" + _randomId;
         		var _rule = {input: _validationInputId, message: _validationRules[j].message, action: _validationRules[j].action, rule: _validationRules[j].rule};
         		_rules.push(_rule);
@@ -133,7 +133,11 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	});
         
         _editForm.on('validationSuccess', function (event) { 
-        	_saveGroup();
+        	var _savedData = {};
+        	for(var k=0; k<_formFields.length; k++){
+        		_savedData[_formFields[k].name] = $("#" + _formFields[k].name + "_Input_" + _randomId).val();
+        	}
+        	Observable.prototype.publish.call(_self, _savedData, "onSaveForm");
         }); 
         
         /*_editForm.jqxValidator({

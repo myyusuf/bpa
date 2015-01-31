@@ -37,6 +37,12 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
+		var _onSaveForm = function(data){
+			console.log(data);
+			_simpleEditForm.close();
+		}
+		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
+		
 		
 		
 /*        
