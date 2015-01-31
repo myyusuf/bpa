@@ -4,7 +4,7 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 		
 		var _self = this;
 		
-		var _groupListUrl = BPA.Constant.workflow.identity.groupUrl;
+		var _groupListUrl = BPA.Constant.workflow.identity.groupsUrl;
 		
 		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
             width: 250, position: "top-right", opacity: 0.9,
