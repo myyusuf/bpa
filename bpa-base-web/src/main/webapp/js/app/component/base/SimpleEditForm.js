@@ -49,11 +49,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 			var _fieldInputColumn = $('<td></td>');
 			var _fieldInput = '';
 			if(_formFields[i].required){
-				_fieldInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px; float: left;"/>');
+				_fieldInput = $('<input type="text" class="text-input" style="width: 233px; float: left;"/>');
 			}else{
-				_fieldInput = $('<input type="text" class="text-input" maxlength="8" style="width: 233px;"/>');
+				_fieldInput = $('<input type="text" class="text-input" style="width: 233px;"/>');
 			}
 			_fieldInput.attr("id", _formFields[i].name + "_Input_" + _randomId);
+			if(_formFields[i].maxLength){
+				_fieldInput.attr("maxlength", _formFields[i].maxLength);
+			}
 			_fieldInput.jqxInput({ theme: 'metro' });
 			
 			if(_isEditForm){

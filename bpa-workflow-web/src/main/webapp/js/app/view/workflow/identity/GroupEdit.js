@@ -25,8 +25,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		}
 		_options.isEditForm = _isEditForm;
 		
-		_options.formFields = [{name: "id", label: "Id", value: _editedGroup.id, required: true},
-		                       {name: "name", label: "Name", value: _editedGroup.name, required: true}
+		_options.formFields = [{name: "id", label: "Id", value: _editedGroup.id, required: true, maxLength: 30},
+		                       {name: "name", label: "Name", value: _editedGroup.name, required: true, maxLength: 100}
 		                       ];
 		
 		_options.validationRules = [

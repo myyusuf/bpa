@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workflow.infrastructure.services;
 
 import id.co.oriza.bpa.workflow.application.IdentityService;
+import id.co.oriza.bpa.workflow.application.NewGroupCommand;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
 

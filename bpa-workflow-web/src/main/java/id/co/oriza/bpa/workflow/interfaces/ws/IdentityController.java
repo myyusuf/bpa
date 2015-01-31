@@ -2,9 +2,9 @@ package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workflow.application.IdentityService;
+import id.co.oriza.bpa.workflow.application.NewGroupCommand;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
-import id.co.oriza.bpa.workflow.infrastructure.services.NewGroupCommand;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.GroupPresentationModel;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.UserPresentationModel;
 
@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,9 +86,11 @@ public class IdentityController extends CommonController{
 	}
 	
 	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.POST, produces="application/json")
-	public Map<String, Object> createGroup(@RequestParam(required=false) Map<String, String> params){
+	public Map<String, Object> createGroup(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("create group");
+		
+		printParams(params);
 		
 		String id = (String) params.get("id");
 		String name = (String) params.get("name");

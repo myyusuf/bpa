@@ -2,7 +2,6 @@ package id.co.oriza.bpa.workflow.application;
 
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
-import id.co.oriza.bpa.workflow.infrastructure.services.NewGroupCommand;
 
 import java.util.List;
 

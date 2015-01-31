@@ -1,4 +1,4 @@
-package id.co.oriza.bpa.workflow.infrastructure.services;
+package id.co.oriza.bpa.workflow.application;
 
 public class NewGroupCommand {
 
