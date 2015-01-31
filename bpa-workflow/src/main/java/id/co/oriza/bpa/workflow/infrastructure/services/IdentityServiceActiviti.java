@@ -1,5 +1,9 @@
 package id.co.oriza.bpa.workflow.infrastructure.services;
 
+import id.co.oriza.bpa.workflow.application.IdentityService;
+import id.co.oriza.bpa.workflow.domain.model.Group;
+import id.co.oriza.bpa.workflow.domain.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +11,7 @@ import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.UserQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import id.co.oriza.bpa.workflow.application.IdentityService;
-import id.co.oriza.bpa.workflow.domain.model.Group;
-import id.co.oriza.bpa.workflow.domain.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 public class IdentityServiceActiviti implements IdentityService{
 	
@@ -60,6 +61,19 @@ public class IdentityServiceActiviti implements IdentityService{
 			groups.add(group);
 		}
 		return groups;
+	}
+	
+	@Transactional
+	@Override
+	public Group newGroupWith(NewGroupCommand aCommand){
+		
+		org.activiti.engine.identity.Group newGroup = this.activitiIdentityService().newGroup(aCommand.getId());
+		newGroup.setName(aCommand.getName());
+		newGroup.setType("assignment");
+		
+		this.activitiIdentityService().saveGroup(newGroup);
+		
+		return null;
 	}
 
 }

@@ -4,6 +4,7 @@ import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workflow.application.IdentityService;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
+import id.co.oriza.bpa.workflow.infrastructure.services.NewGroupCommand;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.GroupPresentationModel;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.UserPresentationModel;
 
@@ -78,6 +79,24 @@ public class IdentityController extends CommonController{
 		
 		result.put("num", groupsSize);
 		result.put("data", groupModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createGroup(@RequestParam(required=false) Map<String, String> params){
+		
+		logger.debug("create group");
+		
+		String id = (String) params.get("id");
+		String name = (String) params.get("name");
+		
+		NewGroupCommand command = new NewGroupCommand(id, name);
+		this.identityService().newGroupWith(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("success", true);
 		
 		return result;

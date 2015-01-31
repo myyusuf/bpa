@@ -122,6 +122,20 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             });
             
             _gridContextMenu = _defaultGridContextMenu;
+        }else{
+        	_gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+        	_gridContextMenu.on('itemclick', function (event){
+            	
+            	var _menuKey = $(event.target).data("menukey");
+            	
+            	var _rowData = "";
+            	
+            	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
+            	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
+            	
+            	var _command = "";
+    	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
+            });
         }
         
         _groupListGrid.on('rowclick', function (event) {
