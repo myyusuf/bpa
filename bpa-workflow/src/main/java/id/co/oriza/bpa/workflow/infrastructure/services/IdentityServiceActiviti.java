@@ -77,4 +77,10 @@ public class IdentityServiceActiviti implements IdentityService{
 		return null;
 	}
 
+	@Override
+	public long allGroupsSize() {
+		GroupQuery groupQuery = this.activitiIdentityService().createGroupQuery();
+		return groupQuery.count();
+	}
+
 }

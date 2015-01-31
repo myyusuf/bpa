@@ -74,7 +74,7 @@ public class IdentityController extends CommonController{
 			groupModels.add(groupModel);
 		}
 		
-		Long groupsSize = 10l;//this.identityService().allGroupsSize();
+		Long groupsSize = this.identityService().allGroupsSize();
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		

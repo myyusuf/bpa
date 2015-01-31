@@ -9,6 +9,7 @@ public interface IdentityService {
 	
 	List<User> allUsers(int start, int limit);
 	List<Group> allGroups(int start, int limit);
+	long allGroupsSize();
 	Group newGroupWith(NewGroupCommand aCommand);
 
 }
