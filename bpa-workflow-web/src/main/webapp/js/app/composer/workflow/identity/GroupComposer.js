@@ -20,9 +20,28 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 		
 		var _groupList = new GroupList(container, _options);
 		
-		var _onAddGroup = function(editedGroup){
+		var _onAddGroup = function(){
 			//Consider always new instance
-			var _groupEdit = new GroupEdit(container, {editedGroup: editedGroup});
+			var _groupEdit = new GroupEdit(container, {});
+			
+			var _onAddNewGroup = function(newGroup){
+				
+				var _requestType = "POST";
+				
+				var _onSuccess = function(result){// Depends on new _groupEdit instance
+					_groupEdit.close();//new _groupEdit instance
+					_groupList.refreshGrid();
+					_successNotification.jqxNotification("open");
+				}
+				
+				var _onError = function(status, error){
+					var _errorWindow = new NotificationWindow(container, {title:'Error Saving Group', 
+						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
+				}
+				
+				_sendData(newGroup, _requestType, _onSuccess, _onError);
+			}
+			_groupEdit.subscribe(_onAddNewGroup, "addnewgroup");
 			_groupEdit.open();
 		}
 		_groupList.subscribe(_onAddGroup, "onAddGroup");

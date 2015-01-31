@@ -17,13 +17,13 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		_options.formName = "workflowGroupEdit";
 		
 		if(_editedGroup.id){
-			_options.isEditForm = true;
+			_isEditForm = true;
 			_options.caption = "Edit Group";
 		}else{
-			_options.isEditForm = false;
+			_isEditForm = false;
 			_options.caption = "Add New Group";
 		}
-		
+		_options.isEditForm = _isEditForm;
 		
 		_options.formFields = [{name: "id", label: "Id", value: _editedGroup.id, required: true},
 		                       {name: "name", label: "Name", value: _editedGroup.name, required: true}
@@ -38,11 +38,13 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
 		var _onSaveForm = function(data){
-			console.log(data);
-			_simpleEditForm.close();
+			if(_isEditForm){
+        		Observable.prototype.publish.call(_self, data, "updategroup");
+        	}else{
+        		Observable.prototype.publish.call(_self, data, "addnewgroup");
+        	}
 		}
 		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
-		
 		
 		
 /*        
