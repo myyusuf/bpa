@@ -1,8 +1,61 @@
 define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
 	
-	var UserEdit = function(container, options){
+	var UserEdit = function(container, user){
 		
 		var _self = this;
+		
+		var _subscribers = {
+			any:[]
+		};
+		
+		Observable.call(_self, _subscribers);
+		
+		var _options = {};
+		
+		var _isEditForm = false;
+		if(user.id){
+			_isEditForm = true;
+			_options.caption = "Edit User";
+		}else{
+			_options.caption = "Add New User";
+		}
+		_options.isEditForm = _isEditForm;
+		
+		_options.formName = "workflowUserEdit";
+		
+		_options.formFields = [{name: "id", label: "Id", value: user.id, isKey: true, required: true, maxLength: 30},
+		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
+		                       {name: "lastName", label: "Last Name", value: user.lastName, required: true, maxLength: 100},
+		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100}
+		                       ];
+		
+		_options.validationRules = [
+                { fieldName: "id", message: 'Id is required', action: 'keyup, blur', rule: 'required' },
+                { fieldName: "firstName", message: 'First Name is required', action: 'keyup, blur', rule: 'required' },
+                { fieldName: "email", message: 'Email is required', action: 'keyup, blur', rule: 'required' }
+               ]
+
+		
+		var _simpleEditForm = new SimpleEditForm(container, _options);
+		
+		var _onSaveForm = function(data){
+			if(_isEditForm){
+        		Observable.prototype.publish.call(_self, data, "onSaveUser");
+        	}else{
+        		Observable.prototype.publish.call(_self, data, "onSaveNewUser");
+        	}
+		}
+		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
+		
+		this.open = function(){
+			_simpleEditForm.open();
+        }
+        
+        this.close = function(){
+        	_simpleEditForm.close();
+        }
+		
+		/*var _self = this;
 		
 		var _options = options || {};
 		
@@ -204,7 +257,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         this.close = function(){
         	_editWindow.jqxWindow('close');
         	_editWindow.jqxWindow('destroy');
-        }
+        }*/
         
 	}
 	

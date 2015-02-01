@@ -13,7 +13,7 @@ public class User extends AssertionConcern implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String userId;
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -21,10 +21,10 @@ public class User extends AssertionConcern implements Serializable {
 
 	private Set<Group> groups;
 
-	public User(String userId, String firstName, String lastName, String email,
+	public User(String id, String firstName, String lastName, String email,
 			String password) {
 		this();
-		this.setUserId(userId);
+		this.setId(id);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -36,13 +36,13 @@ public class User extends AssertionConcern implements Serializable {
 		this.setGroups(new HashSet<Group>(0));
 	}
 
-	public String userId() {
-		return userId;
+	public String id() {
+		return id;
 	}
 
-	protected void setUserId(String userId) {
-		this.assertArgumentNotEmpty(userId, "Userid is required");
-		this.userId = userId;
+	protected void setId(String id) {
+		this.assertArgumentNotEmpty(id, "Id is required");
+		this.id = id;
 	}
 
 	public String firstName() {
@@ -118,7 +118,7 @@ public class User extends AssertionConcern implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -131,11 +131,12 @@ public class User extends AssertionConcern implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (userId == null) {
-			if (other.userId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!userId.equals(other.userId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
+
 }
