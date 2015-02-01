@@ -15,16 +15,13 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
             autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
         });
 			
-		var _options = {};
-		_options.url = _groupListUrl;
-		
-		var _groupList = new GroupList(container, _options);
+		var _groupList = new GroupList(container, _groupListUrl);
 		
 		var _onAddGroup = function(){
 			//Consider always new instance
 			var _groupEdit = new GroupEdit(container, {});
 			
-			var _onAddNewGroup = function(newGroup){
+			var _onSaveNewGroup = function(newGroup){
 				
 				var _requestType = "POST";
 				
@@ -41,12 +38,66 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 				
 				_sendData(newGroup, _requestType, _onSuccess, _onError);
 			}
-			_groupEdit.subscribe(_onAddNewGroup, "addnewgroup");
+			_groupEdit.subscribe(_onSaveNewGroup, "onSaveNewGroup");
 			_groupEdit.open();
 		}
 		_groupList.subscribe(_onAddGroup, "onAddGroup");
 		
-		GroupComposer.prototype.buildOnUpdateGroup = function(groupList, groupEdit){
+		GroupComposer.prototype.buildOnEditGroup = function(subClassRefGroupList){
+			var _onEditGroup = function(editedGroup){
+				//Consider always new instance
+				var _groupEdit = new GroupEdit(container, editedGroup);
+				
+				var _onSaveGroup = function(group){
+					
+					var _requestType = "PUT";
+					
+					var _onSuccess = function(result){// Depends on new _groupEdit instance
+						_groupEdit.close();//new _groupEdit instance
+						_groupList.refreshGrid();
+						_successNotification.jqxNotification("open");
+					}
+					
+					var _onError = function(status, error){
+						var _errorWindow = new NotificationWindow(container, {title:'Error Saving Group', 
+							content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
+					}
+					
+					_sendData(editedGroup, _requestType, _onSuccess, _onError);
+				}
+				_groupEdit.subscribe(_onSaveGroup, "onSaveGroup");
+				_groupEdit.open();
+			}
+			
+			return _onEditGroup;
+		}
+		
+		_groupList.subscribe(_self.buildOnEditGroup(_groupList), "onEditGroup");
+		
+		var _onDeleteGroup = function(deletedGroup){
+			var _onOk = function(){
+				var _requestType = "DELETE";
+				var _onSuccess = function(result){
+					_groupList.refreshGrid();
+					_successDeleteNotification.jqxNotification("open");
+				}
+				
+				var _onError = function(status, error){
+					var _errorWindow = new NotificationWindow(container, {title:'Error Deleting Group', 
+						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
+				}
+				
+				_sendData(deletedGroup, _requestType, _onSuccess, _onError);
+			}
+			
+			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Group', 
+			content: "Are you sure want to delete this group : " + deletedGroup.code + " (" + deletedGroup.firstName + ") ?", type: 'info', onOk: _onOk});
+		}
+		_groupList.subscribe(_onDeleteGroup, "onDeleteGroup");
+		
+		
+		
+		/*GroupComposer.prototype.buildOnUpdateGroup = function(groupList, groupEdit){
 			var _onUpdateGroup = function(updatedGroup){
 				
 				var _requestType = "PUT";
@@ -123,7 +174,7 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 			
 			
 		};
-		_groupList.subscribe(_onDeleteRow, "deleterow");
+		_groupList.subscribe(_onDeleteRow, "deleterow");*/
 		
 		var _sendData = function(data, requestType, onSuccess, onError){
 			$.ajax({

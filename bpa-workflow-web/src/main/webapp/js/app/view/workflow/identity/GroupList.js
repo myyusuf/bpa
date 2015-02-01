@@ -2,11 +2,11 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
         ], function (Observable, SimpleListGrid) {
 	
-	var GroupList = function(container, options){
+	var GroupList = function(container, url){
 		
 		var _self = this;
 		
-		var _options = options || {};
+		var _options = {};
 		
 		var _subscribers = {
 			any:[]
@@ -38,10 +38,32 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		var _simpleListGrid = new SimpleListGrid(container, _options);
 		
 		var _onContextMenuClick = function(commandObject){
-			console.log(commandObject.command);
+			var _command = commandObject.command;
+			var _rowData = commandObject.rowData;
+			console.log(_command);
+			
+			var _eventName = "";
+			if(_command == "add"){
+				_eventName = "onAddGroup";
+			}else if(_command == "edit"){
+				_eventName = "onEditGroup";
+			}else if(_command == "delete"){
+				_eventName = "onDeleteGroup";
+			}
+			Observable.prototype.publish.call(_self, _getGroupFromRowData(_rowData), _eventName);
 		}
-		
 		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
+		
+		var _getGroupFromRowData = function(rowData){
+        	var _group = {};
+        	
+        	if(rowData){
+        		_group.id = rowData.id;
+            	_group.name = rowData.name;
+        	}
+        	
+        	return _group;
+        }
 		
         /*var _source =
         {

@@ -117,7 +117,6 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
             	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
             	
-            	var _command = "";
     	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
             });
             
@@ -133,7 +132,6 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
             	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
             	
-            	var _command = "";
     	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
             });
         }

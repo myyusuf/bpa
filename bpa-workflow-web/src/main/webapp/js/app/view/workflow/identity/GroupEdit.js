@@ -1,12 +1,8 @@
 define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm) {
 	
-	var GroupEdit = function(container, options){
+	var GroupEdit = function(container, group){
 		
 		var _self = this;
-		
-		var _options = options || {};
-		
-		var _editedGroup = _options.editedGroup || {};
 		
 		var _subscribers = {
 			any:[]
@@ -14,19 +10,21 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		Observable.call(_self, _subscribers);
 		
-		_options.formName = "workflowGroupEdit";
+		var _options = {};
 		
-		if(_editedGroup.id){
+		var _isEditForm = false;
+		if(group.id){
 			_isEditForm = true;
 			_options.caption = "Edit Group";
 		}else{
-			_isEditForm = false;
 			_options.caption = "Add New Group";
 		}
 		_options.isEditForm = _isEditForm;
 		
-		_options.formFields = [{name: "id", label: "Id", value: _editedGroup.id, required: true, maxLength: 30},
-		                       {name: "name", label: "Name", value: _editedGroup.name, required: true, maxLength: 100}
+		_options.formName = "workflowGroupEdit";
+		
+		_options.formFields = [{name: "id", label: "Id", value: group.id, required: true, maxLength: 30},
+		                       {name: "name", label: "Name", value: group.name, required: true, maxLength: 100}
 		                       ];
 		
 		_options.validationRules = [
@@ -39,9 +37,9 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		var _onSaveForm = function(data){
 			if(_isEditForm){
-        		Observable.prototype.publish.call(_self, data, "updategroup");
+        		Observable.prototype.publish.call(_self, data, "onSaveGroup");
         	}else{
-        		Observable.prototype.publish.call(_self, data, "addnewgroup");
+        		Observable.prototype.publish.call(_self, data, "onSaveNewGroup");
         	}
 		}
 		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
