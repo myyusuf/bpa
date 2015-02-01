@@ -1,6 +1,6 @@
-define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
-        ], function (Observable) {
+        ], function (Observable, SimpleListGrid) {
 	
 	var UserList = function(container, url){
 		
@@ -16,7 +16,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		_options.dataFields = [
 		                       { name: 'id', type: 'string' },
-		                       { name: 'password', type: 'string' }
+		                       { name: 'password', type: 'string' },
 		                       { name: 'firstName', type: 'string' },
 		                       { name: 'lastName', type: 'string' },
 		                       { name: 'email', type: 'string' }
