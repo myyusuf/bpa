@@ -44,11 +44,11 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 		_groupList.subscribe(_onAddGroup, "onAddGroup");
 		
 		GroupComposer.prototype.buildOnEditGroup = function(subClassRefGroupList){
-			var _onEditGroup = function(editedGroup){
+			var _onEditGroup = function(groupToBeEdited){
 				//Consider always new instance
-				var _groupEdit = new GroupEdit(container, editedGroup);
+				var _groupEdit = new GroupEdit(container, groupToBeEdited);
 				
-				var _onSaveGroup = function(group){
+				var _onSaveGroup = function(editedGroup){
 					
 					var _requestType = "PUT";
 					
@@ -91,7 +91,7 @@ define(["notificationWindow", "view/workflow/identity/GroupList", "view/workflow
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Group', 
-			content: "Are you sure want to delete this group : " + deletedGroup.code + " (" + deletedGroup.firstName + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this group : " + deletedGroup.id + " (" + deletedGroup.name + ") ?", type: 'info', onOk: _onOk});
 		}
 		_groupList.subscribe(_onDeleteGroup, "onDeleteGroup");
 		

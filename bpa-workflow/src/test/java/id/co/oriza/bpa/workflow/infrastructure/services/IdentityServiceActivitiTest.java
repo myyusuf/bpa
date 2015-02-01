@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workflow.infrastructure.services;
 
 import static org.junit.Assert.assertNotNull;
+import id.co.oriza.bpa.workflow.application.ChangeGroupNameCommand;
 import id.co.oriza.bpa.workflow.application.IdentityService;
 import id.co.oriza.bpa.workflow.domain.model.User;
 
@@ -23,6 +24,12 @@ public class IdentityServiceActivitiTest {
 	public void testUsers(){
 		List<User> allUsers = identityService.allUsers(0, 100);
 		assertNotNull(allUsers);
+	}
+	
+	@Test
+	public void testChangeGroupName(){
+		ChangeGroupNameCommand aCommand = new ChangeGroupNameCommand("my", "myyxx");
+		identityService.changeGroupName(aCommand);
 	}
 
 }
