@@ -1,7 +1,9 @@
 package id.co.oriza.bpa.workflow.infrastructure.services;
 
+import id.co.oriza.bpa.workflow.application.ChangeGroupNameCommand;
 import id.co.oriza.bpa.workflow.application.IdentityService;
 import id.co.oriza.bpa.workflow.application.NewGroupCommand;
+import id.co.oriza.bpa.workflow.application.RemoveGroupCommand;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
 
@@ -81,6 +83,19 @@ public class IdentityServiceActiviti implements IdentityService{
 	public long allGroupsSize() {
 		GroupQuery groupQuery = this.activitiIdentityService().createGroupQuery();
 		return groupQuery.count();
+	}
+
+	@Override
+	public void changeGroupName(ChangeGroupNameCommand aCommand) {
+		GroupQuery groupQuery = this.activitiIdentityService().createGroupQuery();
+		org.activiti.engine.identity.Group activitiGroup = groupQuery.groupId(aCommand.getId()).singleResult();
+		activitiGroup.setName(aCommand.getName());
+		this.activitiIdentityService().saveGroup(activitiGroup);
+	}
+
+	@Override
+	public void removeGroup(RemoveGroupCommand aCommand) {
+		this.activitiIdentityService().deleteGroup(aCommand.getId());
 	}
 
 }

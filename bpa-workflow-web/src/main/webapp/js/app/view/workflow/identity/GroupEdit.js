@@ -23,7 +23,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		_options.formName = "workflowGroupEdit";
 		
-		_options.formFields = [{name: "id", label: "Id", value: group.id, required: true, maxLength: 30},
+		_options.formFields = [{name: "id", label: "Id", value: group.id, isKey: true, required: true, maxLength: 30},
 		                       {name: "name", label: "Name", value: group.name, required: true, maxLength: 100}
 		                       ];
 		

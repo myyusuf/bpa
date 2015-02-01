@@ -11,5 +11,7 @@ public interface IdentityService {
 	List<Group> allGroups(int start, int limit);
 	long allGroupsSize();
 	Group newGroupWith(NewGroupCommand aCommand);
+	void changeGroupName(ChangeGroupNameCommand aCommand);
+	void removeGroup(RemoveGroupCommand aCommand);
 
 }

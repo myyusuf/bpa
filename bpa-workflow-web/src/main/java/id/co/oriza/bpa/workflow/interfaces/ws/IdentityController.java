@@ -1,8 +1,10 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.workflow.application.ChangeGroupNameCommand;
 import id.co.oriza.bpa.workflow.application.IdentityService;
 import id.co.oriza.bpa.workflow.application.NewGroupCommand;
+import id.co.oriza.bpa.workflow.application.RemoveGroupCommand;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.GroupPresentationModel;
@@ -100,6 +102,42 @@ public class IdentityController extends CommonController{
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changeGroupName(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("changeGroupName");
+		
+		printParams(params);
+		
+		String id = (String) params.get("id");
+		String name = (String) params.get("name");
+		
+		ChangeGroupNameCommand command = new ChangeGroupNameCommand(id, name);
+		this.identityService().changeGroupName(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> removeGroup(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("remove group");
+		
+		String id = (String) params.get("id");
+		
+		RemoveGroupCommand command = new RemoveGroupCommand(id);
+		this.identityService().removeGroup(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;
