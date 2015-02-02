@@ -61,6 +61,29 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
+	@RequestMapping(value="/workflow/identity/users", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createUser(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("create user");
+		
+		printParams(params);
+		
+		String id = (String) params.get("id");
+		String password = (String) params.get("password");
+		String firstName = (String) params.get("firstName");
+		String lastName = (String) params.get("lastName");
+		String email = (String) params.get("email");
+		
+		NewUserCommand command = new NewUserCommand(id, password, firstName, lastName, email);
+		this.identityService().newUserWith(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
 	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allGroups(@RequestParam(required=false) Map<String, String> params){
 		
