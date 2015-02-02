@@ -11,6 +11,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		var _url = _options.url; 
 		if(!_url) throw "url is required";
 		
+		var _urlData = _options.urlData || {};
+		
 		var _dataFields = _options.dataFields;
 		if(!_dataFields) throw "dataFields is required";
 		
@@ -35,6 +37,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
         var _source =
         {
+        	data: _urlData,
             datatype: "json",
             datafields: _dataFields,
             id: _dataFieldId,
