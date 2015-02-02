@@ -1,9 +1,12 @@
 package id.co.oriza.bpa.workflow.infrastructure.services;
 
 import id.co.oriza.bpa.workflow.application.ChangeGroupNameCommand;
+import id.co.oriza.bpa.workflow.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.workflow.application.IdentityService;
 import id.co.oriza.bpa.workflow.application.NewGroupCommand;
+import id.co.oriza.bpa.workflow.application.NewUserCommand;
 import id.co.oriza.bpa.workflow.application.RemoveGroupCommand;
+import id.co.oriza.bpa.workflow.application.RemoveUserCommand;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
 
@@ -47,10 +50,40 @@ public class IdentityServiceActiviti implements IdentityService{
 		return users;
 	}
 	
-	private org.activiti.engine.IdentityService activitiIdentityService(){
-		return this.processEngine.getIdentityService();
+	@Override
+	public long allUsersSize() {
+		 UserQuery userQuery = this.activitiIdentityService().createUserQuery();
+		return userQuery.count();
 	}
-
+	
+	@Override
+	public void newUserWith(NewUserCommand aCommand) {
+		org.activiti.engine.identity.User newActivitiUser = this.activitiIdentityService().newUser(aCommand.getId());
+		newActivitiUser.setId(aCommand.getId());
+		newActivitiUser.setPassword(aCommand.getPassword());
+		newActivitiUser.setFirstName(aCommand.getFirstName());
+		newActivitiUser.setLastName(aCommand.getLastName());
+		newActivitiUser.setEmail(aCommand.getEmail());
+		
+		this.activitiIdentityService().saveUser(newActivitiUser);
+	}
+	
+	@Override
+	public void changeUserInfo(ChangeUserInfoCommand aCommand) {
+		UserQuery userQuery = this.activitiIdentityService().createUserQuery();
+		org.activiti.engine.identity.User activitiUser = userQuery.userId(aCommand.getId()).singleResult();
+		activitiUser.setFirstName(aCommand.getFirstName());
+		activitiUser.setLastName(aCommand.getLastName());
+		activitiUser.setEmail(aCommand.getEmail());
+		
+		this.activitiIdentityService().saveUser(activitiUser);
+	}
+	
+	@Override
+	public void removeUser(RemoveUserCommand aCommand) {
+		this.activitiIdentityService().deleteUser(aCommand.getId());
+	}
+	
 	@Override
 	public List<Group> allGroups(int start, int limit) {
 		GroupQuery groupQuery = this.activitiIdentityService().createGroupQuery();
@@ -68,15 +101,13 @@ public class IdentityServiceActiviti implements IdentityService{
 	
 	@Transactional
 	@Override
-	public Group newGroupWith(NewGroupCommand aCommand){
+	public void newGroupWith(NewGroupCommand aCommand){
 		
-		org.activiti.engine.identity.Group newGroup = this.activitiIdentityService().newGroup(aCommand.getId());
-		newGroup.setName(aCommand.getName());
-		newGroup.setType("assignment");
+		org.activiti.engine.identity.Group newActivitiGroup = this.activitiIdentityService().newGroup(aCommand.getId());
+		newActivitiGroup.setName(aCommand.getName());
+		newActivitiGroup.setType("assignment");
 		
-		this.activitiIdentityService().saveGroup(newGroup);
-		
-		return null;
+		this.activitiIdentityService().saveGroup(newActivitiGroup);
 	}
 
 	@Override
@@ -96,6 +127,10 @@ public class IdentityServiceActiviti implements IdentityService{
 	@Override
 	public void removeGroup(RemoveGroupCommand aCommand) {
 		this.activitiIdentityService().deleteGroup(aCommand.getId());
+	}
+
+	private org.activiti.engine.IdentityService activitiIdentityService(){
+		return this.processEngine.getIdentityService();
 	}
 
 }
