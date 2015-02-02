@@ -31,9 +31,13 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 		var _randomId = BPA.Util.getRandomId(_formName);
         
 		var _editWindow = $('<div id="'+ _formName + '_Window"></div>');
+		_editWindow.appendTo(container);
+		
 		var _windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">' + _caption + '</span></td></tr></table></div>');
+		_windowHeader.appendTo(_editWindow);
 		
 		var _windowContent = $('<div></div>');
+		_windowContent.appendTo(_editWindow);
 		
 		var _editForm = $('<form></form>');
 		_editForm.appendTo(_windowContent);
@@ -54,6 +58,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 				_fieldInput = $('<input type="text" class="text-input" style="width: 233px;"/>');
 			}
 			_fieldInput.attr("id", _formFields[i].name + "_Input_" + _randomId);
+			
 			if(_formFields[i].maxLength){
 				_fieldInput.attr("maxlength", _formFields[i].maxLength);
 			}
@@ -63,7 +68,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 				_fieldInput.jqxInput({ theme: 'metro' });
 			}else if(_inputType == 'password'){
 				_fieldInput.attr("type", "password");
-				_fieldInput.jqxPasswordInput({showStrength: true, showStrengthPosition: "right", theme: 'metro' });
+				_fieldInput.jqxPasswordInput({showStrength: true, showStrengthPosition: "right", showPasswordIcon: false, theme: 'metro' });
 			}
 			
 			if(_isEditForm){
@@ -105,10 +110,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 		_saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
 		
-		_windowHeader.appendTo(_editWindow);
-		_windowContent.appendTo(_editWindow);
-        _editWindow.appendTo(container);
-        
+		
         _editWindow.jqxWindow('resizable', true);
         _editWindow.jqxWindow('draggable', true);
         

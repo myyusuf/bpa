@@ -34,7 +34,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                 { fieldName: "id", message: 'Id is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "password", message: 'Password is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "firstName", message: 'First Name is required', action: 'keyup, blur', rule: 'required' },
-                { fieldName: "email", message: 'Email is required', action: 'keyup, blur', rule: 'required' }
+                { fieldName: "email", message: 'Email is required', action: 'keyup, blur', rule: 'required' },
+                { fieldName: "email", message: 'Invalid email format', action: 'keyup, blur', rule: 'email' }
                ]
 
 		

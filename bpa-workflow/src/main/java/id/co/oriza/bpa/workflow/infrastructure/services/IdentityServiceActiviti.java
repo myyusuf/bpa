@@ -59,7 +59,6 @@ public class IdentityServiceActiviti implements IdentityService{
 	@Override
 	public void newUserWith(NewUserCommand aCommand) {
 		org.activiti.engine.identity.User newActivitiUser = this.activitiIdentityService().newUser(aCommand.getId());
-		newActivitiUser.setId(aCommand.getId());
 		newActivitiUser.setPassword(aCommand.getPassword());
 		newActivitiUser.setFirstName(aCommand.getFirstName());
 		newActivitiUser.setLastName(aCommand.getLastName());
