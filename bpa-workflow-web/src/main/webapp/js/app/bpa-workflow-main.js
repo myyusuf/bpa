@@ -27,6 +27,8 @@
         "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
         "jqxwindow": "../jqwidgets/3.5.0/jqxwindow",
         "jqxinput": "../jqwidgets/3.5.0/jqxinput",
+        "jqxpasswordinput": "../jqwidgets/3.5.0/jqxpasswordinput",
+        "jqxtooltip": "../jqwidgets/3.5.0/jqxtooltip",
         "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
@@ -133,6 +135,14 @@
         "jqxinput": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
+        },
+        "jqxtooltip": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxpasswordinput": {
+            export: "$",
+            deps: ['jQuery', "jqxcore", "jqxtooltip"]
         },
         "jqxvalidator": {
             export: "$",

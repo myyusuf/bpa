@@ -95,11 +95,12 @@ public class IdentityController extends CommonController{
 		printParams(params);
 		
 		String id = (String) params.get("id");
+		String password = (String) params.get("password");
 		String firstName = (String) params.get("firstName");
 		String lastName = (String) params.get("lastName");
 		String email = (String) params.get("email");
 		
-		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, firstName, lastName, email);
+		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, password, firstName, lastName, email);
 		this.identityService().changeUserInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();

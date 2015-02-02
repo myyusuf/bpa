@@ -72,6 +72,7 @@ public class IdentityServiceActiviti implements IdentityService{
 	public void changeUserInfo(ChangeUserInfoCommand aCommand) {
 		UserQuery userQuery = this.activitiIdentityService().createUserQuery();
 		org.activiti.engine.identity.User activitiUser = userQuery.userId(aCommand.getId()).singleResult();
+		activitiUser.setPassword(aCommand.getPassword());
 		activitiUser.setFirstName(aCommand.getFirstName());
 		activitiUser.setLastName(aCommand.getLastName());
 		activitiUser.setEmail(aCommand.getEmail());

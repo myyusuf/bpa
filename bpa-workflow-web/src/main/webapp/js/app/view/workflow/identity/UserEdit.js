@@ -24,6 +24,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		_options.formName = "workflowUserEdit";
 		
 		_options.formFields = [{name: "id", label: "Id", value: user.id, isKey: true, required: true, maxLength: 30},
+		                       {name: "password", label: "Password", value: user.lastName, type: 'password', required: true, maxLength: 100},
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
 		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100}
@@ -31,6 +32,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		_options.validationRules = [
                 { fieldName: "id", message: 'Id is required', action: 'keyup, blur', rule: 'required' },
+                { fieldName: "password", message: 'Password is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "firstName", message: 'First Name is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "email", message: 'Email is required', action: 'keyup, blur', rule: 'required' }
                ]

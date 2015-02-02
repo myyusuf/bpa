@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
+define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtooltip", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
 	
 	var SimpleEditForm = function(container, options){
 		
@@ -57,7 +57,14 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 			if(_formFields[i].maxLength){
 				_fieldInput.attr("maxlength", _formFields[i].maxLength);
 			}
-			_fieldInput.jqxInput({ theme: 'metro' });
+			
+			var _inputType = _formFields[i].type || "text";
+			if(_inputType == 'text'){
+				_fieldInput.jqxInput({ theme: 'metro' });
+			}else if(_inputType == 'password'){
+				_fieldInput.attr("type", "password");
+				_fieldInput.jqxPasswordInput({showStrength: true, showStrengthPosition: "right", theme: 'metro' });
+			}
 			
 			if(_isEditForm){
 				_fieldInput.val(_formFields[i].value);
