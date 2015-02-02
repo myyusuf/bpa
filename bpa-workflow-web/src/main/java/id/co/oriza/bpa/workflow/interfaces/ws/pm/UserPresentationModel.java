@@ -11,8 +11,8 @@ public class UserPresentationModel {
 		this.user = user;
 	}
 
-	public String getUserId() {
-		return user.userId();
+	public String getId() {
+		return user.id();
 	}
 
 	public String getFirstName() {

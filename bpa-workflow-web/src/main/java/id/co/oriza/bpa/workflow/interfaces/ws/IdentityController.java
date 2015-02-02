@@ -2,9 +2,12 @@ package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workflow.application.ChangeGroupNameCommand;
+import id.co.oriza.bpa.workflow.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.workflow.application.IdentityService;
 import id.co.oriza.bpa.workflow.application.NewGroupCommand;
+import id.co.oriza.bpa.workflow.application.NewUserCommand;
 import id.co.oriza.bpa.workflow.application.RemoveGroupCommand;
+import id.co.oriza.bpa.workflow.application.RemoveUserCommand;
 import id.co.oriza.bpa.workflow.domain.model.Group;
 import id.co.oriza.bpa.workflow.domain.model.User;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.GroupPresentationModel;
@@ -50,7 +53,7 @@ public class IdentityController extends CommonController{
 			userModels.add(userModel);
 		}
 		
-		Long usersSize = 10l;//this.identityService().allUsersSize();
+		Long usersSize = this.identityService().allUsersSize();
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
@@ -64,7 +67,7 @@ public class IdentityController extends CommonController{
 	@RequestMapping(value="/workflow/identity/users", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createUser(@RequestBody(required=false) Map<String, Object> params){
 		
-		logger.debug("create user");
+		logger.debug("createUser");
 		
 		printParams(params);
 		
@@ -79,6 +82,44 @@ public class IdentityController extends CommonController{
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/identity/users", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changeUserInfo(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("changeUserInfo");
+		
+		printParams(params);
+		
+		String id = (String) params.get("id");
+		String firstName = (String) params.get("firstName");
+		String lastName = (String) params.get("lastName");
+		String email = (String) params.get("email");
+		
+		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, firstName, lastName, email);
+		this.identityService().changeUserInfo(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/identity/users", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> removeUser(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("removeUser");
+		
+		String id = (String) params.get("id");
+		
+		RemoveUserCommand command = new RemoveUserCommand(id);
+		this.identityService().removeUser(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;
@@ -113,7 +154,7 @@ public class IdentityController extends CommonController{
 	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createGroup(@RequestBody(required=false) Map<String, Object> params){
 		
-		logger.debug("create group");
+		logger.debug("createGroup");
 		
 		printParams(params);
 		
@@ -153,7 +194,7 @@ public class IdentityController extends CommonController{
 	@RequestMapping(value="/workflow/identity/groups", method=RequestMethod.DELETE, produces="application/json")
 	public Map<String, Object> removeGroup(@RequestBody(required=false) Map<String, Object> params){
 		
-		logger.debug("remove group");
+		logger.debug("removeGroup");
 		
 		String id = (String) params.get("id");
 		
