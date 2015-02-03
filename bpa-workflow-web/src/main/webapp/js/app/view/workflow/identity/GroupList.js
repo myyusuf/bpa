@@ -210,6 +210,11 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	_simpleListGrid.refreshGrid();
         }
         
+        this.getComponent = function(){
+        	return _simpleListGrid.getComponent();
+        }
+        
+        
 	}
 	
 	inheritPrototype(GroupList, Observable);

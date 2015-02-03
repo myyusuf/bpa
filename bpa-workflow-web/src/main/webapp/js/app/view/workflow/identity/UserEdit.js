@@ -1,4 +1,4 @@
-define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm) {
+define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identity/GroupList", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm, GroupList) {
 	
 	var UserEdit = function(container, user){
 		
@@ -23,11 +23,17 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		_options.formName = "workflowUserEdit";
 		
+		var _testContainer = $('<div></div>');
+		_testContainer.appendTo(container);
+		
+		var _groupList = new GroupList(_testContainer, BPA.Constant.workflow.identity.groupsUrl);
+		
 		_options.formFields = [{name: "id", label: "Id", value: user.id, isKey: true, required: true, maxLength: 30},
 		                       {name: "password", label: "Password", value: user.lastName, type: 'password', required: true, maxLength: 100},
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
-		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100}
+		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100},
+		                       {name: "Test", label: "Test", value: "test", type: 'custom', customField : _groupList.getComponent(),required: true}
 		                       ];
 		
 		_options.validationRules = [
@@ -38,6 +44,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                 { fieldName: "email", message: 'Invalid email format', action: 'keyup, blur', rule: 'email' }
                ]
 
+		_options.width = 500;
+		_options.height = 400;
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		

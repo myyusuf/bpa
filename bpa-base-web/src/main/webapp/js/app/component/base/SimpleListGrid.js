@@ -59,7 +59,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             loadError: function (xhr, status, error) { }
         });
         
-        var _groupListGrid = container.jqxGrid(
+        var _listGrid = container.jqxGrid(
         {
             width: '100%',
             height: '100%',
@@ -104,9 +104,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             },
         });
         
-        _groupListGrid.on('rowdoubleclick', function (event){ 
+        _listGrid.on('rowdoubleclick', function (event){ 
         	var _args = event.args, _rowindex = _args.rowindex;
-        	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowindex);
+        	var _rowData = _listGrid.jqxGrid('getrowdata', _rowindex);
         	Observable.prototype.publish.call(_self, _rowData, "onRowDoubleClick");
         });
         
@@ -119,8 +119,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	
             	var _rowData = "";
             	
-            	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
-            	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
+            	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
+            	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
             	
     	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
             });
@@ -134,8 +134,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	
             	var _rowData = "";
             	
-            	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
-            	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
+            	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
+            	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
             	
     	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
             });
@@ -144,18 +144,18 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         var _onRowClick = _options.onRowClick;
         if(_onRowClick){
         	var _args = event.args, _rowindex = _args.rowindex;
-        	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowindex);
+        	var _rowData = _listGrid.jqxGrid('getrowdata', _rowindex);
 //        	Observable.prototype.publish.call(_self, _rowData, "onRowClick");
         	onRowClick(_rowData);
         }else{
-        	_groupListGrid.on('rowclick', function (event) {
+        	_listGrid.on('rowclick', function (event) {
             	
             	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
             	
             	var _rightClick = _isRightClick(_clickEvent);
                 if (_rightClick) {
-                	if(_groupListGrid.jqxGrid('getselectedrowindex') === -1){
-                		_groupListGrid.jqxGrid('selectrow', _rowIndex);
+                	if(_listGrid.jqxGrid('getselectedrowindex') === -1){
+                		_listGrid.jqxGrid('selectrow', _rowIndex);
                 	}
                 	
                     var _scrollTop = $(window).scrollTop();
@@ -170,12 +170,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         
         
         
-        _groupListGrid.on('contextmenu', function (e) {
+        _listGrid.on('contextmenu', function (e) {
             return false;
         });
         
         this.refreshGrid = function(){
-        	_groupListGrid.jqxGrid('updatebounddata');
+        	_listGrid.jqxGrid('updatebounddata');
         }
         
         var _isRightClick = function(event) {
@@ -184,6 +184,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             if (event.which) _rightclick = (event.which == 3);
             else if (event.button) _rightclick = (event.button == 2);
             return _rightclick;
+        }
+        
+        this.getComponent = function(){
+        	return _listGrid;
         }
         
 	}
