@@ -29,6 +29,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		var _toolbarButtons = _options.toolbarButtons;
 		var _gridContextMenu = _options.gridContextMenu; 
 		
+		var _pageable = _options.pageable || true;
+		
 		var _subscribers = {
 			any:[]
 		};
@@ -62,7 +64,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             width: '100%',
             height: '100%',
             source: _dataAdapter,                
-            pageable: true,
+            pageable: _pageable,
             autoheight: false,
             sortable: true,
             altrows: true,
@@ -139,36 +141,38 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             });
         }
         
-        _groupListGrid.on('rowclick', function (event) {
-        	
-        	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
-        	
-        	var _rightClick = _isRightClick(_clickEvent);
-            if (_rightClick) {
-            	if(_groupListGrid.jqxGrid('getselectedrowindex') === -1){
-            		_groupListGrid.jqxGrid('selectrow', _rowIndex);
-            	}
+        var _onRowClick = _options.onRowClick;
+        if(_onRowClick){
+        	var _args = event.args, _rowindex = _args.rowindex;
+        	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowindex);
+//        	Observable.prototype.publish.call(_self, _rowData, "onRowClick");
+        	onRowClick(_rowData);
+        }else{
+        	_groupListGrid.on('rowclick', function (event) {
             	
-                var _scrollTop = $(window).scrollTop();
-                var _scrollLeft = $(window).scrollLeft();
-                _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
-                return false;
-            }else{
-            	_gridContextMenu.jqxMenu('close');
-            }
-        });
+            	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
+            	
+            	var _rightClick = _isRightClick(_clickEvent);
+                if (_rightClick) {
+                	if(_groupListGrid.jqxGrid('getselectedrowindex') === -1){
+                		_groupListGrid.jqxGrid('selectrow', _rowIndex);
+                	}
+                	
+                    var _scrollTop = $(window).scrollTop();
+                    var _scrollLeft = $(window).scrollLeft();
+                    _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                    return false;
+                }else{
+                	_gridContextMenu.jqxMenu('close');
+                }
+            });
+        }
+        
+        
         
         _groupListGrid.on('contextmenu', function (e) {
             return false;
         });
-        
-        var _showEditPage = function(rowData){
-        	Observable.prototype.publish.call(_self, _getGroupFromRowData(rowData), "editrow");
-        }
-        
-        var _deleteRow = function(rowData){
-        	Observable.prototype.publish.call(_self, _getGroupFromRowData(rowData), "deleterow");
-        }
         
         this.refreshGrid = function(){
         	_groupListGrid.jqxGrid('updatebounddata');

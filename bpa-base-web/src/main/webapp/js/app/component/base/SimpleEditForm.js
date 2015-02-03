@@ -20,6 +20,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 		var _width = _options.width || 346;
 		var _height = _options.height || 236; 
 		
+		var _theme = _options.theme || "metro";
+		
 		var _subscribers = {
 			any:[]
 		};
@@ -44,31 +46,51 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 		var _editTable = $('<table class="edit-table"></table>');
 		_editTable.appendTo(_editForm);
 		
+		var _newRow = '';
+		var _fieldLabel = '';
+		var _fieldInputColumn = '';
+		var _fieldInput = '';
 		for(var i=0; i<_formFields.length; i++){
 			
-			var _newRow = $('<tr></tr>');
+			_newRow = $('<tr></tr>');
 			_newRow.appendTo(_editTable);
-			var _fieldLabel = $('<td>'+_formFields[i].label+'</td>');
-			_fieldLabel.appendTo(_newRow);
-			var _fieldInputColumn = $('<td></td>');
-			var _fieldInput = '';
-			if(_formFields[i].required){
-				_fieldInput = $('<input type="text" class="text-input" style="width: 233px; float: left;"/>');
+			
+			if(_formFields[i].label){
+				_fieldLabel = $('<td>'+_formFields[i].label+'</td>');
+				_fieldLabel.appendTo(_newRow);
+				_fieldInputColumn = $('<td></td>');
+				_fieldInputColumn.appendTo(_newRow);
+				_fieldInput = '';
 			}else{
-				_fieldInput = $('<input type="text" class="text-input" style="width: 233px;"/>');
+				_fieldInputColumn = $('<td colspan="2"></td>');
+				_fieldInputColumn.appendTo(_newRow);
+				_fieldInput = '';
 			}
+			
+			var _fieldType = _formFields[i].type || "text";
+			if(_fieldType == 'text'){
+				_fieldInput = $('<input type="text" class="text-input" />');
+				_fieldInput.jqxInput({ theme: _theme });
+				_fieldInput.attr("maxlength", _formFields[i].maxLength);
+			}else if(_fieldType == 'password'){
+				_fieldInput = $('<input type="password" class="text-input" />');
+				_fieldInput.jqxPasswordInput({showStrength: true, showStrengthPosition: "right", showPasswordIcon: false, theme: _theme });
+			}else if(_fieldType == 'custom'){
+				_fieldInput = $('<div></div>');
+				_fieldInput.append(_formFields[i].customField);
+			}
+			
+			_fieldInput.appendTo(_fieldInputColumn);
 			_fieldInput.attr("id", _formFields[i].name + "_Input_" + _randomId);
+			
+			if(_formFields[i].required){
+				_fieldInput = _fieldInput.attr("style", "width: 233px; float: left;");
+			}else{
+				_fieldInput = _fieldInput.attr("style", "width: 233px;");
+			}
 			
 			if(_formFields[i].maxLength){
 				_fieldInput.attr("maxlength", _formFields[i].maxLength);
-			}
-			
-			var _inputType = _formFields[i].type || "text";
-			if(_inputType == 'text'){
-				_fieldInput.jqxInput({ theme: 'metro' });
-			}else if(_inputType == 'password'){
-				_fieldInput.attr("type", "password");
-				_fieldInput.jqxPasswordInput({showStrength: true, showStrengthPosition: "right", showPasswordIcon: false, theme: 'metro' });
 			}
 			
 			if(_isEditForm){
@@ -77,12 +99,10 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 					_fieldInput.jqxInput({disabled: true});
 				}
 			}
-			_fieldInput.appendTo(_fieldInputColumn);
+			
 			if(_formFields[i].required){
 				$(BPA.Constant.requiredFieldSymbol).appendTo(_fieldInputColumn);
 			}
-			
-			_fieldInputColumn.appendTo(_newRow);
 			
 		}
 		
