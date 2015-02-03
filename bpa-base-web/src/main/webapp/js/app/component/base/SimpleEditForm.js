@@ -83,11 +83,18 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 			_fieldInput.appendTo(_fieldInputColumn);
 			_fieldInput.attr("id", _formFields[i].name + "_Input_" + _randomId);
 			
-			if(_formFields[i].required){
-				_fieldInput = _fieldInput.attr("style", "width: 233px; float: left;");
+			if(_fieldType != 'custom'){
+				if(_formFields[i].required){
+					_fieldInput = _fieldInput.attr("style", "width: 233px; float: left;");
+				}else{
+					_fieldInput = _fieldInput.attr("style", "width: 233px;");
+				}
 			}else{
-				_fieldInput = _fieldInput.attr("style", "width: 233px;");
+				if(_formFields[i].required){
+					_fieldInput = _fieldInput.attr("style", "float: left;");
+				}
 			}
+			
 			
 			if(_formFields[i].maxLength){
 				_fieldInput.attr("maxlength", _formFields[i].maxLength);
