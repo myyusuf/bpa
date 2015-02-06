@@ -34,7 +34,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		var _width = _options.width || '100%';
 		var _height = _options.height || '100%';
-		var _showToolbar = _options.showToolbar || true;
+		var _showToolbar = _options.showToolbar;
+		if(_showToolbar === undefined){
+			_showToolbar = true;
+		};
 		
 		var _subscribers = {
 			any:[]
@@ -147,40 +150,42 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
                 });
             }
-        }
-        
-        var _onRowClick = _options.onRowClick;
-        if(_onRowClick){
-        	var _args = event.args, _rowindex = _args.rowindex;
-        	var _rowData = _listGrid.jqxGrid('getrowdata', _rowindex);
-//        	Observable.prototype.publish.call(_self, _rowData, "onRowClick");
-        	onRowClick(_rowData);
-        }else{
-        	_listGrid.on('rowclick', function (event) {
-            	
-            	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
-            	
-            	var _rightClick = _isRightClick(_clickEvent);
-                if (_rightClick) {
-                	if(_listGrid.jqxGrid('getselectedrowindex') === -1){
-                		_listGrid.jqxGrid('selectrow', _rowIndex);
-                	}
+        	
+        	
+        	var _onRowClick = _options.onRowClick;
+            if(_onRowClick){
+            	var _args = event.args, _rowindex = _args.rowindex;
+            	var _rowData = _listGrid.jqxGrid('getrowdata', _rowindex);
+//            	Observable.prototype.publish.call(_self, _rowData, "onRowClick");
+            	onRowClick(_rowData);
+            }else{
+            	_listGrid.on('rowclick', function (event) {
                 	
-                    var _scrollTop = $(window).scrollTop();
-                    var _scrollLeft = $(window).scrollLeft();
-                    _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
-                    return false;
-                }else{
-                	_gridContextMenu.jqxMenu('close');
-                }
+                	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
+                	
+                	var _rightClick = _isRightClick(_clickEvent);
+                    if (_rightClick) {
+                    	if(_listGrid.jqxGrid('getselectedrowindex') === -1){
+                    		_listGrid.jqxGrid('selectrow', _rowIndex);
+                    	}
+                    	
+                        var _scrollTop = $(window).scrollTop();
+                        var _scrollLeft = $(window).scrollLeft();
+                        _gridContextMenu.jqxMenu('open', parseInt(_clickEvent.clientX) + 5 + _scrollLeft, parseInt(_clickEvent.clientY) + 5 + _scrollTop);
+                        return false;
+                    }else{
+                    	_gridContextMenu.jqxMenu('close');
+                    }
+                });
+            }
+            
+            
+            
+            _listGrid.on('contextmenu', function (e) {
+                return false;
             });
         }
         
-        
-        
-        _listGrid.on('contextmenu', function (e) {
-            return false;
-        });
         
         this.refreshGrid = function(){
         	_listGrid.jqxGrid('updatebounddata');

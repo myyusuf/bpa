@@ -96,7 +96,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            minHeight: 150, minWidth: 200, height: 300, width: 426,
+            minHeight: 150, minWidth: 200, height: 300, width: 421,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
