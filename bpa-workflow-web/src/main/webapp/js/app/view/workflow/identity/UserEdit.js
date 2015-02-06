@@ -86,8 +86,13 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		                	
 		                	var _groupSelect = new GroupSelect(container);
 		                	_groupSelect.subscribe(function(selectedGroup){
-		                		_data.push(selectedGroup);
-			                	_groupListGrid.jqxGrid('updatebounddata');
+		                		
+		                		var _result = $.grep(_data, function(e){ return e.id == selectedGroup.id; });
+		                		if(_result.length == 0){
+		                			_data.push(selectedGroup);
+				                	_groupListGrid.jqxGrid('updatebounddata');
+		                		}
+		                		
 		                	}, "onSelectGroup");
 		                	_groupSelect.open();
 		                });
@@ -98,6 +103,18 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		        		_deleteButton.appendTo(_newColumn);
 		                _deleteButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
 		                _deleteButton.click(function(event){
+		                	
+		                	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
+		                	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
+		                	var _resultIndex = -1;
+		                	for(i=0;i<_data.length;i++){
+		                		if(_data[i].id == _rowData.id){
+		                			_resultIndex = i;
+		                		}
+		                	}
+		                	
+		                	_data.splice(_resultIndex, 1);
+		                	_groupListGrid.jqxGrid('updatebounddata');
 		                });
 		            },
 		        });
