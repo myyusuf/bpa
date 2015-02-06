@@ -145,7 +145,12 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: _height, width: _width,
+//            maxHeight: 400, 
+//            maxWidth: 700, 
+            minHeight: 150, 
+            minWidth: 200, 
+            height: _height, 
+            width: _width,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },

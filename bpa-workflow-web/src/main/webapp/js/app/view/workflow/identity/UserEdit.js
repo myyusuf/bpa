@@ -23,17 +23,82 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		
 		_options.formName = "workflowUserEdit";
 		
-		var _testContainer = $('<div></div>');
-		_testContainer.appendTo(container);
+		var _groupListContainer = $('<div></div>');
+		_groupListContainer.appendTo(container);
 		
-		var _groupList = new GroupList(_testContainer, BPA.Constant.workflow.identity.groupsUrl);
+		var _data = [];
+		_data.push({id:'1', name: 'abc'});
+		
+		var _source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'id', type: 'string' },
+                { name: 'name', type: 'string' }
+            ],
+            id: 'id',
+            localdata: _data
+        };
+        
+        var _dataAdapter = new $.jqx.dataAdapter(_source);
+		
+		var _groupList = _groupListContainer.jqxGrid(
+		        {
+		            width: '300',
+		            height: '200',
+		            source: _dataAdapter,                
+		            autoheight: false,
+		            sortable: true,
+		            altrows: true,
+		            enabletooltips: true,
+		            editable: false,
+		            selectionmode: 'singlerow',
+		            columns: [
+		              { text: 'Id', datafield: 'id', width: '50%' },
+		              { text: 'Name', datafield: 'name', width: '50%' }
+		            ],
+		        	theme: 'metro',
+//		        	virtualmode: true,
+//		        	rendergridrows: function () {
+//		                return _dataAdapter.records;
+//		            },
+		            showtoolbar: true,
+		            toolbarheight: 40,
+		            rendertoolbar: function(toolbar)
+		            {
+		            	toolbar.empty();
+		            	
+		                var _searchContainer = $("<div style='float: left; margin: 5px; text-align: right;'></div>");
+		                var _searchTable = $('<table></table>');
+		                _searchTable.appendTo(_searchContainer);
+		                toolbar.append(_searchContainer);
+		        		
+		        		var _newRow = $('<tr></tr>');
+		        		_newRow.appendTo(_searchTable);
+		        		var _newColumn = $('<td></td>');
+		        		_newColumn.appendTo(_newRow);
+		        		var _addButton = $('<div style="margin-left: 2px;">Add Group</div>');
+		        		_addButton.appendTo(_newColumn);
+		                _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+		                _addButton.click(function(event){
+		                });
+		                
+		                _newColumn = $('<td></td>');
+		        		_newColumn.appendTo(_newRow);
+		        		var _deleteButton = $('<div style="margin-left: 2px;">Delete</div>');
+		        		_deleteButton.appendTo(_newColumn);
+		                _deleteButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+		                _deleteButton.click(function(event){
+		                });
+		            },
+		        });
 		
 		_options.formFields = [{name: "id", label: "Id", value: user.id, isKey: true, required: true, maxLength: 30},
 		                       {name: "password", label: "Password", value: user.lastName, type: 'password', required: true, maxLength: 100},
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
 		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100},
-		                       {name: "Test", label: "Test", value: "test", type: 'custom', customField : _groupList.getComponent(),required: true}
+		                       {name: "Test", label: "Test", value: "test", type: 'custom', customField : _groupList,required: true}
 		                       ];
 		
 		_options.validationRules = [
@@ -44,8 +109,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
                 { fieldName: "email", message: 'Invalid email format', action: 'keyup, blur', rule: 'email' }
                ]
 
-		_options.width = 500;
-		_options.height = 400;
+		_options.width = 423;
+		_options.height = 440;
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
