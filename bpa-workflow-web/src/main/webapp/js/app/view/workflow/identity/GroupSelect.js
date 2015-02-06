@@ -44,13 +44,6 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		_options.width = '400';
 		_options.height = '200';
 		
-		var _addButton = $('<div style="margin-left: 2px;">Select Group</div>');
-		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
-		_addButton.click(function(event){
-			Observable.prototype.publish.call(_self, {}, "onAddGroup");
-        });
-		
-//		_options.toolbarButtons = [_addButton];
 		_options.showToolbar = false;
 		_options.disableContextMenu = true;
 		
@@ -58,6 +51,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		_groupListContainer.appendTo(container);
 		
 		var _simpleListGrid = new SimpleListGrid(_groupListContainer, _options);
+		
 		//-------------------------------------
 		
 		
@@ -72,13 +66,17 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		
 		
 		
-		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);
 		
 		var _buttonColumn = $('<td colspan="2"></td>');
 		var _saveButton = $('<input type="button" value="Select" style="margin-right: 5px; margin-top: 5px;"/>');
 		_saveButton.appendTo(_buttonColumn);
+		_saveButton.click(function(event){
+			var _selectedData = _simpleListGrid.getSelectedData();
+			Observable.prototype.publish.call(_self, {id: _selectedData.id, name: _selectedData.name}, "onSelectGroup");
+			_self.close();
+        });
 		
 		var _cancelButton = $('<input type="button" value="Cancel"/>');
 		_cancelButton.appendTo(_buttonColumn);
@@ -120,6 +118,11 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
         
         this.open = function(){
         	_editWindow.jqxWindow('open');
+        }
+        
+        this.close = function(){
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
         }
         
 	}

@@ -27,7 +27,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		_groupListContainer.appendTo(container);
 		
 		var _data = [];
-		_data.push({id:'1', name: 'abc'});
+//		_data.push({id:'1', name: 'abc'});
 		
 		var _source =
         {
@@ -85,6 +85,10 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 //		                	_groupListGrid.jqxGrid('updatebounddata');
 		                	
 		                	var _groupSelect = new GroupSelect(container);
+		                	_groupSelect.subscribe(function(selectedGroup){
+		                		_data.push(selectedGroup);
+			                	_groupListGrid.jqxGrid('updatebounddata');
+		                	}, "onSelectGroup");
 		                	_groupSelect.open();
 		                });
 		                

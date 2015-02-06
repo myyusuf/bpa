@@ -191,6 +191,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	_listGrid.jqxGrid('updatebounddata');
         }
         
+        this.getSelectedData = function(){
+        	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
+        	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
+        	return _rowData;
+        }
+        
         var _isRightClick = function(event) {
             var _rightclick;
             if (!event) var event = window.event;
