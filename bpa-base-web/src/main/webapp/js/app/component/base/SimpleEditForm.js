@@ -32,7 +32,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 		
 		var _randomId = BPA.Util.getRandomId(_formName);
         
-		var _editWindow = $('<div id="'+ _formName + '_Window"></div>');
+		var _editWindow = $('<div id="window_'+ _randomId + '"></div>');
 		_editWindow.appendTo(container);
 		
 		var _windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">' + _caption + '</span></td></tr></table></div>');

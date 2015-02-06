@@ -1,4 +1,4 @@
-define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identity/GroupList", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm, GroupList) {
+define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identity/GroupSelect", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm, GroupSelect) {
 	
 	var UserEdit = function(container, user){
 		
@@ -42,7 +42,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
         
         var _dataAdapter = new $.jqx.dataAdapter(_source);
 		
-		var _groupList = _groupListContainer.jqxGrid(
+		var _groupListGrid = _groupListContainer.jqxGrid(
 		        {
 		            width: '300',
 		            height: '200',
@@ -81,6 +81,11 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		        		_addButton.appendTo(_newColumn);
 		                _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
 		                _addButton.click(function(event){
+//		                	_data.push({id:'2', name: 'def'});
+//		                	_groupListGrid.jqxGrid('updatebounddata');
+		                	
+		                	var _groupSelect = new GroupSelect(container);
+		                	_groupSelect.open();
 		                });
 		                
 		                _newColumn = $('<td></td>');
@@ -98,7 +103,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
 		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100},
-		                       {name: "Test", label: "Test", value: "test", type: 'custom', customField : _groupList,required: true}
+		                       {name: "Test", label: "Test", value: "test", type: 'custom', customField : _groupListGrid,required: true}
 		                       ];
 		
 		_options.validationRules = [

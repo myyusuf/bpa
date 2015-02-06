@@ -28,8 +28,13 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		var _pageSizeOptions = _options.pageSizeOptions || ['5', '10', '20', '100'];
 		var _toolbarButtons = _options.toolbarButtons;
 		var _gridContextMenu = _options.gridContextMenu; 
+		var _disableContextMenu = _options.disableContextMenu || false;
 		
 		var _pageable = _options.pageable || true;
+		
+		var _width = _options.width || '100%';
+		var _height = _options.height || '100%';
+		var _showToolbar = _options.showToolbar || true;
 		
 		var _subscribers = {
 			any:[]
@@ -61,8 +66,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         
         var _listGrid = container.jqxGrid(
         {
-            width: '100%',
-            height: '100%',
+            width: _width,
+            height: _height,
             source: _dataAdapter,                
             pageable: _pageable,
             autoheight: false,
@@ -78,7 +83,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	rendergridrows: function () {
                 return _dataAdapter.records;
             },
-            showtoolbar: true,
+            showtoolbar: _showToolbar,
             toolbarheight: 40,
             rendertoolbar: function(toolbar)
             {
@@ -110,35 +115,38 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	Observable.prototype.publish.call(_self, _rowData, "onRowDoubleClick");
         });
         
-        if(!_gridContextMenu){
-        	var _defaultGridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
-            _defaultGridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
-            _defaultGridContextMenu.on('itemclick', function (event){
-            	
-            	var _menuKey = $(event.target).data("menukey");
-            	
-            	var _rowData = "";
-            	
-            	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
-            	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
-            	
-    	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
-            });
-            
-            _gridContextMenu = _defaultGridContextMenu;
-        }else{
-        	_gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
-        	_gridContextMenu.on('itemclick', function (event){
-            	
-            	var _menuKey = $(event.target).data("menukey");
-            	
-            	var _rowData = "";
-            	
-            	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
-            	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
-            	
-    	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
-            });
+        
+        if(!_disableContextMenu){
+        	if(!_gridContextMenu){
+            	var _defaultGridContextMenu = $('<div><ul><li data-menukey="add">Add New</li><li data-menukey="edit">Edit</li><li data-menukey="delete">Delete</li></ul></div>');
+                _defaultGridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+                _defaultGridContextMenu.on('itemclick', function (event){
+                	
+                	var _menuKey = $(event.target).data("menukey");
+                	
+                	var _rowData = "";
+                	
+                	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
+                	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
+                	
+        	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
+                });
+                
+                _gridContextMenu = _defaultGridContextMenu;
+            }else{
+            	_gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+            	_gridContextMenu.on('itemclick', function (event){
+                	
+                	var _menuKey = $(event.target).data("menukey");
+                	
+                	var _rowData = "";
+                	
+                	var _rowIndex = _listGrid.jqxGrid('getselectedrowindex');
+                	var _rowData = _listGrid.jqxGrid('getrowdata', _rowIndex);
+                	
+        	 		Observable.prototype.publish.call(_self, {command: _menuKey, rowData: _rowData}, "onContextMenuClick");
+                });
+            }
         }
         
         var _onRowClick = _options.onRowClick;
