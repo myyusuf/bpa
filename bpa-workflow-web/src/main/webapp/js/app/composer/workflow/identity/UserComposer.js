@@ -36,7 +36,7 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
-				_sendData(newUser, _requestType, _onSuccess, _onError);
+				_sendData(_userListUrl, newUser, _requestType, _onSuccess, _onError);
 			}
 			_userEdit.subscribe(_onSaveNewUser, "onSaveNewUser");
 			_userEdit.open();
@@ -45,6 +45,13 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 		
 		UserComposer.prototype.buildOnEditUser = function(subClassRefUserList){
 			var _onEditUser = function(userToBeEdited){
+				
+				var _userGroupUrl = BPA.Constant.workflow.identity.usersUrl + "/" + userToBeEdited.id + "/groups";
+				_sendData(_userGroupUrl, {}, "GET", function(result){
+					console.log(result);
+				}, null);
+				
+				
 				//Consider always new instance
 				var _userEdit = new UserEdit(container, userToBeEdited);
 				
@@ -63,7 +70,7 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 							content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 					}
 					
-					_sendData(editedUser, _requestType, _onSuccess, _onError);
+					_sendData(_userListUrl, editedUser, _requestType, _onSuccess, _onError);
 				}
 				_userEdit.subscribe(_onSaveUser, "onSaveUser");
 				_userEdit.open();
@@ -87,7 +94,7 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
-				_sendData(deletedUser, _requestType, _onSuccess, _onError);
+				_sendData(_userListUrl, deletedUser, _requestType, _onSuccess, _onError);
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete User', 
@@ -191,9 +198,9 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 		};
 		_userList.subscribe(_onDeleteRow, "deleterow");*/
 		
-		var _sendData = function(data, requestType, onSuccess, onError){
+		var _sendData = function(url, data, requestType, onSuccess, onError){
 			$.ajax({
-			    url: _userListUrl,
+			    url: url,
 			    type: requestType,
 			    data: JSON.stringify(data),
 			    beforeSend: function(xhr) {
