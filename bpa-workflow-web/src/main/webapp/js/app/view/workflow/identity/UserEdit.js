@@ -26,8 +26,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		var _groupListContainer = $('<div></div>');
 		_groupListContainer.appendTo(container);
 		
-		var _data = [];
-//		_data.push({id:'1', name: 'abc'});
+		var _groups = [];
+//		_groups.push({id:'1', name: 'abc'});
 		
 		var _source =
         {
@@ -37,7 +37,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
                 { name: 'name', type: 'string' }
             ],
             id: 'id',
-            localdata: _data
+            localdata: _groups
         };
         
         var _dataAdapter = new $.jqx.dataAdapter(_source);
@@ -81,15 +81,15 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		        		_addButton.appendTo(_newColumn);
 		                _addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
 		                _addButton.click(function(event){
-//		                	_data.push({id:'2', name: 'def'});
+//		                	_groups.push({id:'2', name: 'def'});
 //		                	_groupListGrid.jqxGrid('updatebounddata');
 		                	
 		                	var _groupSelect = new GroupSelect(container);
 		                	_groupSelect.subscribe(function(selectedGroup){
 		                		
-		                		var _result = $.grep(_data, function(e){ return e.id == selectedGroup.id; });
+		                		var _result = $.grep(_groups, function(e){ return e.id == selectedGroup.id; });
 		                		if(_result.length == 0){
-		                			_data.push(selectedGroup);
+		                			_groups.push(selectedGroup);
 				                	_groupListGrid.jqxGrid('updatebounddata');
 		                		}
 		                		
@@ -107,13 +107,13 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		                	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
 		                	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
 		                	var _resultIndex = -1;
-		                	for(i=0;i<_data.length;i++){
-		                		if(_data[i].id == _rowData.id){
+		                	for(i=0;i<_groups.length;i++){
+		                		if(_groups[i].id == _rowData.id){
 		                			_resultIndex = i;
 		                		}
 		                	}
 		                	
-		                	_data.splice(_resultIndex, 1);
+		                	_groups.splice(_resultIndex, 1);
 		                	_groupListGrid.jqxGrid('updatebounddata');
 		                });
 		            },
@@ -141,6 +141,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
 		var _onSaveForm = function(data){
+			
+			data.groups = _groups;
 			if(_isEditForm){
         		Observable.prototype.publish.call(_self, data, "onSaveUser");
         	}else{
