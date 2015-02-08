@@ -48,32 +48,37 @@ define(["notificationWindow", "view/workflow/identity/UserList", "view/workflow/
 				
 				var _userGroupUrl = BPA.Constant.workflow.identity.usersUrl + "/" + userToBeEdited.id + "/groups";
 				_sendData(_userGroupUrl, {}, "GET", function(result){
-					console.log(result);
+					
+					console.log(result.data);
+					userToBeEdited.groups = result.data;
+					
+					//Consider always new instance
+					var _userEdit = new UserEdit(container, userToBeEdited);
+					
+					var _onSaveUser = function(editedUser){
+						
+						var _requestType = "PUT";
+						
+						var _onSuccess = function(result){// Depends on new _userEdit instance
+							_userEdit.close();//new _userEdit instance
+							_userList.refreshGrid();
+							_successNotification.jqxNotification("open");
+						}
+						
+						var _onError = function(status, error){
+							var _errorWindow = new NotificationWindow(container, {title:'Error Saving User', 
+								content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
+						}
+						
+						_sendData(_userListUrl, editedUser, _requestType, _onSuccess, _onError);
+					}
+					_userEdit.subscribe(_onSaveUser, "onSaveUser");
+					_userEdit.open();
+					
 				}, null);
 				
 				
-				//Consider always new instance
-				var _userEdit = new UserEdit(container, userToBeEdited);
 				
-				var _onSaveUser = function(editedUser){
-					
-					var _requestType = "PUT";
-					
-					var _onSuccess = function(result){// Depends on new _userEdit instance
-						_userEdit.close();//new _userEdit instance
-						_userList.refreshGrid();
-						_successNotification.jqxNotification("open");
-					}
-					
-					var _onError = function(status, error){
-						var _errorWindow = new NotificationWindow(container, {title:'Error Saving User', 
-							content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
-					}
-					
-					_sendData(_userListUrl, editedUser, _requestType, _onSuccess, _onError);
-				}
-				_userEdit.subscribe(_onSaveUser, "onSaveUser");
-				_userEdit.open();
 			}
 			
 			return _onEditUser;

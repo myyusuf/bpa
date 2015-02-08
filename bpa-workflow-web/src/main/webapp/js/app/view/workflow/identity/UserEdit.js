@@ -26,7 +26,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		var _groupListContainer = $('<div></div>');
 		_groupListContainer.appendTo(container);
 		
-		var _groups = [];
+		var _groups = user.groups || [];
 //		_groups.push({id:'1', name: 'abc'});
 		
 		var _source =

@@ -86,6 +86,9 @@ public class IdentityServiceActiviti implements IdentityService{
 		this.activitiIdentityService().saveUser(activitiUser);
 		
 		List<String> groupIds = aCommand.getGroupIds();
+		if (groupIds == null){
+			groupIds = new ArrayList<String>(0);
+		}
 		
 		List<String> existingMemberGroupIds = new ArrayList<String>(0);
 		List<org.activiti.engine.identity.Group> existingActivitiMemberGroups = this.activitiIdentityService().createGroupQuery().groupMember(activitiUser.getId()).list();

@@ -78,7 +78,16 @@ public class IdentityController extends CommonController{
 		String lastName = (String) params.get("lastName");
 		String email = (String) params.get("email");
 		
-		NewUserCommand command = new NewUserCommand(id, password, firstName, lastName, email);
+		List<String> groupIds = new ArrayList<String>(0);
+		List<Map<String, Object>> groupsMap = (List<Map<String, Object>>) params.get("groups");
+		for (Map<String, Object> groupMap : groupsMap) {
+			groupIds.add((String) groupMap.get("id"));
+		}
+		System.out.println("groupsMap : " + groupsMap);
+		System.out.println("groupIds : " + groupIds);
+		
+		
+		NewUserCommand command = new NewUserCommand(id, password, firstName, lastName, email, groupIds );
 		this.identityService().newUserWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -101,7 +110,15 @@ public class IdentityController extends CommonController{
 		String lastName = (String) params.get("lastName");
 		String email = (String) params.get("email");
 		
-		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, password, firstName, lastName, email);
+		List<String> groupIds = new ArrayList<String>(0);
+		List<Map<String, Object>> groupsMap = (List<Map<String, Object>>) params.get("groups");
+		for (Map<String, Object> groupMap : groupsMap) {
+			groupIds.add((String) groupMap.get("id"));
+		}
+		System.out.println("groupsMap : " + groupsMap);
+		System.out.println("groupIds : " + groupIds);
+		
+		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, password, firstName, lastName, email, groupIds);
 		this.identityService().changeUserInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
