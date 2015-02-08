@@ -165,9 +165,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
                 	
                 	var _rightClick = _isRightClick(_clickEvent);
                     if (_rightClick) {
-                    	if(_listGrid.jqxGrid('getselectedrowindex') === -1){
+//                    	if(_listGrid.jqxGrid('getselectedrowindex') === -1){
                     		_listGrid.jqxGrid('selectrow', _rowIndex);
-                    	}
+//                    	}
                     	
                         var _scrollTop = $(window).scrollTop();
                         var _scrollLeft = $(window).scrollLeft();
