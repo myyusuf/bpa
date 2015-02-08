@@ -124,7 +124,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/workflow/identit
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
 		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100},
-		                       {name: "Test", label: "Test", value: "test", type: 'custom', customField : _groupListGrid,required: true}
+		                       {name: "groups", label: "Groups", type: 'custom', customField : _groupListGrid}
 		                       ];
 		
 		_options.validationRules = [
