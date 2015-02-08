@@ -65,6 +65,13 @@ public class IdentityServiceActiviti implements IdentityService{
 		newActivitiUser.setEmail(aCommand.getEmail());
 		
 		this.activitiIdentityService().saveUser(newActivitiUser);
+		List<String> groupIds = aCommand.getGroupIds();
+		if(groupIds != null){
+			for (String groupId : groupIds) {
+				this.activitiIdentityService().createMembership(newActivitiUser.getId(), groupId);
+			}
+		}
+		
 	}
 	
 	@Override
@@ -77,6 +84,27 @@ public class IdentityServiceActiviti implements IdentityService{
 		activitiUser.setEmail(aCommand.getEmail());
 		
 		this.activitiIdentityService().saveUser(activitiUser);
+		
+		List<String> groupIds = aCommand.getGroupIds();
+		
+		List<String> existingMemberGroupIds = new ArrayList<String>(0);
+		List<org.activiti.engine.identity.Group> existingActivitiMemberGroups = this.activitiIdentityService().createGroupQuery().groupMember(activitiUser.getId()).list();
+		for (org.activiti.engine.identity.Group existingActivitiMemberGroup : existingActivitiMemberGroups) {
+			existingMemberGroupIds.add(existingActivitiMemberGroup.getId());
+		}
+		
+		List<String> deletedMemberGroupIds = new ArrayList<String>(existingMemberGroupIds);
+		deletedMemberGroupIds.removeAll(groupIds);
+		for (String deletedMemberGroupId : deletedMemberGroupIds) {
+			this.activitiIdentityService().deleteMembership(activitiUser.getId(), deletedMemberGroupId);
+		}
+		
+		List<String> newMemberGroupIds = new ArrayList<String>(groupIds);
+		newMemberGroupIds.removeAll(existingMemberGroupIds);
+		for (String newMemberGroupId : newMemberGroupIds) {
+			this.activitiIdentityService().createMembership(activitiUser.getId(), newMemberGroupId);
+		}
+		
 	}
 	
 	@Override

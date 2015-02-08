@@ -1,5 +1,7 @@
 package id.co.oriza.bpa.workflow.application;
 
+import java.util.List;
+
 public class NewUserCommand {
 
 	private String id;
@@ -7,15 +9,17 @@ public class NewUserCommand {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private List<String> groupIds;
 
 	public NewUserCommand(String id, String password, String firstName,
-			String lastName, String email) {
+			String lastName, String email, List<String> groupIds) {
 		super();
 		this.id = id;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.groupIds = groupIds;
 	}
 
 	public String getId() {
@@ -56,6 +60,14 @@ public class NewUserCommand {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<String> getGroupIds() {
+		return groupIds;
+	}
+
+	public void setGroupIds(List<String> groupIds) {
+		this.groupIds = groupIds;
 	}
 
 }
