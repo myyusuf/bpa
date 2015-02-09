@@ -20,7 +20,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		                   ];
 		_options.dataFieldId = "id";
 		
-		_options.url = url || BPA.Constant.workflow.identity.runningProcessInstancesUrl;
+		_options.url = url || BPA.Constant.workflow.administration.runningProcessInstancesUrl;
 		
 		_options.columns = [
 		                   { text: 'Idx', datafield: 'id', width: '50%' },
