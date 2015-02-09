@@ -4,7 +4,7 @@ define(["notificationWindow", "view/workflow/identity/RunningProcessInstanceList
 		
 		var _self = this;
 		
-		var _runningProcessInstanceListUrl = BPA.Constant.workflow.identity.runningProcessInstancesUrl;
+		var _runningProcessInstanceListUrl = BPA.Constant.workflow.administration.runningProcessInstancesUrl;
 		
 		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
             width: 250, position: "top-right", opacity: 0.9,

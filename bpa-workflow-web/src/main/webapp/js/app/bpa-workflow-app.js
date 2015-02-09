@@ -45,6 +45,10 @@
                 		$.publish("viewTaskListEvent", {name: "task"});
                 	});
                 	
+                	$("#runningProcessInstanceListMenu").click(function(){
+                		$.publish("viewRunningProcessInstanceListEvent", {name: "task"});
+                	});
+                	
                 }
                 
                 registerMenu();

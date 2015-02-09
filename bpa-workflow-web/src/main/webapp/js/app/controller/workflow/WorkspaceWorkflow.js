@@ -67,6 +67,19 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewRunningProcessInstanceListEvent", function(e, data){
+			var gridContainer = $('<div></div>');
+        	gridContainer.appendTo(container);
+			
+			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
+				if(container.children()[0] != undefined){
+					$(container.children()[0]).jqxGrid('destroy');
+				}
+				
+            	var runningProcessInstanceList = new RunningProcessInstanceList(gridContainer);
+            });
+		});
+		
 	};
 	
 	return WorkspaceWorkflow;

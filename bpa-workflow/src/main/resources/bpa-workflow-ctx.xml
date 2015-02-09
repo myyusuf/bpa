@@ -61,6 +61,7 @@
 	<bean id="sessionProvider" class="id.co.oriza.bpa.base.spring.SpringHibernateSessionProvider" autowire="byName"/>
 	<bean id="taskServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.TaskServiceActiviti" autowire="byName"/>
 	<bean id="identityServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.IdentityServiceActiviti" autowire="byName"/>
+	<bean id="administrationServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.AdministrationServiceActiviti" autowire="byName"/>
 	
 	<import resource="bpa-workflow-bean.xml"/>
 
