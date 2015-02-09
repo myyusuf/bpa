@@ -82,7 +82,15 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             url: _url
         };
         
+        var _formatDataDefault = function (data) {
+//            data.codeOrNameStartsWith = _searchInput.val();
+            return data;
+        }
+        
+        var _formatData = _options.formatData || _formatDataDefault;
+        
         var _dataAdapter = new $.jqx.dataAdapter(_source, {
+        	formatData: _formatData,
             downloadComplete: function (data, status, xhr) { 
             },
             loadComplete: function (data) { 

@@ -147,8 +147,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
             isModal: true,
 //            maxHeight: 400, 
 //            maxWidth: 700, 
-            minHeight: 150, 
-            minWidth: 200, 
+            minHeight: 50, 
+            minWidth: 100, 
             height: _height, 
             width: _width,
             initContent: function () {

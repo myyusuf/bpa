@@ -16,24 +16,64 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		_options.dataFields = [
 		                       { name: 'id', type: 'string' },
-		                       { name: 'name', type: 'string' }
+		                       { name: 'businessKey', type: 'string' },
+		                       { name: 'startedBy', type: 'string' },
+		                       { name: 'startActivityId', type: 'string' },
+		                       { name: 'started', type: 'string' }
+		                       
 		                   ];
 		_options.dataFieldId = "id";
 		
 		_options.url = url || BPA.Constant.workflow.administration.runningProcessInstancesUrl;
 		
 		_options.columns = [
-		                   { text: 'Idx', datafield: 'id', width: '50%' },
-		                   { text: 'Name', datafield: 'name', width: '50%' }
+		                   { text: 'Id', datafield: 'id', width: '20%' },
+		                   { text: 'Business Key', datafield: 'businessKey', width: '20%' },
+		                   { text: 'Started By', datafield: 'startedBy', width: '20%' },
+		                   { text: 'Start Activity Id', datafield: 'startActivityId', width: '20%' },
+		                   { text: 'Started', datafield: 'started', width: '20%' }
 		                 ];
 		
-		var _addButton = $('<div style="margin-left: 2px;">New RunningProcessInstance</div>');
-		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
-		_addButton.click(function(event){
-			Observable.prototype.publish.call(_self, {}, "onAddRunningProcessInstance");
-        });
-		
-		_options.toolbarButtons = [_addButton];
+		var _searchInput = $('<input type="text" class="text-input" style="width: 250px;"/>');
+		_options.formatData = function (data) {
+            data.processDefinitionId = _searchInput.val();
+            return data;
+        };
+        
+		_options.renderToolbar = function(toolbar)
+        {
+        	toolbar.empty();
+        	
+            var _searchContainer = $("<div style='float: left; margin: 5px; text-align: right;'></div>");
+            var _searchTable = $('<table></table>');
+            _searchTable.appendTo(_searchContainer);
+    		
+    		var _newRow = $('<tr></tr>');
+    		_newRow.appendTo(_searchTable);
+    		var _newColumn = $('<td></td>');
+    		_newColumn.appendTo(_newRow);
+    		_searchInput.appendTo(_newColumn);
+    		
+    		_newColumn = $('<td></td>');
+    		_newColumn.appendTo(_newRow);
+    		var _searchButton = $('<div><img src="resources/images/magnifier-medium.png"/></div>');
+    		_searchButton.appendTo(_newColumn);
+    		
+            toolbar.append(_searchContainer);
+            
+            _searchInput.jqxInput({placeHolder: " Search by Process Definition Id", theme: 'metro' });
+            _searchButton.jqxButton({ width: '14', height: '14', theme: 'metro' });
+            
+            _searchButton.click(function(event){
+            	_simpleListGrid.refreshGrid();
+            });
+            _searchInput.on('keypress', function(event){
+            	if(13 == event.charCode){
+            		_simpleListGrid.refreshGrid();
+            	}
+            });
+            
+        };
 		
 		var _simpleListGrid = new SimpleListGrid(container, _options);
 		
