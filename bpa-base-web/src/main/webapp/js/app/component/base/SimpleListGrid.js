@@ -39,6 +39,31 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 			_showToolbar = true;
 		};
 		
+		var _defaultRenderToolbar = function(toolbar)
+        {
+        	toolbar.empty();
+        	
+            var _searchContainer = $("<div style='float: left; margin: 5px; text-align: right;'></div>");
+            var _searchTable = $('<table></table>');
+            _searchTable.appendTo(_searchContainer);
+    		
+    		var _newRow = $('<tr></tr>');
+    		_newRow.appendTo(_searchTable);
+    		
+    		if(_toolbarButtons){
+    			for(i=0; i<_toolbarButtons.length; i++){
+    				var _newColumn = $('<td></td>');
+            		_newColumn.appendTo(_newRow);
+            		_toolbarButtons[i].appendTo(_newColumn);
+    			}
+    		}
+    		
+            toolbar.append(_searchContainer);
+            
+        }
+		
+		var _renderToolbar = _options.renderToolbar || _defaultRenderToolbar;
+		
 		var _subscribers = {
 			any:[]
 		};
@@ -88,28 +113,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             },
             showtoolbar: _showToolbar,
             toolbarheight: 40,
-            rendertoolbar: function(toolbar)
-            {
-            	toolbar.empty();
-            	
-                var _searchContainer = $("<div style='float: left; margin: 5px; text-align: right;'></div>");
-                var _searchTable = $('<table></table>');
-                _searchTable.appendTo(_searchContainer);
-        		
-        		var _newRow = $('<tr></tr>');
-        		_newRow.appendTo(_searchTable);
-        		
-        		if(_toolbarButtons){
-        			for(i=0; i<_toolbarButtons.length; i++){
-        				var _newColumn = $('<td></td>');
-                		_newColumn.appendTo(_newRow);
-                		_toolbarButtons[i].appendTo(_newColumn);
-        			}
-        		}
-        		
-                toolbar.append(_searchContainer);
-                
-            },
+            rendertoolbar: _renderToolbar,
         });
         
         _listGrid.on('rowdoubleclick', function (event){ 
