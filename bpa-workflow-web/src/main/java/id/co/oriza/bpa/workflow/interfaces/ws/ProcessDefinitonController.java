@@ -63,7 +63,7 @@ public class ProcessDefinitonController {
 		String userId = workflowUserAccessor.getActiveUser();
 		
 		String processDefinitionKey = (String) params.get("processDefinitionKey");
-//		this.taskService().startProcess(userId, processDefinitionKey, new HashMap<String, Object>());
+		this.taskService().startProcess(userId, processDefinitionKey, new HashMap<String, Object>());
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
