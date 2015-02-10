@@ -1,8 +1,8 @@
-define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/administration/ProcessInstanceTaskList", 
+define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/administration/ProcessInstanceTaskList", "bpmn/Bpmn", "dojo/domReady!", 
         "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxsplitter",
         "jqxtabs"
-        ], function (Observable, SimpleListGrid, ProcessInstanceTaskList) {
+        ], function (Observable, SimpleListGrid, ProcessInstanceTaskList, Bpmn) {
 	
 	var RunningProcessInstanceList = function(container, url){
 		
@@ -14,6 +14,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
 			any:[]
 		};
 		
+		var _randomId = BPA.Util.getRandomId("runningProcessInstanceList");
+		
 		Observable.call(_self, _subscribers);
 		
 		_options.dataFields = [
@@ -21,7 +23,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
 		                       { name: 'businessKey', type: 'string' },
 		                       { name: 'startedBy', type: 'string' },
 		                       { name: 'startActivityId', type: 'string' },
-		                       { name: 'started', type: 'string' }
+		                       { name: 'started', type: 'string' },
+		                       { name: 'processDefinitionId', type: 'string' }
 		                       
 		                   ];
 		_options.dataFieldId = "id";
@@ -111,8 +114,39 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
         tabs.css({marginTop: "0px", borderTop: "0px"});
         
         var _processInstanceTaskList = new ProcessInstanceTaskList(_processInstanceTasksContainer, null);
+        
+        
+        
         _options.onRowClick = function(rowData){
+        	
         	_processInstanceTaskList.refreshGridWithProcessInstanceId(rowData.id);
+        	
+        	var _processDefinitionId = rowData.processDefinitionId;
+        	
+        	//remove diagram container children
+        	var _children = _diagramContainer.children();
+			for(var i=0; i<_children.length; i++){
+				_children[i].remove();
+			}
+			
+        	var _diagramId = _randomId;// + '_' + _processDefinitionId;
+        	var _diagramElement = $('<div style="height: 100%;" id="diagram_' + _diagramId + '"></div>');
+        	_diagramElement.appendTo(_diagramContainer);
+        	
+        	new Bpmn().renderUrl("service/workflow/diagram/definition?processDefinitionId=" + _processDefinitionId, {
+    	        diagramElement : "diagram_" + _diagramId,
+    	        overlayHtml : '<div style="position: relative; top:100%"></div>'
+    	      }).then(function (bpmn){
+    	        //bpmn.zoom(0.8);
+    	        /*bpmn.annotation("usertask1").addClasses(["highlight"]);
+    			
+    	        $('div[id="diagram_'+ _diagramId + '"] div[data-activity-id="usertask1"]').click(function(){
+    				console.log("userTask clicked..");
+    			});*/
+    	        
+    	      });
+        	
+        	
         }
         
         
