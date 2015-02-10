@@ -15,7 +15,7 @@ public class Task extends AssertionConcern implements Serializable {
 	private String processDefinitionId;
 	private String processInstanceId;
 	
-	public Task() {
+	protected Task() {
 		super();
 	}
 
