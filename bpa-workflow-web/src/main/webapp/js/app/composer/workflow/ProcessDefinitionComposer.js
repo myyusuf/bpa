@@ -35,7 +35,7 @@ define(["notificationWindow", "view/workflow/ProcessDefinitionList", "view/workf
 						content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 				}
 				
-				_startProcessRequest({processDefinitonKey: data.processDefinitionKey}, _requestType, _onSuccess, _onError);
+				_startProcessRequest({processDefinitionKey: data.processDefinitionKey}, _requestType, _onSuccess, _onError);
 			}
 			
 			var _startProcessConfirmationWindow = new NotificationWindow(container, {title:'Start Process', 
