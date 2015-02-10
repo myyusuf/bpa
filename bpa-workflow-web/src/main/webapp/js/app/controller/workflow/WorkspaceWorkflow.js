@@ -3,15 +3,17 @@ define(["jQuery", "jqxcore"], function () {
 	var WorkspaceWorkflow = function(container){
 		
 		$.subscribe("viewDeploymentListEvent", function(e, data){
-			var gridContainer = $('<div></div>');
-        	gridContainer.appendTo(container);
 			
+			var _gridContainer = $('<div></div>');
+        	
 			require(['./composer/workflow/DeploymentComposer'], function (DeploymentComposer) {
-				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
 				}
+				_gridContainer.appendTo(container);
 				
-            	var _deploymentComposer = new DeploymentComposer(gridContainer);
+            	var _deploymentComposer = new DeploymentComposer(_gridContainer);
             });
 		});
 		
@@ -29,15 +31,16 @@ define(["jQuery", "jqxcore"], function () {
 		});
 		
 		$.subscribe("viewUserListEvent", function(e, data){
-			var gridContainer = $('<div></div>');
-        	gridContainer.appendTo(container);
-			
+			var _gridContainer = $('<div></div>');
+        	
 			require(['./composer/workflow/identity/UserComposer'], function (UserComposer) {
-				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
 				}
+				_gridContainer.appendTo(container);
 				
-            	var _userComposer = new UserComposer(gridContainer);
+            	var _userComposer = new UserComposer(_gridContainer);
             });
 		});
 		
