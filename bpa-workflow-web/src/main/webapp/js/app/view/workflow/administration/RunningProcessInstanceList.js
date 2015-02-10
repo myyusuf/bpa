@@ -1,6 +1,7 @@
 define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/administration/ProcessInstanceTaskList", 
         "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
-        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxsplitter"
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxsplitter",
+        "jqxtabs"
         ], function (Observable, SimpleListGrid, ProcessInstanceTaskList) {
 	
 	var RunningProcessInstanceList = function(container, url){
@@ -89,14 +90,27 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
         var _taskContainer = $('<div style="height: 100%;"></div>');
         _taskContainer.appendTo(_parentContainer);
         
-        var _taskContainer2 = $('<div style="height: 100%;"></div>');
-        _taskContainer2.appendTo(_taskContainer);
+//        var _taskContainer2 = $('<div style="height: 100%;"></div>');
+//        _taskContainer2.appendTo(_taskContainer);
         
         _parentContainer.jqxSplitter({ width: '100%', height: '100%',  orientation: 'horizontal', 
-        	panels: [{ size: '70%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
+        	panels: [{ size: '55%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
 		
         
-        var _processInstanceTaskList = new ProcessInstanceTaskList(_taskContainer2, null);
+        var tabs = $('<div id="tabs"><ul><li>Tasks</li><li>Workflow Diagram</li></ul></div>');
+        tabs.appendTo(_taskContainer);
+        
+        
+        var _processInstanceTasksContainer = $('<div style="height: 100%;"></div>');
+        _processInstanceTasksContainer.appendTo(tabs);
+        
+        var _diagramContainer = $('<div style="height: 100%;"></div>');
+        _diagramContainer.appendTo(tabs);
+        
+        tabs.jqxTabs({ width: '100%', height: '100%', position: 'top', showCloseButtons: false, scrollPosition: 'both', theme: 'metro'});
+        tabs.css({marginTop: "0px", borderTop: "0px"});
+        
+        var _processInstanceTaskList = new ProcessInstanceTaskList(_processInstanceTasksContainer, null);
         _options.onRowClick = function(rowData){
         	_processInstanceTaskList.refreshGridWithProcessInstanceId(rowData.id);
         }
