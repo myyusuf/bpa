@@ -12,7 +12,8 @@ BPA.Constant.workflow = {
 		groupsUrl : 'service/workflow/identity/groups'
 	},
 	administration:{
-		runningProcessInstancesUrl : 'service/workflow/administration/runningprocessinstances'
+		runningProcessInstancesUrl : 'service/workflow/administration/runningprocessinstances',
+		processInstanceTasksUrl : 'service/workflow/administration/processinstancetasks'	
 	},
 	tasksUrl : 'sample/data/workflow/tasks.json'
 };

@@ -28,7 +28,7 @@ public class IdentityServiceActivitiTest {
 	
 	@Test
 	public void testChangeGroupName(){
-		ChangeGroupNameCommand aCommand = new ChangeGroupNameCommand("my", "myyxx");
+		ChangeGroupNameCommand aCommand = new ChangeGroupNameCommand("testGroup", "TestGroup");
 		identityService.changeGroupName(aCommand);
 	}
 

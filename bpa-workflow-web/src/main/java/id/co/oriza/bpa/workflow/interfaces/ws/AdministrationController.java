@@ -3,7 +3,9 @@ package id.co.oriza.bpa.workflow.interfaces.ws;
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workflow.application.AdministrationService;
 import id.co.oriza.bpa.workflow.domain.model.ProcessInstance;
+import id.co.oriza.bpa.workflow.domain.model.Task;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessInstanceModel;
+import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessInstanceTaskModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +53,31 @@ public class AdministrationController extends CommonController{
 		long allRunningProcessInstancesSize = administrationService.allRunningProcessInstancesSize();
 		result.put("num", allRunningProcessInstancesSize );
 		result.put("data", processInstanceModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/administration/processinstancetasks", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> allProcessInstanceTasks(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		String processInstanceId = params.get("processInstanceId") != null ? params.get("processInstanceId") : "";
+		
+		List<Task> allProcessInstanceTasks = administrationService.allProcessInstanceTasks(processInstanceId , start, limit);
+		List<ProcessInstanceTaskModel> processInstanceTaskModels = new ArrayList<ProcessInstanceTaskModel>();
+		for (Task task : allProcessInstanceTasks) {
+			ProcessInstanceTaskModel processInstanceTaskModel = new ProcessInstanceTaskModel(task);
+			processInstanceTaskModels.add(processInstanceTaskModel);
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		long allProcessInstanceTasksSize = administrationService.allProcessInstanceTasksSize(processInstanceId);
+		result.put("num", allProcessInstanceTasksSize);
+		result.put("data", processInstanceTaskModels);
 		result.put("success", true);
 		
 		return result;

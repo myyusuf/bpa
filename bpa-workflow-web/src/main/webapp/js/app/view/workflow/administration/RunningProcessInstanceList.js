@@ -91,7 +91,13 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         _parentContainer.jqxSplitter({ width: '100%', height: '100%',  orientation: 'horizontal', 
         	panels: [{ size: '70%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
 		
-//        _options.height = '200';
+        
+        var _processInstanceTaskList = new ProcessInstanceTaskList(_taskContainer, null);
+        _options.onRowClick = function(rowData){
+        	_processInstanceTaskList.refreshGridWithProcessInstanceId(rowData.id);
+        }
+        
+        
 		var _simpleListGrid = new SimpleListGrid(_processInstanceContainer2, _options);
 		
 		var _onContextMenuClick = function(commandObject){
@@ -111,16 +117,6 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		}
 		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
 		
-		var _getRunningProcessInstanceFromRowData = function(rowData){
-        	var _runningProcessInstance = {};
-        	
-        	if(rowData){
-        		_runningProcessInstance.id = rowData.id;
-            	_runningProcessInstance.name = rowData.name;
-        	}
-        	
-        	return _runningProcessInstance;
-        }
 		
         this.refreshGrid = function(){
         	_simpleListGrid.refreshGrid();

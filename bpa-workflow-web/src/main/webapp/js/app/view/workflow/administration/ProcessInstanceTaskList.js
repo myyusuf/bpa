@@ -20,25 +20,31 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		                   ];
 		_options.dataFieldId = "id";
 		
-		_options.url = url || BPA.Constant.workflow.identity.groupsUrl;
+		_options.url = url || BPA.Constant.workflow.administration.processInstanceTasksUrl;
 		
 		_options.columns = [
 		                   { text: 'Id', datafield: 'id', width: '50%' },
 		                   { text: 'Name', datafield: 'name', width: '50%' }
 		                 ];
 		
-		var _addButton = $('<div style="margin-left: 2px;">New ProcessInstanceTask</div>');
-		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
-		_addButton.click(function(event){
-			Observable.prototype.publish.call(_self, {}, "onAddProcessInstanceTask");
-        });
+		_options.showToolbar = false;
 		
-		_options.toolbarButtons = [_addButton];
+		var _processInstanceId = "";
+		
+		_options.formatData = function (data) {
+            data.processInstanceId = _processInstanceId;
+            return data;
+        };
 		
 		var _simpleListGrid = new SimpleListGrid(container, _options);
 		
         
         this.refreshGrid = function(){
+        	_simpleListGrid.refreshGrid();
+        }
+        
+        this.refreshGridWithProcessInstanceId = function(processInstanceId){
+        	_processInstanceId = processInstanceId;
         	_simpleListGrid.refreshGrid();
         }
         
