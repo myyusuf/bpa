@@ -75,19 +75,24 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
             
         };
         
-        var _parentContainer = $("<div></div>");
+        container.css({height: '100%'});
+        var _parentContainer = $('<div style="overflow: hidden; height: 100%; background-color: blue;"></div>');
         _parentContainer.appendTo(container);
         
-        var _processInstanceContainer = $("<div></div>");
+        var _processInstanceContainer = $('<div style="height: 100%;"></div>');
         _processInstanceContainer.appendTo(_parentContainer);
         
-        var _taskContainer = $("<div></div>");
+        var _processInstanceContainer2 = $('<div style="height: 100%;"></div>');
+        _processInstanceContainer2.appendTo(_processInstanceContainer);
+        
+        var _taskContainer = $("<div>task</div>");
         _taskContainer.appendTo(_parentContainer);
         
-        _parentContainer.jqxSplitter({ width: '100%', height: '500',  orientation: 'horizontal', 
-        	panels: [{ size: '30%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
+        _parentContainer.jqxSplitter({ width: '100%', height: '100%',  orientation: 'horizontal', 
+        	panels: [{ size: '70%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
 		
-		var _simpleListGrid = new SimpleListGrid(_processInstanceContainer, _options);
+//        _options.height = '200';
+		var _simpleListGrid = new SimpleListGrid(_processInstanceContainer2, _options);
 		
 		var _onContextMenuClick = function(commandObject){
 			var _command = commandObject.command;
