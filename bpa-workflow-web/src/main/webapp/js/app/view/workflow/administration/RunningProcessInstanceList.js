@@ -1,5 +1,5 @@
 define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
-        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxsplitter"
         ], function (Observable, SimpleListGrid) {
 	
 	var RunningProcessInstanceList = function(container, url){
@@ -74,8 +74,20 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
             });
             
         };
+        
+        var _parentContainer = $("<div></div>");
+        _parentContainer.appendTo(container);
+        
+        var _processInstanceContainer = $("<div></div>");
+        _processInstanceContainer.appendTo(_parentContainer);
+        
+        var _taskContainer = $("<div></div>");
+        _taskContainer.appendTo(_parentContainer);
+        
+        _parentContainer.jqxSplitter({ width: '100%', height: '500',  orientation: 'horizontal', 
+        	panels: [{ size: '30%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
 		
-		var _simpleListGrid = new SimpleListGrid(container, _options);
+		var _simpleListGrid = new SimpleListGrid(_processInstanceContainer, _options);
 		
 		var _onContextMenuClick = function(commandObject){
 			var _command = commandObject.command;
