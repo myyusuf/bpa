@@ -17,19 +17,21 @@ public class ProcessInstance extends AssertionConcern implements Serializable {
 	private String startedBy;
 	private String startActivityId;
 	private Date started;
+	private String processDefinitionId;
 
 	protected ProcessInstance() {
 		super();
 	}
 
 	public ProcessInstance(String id, String businessKey, String startedBy,
-			String startActivityId, Date started) {
+			String startActivityId, Date started, String processDefinitionId) {
 		this();
 		this.setId(id);
 		this.setBusinessKey(businessKey);
 		this.setStartedBy(startedBy);
 		this.setStartActivityId(startActivityId);
 		this.setStarted(started);
+		this.setProcessDefinitionId(processDefinitionId);
 	}
 
 	public String businessKey() {
@@ -70,6 +72,14 @@ public class ProcessInstance extends AssertionConcern implements Serializable {
 
 	protected void setId(String id) {
 		this.id = id;
+	}
+
+	public String processDefinitionId() {
+		return processDefinitionId;
+	}
+
+	protected void setProcessDefinitionId(String processDefinitionId) {
+		this.processDefinitionId = processDefinitionId;
 	}
 
 

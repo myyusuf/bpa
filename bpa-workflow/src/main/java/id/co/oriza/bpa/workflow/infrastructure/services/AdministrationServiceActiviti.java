@@ -29,7 +29,8 @@ public class AdministrationServiceActiviti implements AdministrationService {
 			String startUserId = activitiRunningProcessInstance.getStartUserId();
 			String startActivityId = activitiRunningProcessInstance.getStartActivityId();
 			Date startTime = activitiRunningProcessInstance.getStartTime();
-			ProcessInstance processInstance = new ProcessInstance(id, businessKey, startUserId, startActivityId, startTime);
+			String processDefinitionId = activitiRunningProcessInstance.getProcessDefinitionId();
+			ProcessInstance processInstance = new ProcessInstance(id, businessKey, startUserId, startActivityId, startTime, processDefinitionId);
 			
 			runningProcessInstances.add(processInstance);
 		}

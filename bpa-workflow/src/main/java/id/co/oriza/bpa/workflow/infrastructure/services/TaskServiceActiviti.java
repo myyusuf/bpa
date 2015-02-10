@@ -17,6 +17,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +137,14 @@ public class TaskServiceActiviti implements TaskService {
 			}
 		}
 		return getResourceAsStream(deploymentId, bpmnResourceName);
+	}
+	
+	@Override
+	public InputStream getBpmnResourceAsStreamByProcessDefinitionId(String processDefinitionId) {
+		ProcessDefinition processDefinition = processEngine.getRepositoryService()
+		.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+		String deploymentId = processDefinition.getDeploymentId();
+		return getBpmnResourceAsStream(deploymentId);
 	}
 	
 	

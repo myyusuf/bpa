@@ -8,7 +8,6 @@ import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessInstanceModel;
 import id.co.oriza.bpa.workflow.interfaces.ws.pm.ProcessInstanceTaskModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +37,7 @@ public class AdministrationController extends CommonController{
 		List<ProcessInstance> allRunningProcessInstances = administrationService.allRunningProcessInstances(start, limit);
 		List<ProcessInstanceModel> processInstanceModels = new ArrayList<ProcessInstanceModel>();
 		for (ProcessInstance processInstance : allRunningProcessInstances) {
-			String id = processInstance.id();
-			String businessKey = processInstance.businessKey();
-			String startedBy = processInstance.startedBy();
-			String startActivityId = processInstance.startActivityId();
-			Date started = processInstance.started();
-			ProcessInstanceModel processInstanceModel = new ProcessInstanceModel(id, businessKey, startedBy, startActivityId, started);
+			ProcessInstanceModel processInstanceModel = new ProcessInstanceModel(processInstance);
 			processInstanceModels.add(processInstanceModel);
 		}
 		

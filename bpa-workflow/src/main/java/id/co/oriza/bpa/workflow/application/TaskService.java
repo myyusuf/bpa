@@ -32,4 +32,6 @@ public interface TaskService {
 
 	InputStream getBpmnResourceAsStream(String deploymentId);
 
+	InputStream getBpmnResourceAsStreamByProcessDefinitionId(String processDefinitionId);
+
 }

@@ -1,5 +1,7 @@
 package id.co.oriza.bpa.workflow.interfaces.ws.pm;
 
+import id.co.oriza.bpa.workflow.domain.model.ProcessInstance;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,60 +11,37 @@ public class ProcessInstanceModel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String id;
-	private String businessKey;
-	private String startedBy;
-	private String startActivityId;
-	private Date started;
+	private ProcessInstance processInstance;
 
-	public ProcessInstanceModel(String id, String businessKey,
-			String startedBy, String startActivityId, Date started) {
+	public ProcessInstanceModel(ProcessInstance processInstance) {
 		super();
-		this.id = id;
-		this.businessKey = businessKey;
-		this.startedBy = startedBy;
-		this.startActivityId = startActivityId;
-		this.started = started;
+		this.processInstance = processInstance;
 	}
 
 	public String getId() {
-		return id;
+		return processInstance.id();
 	}
 
 	public String getBusinessKey() {
-		return businessKey;
+		return processInstance.businessKey();
 	}
 
 	public String getStartedBy() {
-		return startedBy;
+		return processInstance.startedBy();
 	}
 
 	public String getStartActivityId() {
-		return startActivityId;
+		return processInstance.startActivityId();
 	}
 
 	public Date getStarted() {
-		return started;
+		return processInstance.started();
+	}
+	
+	public String getProcessDefinitionId(){
+		return processInstance.processDefinitionId();
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void setBusinessKey(String businessKey) {
-		this.businessKey = businessKey;
-	}
-
-	public void setStartedBy(String startedBy) {
-		this.startedBy = startedBy;
-	}
-
-	public void setStartActivityId(String startActivityId) {
-		this.startActivityId = startActivityId;
-	}
-
-	public void setStarted(Date started) {
-		this.started = started;
-	}
+	
 
 }
