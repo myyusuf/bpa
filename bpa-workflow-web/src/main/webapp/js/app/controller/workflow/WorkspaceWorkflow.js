@@ -18,15 +18,16 @@ define(["jQuery", "jqxcore"], function () {
 		});
 		
 		$.subscribe("viewProcessDefinitionListEvent", function(e, data){
-			var gridContainer = $('<div></div>');
-        	gridContainer.appendTo(container);
+			var _gridContainer = $('<div></div>');
 			
 			require(['./composer/workflow/ProcessDefinitionComposer'], function (ProcessDefinitionComposer) {
-				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
 				}
+				_gridContainer.appendTo(container);
 				
-            	var _processDefinitionComposer = new ProcessDefinitionComposer(gridContainer);
+            	var _processDefinitionComposer = new ProcessDefinitionComposer(_gridContainer);
             });
 		});
 		
@@ -45,41 +46,44 @@ define(["jQuery", "jqxcore"], function () {
 		});
 		
 		$.subscribe("viewGroupListEvent", function(e, data){
-			var gridContainer = $('<div></div>');
-        	gridContainer.appendTo(container);
+			var _gridContainer = $('<div></div>');
 			
 			require(['./composer/workflow/identity/GroupComposer'], function (GroupComposer) {
-				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
 				}
+				_gridContainer.appendTo(container);
 				
-            	var _groupComposer = new GroupComposer(gridContainer);
+            	var _groupComposer = new GroupComposer(_gridContainer);
             });
 		});
 		
 		$.subscribe("viewTaskListEvent", function(e, data){
-			var gridContainer = $('<div></div>');
-        	gridContainer.appendTo(container);
+			var _gridContainer = $('<div></div>');
 			
 			require(['./view/workflow/TaskList'], function (TaskList) {
-				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
 				}
+				_gridContainer.appendTo(container);
 				
-            	var taskListPage = new TaskList(gridContainer);
+            	var taskListPage = new TaskList(_gridContainer);
             });
 		});
 		
 		$.subscribe("viewRunningProcessInstanceListEvent", function(e, data){
-			var gridContainer = $('<div></div>');
-        	gridContainer.appendTo(container);
+			var _gridContainer = $('<div></div>');
 			
 			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
-				if(container.children()[0] != undefined){
-					$(container.children()[0]).jqxGrid('destroy');
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
 				}
+				_gridContainer.appendTo(container);
 				
-            	var runningProcessInstanceList = new RunningProcessInstanceList(gridContainer);
+            	var runningProcessInstanceList = new RunningProcessInstanceList(_gridContainer);
             });
 		});
 		
