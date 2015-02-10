@@ -1,6 +1,7 @@
-define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/administration/ProcessInstanceTaskList", 
+        "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxsplitter"
-        ], function (Observable, SimpleListGrid) {
+        ], function (Observable, SimpleListGrid, ProcessInstanceTaskList) {
 	
 	var RunningProcessInstanceList = function(container, url){
 		
@@ -85,14 +86,17 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         var _processInstanceContainer2 = $('<div style="height: 100%;"></div>');
         _processInstanceContainer2.appendTo(_processInstanceContainer);
         
-        var _taskContainer = $("<div>task</div>");
+        var _taskContainer = $('<div style="height: 100%;"></div>');
         _taskContainer.appendTo(_parentContainer);
+        
+        var _taskContainer2 = $('<div style="height: 100%;"></div>');
+        _taskContainer2.appendTo(_taskContainer);
         
         _parentContainer.jqxSplitter({ width: '100%', height: '100%',  orientation: 'horizontal', 
         	panels: [{ size: '70%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
 		
         
-        var _processInstanceTaskList = new ProcessInstanceTaskList(_taskContainer, null);
+        var _processInstanceTaskList = new ProcessInstanceTaskList(_taskContainer2, null);
         _options.onRowClick = function(rowData){
         	_processInstanceTaskList.refreshGridWithProcessInstanceId(rowData.id);
         }

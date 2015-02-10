@@ -166,10 +166,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
         	var _onRowClick = _options.onRowClick;
             if(_onRowClick){
-            	var _args = event.args, _rowindex = _args.rowindex;
-            	var _rowData = _listGrid.jqxGrid('getrowdata', _rowindex);
-//            	Observable.prototype.publish.call(_self, _rowData, "onRowClick");
-            	onRowClick(_rowData);
+            	_listGrid.on('rowclick', function (event) {
+            		var _args = event.args, _rowindex = _args.rowindex;
+                	var _rowData = _listGrid.jqxGrid('getrowdata', _rowindex);
+//                	Observable.prototype.publish.call(_self, _rowData, "onRowClick");
+                	_onRowClick(_rowData);
+            	});
             }else{
             	_listGrid.on('rowclick', function (event) {
                 	
