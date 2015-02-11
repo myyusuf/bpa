@@ -34,4 +34,6 @@ public interface TaskService {
 
 	InputStream getBpmnResourceAsStreamByProcessDefinitionId(String processDefinitionId);
 
+	List<String> getHighLightedActivities(String processInstanceId);
+
 }

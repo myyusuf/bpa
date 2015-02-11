@@ -191,6 +191,11 @@ public class TaskServiceActiviti implements TaskService {
 //			getHighLightedFlows(processDefinition.getActivities(), historicActivityInstanceList, highLightedFlows);
 		 
 	}
+	
+	@Override
+	public List<String> getHighLightedActivities(String processInstanceId){
+		return runtimeService.getActiveActivityIds(processInstanceId);
+	}
 
 
 }

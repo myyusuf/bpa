@@ -110,24 +110,46 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
         var _diagramContainer = $('<div style="height: 100%;"></div>');
         _diagramContainer.appendTo(tabs);
         
+        
+        var _taskId = "";
+        var _processDefinitionId = "";
+        var isDiagramTabSelected = false;
+        
         tabs.jqxTabs({ width: '100%', height: '100%', position: 'top', showCloseButtons: false, scrollPosition: 'both', theme: 'metro'});
         tabs.css({marginTop: "0px", borderTop: "0px"});
+        tabs.on('selected', function (event) { 
+        	var selectedTabIndex = event.args.item;
+        	if(selectedTabIndex == 1){
+        		isDiagramTabSelected = true;
+        		_renderDiagram();
+        	}
+        }); 
+        
+        tabs.on('unselected', function (event) { 
+        	var selectedTabIndex = event.args.item;
+        	if(selectedTabIndex == 1){
+        		isDiagramTabSelected = false;
+        	}
+        });
         
         var _processInstanceTaskList = new ProcessInstanceTaskList(_processInstanceTasksContainer, null);
         
-        
-        
-        _options.onRowClick = function(rowData){
+        var _renderDiagram = function(){
         	
-        	_processInstanceTaskList.refreshGridWithProcessInstanceId(rowData.id);
+        	if(!isDiagramTabSelected){
+        		return;
+        	}
         	
-        	var _processDefinitionId = rowData.processDefinitionId;
+        	if(_processDefinitionId == ""){
+        		return;
+        	}
         	
         	//remove diagram container children
         	var _children = _diagramContainer.children();
 			for(var i=0; i<_children.length; i++){
 				_children[i].remove();
 			}
+			
 			
         	var _diagramId = _randomId;// + '_' + _processDefinitionId;
         	var _diagramElement = $('<div style="height: 100%;" id="diagram_' + _diagramId + '"></div>');
@@ -145,6 +167,18 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
     			});*/
     	        
     	      });
+        	
+        }
+        
+        _options.onRowClick = function(rowData){
+        	
+        	_taskId = rowData.id;
+        	_processDefinitionId = rowData.processDefinitionId;
+        	
+        	_processInstanceTaskList.refreshGridWithProcessInstanceId(_taskId);
+        	_renderDiagram();
+        	
+        	
         	
         	
         }
