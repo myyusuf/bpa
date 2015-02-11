@@ -61,7 +61,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	        overlayHtml : '<div style="position: relative; top:100%"></div>'
         	      }).then(function (bpmn){
         	        //bpmn.zoom(0.8);
-        	        bpmn.annotation("usertask1").addClasses(["highlight"]);
+        	        //bpmn.annotation("usertask1").addClasses(["highlight"]);
         			
         	        $('div[id="diagram_'+ _diagramId + '"] div[data-activity-id="usertask1"]').click(function(){
         				console.log("userTask clicked..");

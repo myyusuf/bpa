@@ -111,7 +111,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
         _diagramContainer.appendTo(tabs);
         
         
-        var _taskId = "";
+        var _processInstanceId = "";
         var _processDefinitionId = "";
         var isDiagramTabSelected = false;
         
@@ -165,6 +165,15 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
     	        $('div[id="diagram_'+ _diagramId + '"] div[data-activity-id="usertask1"]').click(function(){
     				console.log("userTask clicked..");
     			});*/
+    	    	  
+    	    	  _sendData("service/workflow/diagram/highlighted", {processInstanceId : _processInstanceId}, "GET", function(result){
+  					
+  					console.log(result.data);
+  					var _highLightedActivities = result.data;
+  					for(var i=0; i<_highLightedActivities.length; i++){
+  						bpmn.annotation(_highLightedActivities[i]).addClasses(["highlight"]);
+  					}
+    	    	  });
     	        
     	      });
         	
@@ -172,14 +181,11 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
         
         _options.onRowClick = function(rowData){
         	
-        	_taskId = rowData.id;
+        	_processInstanceId = rowData.id;
         	_processDefinitionId = rowData.processDefinitionId;
         	
-        	_processInstanceTaskList.refreshGridWithProcessInstanceId(_taskId);
+        	_processInstanceTaskList.refreshGridWithProcessInstanceId(_processInstanceId);
         	_renderDiagram();
-        	
-        	
-        	
         	
         }
         
@@ -211,6 +217,24 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workflow/adminis
         this.getComponent = function(){
         	return _simpleListGrid.getComponent();
         }
+        
+        var _sendData = function(url, data, requestType, onSuccess, onError){
+			$.ajax({
+			    url: url,
+			    type: requestType,
+			    data: data,
+			    beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+			    success: function(result) {
+			    	onSuccess(result);
+			    },
+			    error: function(jqXHR, status, error){
+			    	onError(jqXHR.status, error);
+			    }
+			});
+		};
         
         
 	}

@@ -3,6 +3,8 @@ package id.co.oriza.bpa.workflow.interfaces.ws;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +59,22 @@ public class WorkflowDiagramController extends CommonController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/workflow/diagram/highlighted", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> getHightlightedActivities(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(required=false) Map<String, String> params){
+		
+		printParamsString(params);
+		String processInstanceId = params.get("processInstanceId") != null ? params.get("processInstanceId") : "";
+		
+		List<String> highLightedActivities = taskService.getHighLightedActivities(processInstanceId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("data", highLightedActivities);
+		result.put("success", true);
+		
+		return result;
 	}
 	
 	private void writeToOutputStream(InputStream inputStream, OutputStream outputStream){
