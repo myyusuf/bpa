@@ -15,5 +15,8 @@ BPA.Constant.workflow = {
 		runningProcessInstancesUrl : 'service/workflow/administration/runningprocessinstances',
 		processInstanceTasksUrl : 'service/workflow/administration/processinstancetasks'	
 	},
+	task: {
+		queuedsUrl : 'service/workflow/task/queueds'
+	},
 	tasksUrl : 'sample/data/workflow/tasks.json'
 };
