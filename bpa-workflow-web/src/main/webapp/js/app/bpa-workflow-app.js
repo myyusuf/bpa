@@ -49,6 +49,10 @@
                 		$.publish("viewRunningProcessInstanceListEvent", {name: "task"});
                 	});
                 	
+                	$("#queuedTaskListMenu").click(function(){
+                		$.publish("viewQueuedTaskListMenuEvent", {name: "queued task"});
+                	});
+                	
                 }
                 
                 registerMenu();

@@ -87,6 +87,20 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewQueuedTaskListMenuEvent", function(e, data){
+			var _gridContainer = $('<div></div>');
+			
+			require(['./composer/workflow/task/QueuedComposer'], function (QueuedComposer) {
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				_gridContainer.appendTo(container);
+				
+            	var queuedComposer = new QueuedComposer(_gridContainer);
+            });_
+		});
+		
 	};
 	
 	return WorkspaceWorkflow;
