@@ -1,18 +1,16 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
+import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.workflow.application.TaskService;
+import id.co.oriza.bpa.workflow.application.WorkflowUserAccessor;
+import id.co.oriza.bpa.workflow.domain.model.Task;
+import id.co.oriza.bpa.workflow.interfaces.ws.pm.TaskModel;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import id.co.oriza.bpa.base.interfaces.ws.CommonController;
-import id.co.oriza.bpa.workflow.application.TaskService;
-import id.co.oriza.bpa.workflow.application.WorkflowUserAccessor;
-import id.co.oriza.bpa.workflow.domain.model.Group;
-import id.co.oriza.bpa.workflow.domain.model.Task;
-import id.co.oriza.bpa.workflow.interfaces.ws.pm.GroupPresentationModel;
-import id.co.oriza.bpa.workflow.interfaces.ws.pm.TaskModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,15 +43,15 @@ public class TaskController extends CommonController{
 		
 		List<TaskModel> taskModels = new ArrayList<TaskModel>();
 		
-		String userId = workflowUserAccessor.getActiveUser();
+		String groupId = workflowUserAccessor.getActiveUserGroup();
 		
-		Collection<Task> queuedTasks = this.taskService().queuedTasksByUserId(userId);
+		Collection<Task> queuedTasks = this.taskService().queuedTasksByGroupId(groupId, start, limit);
 		for (Task task : queuedTasks) {
 			TaskModel taskModel = new TaskModel(task);
 			taskModels.add(taskModel);
 		}
 		
-		Long queuedTasksSize = this.taskService().queuedTasksByUserIdSize(userId);
+		Long queuedTasksSize = this.taskService().queuedTasksByGroupIdSize(groupId);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		

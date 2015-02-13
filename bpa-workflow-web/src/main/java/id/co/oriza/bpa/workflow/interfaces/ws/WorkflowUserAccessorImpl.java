@@ -8,10 +8,16 @@ import org.springframework.stereotype.Component;
 public class WorkflowUserAccessorImpl implements WorkflowUserAccessor {
 	
 	private static final String ACTIVE_USER = "kermit";
+	private static final String ACTIVE_USER_GROUP = "sales";
 
 	@Override
 	public String getActiveUser() {
 		return ACTIVE_USER;
+	}
+
+	@Override
+	public String getActiveUserGroup() {
+		return ACTIVE_USER_GROUP;
 	}
 
 }

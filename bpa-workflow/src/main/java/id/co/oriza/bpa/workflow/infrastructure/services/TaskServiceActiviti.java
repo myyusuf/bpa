@@ -3,6 +3,7 @@ package id.co.oriza.bpa.workflow.infrastructure.services;
 
 import id.co.oriza.bpa.workflow.application.TaskService;
 import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
+import id.co.oriza.bpa.workflow.domain.model.Task;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class TaskServiceActiviti implements TaskService {
@@ -154,7 +155,7 @@ public class TaskServiceActiviti implements TaskService {
 		org.activiti.engine.TaskService taskService = processEngine.getTaskService();
 		
 		if(processDefinitionId == null){
-			Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+			org.activiti.engine.task.Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 			processDefinitionId = task.getProcessDefinitionId();
 		}
 		
@@ -194,7 +195,40 @@ public class TaskServiceActiviti implements TaskService {
 	
 	@Override
 	public List<String> getHighLightedActivities(String processInstanceId){
-		return runtimeService.getActiveActivityIds(processInstanceId);
+		
+		List<String> highLightedActivities = new ArrayList<String>();
+		
+		List<HistoricActivityInstance> historicActivityInstances = processEngine.getHistoryService().
+				createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).
+				orderByHistoricActivityInstanceStartTime().asc().list();
+		 
+		for (HistoricActivityInstance hai : historicActivityInstances) {
+			highLightedActivities.add(hai.getActivityId());
+		}
+		
+		List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstanceId);
+		highLightedActivities.addAll(activeActivityIds);
+			
+		return highLightedActivities; 
+	}
+	
+	@Override
+	public List<Task> queuedTasksByGroupId(String groupId, int start, int limit){
+		TaskQuery taskQuery = processEngine.getTaskService().createTaskQuery().taskCandidateGroup(groupId).taskUnassigned().orderByTaskId().asc();
+		List<org.activiti.engine.task.Task> activitiTasks = taskQuery.listPage(start, limit);
+		
+		List<Task> queuedTasks = new ArrayList<Task>();
+		for (org.activiti.engine.task.Task activitiTask : activitiTasks) {
+			Task queuedTask = new Task(activitiTask.getId(), activitiTask.getName(), activitiTask.getProcessDefinitionId(), activitiTask.getProcessInstanceId());
+			queuedTasks.add(queuedTask);
+		}
+		
+		return queuedTasks;
+	}
+
+	@Override
+	public long queuedTasksByGroupIdSize(String groupId) {
+		return processEngine.getTaskService().createTaskQuery().taskCandidateGroup(groupId).taskUnassigned().count();
 	}
 
 

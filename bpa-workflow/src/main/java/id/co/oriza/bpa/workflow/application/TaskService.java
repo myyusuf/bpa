@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workflow.application;
 
 import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
+import id.co.oriza.bpa.workflow.domain.model.Task;
 
 import java.io.InputStream;
 import java.util.List;
@@ -35,5 +36,8 @@ public interface TaskService {
 	InputStream getBpmnResourceAsStreamByProcessDefinitionId(String processDefinitionId);
 
 	List<String> getHighLightedActivities(String processInstanceId);
+
+	List<Task> queuedTasksByGroupId(String groupId, int start, int limit);
+	long queuedTasksByGroupIdSize(String groupId);
 
 }
