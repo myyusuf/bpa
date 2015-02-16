@@ -98,7 +98,7 @@ define(["jQuery", "jqxcore"], function () {
 				_gridContainer.appendTo(container);
 				
             	var queuedComposer = new QueuedComposer(_gridContainer);
-            });_
+            });
 		});
 		
 	};

@@ -35,24 +35,15 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		_options.toolbarButtons = [_addButton];
 		
-		var _simpleListGrid = new SimpleListGrid(container, _options);
-		
-		var _onContextMenuClick = function(commandObject){
-			var _command = commandObject.command;
-			var _rowData = commandObject.rowData;
-			console.log(_command);
-			
-			var _eventName = "";
-			if(_command == "add"){
-				_eventName = "onAddQueued";
-			}else if(_command == "edit"){
-				_eventName = "onEditQueued";
-			}else if(_command == "delete"){
-				_eventName = "onDeleteQueued";
-			}
+		_options.gridContextMenu = $('<div><ul><li data-menukey="claim">Claim</li></ul></div>');
+		_options.gridContextMenu.jqxMenu({width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'metro'});
+		_options.gridContextMenu.on('itemclick', function (event){
+        	
+        	var _menuKey = $(event.target).data("menukey");
+        	var _rowData = _simpleListGrid.getSelectedData();
+        	var _eventName = "onOpenTaskDetail";
 			Observable.prototype.publish.call(_self, _getQueuedFromRowData(_rowData), _eventName);
-		}
-		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
+        });
 		
 		var _getQueuedFromRowData = function(rowData){
         	var _queued = {};
@@ -65,6 +56,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	return _queued;
         }
 		
+		var _simpleListGrid = new SimpleListGrid(container, _options);
+		
         this.refreshGrid = function(){
         	_simpleListGrid.refreshGrid();
         }
@@ -72,7 +65,6 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         this.getComponent = function(){
         	return _simpleListGrid.getComponent();
         }
-        
         
 	}
 	

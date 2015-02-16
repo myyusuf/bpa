@@ -18,9 +18,9 @@ define(["notificationWindow", "view/workflow/task/QueuedList", "view/workflow/ta
 		var _queuedList = new QueuedList(container, _queuedListUrl);
 		
 		QueuedComposer.prototype.buildOnOpenTaskDetail = function(subClassRefQueuedList){
-			var _onOpenTaskDetail = function(){
+			var _onOpenTaskDetail = function(queuedTask){
 				//Consider always new instance
-				var _queuedDetail = new QueuedDetail(container, {});
+				var _queuedDetail = new QueuedDetail(container, {queuedTask: queuedTask});
 				
 				var _OnClaimTask = function(queued){
 					
@@ -45,7 +45,7 @@ define(["notificationWindow", "view/workflow/task/QueuedList", "view/workflow/ta
 			
 			return _onOpenTaskDetail;
 		}
-		_queuedList.subscribe(_self.buildOnEditQueued(_queuedList), "onOpenTaskDetail");
+		_queuedList.subscribe(_self.buildOnOpenTaskDetail(_queuedList), "onOpenTaskDetail");
 		
 		var _sendData = function(data, requestType, onSuccess, onError){
 			$.ajax({

@@ -32,7 +32,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _idLabel = $('<td>Id</td>');
 		_idLabel.appendTo(_newRow);
 		var _idInputColumn = $('<td></td>');
-		var _idInput = $('<span>'+ _queuedTask.id +'</span>');
+		var _idInput = $('<span style="font-weight: bold;">'+ _queuedTask.id +'</span>');
 		_idInput.appendTo(_idInputColumn);
 		_idInputColumn.appendTo(_newRow);
 		
@@ -41,7 +41,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _nameLabel = $('<td>Name</td>');
 		_nameLabel.appendTo(_newRow);
 		var _nameInputColumn = $('<td></td>');
-		var _nameInput = $('<span>'+ _queuedTask.name +'</span>');
+		var _nameInput = $('<span style="font-weight: bold;">'+ _queuedTask.name +'</span>');
 		_nameInput.appendTo(_nameInputColumn);
 		_nameInputColumn.appendTo(_newRow);
 		
@@ -52,7 +52,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		var _saveButtonLabel = $('<td></td>');
 		_saveButtonLabel.appendTo(_newRow);
 		var _buttonColumn = $('<td colspan="2"></td>');
-		var _saveButton = $('<input type="button" value="Assign To Me" style="margin-right: 5px; margin-top: 5px;"/>');
+		var _saveButton = $('<input type="button" value="Claim" style="margin-right: 5px; margin-top: 5px;"/>');
 		_saveButton.appendTo(_buttonColumn);
 		
 		var _cancelButton = $('<input type="button" value="Cancel"/>');
@@ -71,7 +71,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
+            minHeight: 150, minWidth: 200, height: 146, width: 360,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -81,9 +81,6 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         _editWindow.on('close', function (event) { 
         	_editWindow.jqxWindow('destroy');
         });
-        
-        _idInput.jqxInput({ theme: 'metro' });
-        _nameInput.jqxInput({ theme: 'metro' });
         
         _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
         _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
@@ -103,7 +100,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         	
         	_savedData.id = _queuedTask.id;
         	
-        	Observable.prototype.publish.call(_self, _savedData, "onAssignTask");
+        	Observable.prototype.publish.call(_self, _savedData, "onClaimTask");
         }
         
         this.open = function(){
