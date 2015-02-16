@@ -3,10 +3,12 @@ package id.co.oriza.bpa.workflow.infrastructure.services;
 import id.co.oriza.bpa.workflow.application.AdministrationService;
 import id.co.oriza.bpa.workflow.domain.model.ProcessInstance;
 import id.co.oriza.bpa.workflow.domain.model.Task;
+import id.co.oriza.bpa.workflow.domain.model.TaskVariable;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.history.HistoricProcessInstance;
@@ -54,11 +56,20 @@ public class AdministrationServiceActiviti implements AdministrationService {
 		
 		List<Task> processInstanceTasks = new ArrayList<Task>(0);
 		for (HistoricTaskInstance historicTaskInstance : historicTaskInstances) {
+			
+			Map<String, Object> activitiProcessVariables = historicTaskInstance.getProcessVariables();
+			List<TaskVariable> taskVariables = new ArrayList<TaskVariable>(0);
+			for (String activitiProcessVariable : activitiProcessVariables.keySet()) {
+				TaskVariable taskVariable = new TaskVariable(activitiProcessVariable, activitiProcessVariables.get(activitiProcessVariable));
+				taskVariables.add(taskVariable);
+			}
+			
 			Task task = new Task(
 					historicTaskInstance.getId(), 
 					historicTaskInstance.getName(), 
 					historicTaskInstance.getProcessDefinitionId(), 
-					historicTaskInstance.getProcessInstanceId());
+					historicTaskInstance.getProcessInstanceId(),
+					taskVariables);
 			processInstanceTasks.add(task);
 		}
 		return processInstanceTasks;

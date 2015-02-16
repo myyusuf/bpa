@@ -12,13 +12,13 @@ public class TaskVariable extends AssertionConcern implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-	private String value;
+	private Object value;
 
 	protected TaskVariable() {
 		super();
 	}
 
-	public TaskVariable(String name, String value) {
+	public TaskVariable(String name, Object value) {
 		this();
 		this.setName(name);
 		this.setValue(value);
@@ -28,7 +28,7 @@ public class TaskVariable extends AssertionConcern implements Serializable {
 		return name;
 	}
 
-	public String value() {
+	public Object value() {
 		return value;
 	}
 
@@ -36,7 +36,7 @@ public class TaskVariable extends AssertionConcern implements Serializable {
 		this.name = name;
 	}
 
-	protected void setValue(String value) {
+	protected void setValue(Object value) {
 		this.value = value;
 	}
 

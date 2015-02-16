@@ -4,6 +4,7 @@ package id.co.oriza.bpa.workflow.infrastructure.services;
 import id.co.oriza.bpa.workflow.application.TaskService;
 import id.co.oriza.bpa.workflow.domain.model.BpaProcessDefinition;
 import id.co.oriza.bpa.workflow.domain.model.Task;
+import id.co.oriza.bpa.workflow.domain.model.TaskVariable;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -219,7 +220,14 @@ public class TaskServiceActiviti implements TaskService {
 		
 		List<Task> queuedTasks = new ArrayList<Task>();
 		for (org.activiti.engine.task.Task activitiTask : activitiTasks) {
-			Task queuedTask = new Task(activitiTask.getId(), activitiTask.getName(), activitiTask.getProcessDefinitionId(), activitiTask.getProcessInstanceId());
+			Map<String, Object> activitiProcessVariables = activitiTask.getProcessVariables();
+			List<TaskVariable> taskVariables = new ArrayList<TaskVariable>(0);
+			for (String activitiProcessVariable : activitiProcessVariables.keySet()) {
+				TaskVariable taskVariable = new TaskVariable(activitiProcessVariable, activitiProcessVariables.get(activitiProcessVariable));
+				taskVariables.add(taskVariable);
+			}
+			
+			Task queuedTask = new Task(activitiTask.getId(), activitiTask.getName(), activitiTask.getProcessDefinitionId(), activitiTask.getProcessInstanceId(), taskVariables);
 			queuedTasks.add(queuedTask);
 		}
 		

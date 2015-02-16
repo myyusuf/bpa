@@ -21,12 +21,13 @@ public class Task extends AssertionConcern implements Serializable {
 		super();
 	}
 
-	public Task(String id, String name, String processDefinitionId, String processInstanceId) {
+	public Task(String id, String name, String processDefinitionId, String processInstanceId, List<TaskVariable> taskVariables) {
 		this();
 		this.setId(id);
 		this.setName(name);
 		this.setProcessDefinitionId(processDefinitionId);
 		this.setProcessInstanceId(processInstanceId);
+		this.setVariables(taskVariables);
 	}
 
 	public String id() {
@@ -61,11 +62,11 @@ public class Task extends AssertionConcern implements Serializable {
 		this.processDefinitionId = processDefinitionId;
 	}
 
-	public List<TaskVariable> getVariables() {
+	public List<TaskVariable> variables() {
 		return variables;
 	}
 
-	public void setVariables(List<TaskVariable> variables) {
+	protected void setVariables(List<TaskVariable> variables) {
 		this.variables = variables;
 	}
 
