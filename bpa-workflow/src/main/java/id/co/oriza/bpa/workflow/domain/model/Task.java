@@ -3,6 +3,7 @@ package id.co.oriza.bpa.workflow.domain.model;
 import id.co.oriza.bpa.base.domain.model.AssertionConcern;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Task extends AssertionConcern implements Serializable {
 
@@ -14,6 +15,7 @@ public class Task extends AssertionConcern implements Serializable {
 	private String name;
 	private String processDefinitionId;
 	private String processInstanceId;
+	private List<TaskVariable> variables;
 	
 	protected Task() {
 		super();
@@ -57,6 +59,14 @@ public class Task extends AssertionConcern implements Serializable {
 
 	protected void setProcessDefinitionId(String processDefinitionId) {
 		this.processDefinitionId = processDefinitionId;
+	}
+
+	public List<TaskVariable> getVariables() {
+		return variables;
+	}
+
+	public void setVariables(List<TaskVariable> variables) {
+		this.variables = variables;
 	}
 
 }
