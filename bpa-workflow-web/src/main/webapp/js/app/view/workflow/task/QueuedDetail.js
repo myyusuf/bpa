@@ -1,8 +1,12 @@
-define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm) {
+define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
 	
-	var QueuedDetail = function(container, group){
+	var QueuedDetail = function(container, options){
 		
 		var _self = this;
+		
+		var _options = options || {};
+		
+		var _queuedTask = _options.queuedTask || {};
 		
 		var _subscribers = {
 			any:[]
@@ -10,50 +14,105 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		Observable.call(_self, _subscribers);
 		
-		var _options = {};
 		
-		var _isEditForm = false;
-		if(group.id){
-			_isEditForm = true;
-			_options.caption = "Edit Group";
-		}else{
-			_options.caption = "Add New Group";
-		}
-		_options.isEditForm = _isEditForm;
+		var _randomId = BPA.Util.getRandomId("queuedDetail");
+        
+		var _editWindow = $('<div id="queuedDetailWindow"></div>');
+		var _windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Queued Task Detail</span></td></tr></table></div>');
 		
-		_options.formName = "workflowQueuedDetail";
+		var _windowContent = $('<div></div>');
 		
-		_options.formFields = [{name: "id", label: "Id", value: group.id, isKey: true, required: true, maxLength: 30},
-		                       {name: "name", label: "Name", value: group.name, required: true, maxLength: 100}
-		                       ];
+		var _editForm = $('<form></form>');
+		_editForm.appendTo(_windowContent);
+		var _editTable = $('<table class="edit-table"></table>');
+		_editTable.appendTo(_editForm);
 		
-		_options.validationRules = [
-                { fieldName: "id", message: 'Id is required', action: 'keyup, blur', rule: 'required' },
-                { fieldName: "name", message: 'Name is required', action: 'keyup, blur', rule: 'required' }
-               ];
+		var _newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _idLabel = $('<td>Id</td>');
+		_idLabel.appendTo(_newRow);
+		var _idInputColumn = $('<td></td>');
+		var _idInput = $('<span>'+ _queuedTask.id +'</span>');
+		_idInput.appendTo(_idInputColumn);
+		_idInputColumn.appendTo(_newRow);
 		
-		_options.width = 320;
-		_options.height = 145;
-
-		
-		var _simpleEditForm = new SimpleEditForm(container, _options);
-		
-		var _onSaveForm = function(data){
-			if(_isEditForm){
-        		Observable.prototype.publish.call(_self, data, "onSaveGroup");
-        	}else{
-        		Observable.prototype.publish.call(_self, data, "onSaveNewGroup");
-        	}
-		}
-		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _nameLabel = $('<td>Name</td>');
+		_nameLabel.appendTo(_newRow);
+		var _nameInputColumn = $('<td></td>');
+		var _nameInput = $('<span>'+ _queuedTask.name +'</span>');
+		_nameInput.appendTo(_nameInputColumn);
+		_nameInputColumn.appendTo(_newRow);
 		
 		
-		this.open = function(){
-			_simpleEditForm.open();
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		
+		var _saveButtonLabel = $('<td></td>');
+		_saveButtonLabel.appendTo(_newRow);
+		var _buttonColumn = $('<td colspan="2"></td>');
+		var _saveButton = $('<input type="button" value="Assign To Me" style="margin-right: 5px; margin-top: 5px;"/>');
+		_saveButton.appendTo(_buttonColumn);
+		
+		var _cancelButton = $('<input type="button" value="Cancel"/>');
+		_cancelButton.appendTo(_buttonColumn);
+		
+		_buttonColumn.appendTo(_newRow);
+		
+		_windowHeader.appendTo(_editWindow);
+		_windowContent.appendTo(_editWindow);
+        _editWindow.appendTo(container);
+        
+        _editWindow.jqxWindow('resizable', true);
+        _editWindow.jqxWindow('draggable', true);
+        
+        _editWindow.jqxWindow({
+        	autoOpen: false,
+            showCollapseButton: false, 
+            isModal: true,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 270, width: 375,
+            initContent: function () {
+            	_editWindow.jqxWindow('focus');
+            },
+            theme: 'metro'
+        });
+        
+        _editWindow.on('close', function (event) { 
+        	_editWindow.jqxWindow('destroy');
+        });
+        
+        _idInput.jqxInput({ theme: 'metro' });
+        _nameInput.jqxInput({ theme: 'metro' });
+        
+        _saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        _cancelButton.jqxButton({ width: 60, height: 25, theme: 'metro'});
+        
+        _saveButton.click(function(event){
+        	_assignTask();
+		});
+        
+        _cancelButton.click(function(event){
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
+        });
+        
+        var _assignTask = function(){
+        	
+        	var _savedData = {};
+        	
+        	_savedData.id = _queuedTask.id;
+        	
+        	Observable.prototype.publish.call(_self, _savedData, "onAssignTask");
+        }
+        
+        this.open = function(){
+        	_editWindow.jqxWindow('open');
         }
         
         this.close = function(){
-        	_simpleEditForm.close();
+        	_editWindow.jqxWindow('close');
+        	_editWindow.jqxWindow('destroy');
         }
         
 	}
