@@ -45,6 +45,58 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		_nameInput.appendTo(_nameInputColumn);
 		_nameInputColumn.appendTo(_newRow);
 		
+		//-----------------------------------------------
+		
+		
+		var _variableListContainer = $('<div></div>');
+		_variableListContainer.appendTo(container);
+		
+		var _variables = _queuedTask.variables || [];
+		_variables.push({name:'test', value: '123'});
+		
+		var _source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'name', type: 'string' },
+                { name: 'value', type: 'string' }
+            ],
+            id: 'name',
+            localdata: _variables
+        };
+        
+        var _dataAdapter = new $.jqx.dataAdapter(_source);
+		
+		var _variableListGrid = _variableListContainer.jqxGrid(
+		        {
+		            width: '300',
+		            height: '200',
+		            source: _dataAdapter,                
+		            autoheight: false,
+		            sortable: true,
+		            altrows: true,
+		            enabletooltips: true,
+		            editable: false,
+		            selectionmode: 'singlerow',
+		            columns: [
+		              { text: 'Id', datafield: 'id', width: '50%' },
+		              { text: 'Name', datafield: 'name', width: '50%' }
+		            ],
+		        	theme: 'metro',
+		            showtoolbar: false
+		        });
+		
+		
+		_newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		var _variableLabel = $('<td>Variables</td>');
+		_variableLabel.appendTo(_newRow);
+		var _variableInputColumn = $('<td></td>');
+		_variableInputColumn.appendTo(_newRow);
+		_variableListGrid.appendTo(_variableInputColumn);
+		
+		//-----------------------------------------------
+		
 		
 		_newRow = $('<tr></tr>');
 		_newRow.appendTo(_editTable);

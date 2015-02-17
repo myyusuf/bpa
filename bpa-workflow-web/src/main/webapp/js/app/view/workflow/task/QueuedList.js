@@ -52,6 +52,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	if(rowData){
         		_queued.id = rowData.id;
             	_queued.name = rowData.name;
+            	_queued.variables = rowData.variables;
         	}
         	
         	return _queued;

@@ -37,7 +37,7 @@ define(["notificationWindow", "view/workflow/task/QueuedList", "view/workflow/ta
 							content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
 					}
 					
-					_sendData(queued, _requestType, _onSuccess, _onError);
+					_sendData(BPA.Constant.workflow.task.queuedsClaimUrl, queued, _requestType, _onSuccess, _onError);
 				}
 				_queuedDetail.subscribe(_OnClaimTask, "onClaimTask");
 				_queuedDetail.open();
@@ -47,9 +47,9 @@ define(["notificationWindow", "view/workflow/task/QueuedList", "view/workflow/ta
 		}
 		_queuedList.subscribe(_self.buildOnOpenTaskDetail(_queuedList), "onOpenTaskDetail");
 		
-		var _sendData = function(data, requestType, onSuccess, onError){
+		var _sendData = function(url, data, requestType, onSuccess, onError){
 			$.ajax({
-			    url: _queuedListUrl,
+			    url: url,
 			    type: requestType,
 			    data: JSON.stringify(data),
 			    beforeSend: function(xhr) {
