@@ -16,7 +16,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		_options.dataFields = [
 		                       { name: 'id', type: 'string' },
-		                       { name: 'name', type: 'string' }
+		                       { name: 'name', type: 'string' },
+		                       { name: 'variables' }
 		                   ];
 		_options.dataFieldId = "id";
 		
