@@ -238,6 +238,15 @@ public class TaskServiceActiviti implements TaskService {
 	public long queuedTasksByGroupIdSize(String groupId) {
 		return processEngine.getTaskService().createTaskQuery().taskCandidateGroup(groupId).taskUnassigned().count();
 	}
+	
+	@Override
+	public void claimTask(String userId, String taskId) {
+		
+		IdentityService identityService = processEngine.getIdentityService();
+		identityService.setAuthenticatedUserId(userId);
+		org.activiti.engine.TaskService taskService = processEngine.getTaskService();
+		taskService.claim(taskId, userId);
+	}
 
 
 }

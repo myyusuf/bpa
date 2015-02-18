@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workflow.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.workflow.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.workflow.application.TaskService;
 import id.co.oriza.bpa.workflow.application.WorkflowUserAccessor;
 import id.co.oriza.bpa.workflow.domain.model.Task;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,6 +59,26 @@ public class TaskController extends CommonController{
 		
 		result.put("num", queuedTasksSize);
 		result.put("data", taskModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/task/queueds/claim", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> claimTask(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("claimTask");
+		
+		printParams(params);
+		
+		String userId = workflowUserAccessor.getActiveUser();
+		
+		String taskId = (String) params.get("id");
+		
+		taskService.claimTask(userId, taskId);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("success", true);
 		
 		return result;

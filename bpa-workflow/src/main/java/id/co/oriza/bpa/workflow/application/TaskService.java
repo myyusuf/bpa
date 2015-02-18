@@ -40,4 +40,6 @@ public interface TaskService {
 	List<Task> queuedTasksByGroupId(String groupId, int start, int limit);
 	long queuedTasksByGroupIdSize(String groupId);
 
+	void claimTask(String userId, String taskId);
+
 }
