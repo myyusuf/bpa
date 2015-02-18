@@ -79,8 +79,8 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
 		            editable: false,
 		            selectionmode: 'singlerow',
 		            columns: [
-		              { text: 'Id', datafield: 'id', width: '50%' },
-		              { text: 'Name', datafield: 'name', width: '50%' }
+		              { text: 'Name', datafield: 'name', width: '50%' },
+		              { text: 'Value', datafield: 'value', width: '50%' }
 		            ],
 		        	theme: 'metro',
 		            showtoolbar: false
