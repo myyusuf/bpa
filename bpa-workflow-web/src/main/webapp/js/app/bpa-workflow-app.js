@@ -53,6 +53,10 @@
                 		$.publish("viewQueuedTaskListMenuEvent", {name: "queued task"});
                 	});
                 	
+                	$("#inboxTaskListMenu").click(function(){
+                		$.publish("viewInboxTaskListMenuEvent", {name: "inbox task"});
+                	});
+                	
                 }
                 
                 registerMenu();

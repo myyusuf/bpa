@@ -247,6 +247,39 @@ public class TaskServiceActiviti implements TaskService {
 		org.activiti.engine.TaskService taskService = processEngine.getTaskService();
 		taskService.claim(taskId, userId);
 	}
+	
+	@Override
+	public void completeTask(String taskId, Map<String, Object> params) {
+		org.activiti.engine.TaskService taskService = processEngine.getTaskService();
+		taskService.complete(taskId, params);
+		
+	}
+
+	@Override
+	public List<Task> inboxTasksByUserId(String userId, int start, int limit) {
+		TaskQuery taskQuery = processEngine.getTaskService().createTaskQuery().taskAssignee(userId).orderByTaskId().asc();
+		List<org.activiti.engine.task.Task> activitiTasks = taskQuery.listPage(start, limit);
+		
+		List<Task> inboxTasks = new ArrayList<Task>();
+		for (org.activiti.engine.task.Task activitiTask : activitiTasks) {
+			Map<String, Object> activitiProcessVariables = activitiTask.getProcessVariables();
+			List<TaskVariable> taskVariables = new ArrayList<TaskVariable>(0);
+			for (String activitiProcessVariable : activitiProcessVariables.keySet()) {
+				TaskVariable taskVariable = new TaskVariable(activitiProcessVariable, activitiProcessVariables.get(activitiProcessVariable));
+				taskVariables.add(taskVariable);
+			}
+			
+			Task inboxTask = new Task(activitiTask.getId(), activitiTask.getName(), activitiTask.getProcessDefinitionId(), activitiTask.getProcessInstanceId(), taskVariables);
+			inboxTasks.add(inboxTask);
+		}
+		
+		return inboxTasks;
+	}
+
+	@Override
+	public long inboxTasksByUserIdSize(String userId) {
+		return processEngine.getTaskService().createTaskQuery().taskAssignee(userId).count();
+	}
 
 
 }

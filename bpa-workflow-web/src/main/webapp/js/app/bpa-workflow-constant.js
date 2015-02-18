@@ -16,7 +16,9 @@ BPA.Constant.workflow = {
 	},
 	task: {
 		queuedsUrl : 'service/workflow/task/queueds',
-		queuedsClaimUrl : 'service/workflow/task/queueds/claim'
+		queuedsClaimUrl : 'service/workflow/task/queueds/claim',
+		inboxesUrl : 'service/workflow/task/inboxes',
+		inboxesCompleteUrl : 'service/workflow/task/inboxes/complete'
 	},
 	tasksUrl : 'service/workflow/tasks'
 };

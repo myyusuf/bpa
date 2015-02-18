@@ -101,6 +101,20 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewInboxTaskListMenuEvent", function(e, data){
+			var _gridContainer = $('<div></div>');
+			
+			require(['./composer/workflow/task/InboxComposer'], function (InboxComposer) {
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				_gridContainer.appendTo(container);
+				
+            	var inboxComposer = new InboxComposer(_gridContainer);
+            });
+		});
+		
 	};
 	
 	return WorkspaceWorkflow;

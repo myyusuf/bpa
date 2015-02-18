@@ -42,4 +42,9 @@ public interface TaskService {
 
 	void claimTask(String userId, String taskId);
 
+	List<Task> inboxTasksByUserId(String userId, int start, int limit);
+	long inboxTasksByUserIdSize(String userId);
+	
+	void completeTask(String taskId, Map<String, Object> params);
+
 }

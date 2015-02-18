@@ -83,6 +83,53 @@ public class TaskController extends CommonController{
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/workflow/task/inboxes", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> allInboxTasks(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		printParamsString(params);
+		
+		List<TaskModel> taskModels = new ArrayList<TaskModel>();
+		
+		String userId = workflowUserAccessor.getActiveUser();
+		
+		Collection<Task> inboxTasks = this.taskService().inboxTasksByUserId(userId, start, limit);
+		for (Task task : inboxTasks) {
+			TaskModel taskModel = new TaskModel(task);
+			taskModels.add(taskModel);
+		}
+		
+		Long inboxTasksSize = this.taskService().inboxTasksByUserIdSize(userId);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", inboxTasksSize);
+		result.put("data", taskModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workflow/task/inboxes/complete", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> completeTask(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("completeTask");
+		
+		printParams(params);
+		
+		String taskId = (String) params.get("id");
+		
+		taskService.completeTask(taskId, new HashMap<String, Object>());
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
 
 	public TaskService taskService() {
 		return taskService;
