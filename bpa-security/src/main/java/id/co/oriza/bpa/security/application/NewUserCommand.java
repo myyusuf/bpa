@@ -4,60 +4,70 @@ import java.util.List;
 
 public class NewUserCommand {
 
-	private String username;
+	private String id;
+	private String password;
 	private String firstName;
 	private String lastName;
-	private String description;
-	private List<String> roleCodes;
+	private String email;
+	private List<String> groupIds;
 
-	public NewUserCommand(String username, String firstName, String lastName,
-			String description, List<String> roleCodes) {
+	public NewUserCommand(String id, String password, String firstName,
+			String lastName, String email, List<String> groupIds) {
 		super();
-		this.username = username;
+		this.id = id;
+		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.description = description;
-		this.roleCodes = roleCodes;
+		this.email = email;
+		this.groupIds = groupIds;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getId() {
+		return id;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public String getPassword() {
+		return password;
 	}
 
 	public String getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
 	public String getLastName() {
 		return lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	public String getDescription() {
-		return description;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public List<String> getGroupIds() {
+		return groupIds;
 	}
 
-	public List<String> getRoleCodes() {
-		return roleCodes;
-	}
-
-	public void setRoleCodes(List<String> roleCodes) {
-		this.roleCodes = roleCodes;
+	public void setGroupIds(List<String> groupIds) {
+		this.groupIds = groupIds;
 	}
 
 }

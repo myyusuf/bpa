@@ -1,10 +1,10 @@
 package id.co.oriza.bpa.security.application;
 
-public class RemoveUserCommand {
+public class RemoveGroupCommand {
 
 	private String id;
 
-	public RemoveUserCommand(String id) {
+	public RemoveGroupCommand(String id) {
 		super();
 		this.id = id;
 	}

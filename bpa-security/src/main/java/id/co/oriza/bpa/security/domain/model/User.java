@@ -1,172 +1,142 @@
 package id.co.oriza.bpa.security.domain.model;
 
+import id.co.oriza.bpa.base.domain.model.AssertionConcern;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
-
-public class User extends ConcurrencySafeEntity {
+public class User extends AssertionConcern implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String username;
-	private String password;
+	private String id;
 	private String firstName;
 	private String lastName;
-	private String description;
-	
-	private ContactInformation contactInformation;
-	
-	private Set<Role> roles;
+	private String email;
+	private String password;
 
-	public String username() {
-		return username;
-	}
+	private Set<Group> groups;
 
-	protected void setUsername(String aUsername) {
-		this.username = aUsername;
-	}
-
-	protected void setPassword(String aPassword) {
-		this.password = aPassword;
-	}
-	
-	protected User(){
-		super();
-		this.setRoles(new HashSet<Role>(0));
-	}
-
-	public User(String aUsername, String aPassword, String aFirstName,
-			String aLastName, String aDescription,
-			ContactInformation aContactInformation, Set<Role> aRoles) {
+	public User(String id, String firstName, String lastName, String email,
+			String password) {
 		this();
-		this.setUsername(aUsername);
-		this.protectPassword("", aPassword);
-		this.setFirstName(aFirstName);
-		this.setLastName(aLastName);
-		this.setDescription(aDescription);
-		this.roles().addAll(aRoles);
+		this.setId(id);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setEmail(email);
+		this.setPassword(password);
 	}
-	
-	public void changePassword(String aCurrentPassword, String aChangedPassword) {
-        this.assertArgumentNotEmpty(
-                aCurrentPassword,
-                "Current and new password must be provided.");
 
-        this.assertArgumentEquals(
-                this.password(),
-                this.asEncryptedValue(aCurrentPassword),
-                "Current password not confirmed.");
+	protected User() {
+		super();
+		this.setGroups(new HashSet<Group>(0));
+	}
 
-        this.protectPassword(aCurrentPassword, aChangedPassword);
+	public String id() {
+		return id;
+	}
 
-    }
+	protected void setId(String id) {
+		this.assertArgumentNotEmpty(id, "Id is required");
+		this.id = id;
+	}
 
 	public String firstName() {
 		return firstName;
 	}
 
-	protected void setFirstName(String aFirstName) {
-		this.firstName = aFirstName;
+	protected void setFirstName(String firstName) {
+		this.assertArgumentNotEmpty(firstName, "First Name is required");
+		this.firstName = firstName;
+	}
+
+	public void changeFirstName(String firstName) {
+		this.setFirstName(firstName);
 	}
 
 	public String lastName() {
 		return lastName;
 	}
 
-	protected void setLastName(String aLastName) {
-		this.lastName = aLastName;
+	protected void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public String description() {
-		return description;
+	public void changeLastName(String lastName) {
+		this.setLastName(lastName);
 	}
 
-	protected void setDescription(String aDescription) {
-		this.description = aDescription;
+	public String email() {
+		return email;
 	}
 
-	public ContactInformation contactInformation() {
-		return contactInformation;
+	protected void setEmail(String email) {
+		this.assertArgumentNotEmpty(email, "Email is required");
+		this.email = email;
 	}
 
-	protected void setContactInformation(ContactInformation aContactInformation) {
-		this.contactInformation = aContactInformation;
+	public void changeEmail(String email) {
+		this.setEmail(email);
 	}
-	
-	protected void protectPassword(String aCurrentPassword, String aChangedPassword) {
-        this.assertPasswordsNotSame(aCurrentPassword, aChangedPassword);
 
-        this.assertPasswordNotWeak(aChangedPassword);
-
-        this.assertUsernamePasswordNotSame(aChangedPassword);
-
-        this.setPassword(this.asEncryptedValue(aChangedPassword));
-    }
-	
-	protected void assertPasswordsNotSame(String aCurrentPassword, String aChangedPassword) {
-        this.assertArgumentNotEquals(
-                aCurrentPassword,
-                aChangedPassword,
-                "The password is unchanged.");
-    }
-
-    protected void assertPasswordNotWeak(String aPlainTextPassword) {
-        this.assertArgumentFalse(
-                DomainRegistry.passwordService().isWeak(aPlainTextPassword),
-                "The password must be stronger.");
-    }
-
-    protected void assertUsernamePasswordNotSame(String aPlainTextPassword) {
-        this.assertArgumentNotEquals(
-                this.username(),
-                aPlainTextPassword,
-                "The username and password must not be the same.");
-    }
-
-	protected String asEncryptedValue(String aPlainTextPassword) {
-        String encryptedValue =
-            DomainRegistry
-                .encryptionService()
-                .encryptedValue(aPlainTextPassword);
-
-        return encryptedValue;
-    }
-
-	protected String password() {
+	public String password() {
 		return password;
 	}
+
+	protected void setPassword(String password) {
+		this.assertArgumentNotEmpty(password, "Password is required");
+		this.password = password;
+	}
+
+	public Set<Group> groups() {
+		return groups;
+	}
+
+	protected void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
 	
-	public void changeContactInformation(ContactInformation aContactInformation) {
-		this.setContactInformation(aContactInformation);
+	public void addGroup(Group aGroup){
+		this.assertArgumentNotNull(aGroup, "Group must not be null");
+		if(this.groups().add(aGroup)){
+			//Domain Event
+		}
 	}
 	
-	public void changeFirstName(String aFirstName) {
-		this.setFirstName(aFirstName);
+	public void addGroups(Set<Group> aGroups){
+		this.assertArgumentNotNull(aGroups, "Groups must not be null");
+		if(this.groups().addAll(aGroups)){
+			//Domain Event
+		}
 	}
 
-	public void changeLastName(String aLastName) {
-		this.setLastName(aLastName);
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
-	public void changeDescription(String aDescription) {
-		this.setDescription(aDescription);
-	}
-
-	public Set<Role> roles() {
-		return roles;
-	}
-
-	protected void setRoles(Set<Role> aRoles) {
-		this.roles = aRoles;
-	}
-
-	public void changeRoles(Set<Role> aRoles) {
-		this.roles().clear();
-		this.roles().addAll(aRoles);
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }
