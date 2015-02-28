@@ -33,7 +33,7 @@ public class IdentityApplicationService {
 	}
 	
 	public void changeUserInfo(ChangeUserInfoCommand aCommand) {
-		User user = this.userRepository().existingUser(aCommand.getUserId());
+		User user = this.userRepository().userWithUserId(aCommand.getUserId());
 		user.changeFirstName(aCommand.getFirstName());
 		user.changeLastName(aCommand.getLastName());
 		user.changeEmail(aCommand.getEmail());
@@ -41,7 +41,7 @@ public class IdentityApplicationService {
 	}
 	
 	public void removeUser(RemoveUserCommand aCommand) {
-		User user = this.userRepository().existingUser(aCommand.getUserId());
+		User user = this.userRepository().userWithUserId(aCommand.getUserId());
 		this.userRepository().remove(user);
 	}
 	
