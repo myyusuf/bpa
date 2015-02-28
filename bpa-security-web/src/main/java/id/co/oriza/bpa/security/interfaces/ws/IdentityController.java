@@ -39,7 +39,7 @@ public class IdentityController extends CommonController{
 	@Autowired
 	private IdentityApplicationService identityService;
 	
-	@RequestMapping(value="/security/identity/users", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/security/users", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allUsers(@RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
@@ -65,7 +65,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/users", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/security/users", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createUser(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("createUser");
@@ -97,7 +97,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/users", method=RequestMethod.PUT, produces="application/json")
+	@RequestMapping(value="/security/users", method=RequestMethod.PUT, produces="application/json")
 	public Map<String, Object> changeUserInfo(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("changeUserInfo");
@@ -128,7 +128,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/users", method=RequestMethod.DELETE, produces="application/json")
+	@RequestMapping(value="/security/users", method=RequestMethod.DELETE, produces="application/json")
 	public Map<String, Object> removeUser(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("removeUser");
@@ -144,7 +144,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/users/{id}/groups", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/security/users/{id}/groups", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allUserGroups(@PathVariable String id, @RequestParam(required=false) Map<String, String> params){
 		
 		printParamsString(params);
@@ -165,7 +165,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/groups", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/security/groups", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allGroups(@RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
@@ -191,7 +191,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/groups", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/security/groups", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createGroup(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("createGroup");
@@ -211,7 +211,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/groups", method=RequestMethod.PUT, produces="application/json")
+	@RequestMapping(value="/security/groups", method=RequestMethod.PUT, produces="application/json")
 	public Map<String, Object> changeGroupName(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("changeGroupName");
@@ -231,7 +231,7 @@ public class IdentityController extends CommonController{
 		return result;
 	}
 	
-	@RequestMapping(value="/security/identity/groups", method=RequestMethod.DELETE, produces="application/json")
+	@RequestMapping(value="/security/groups", method=RequestMethod.DELETE, produces="application/json")
 	public Map<String, Object> removeGroup(@RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("removeGroup");

@@ -33,7 +33,6 @@
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
-        "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
         
         "notificationWindow": "../app/component/base/NotificationWindow",
         "bpaObservable": "../app/component/base/Observable"
@@ -164,8 +163,6 @@
         }
     },
     packages: [
-           { name: "dojo", location: "../dojo/dojo" },
-           { name: "dojox", location: "../dojo/dojox"},
       ]
 });
 require(["bpa-workflow-app"], function (App) {
