@@ -15,20 +15,21 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		Observable.call(_self, _subscribers);
 		
 		_options.dataFields = [
-		                       { name: 'id', type: 'string' },
+		                       { name: 'userId', type: 'string' },
 		                       { name: 'password', type: 'string' },
 		                       { name: 'firstName', type: 'string' },
 		                       { name: 'lastName', type: 'string' },
 		                       { name: 'email', type: 'string' }
 		                   ];
-		_options.dataFieldId = "id";
+		_options.dataFieldId = "userId";
 		
 		_options.url = BPA.Constant.workflow.usersUrl;
 		
 		_options.columns = [
-		                   { text: 'First Name', datafield: 'firstName', width: '33.3%' },
-		                   { text: 'Last Name', datafield: 'lastName', width: '33.3%' },
-		                   { text: 'Email', datafield: 'email', width: '33.3%' },
+		                   { text: 'UserId', datafield: 'userId', width: '25%' },
+		                   { text: 'First Name', datafield: 'firstName', width: '25%' },
+		                   { text: 'Last Name', datafield: 'lastName', width: '25%' },
+		                   { text: 'Email', datafield: 'email', width: '25%' },
 		                 ];
 		
 		var _addButton = $('<div style="margin-left: 2px;">New User</div>');
@@ -62,7 +63,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	var _user = {};
         	
         	if(rowData){
-        		_user.id = rowData.id;
+        		_user.userId = rowData.userId;
             	_user.firstName = rowData.firstName;
             	_user.lastName = rowData.lastName;
             	_user.email = rowData.email;

@@ -33,10 +33,10 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
         {
             datatype: "json",
             datafields: [
-                { name: 'id', type: 'string' },
+                { name: 'code', type: 'string' },
                 { name: 'name', type: 'string' }
             ],
-            id: 'id',
+            id: 'code',
             localdata: _groups
         };
         
@@ -120,6 +120,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		        });
 		
 		_options.formFields = [
+		                       {name: "userId", label: "UserId", value: user.lastName, required: true, maxLength: 30},
 		                       {name: "password", label: "Password", value: user.lastName, type: 'password', required: true, maxLength: 100},
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
@@ -128,7 +129,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		                       ];
 		
 		_options.validationRules = [
-                
+		        { fieldName: "userId", message: 'UserId is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "password", message: 'Password is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "firstName", message: 'First Name is required', action: 'keyup, blur', rule: 'required' },
                 { fieldName: "email", message: 'Email is required', action: 'keyup, blur', rule: 'required' },
