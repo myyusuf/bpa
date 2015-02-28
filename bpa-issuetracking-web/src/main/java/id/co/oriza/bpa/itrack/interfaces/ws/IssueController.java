@@ -1,16 +1,15 @@
 package id.co.oriza.bpa.itrack.interfaces.ws;
 
+import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.itrack.application.IssueApplicationService;
+import id.co.oriza.bpa.itrack.domain.model.Issue;
+import id.co.oriza.bpa.itrack.interfaces.ws.pm.IssuePresentationModel;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import id.co.oriza.bpa.base.interfaces.ws.CommonController;
-import id.co.oriza.bpa.itrack.domain.model.Issue;
-import id.co.oriza.bpa.itrack.interfaces.ws.pm.IssuePresentationModel;
-import id.co.oriza.bpa.workflow.domain.model.User;
-import id.co.oriza.bpa.workflow.interfaces.ws.pm.UserPresentationModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ public class IssueController extends CommonController{
 	final Logger logger = LoggerFactory.getLogger(IssueController.class);
 	
 	@Autowired
-	private IssueService issueService;
+	private IssueApplicationService issueService;
 	
 	@RequestMapping(value="/issuetracking/issues", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allIssues(@RequestParam(required=false) Map<String, String> params){
@@ -43,7 +42,7 @@ public class IssueController extends CommonController{
 			issueModels.add(issueModel);
 		}
 		
-		Long issuesSize = this.issueService().allIssuesSize();
+		Long issuesSize = 1l;//this.issueService().allIssuesSize();
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
@@ -52,6 +51,10 @@ public class IssueController extends CommonController{
 		result.put("success", true);
 		
 		return result;
+	}
+
+	public IssueApplicationService issueService() {
+		return issueService;
 	}
 
 }
