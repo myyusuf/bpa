@@ -23,7 +23,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		                   ];
 		_options.dataFieldId = "userId";
 		
-		_options.url = BPA.Constant.workflow.usersUrl;
+		_options.url = BPA.Constant.security.usersUrl;
 		
 		_options.columns = [
 		                   { text: 'UserId', datafield: 'userId', width: '25%' },

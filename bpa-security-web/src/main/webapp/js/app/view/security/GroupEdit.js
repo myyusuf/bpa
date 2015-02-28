@@ -33,8 +33,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                 { fieldName: "name", message: 'Name is required', action: 'keyup, blur', rule: 'required' }
                ];
 		
-		_options.width = 320;
-		_options.height = 145;
+		_options.width = 348;
+		_options.height = 177;
 
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
