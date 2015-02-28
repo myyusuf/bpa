@@ -17,7 +17,7 @@ public class User extends ConcurrencySafeEntity {
 	private String lastName;
 	private String email;
 	private String password;
-
+	
 	private Set<Group> groups;
 
 	public User(String userId, String firstName, String lastName, String email,
@@ -81,13 +81,13 @@ public class User extends ConcurrencySafeEntity {
 		this.assertArgumentNotEmpty(password, "Password is required");
 		this.password = password;
 	}
-
-	public Set<Group> groups() {
-		return groups;
+	
+	public String userId() {
+		return userId;
 	}
 
-	protected void setGroups(Set<Group> groups) {
-		this.groups = groups;
+	protected void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	public void addGroup(Group aGroup){
@@ -104,12 +104,12 @@ public class User extends ConcurrencySafeEntity {
 		}
 	}
 
-	public String userId() {
-		return userId;
+	public Set<Group> groups() {
+		return groups;
 	}
 
-	protected void setUserId(String userId) {
-		this.userId = userId;
+	protected void setGroups(Set<Group> groups) {
+		this.groups = groups;
 	}
 
 }

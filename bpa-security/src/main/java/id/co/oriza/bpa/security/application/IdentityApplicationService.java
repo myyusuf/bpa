@@ -5,6 +5,7 @@ import id.co.oriza.bpa.security.domain.model.GroupRepository;
 import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.domain.model.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,10 @@ public class IdentityApplicationService {
 	}
 	
 	public List<Group> allUserGroups(final String userId) {
-		List<Group> groups = this.groupRepository().allGroupsWithUser(userId);
-		return groups;
+		User user = this.userRepository().userWithUserId(userId);
+		List<Group> result = new ArrayList<Group>(0);
+		result.addAll(user.groups());
+		return result;
 	}
 	
 	public List<Group> allGroups(int start, int limit) {
@@ -70,7 +73,8 @@ public class IdentityApplicationService {
 	}
 
 	public void removeGroup(RemoveGroupCommand aCommand) {
-		this.groupRepository().remove(aCommand.getCode());
+		Group group = this.groupRepository().existingGroup(aCommand.getCode());
+		this.groupRepository().remove(group);
 	}
 
 	public UserRepository userRepository() {

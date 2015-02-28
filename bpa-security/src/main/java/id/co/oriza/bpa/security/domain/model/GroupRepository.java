@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface GroupRepository {
 
-	List<Group> allGroupsWithUser(String userId);
-
 	List<Group> all(int start, int limit);
 
 	void add(Group group);
@@ -14,6 +12,6 @@ public interface GroupRepository {
 
 	Group existingGroup(String code);
 
-	void remove(String code);
+	void remove(Group group);
 
 }

@@ -12,7 +12,7 @@ public class Group extends ConcurrencySafeEntity {
 	private String code;
 	private String name;
 	private String description;
-
+	
 	protected Group() {
 		super();
 	}

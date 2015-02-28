@@ -1,46 +1,53 @@
 package id.co.oriza.bpa.security.infrastructure.persistence;
 
-import java.util.List;
-
 import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
 import id.co.oriza.bpa.security.domain.model.Group;
 import id.co.oriza.bpa.security.domain.model.GroupRepository;
 
+import java.util.List;
+
+import javax.validation.ConstraintViolationException;
+
+import org.hibernate.Query;
+
 public class HibernateGroupRepository extends AbstractHibernateSession implements GroupRepository{
 
-	@Override
-	public List<Group> allGroupsWithUser(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> all(int start, int limit) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = this.session().createQuery("from id.co.oriza.bpa.security.domain.model.Group as _obj_ ");
+		query.setFirstResult(start);
+		query.setMaxResults(limit);
+		return query.list();
 	}
 
 	@Override
 	public void add(Group group) {
-		// TODO Auto-generated method stub
+		try{
+			this.session().saveOrUpdate(group);
+		}catch(ConstraintViolationException e){
+			throw new IllegalStateException("Group is not unique.", e);
+		}
 		
 	}
 
 	@Override
 	public long allSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		Query query = this.session().createQuery("select count(_obj_) from id.co.oriza.bpa.security.domain.model.Group as _obj_ ");
+		return ((Long)query.uniqueResult()).intValue();
 	}
 
 	@Override
 	public Group existingGroup(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = this.session().createQuery("from id.co.oriza.bpa.security.domain.model.Group as _obj_ "
+				+ "where _obj_.code = :code ");
+		query.setString("code", code);
+		return (Group) query.uniqueResult();
 	}
 
 	@Override
-	public void remove(String code) {
-		// TODO Auto-generated method stub
+	public void remove(Group group) {
+		this.session().delete(group);
 		
 	}
 
