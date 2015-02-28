@@ -3,6 +3,7 @@
 
 <hibernate-configuration>
 	<session-factory>
-		<mapping resource="id/co/oriza/bpa/itrack/domain/model/Issue.hbm.xml" />
+		<mapping resource="id/co/oriza/bpa/security/domain/model/User.hbm.xml" />
+		<mapping resource="id/co/oriza/bpa/security/domain/model/Group.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

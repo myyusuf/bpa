@@ -13,5 +13,9 @@
 		<property name="firstName" column="FIRST_NAME" type="java.lang.String" />
 		<property name="lastName" column="LAST_NAME" type="java.lang.String" />
 		<property name="email" column="EMAIL" type="java.lang.String" />
+		<set name="groups">
+            <key column="group_id" not-null="true" />
+            <one-to-many class="id.co.oriza.bpa.security.domain.model.Group" />
+        </set>
 	</class> 
 </hibernate-mapping>
