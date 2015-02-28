@@ -1,14 +1,12 @@
-define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
-        ], function (Observable) {
+        ], function (Observable, SimpleListGrid) {
 	
-	var RoleList = function(container, options){
+	var GroupList = function(container, url){
 		
 		var _self = this;
 		
-		var _options = options || {};
-		
-		var _url = BPA.Constant.security.rolesUrl;
+		var _options = {};
 		
 		var _subscribers = {
 			any:[]
@@ -16,15 +14,65 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 		
 		Observable.call(_self, _subscribers);
 		
-        var _source =
+		_options.dataFields = [
+		                       { name: 'id', type: 'string' },
+		                       { name: 'name', type: 'string' }
+		                   ];
+		_options.dataFieldId = "id";
+		
+		_options.url = url || BPA.Constant.workflow.identity.groupsUrl;
+		
+		_options.columns = [
+		                   { text: 'Id', datafield: 'id', width: '50%' },
+		                   { text: 'Name', datafield: 'name', width: '50%' }
+		                 ];
+		
+		var _addButton = $('<div style="margin-left: 2px;">New Group</div>');
+		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+		_addButton.click(function(event){
+			Observable.prototype.publish.call(_self, {}, "onAddGroup");
+        });
+		
+		_options.toolbarButtons = [_addButton];
+		
+		var _simpleListGrid = new SimpleListGrid(container, _options);
+		
+		var _onContextMenuClick = function(commandObject){
+			var _command = commandObject.command;
+			var _rowData = commandObject.rowData;
+			console.log(_command);
+			
+			var _eventName = "";
+			if(_command == "add"){
+				_eventName = "onAddGroup";
+			}else if(_command == "edit"){
+				_eventName = "onEditGroup";
+			}else if(_command == "delete"){
+				_eventName = "onDeleteGroup";
+			}
+			Observable.prototype.publish.call(_self, _getGroupFromRowData(_rowData), _eventName);
+		}
+		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
+		
+		var _getGroupFromRowData = function(rowData){
+        	var _group = {};
+        	
+        	if(rowData){
+        		_group.id = rowData.id;
+            	_group.name = rowData.name;
+        	}
+        	
+        	return _group;
+        }
+		
+        /*var _source =
         {
             datatype: "json",
             datafields: [
-                { name: 'code', type: 'string' },
-                { name: 'name', type: 'string' },
-                { name: 'description', type: 'string' }
+                { name: 'id', type: 'string' },
+                { name: 'name', type: 'string' }
             ],
-            id: 'code',
+            id: 'id',
             beforeprocessing: function (data) {
                 _source.totalrecords = data.num;
             },
@@ -39,9 +87,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             	
             },
             loadError: function (xhr, status, error) { }
-        });
+        });*/
         
-        var _roleListGrid = container.jqxGrid(
+        /*var _groupListGrid = container.jqxGrid(
         {
             width: '100%',
             height: '100%',
@@ -54,9 +102,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-              { text: 'Code', datafield: 'code', width: '33.3%' },
-              { text: 'Name', datafield: 'name', width: '33.3%' },
-              { text: 'Description', datafield: 'description', width: '33.3%' }
+              { text: 'Id', datafield: 'id', width: '25%' },
+              { text: 'Name', datafield: 'name', width: '25%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],
@@ -78,7 +125,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         		_newRow.appendTo(_searchTable);
         		var _newColumn = $('<td></td>');
         		_newColumn.appendTo(_newRow);
-        		var _addButton = $('<div style="margin-left: 2px;">New Role</div>');
+        		var _addButton = $('<div style="margin-left: 2px;">New Group</div>');
         		_addButton.appendTo(_newColumn);
         		
                 toolbar.append(_searchContainer);
@@ -91,9 +138,9 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             },
         });
         
-        _roleListGrid.on('rowdoubleclick', function (event){ 
+        _groupListGrid.on('rowdoubleclick', function (event){ 
         	var _args = event.args, _rowindex = _args.rowindex;
-        	var _rowData = _roleListGrid.jqxGrid('getrowdata', _rowindex);
+        	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowindex);
             _showEditPage(_rowData);
         });
         
@@ -105,8 +152,8 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	
         	var _rowData = "";
         	
-        	var _rowIndex = _roleListGrid.jqxGrid('getselectedrowindex');
-        	var _rowData = _roleListGrid.jqxGrid('getrowdata', _rowIndex);
+        	var _rowIndex = _groupListGrid.jqxGrid('getselectedrowindex');
+        	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
         	
 	 		if("add" == _menuKey){
 	 			_showEditPage();
@@ -117,14 +164,14 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
 	 		}
         });
         
-        _roleListGrid.on('rowclick', function (event) {
+        _groupListGrid.on('rowclick', function (event) {
         	
         	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
         	
         	var _rightClick = _isRightClick(_clickEvent);
             if (_rightClick) {
-            	if(_roleListGrid.jqxGrid('getselectedrowindex') === -1){
-            		_roleListGrid.jqxGrid('selectrow', _rowIndex);
+            	if(_groupListGrid.jqxGrid('getselectedrowindex') === -1){
+            		_groupListGrid.jqxGrid('selectrow', _rowIndex);
             	}
             	
                 var _scrollTop = $(window).scrollTop();
@@ -136,47 +183,43 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             }
         });
         
-        _roleListGrid.on('contextmenu', function (e) {
+        _groupListGrid.on('contextmenu', function (e) {
             return false;
         });
         
         var _showEditPage = function(rowData){
-        	Observable.prototype.publish.call(_self, _getRoleFromRowData(rowData), "editrow");
+        	Observable.prototype.publish.call(_self, _getGroupFromRowData(rowData), "editrow");
         }
         
         var _deleteRow = function(rowData){
-        	Observable.prototype.publish.call(_self, _getRoleFromRowData(rowData), "deleterow");
+        	Observable.prototype.publish.call(_self, _getGroupFromRowData(rowData), "deleterow");
         }
         
-        var _getRoleFromRowData = function(rowData){
-        	var _role = {};
+        var _getGroupFromRowData = function(rowData){
+        	var _group = {};
         	
         	if(rowData){
-        		_role.code = rowData.code;
-            	_role.name = rowData.name;
-            	_role.description = rowData.description;
+        		_group.id = rowData.id;
+            	_group.name = rowData.name;
         	}
         	
-        	return _role;
-        }
+        	return _group;
+        }*/
         
         this.refreshGrid = function(){
-        	_roleListGrid.jqxGrid('updatebounddata');
+        	_simpleListGrid.refreshGrid();
         }
         
-        var _isRightClick = function(event) {
-            var _rightclick;
-            if (!event) var event = window.event;
-            if (event.which) _rightclick = (event.which == 3);
-            else if (event.button) _rightclick = (event.button == 2);
-            return _rightclick;
+        this.getComponent = function(){
+        	return _simpleListGrid.getComponent();
         }
+        
         
 	}
 	
-	inheritPrototype(RoleList, Observable);
+	inheritPrototype(GroupList, Observable);
 
-    return RoleList;
+    return GroupList;
     
 });
 

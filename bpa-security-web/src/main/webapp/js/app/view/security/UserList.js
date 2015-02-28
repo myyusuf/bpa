@@ -1,14 +1,86 @@
-define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
-        ], function (Observable) {
+        ], function (Observable, SimpleListGrid) {
 	
-	var UserList = function(container, options){
+	var UserList = function(container, url){
 		
 		var _self = this;
 		
+		var _options = {};
+		
+		var _subscribers = {
+			any:[]
+		};
+		
+		Observable.call(_self, _subscribers);
+		
+		_options.dataFields = [
+		                       { name: 'id', type: 'string' },
+		                       { name: 'password', type: 'string' },
+		                       { name: 'firstName', type: 'string' },
+		                       { name: 'lastName', type: 'string' },
+		                       { name: 'email', type: 'string' }
+		                   ];
+		_options.dataFieldId = "id";
+		
+		_options.url = BPA.Constant.workflow.identity.usersUrl;
+		
+		_options.columns = [
+		                   { text: 'Id', datafield: 'id', width: '25%' },
+		                   { text: 'First Name', datafield: 'firstName', width: '25%' },
+		                   { text: 'Last Name', datafield: 'lastName', width: '25%' },
+		                   { text: 'Email', datafield: 'email', width: '25%' },
+		                 ];
+		
+		var _addButton = $('<div style="margin-left: 2px;">New User</div>');
+		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
+		_addButton.click(function(event){
+			Observable.prototype.publish.call(_self, {}, "onAddUser");
+        });
+		
+		_options.toolbarButtons = [_addButton];
+		
+		var _simpleListGrid = new SimpleListGrid(container, _options);
+		
+		var _onContextMenuClick = function(commandObject){
+			var _command = commandObject.command;
+			var _rowData = commandObject.rowData;
+			console.log(_command);
+			
+			var _eventName = "";
+			if(_command == "add"){
+				_eventName = "onAddUser";
+			}else if(_command == "edit"){
+				_eventName = "onEditUser";
+			}else if(_command == "delete"){
+				_eventName = "onDeleteUser";
+			}
+			Observable.prototype.publish.call(_self, _getUserFromRowData(_rowData), _eventName);
+		}
+		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
+		
+		var _getUserFromRowData = function(rowData){
+        	var _user = {};
+        	
+        	if(rowData){
+        		_user.id = rowData.id;
+            	_user.firstName = rowData.firstName;
+            	_user.lastName = rowData.lastName;
+            	_user.email = rowData.email;
+        	}
+        	
+        	return _user;
+        }
+		
+		this.refreshGrid = function(){
+        	_simpleListGrid.refreshGrid();
+        }
+		
+		/*var _self = this;
+		
 		var _options = options || {};
 		
-		var _url = BPA.Constant.security.usersUrl;
+		var _url = BPA.Constant.workflow.identity.usersUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -20,13 +92,12 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         {
             datatype: "json",
             datafields: [
-                { name: 'username', type: 'string' },
+                { name: 'userId', type: 'string' },
                 { name: 'firstName', type: 'string' },
                 { name: 'lastName', type: 'string' },
-                { name: 'description', type: 'string' },
-                { name: 'roles' }
+                { name: 'email', type: 'string' }
             ],
-            id: 'username',
+            id: 'userId',
             beforeprocessing: function (data) {
                 _source.totalrecords = data.num;
             },
@@ -56,10 +127,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-              { text: 'Username', datafield: 'username', width: '25%' },
+              { text: 'User Id', datafield: 'userId', width: '25%' },
               { text: 'First Name', datafield: 'firstName', width: '25%' },
               { text: 'Last Name', datafield: 'lastName', width: '25%' },
-              { text: 'Description', datafield: 'description', width: '25%' }
+              { text: 'Email', datafield: 'email', width: '25%' }
             ],
         	theme: 'metro',
         	pagesizeoptions: ['5', '10', '20', '100'],
@@ -155,11 +226,10 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	var _user = {};
         	
         	if(rowData){
-        		_user.username = rowData.username;
+        		_user.userId = rowData.userId;
             	_user.firstName = rowData.firstName;
             	_user.lastName = rowData.lastName;
-            	_user.description = rowData.description;
-            	_user.roles = rowData.roles;
+            	_user.email = rowData.email;
         	}
         	
         	return _user;
@@ -175,7 +245,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
             if (event.which) _rightclick = (event.which == 3);
             else if (event.button) _rightclick = (event.button == 2);
             return _rightclick;
-        }
+        }*/
         
 	}
 	

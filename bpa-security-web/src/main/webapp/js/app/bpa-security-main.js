@@ -22,17 +22,21 @@
         "jqxlistbox": "../jqwidgets/3.5.0/jqxlistbox",
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
         "jqxdata": "../jqwidgets/3.5.0/jqxdata",
+        "jqxslider": "../jqwidgets/3.5.0/jqxslider",
         "jqxtreegrid": "../jqwidgets/3.5.0/jqxtreegrid",
         "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
         "jqxwindow": "../jqwidgets/3.5.0/jqxwindow",
         "jqxinput": "../jqwidgets/3.5.0/jqxinput",
+        "jqxpasswordinput": "../jqwidgets/3.5.0/jqxpasswordinput",
+        "jqxtooltip": "../jqwidgets/3.5.0/jqxtooltip",
         "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
+        "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
+        "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
         
         "notificationWindow": "../app/component/base/NotificationWindow",
         "bpaObservable": "../app/component/base/Observable"
-        	
     },
     //waitSeconds: 60,
     shim: {
@@ -132,6 +136,14 @@
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },
+        "jqxtooltip": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxpasswordinput": {
+            export: "$",
+            deps: ['jQuery', "jqxcore", "jqxtooltip"]
+        },
         "jqxvalidator": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
@@ -144,18 +156,18 @@
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },
-        "bpaErrorWindow": {
-            export: "ErrorWindow"
-        },
         "notificationWindow": {
             export: "NotificationWindow"
         },
         "bpaObservable": {
             export: "Observable"
         }
-        
-    }
+    },
+    packages: [
+           { name: "dojo", location: "../dojo/dojo" },
+           { name: "dojox", location: "../dojo/dojox"},
+      ]
 });
-require(["bpa-security-app"], function (App) {
+require(["bpa-workflow-app"], function (App) {
     App.initialize();
 });
