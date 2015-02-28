@@ -198,10 +198,11 @@ public class IdentityController extends CommonController{
 		
 		printParams(params);
 		
-		String id = (String) params.get("id");
+		String code = (String) params.get("code");
 		String name = (String) params.get("name");
+		String description = (String) params.get("description");
 		
-		NewGroupCommand command = new NewGroupCommand(id, name);
+		NewGroupCommand command = new NewGroupCommand(code, name, description);
 		this.identityService().newGroupWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
