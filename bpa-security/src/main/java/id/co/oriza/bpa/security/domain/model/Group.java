@@ -17,7 +17,7 @@ public class Group extends ConcurrencySafeEntity {
 		super();
 	}
 
-	public Group(String id, String code, String name, String description) {
+	public Group(String code, String name, String description) {
 		this();
 		this.setCode(code);
 		this.setName(name);
@@ -47,6 +47,10 @@ public class Group extends ConcurrencySafeEntity {
 
 	protected void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public void changeName(String aName){
+		this.setName(aName);
 	}
 
 }

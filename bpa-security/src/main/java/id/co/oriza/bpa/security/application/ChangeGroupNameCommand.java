@@ -2,25 +2,25 @@ package id.co.oriza.bpa.security.application;
 
 public class ChangeGroupNameCommand {
 
-	private String id;
+	private String code;
 	private String name;
 
-	public ChangeGroupNameCommand(String id, String name) {
+	public ChangeGroupNameCommand(String code, String name) {
 		super();
-		this.id = id;
+		this.code = code;
 		this.name = name;
 	}
 
-	public String getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public void setName(String name) {

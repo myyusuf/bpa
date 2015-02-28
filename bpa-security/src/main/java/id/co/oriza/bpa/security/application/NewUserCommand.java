@@ -4,17 +4,17 @@ import java.util.List;
 
 public class NewUserCommand {
 
-	private String id;
+	private String userId;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private List<String> groupIds;
 
-	public NewUserCommand(String id, String password, String firstName,
+	public NewUserCommand(String userId, String password, String firstName,
 			String lastName, String email, List<String> groupIds) {
 		super();
-		this.id = id;
+		this.userId = userId;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -22,8 +22,8 @@ public class NewUserCommand {
 		this.groupIds = groupIds;
 	}
 
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
 	public String getPassword() {
@@ -42,8 +42,8 @@ public class NewUserCommand {
 		return email;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setPassword(String password) {

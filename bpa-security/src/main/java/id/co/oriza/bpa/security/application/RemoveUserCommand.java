@@ -2,19 +2,19 @@ package id.co.oriza.bpa.security.application;
 
 public class RemoveUserCommand {
 
-	private String id;
+	private String userId;
 
-	public RemoveUserCommand(String id) {
+	public RemoveUserCommand(String userId) {
 		super();
-		this.id = id;
+		this.userId = userId;
 	}
 
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

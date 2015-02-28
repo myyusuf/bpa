@@ -12,6 +12,7 @@ public class User extends ConcurrencySafeEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -19,9 +20,10 @@ public class User extends ConcurrencySafeEntity {
 
 	private Set<Group> groups;
 
-	public User(String firstName, String lastName, String email,
+	public User(String userId, String firstName, String lastName, String email,
 			String password) {
 		this();
+		this.setUserId(userId);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -100,6 +102,14 @@ public class User extends ConcurrencySafeEntity {
 		if(this.groups().addAll(aGroups)){
 			//Domain Event
 		}
+	}
+
+	public String userId() {
+		return userId;
+	}
+
+	protected void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }
