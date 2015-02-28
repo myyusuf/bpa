@@ -12,7 +12,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		
 		Observable.call(_self, _subscribers);
 		
-		var _randomId = BPA.Util.getRandomId("workFlowGroupSelect");
+		var _randomId = BPA.Util.getRandomId("securityGroupSelect");
         
 		var _editWindow = $('<div id="window_'+_randomId+'"></div>');
 		var _windowHeader = $('<div style="height: 18px; padding: 5px; padding-top: 3px; padding-bottom: 7px;"><table><tr><td><img src="resources/images/application-dialog.png" alt="" style="margin-right: 1px" /></td><td valign="center"><span style="font-weight: bold">Select Group</span></td></tr></table></div>');
@@ -34,7 +34,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		                   ];
 		_options.dataFieldId = "id";
 		
-		_options.url = BPA.Constant.workflow.identity.groupsUrl;
+		_options.url = BPA.Constant.security.groupsUrl;
 		
 		_options.columns = [
 		                   { text: 'Id', datafield: 'id', width: '50%' },

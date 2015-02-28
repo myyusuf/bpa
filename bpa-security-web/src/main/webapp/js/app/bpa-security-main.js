@@ -165,6 +165,6 @@
     packages: [
       ]
 });
-require(["bpa-workflow-app"], function (App) {
+require(["bpa-security-app"], function (App) {
     App.initialize();
 });
