@@ -1,45 +1,52 @@
 package id.co.oriza.bpa.security.domain.model;
 
-import id.co.oriza.bpa.base.domain.model.AssertionConcern;
+import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
-import java.io.Serializable;
-
-public class Group extends AssertionConcern implements Serializable {
+public class Group extends ConcurrencySafeEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	private String code;
 	private String name;
+	private String description;
 
 	protected Group() {
 		super();
 	}
 
-	public Group(String id, String name) {
+	public Group(String id, String code, String name, String description) {
 		this();
-		this.setId(id);
+		this.setCode(code);
 		this.setName(name);
+		this.setDescription(description);
 	}
 
-	public String id() {
-		return id;
+	protected void setName(String name) {
+		this.assertArgumentNotEmpty(name, "Name is required");
+		this.name = name;
 	}
 
-	protected void setId(String id) {
-		this.assertArgumentNotEmpty(id, "Id is required");
-		this.id = id;
+	public String code() {
+		return code;
 	}
 
 	public String name() {
 		return name;
 	}
 
-	protected void setName(String name) {
-		this.assertArgumentNotEmpty(name, "Name is required");
-		this.name = name;
+	public String description() {
+		return description;
+	}
+
+	protected void setCode(String code) {
+		this.code = code;
+	}
+
+	protected void setDescription(String description) {
+		this.description = description;
 	}
 
 }

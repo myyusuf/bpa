@@ -5,7 +5,7 @@ import id.co.oriza.bpa.security.domain.model.User;
 
 import java.util.List;
 
-public interface IdentityService {
+public interface IdentityApplicationService {
 	
 	List<User> allUsers(int start, int limit);
 	long allUsersSize();
