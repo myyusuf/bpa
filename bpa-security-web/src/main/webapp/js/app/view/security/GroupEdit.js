@@ -25,7 +25,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		_options.formFields = [{name: "code", label: "Code", value: group.code, isKey: true, required: true, maxLength: 30},
 		                       {name: "name", label: "Name", value: group.name, required: true, maxLength: 100},
-		                       {name: "description", label: "Description", value: group.description, required: true, maxLength: 100}
+		                       {name: "description", label: "Description", value: group.description, maxLength: 100}
 		                       ];
 		
 		_options.validationRules = [
