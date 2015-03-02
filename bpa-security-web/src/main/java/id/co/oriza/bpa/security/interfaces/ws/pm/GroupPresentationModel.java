@@ -19,7 +19,7 @@ public class GroupPresentationModel {
 		return group.name();
 	}
 	
-	public String getDecription() {
+	public String getDescription() {
 		return group.description();
 	}
 

@@ -15,17 +15,16 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		Observable.call(_self, _subscribers);
 		
 		_options.dataFields = [
-		                       { name: 'id', type: 'string' },
 		                       { name: 'code', type: 'string' },
 		                       { name: 'name', type: 'string' },
 		                       { name: 'description', type: 'string' }
 		                   ];
-		_options.dataFieldId = "id";
+		_options.dataFieldId = "code";
 		
 		_options.url = url || BPA.Constant.security.groupsUrl;
 		
 		_options.columns = [
-		                   { text: 'Code', datafield: 'id', width: '50%' },
+		                   { text: 'Code', datafield: 'code', width: '50%' },
 		                   { text: 'Name', datafield: 'name', width: '50%' }
 		                 ];
 		
@@ -60,8 +59,9 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	var _group = {};
         	
         	if(rowData){
-        		_group.id = rowData.id;
+        		_group.code = rowData.code;
             	_group.name = rowData.name;
+            	_group.description = rowData.description;
         	}
         	
         	return _group;

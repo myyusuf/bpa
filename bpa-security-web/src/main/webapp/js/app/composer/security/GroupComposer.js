@@ -71,7 +71,6 @@ define(["notificationWindow", "view/security/GroupList", "view/security/GroupEdi
 			
 			return _onEditGroup;
 		}
-		
 		_groupList.subscribe(_self.buildOnEditGroup(_groupList), "onEditGroup");
 		
 		var _onDeleteGroup = function(deletedGroup){

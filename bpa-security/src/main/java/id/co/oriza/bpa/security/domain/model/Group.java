@@ -53,4 +53,8 @@ public class Group extends ConcurrencySafeEntity {
 		this.setName(aName);
 	}
 
+	public void changeDescription(String aDescription) {
+		this.setDescription(aDescription);
+	}
+
 }

@@ -1,7 +1,7 @@
 package id.co.oriza.bpa.security.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
-import id.co.oriza.bpa.security.application.ChangeGroupNameCommand;
+import id.co.oriza.bpa.security.application.ChangeGroupInfoCommand;
 import id.co.oriza.bpa.security.application.ChangeUserInfoCommand;
 import id.co.oriza.bpa.security.application.IdentityApplicationService;
 import id.co.oriza.bpa.security.application.NewGroupCommand;
@@ -219,11 +219,12 @@ public class IdentityController extends CommonController{
 		
 		printParams(params);
 		
-		String id = (String) params.get("id");
+		String code = (String) params.get("code");
 		String name = (String) params.get("name");
+		String description = (String) params.get("description");
 		
-		ChangeGroupNameCommand command = new ChangeGroupNameCommand(id, name);
-		this.identityService().changeGroupName(command);
+		ChangeGroupInfoCommand command = new ChangeGroupInfoCommand(code, name, description);
+		this.identityService().changeGroupInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		

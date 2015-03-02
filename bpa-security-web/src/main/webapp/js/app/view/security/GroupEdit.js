@@ -13,7 +13,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _options = {};
 		
 		var _isEditForm = false;
-		if(group.id){
+		if(group.code){
 			_isEditForm = true;
 			_options.caption = "Edit Group";
 		}else{

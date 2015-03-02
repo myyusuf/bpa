@@ -68,9 +68,10 @@ public class IdentityApplicationService {
 		return this.groupRepository().allSize();
 	}
 
-	public void changeGroupName(ChangeGroupNameCommand aCommand) {
+	public void changeGroupInfo(ChangeGroupInfoCommand aCommand) {
 		Group group = this.groupRepository().existingGroup(aCommand.getCode());
 		group.changeName(aCommand.getName());
+		group.changeDescription(aCommand.getDescription());
 	}
 
 	public void removeGroup(RemoveGroupCommand aCommand) {

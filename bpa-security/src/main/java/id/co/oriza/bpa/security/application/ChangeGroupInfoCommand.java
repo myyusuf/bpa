@@ -1,14 +1,16 @@
 package id.co.oriza.bpa.security.application;
 
-public class ChangeGroupNameCommand {
+public class ChangeGroupInfoCommand {
 
 	private String code;
 	private String name;
+	private String description;
 
-	public ChangeGroupNameCommand(String code, String name) {
+	public ChangeGroupInfoCommand(String code, String name, String description) {
 		super();
 		this.code = code;
 		this.name = name;
+		this.description = description;
 	}
 
 	public String getCode() {
@@ -25,6 +27,14 @@ public class ChangeGroupNameCommand {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
