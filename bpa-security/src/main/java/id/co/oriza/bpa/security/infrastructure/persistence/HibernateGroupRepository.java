@@ -4,6 +4,7 @@ import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
 import id.co.oriza.bpa.security.domain.model.Group;
 import id.co.oriza.bpa.security.domain.model.GroupRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -54,6 +55,11 @@ public class HibernateGroupRepository extends AbstractHibernateSession implement
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> withCodes(List<String> groupCodes) {
+		
+		if(groupCodes == null || groupCodes.size() == 0){
+			return new ArrayList<Group>(0);
+		}
+		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.security.domain.model.Group as _obj_ "
 				+ "where _obj_.code in (:codes) ");
 		query.setParameterList("codes", groupCodes);
