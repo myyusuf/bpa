@@ -87,7 +87,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		                	var _groupSelect = new GroupSelect(container);
 		                	_groupSelect.subscribe(function(selectedGroup){
 		                		
-		                		var _result = $.grep(_groups, function(e){ return e.id == selectedGroup.id; });
+		                		var _result = $.grep(_groups, function(e){ return e.code == selectedGroup.code; });
 		                		if(_result.length == 0){
 		                			_groups.push(selectedGroup);
 				                	_groupListGrid.jqxGrid('updatebounddata');
