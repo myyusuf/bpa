@@ -14,4 +14,6 @@ public interface GroupRepository {
 
 	void remove(Group group);
 
+	List<Group> withCodes(List<String> groupCodes);
+
 }

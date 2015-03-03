@@ -51,4 +51,14 @@ public class HibernateGroupRepository extends AbstractHibernateSession implement
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Group> withCodes(List<String> groupCodes) {
+		Query query = this.session().createQuery("from id.co.oriza.bpa.security.domain.model.Group as _obj_ "
+				+ "where _obj_.code in (:codes) ");
+		query.setParameterList("codes", groupCodes);
+		return query.list();
+		
+	}
+
 }

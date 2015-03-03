@@ -6,6 +6,7 @@ import id.co.oriza.bpa.security.domain.model.User;
 import id.co.oriza.bpa.security.domain.model.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class IdentityApplicationService {
 	
 	public void newUserWith(NewUserCommand aCommand) {
 		User user = new User(aCommand.getUserId(), aCommand.getFirstName(), aCommand.getLastName(), aCommand.getEmail(), aCommand.getPassword());
+		
+		List<Group> groups = this.groupRepository().withCodes(aCommand.getGroupCodes());
+		user.addGroups(new HashSet<Group>(groups));
 		this.userRepository().add(user);
 		
 	}
@@ -39,6 +43,10 @@ public class IdentityApplicationService {
 		user.changeFirstName(aCommand.getFirstName());
 		user.changeLastName(aCommand.getLastName());
 		user.changeEmail(aCommand.getEmail());
+		
+		List<Group> groups = this.groupRepository().withCodes(aCommand.getGroupCodes());
+		user.groups().clear();
+		user.addGroups(new HashSet<Group>(groups));
 		
 	}
 	

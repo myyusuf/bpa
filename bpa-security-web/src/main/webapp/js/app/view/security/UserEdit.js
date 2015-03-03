@@ -54,7 +54,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		            editable: false,
 		            selectionmode: 'singlerow',
 		            columns: [
-		              { text: 'Id', datafield: 'id', width: '50%' },
+		              { text: 'Code', datafield: 'code', width: '50%' },
 		              { text: 'Name', datafield: 'name', width: '50%' }
 		            ],
 		        	theme: 'metro',
@@ -108,7 +108,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		                	var _rowData = _groupListGrid.jqxGrid('getrowdata', _rowIndex);
 		                	var _resultIndex = -1;
 		                	for(i=0;i<_groups.length;i++){
-		                		if(_groups[i].id == _rowData.id){
+		                		if(_groups[i].code == _rowData.code){
 		                			_resultIndex = i;
 		                		}
 		                	}

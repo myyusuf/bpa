@@ -9,17 +9,17 @@ public class ChangeUserInfoCommand {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private List<String> groupIds;
+	private List<String> groupCodes;
 
 	public ChangeUserInfoCommand(String userId, String password, String firstName,
-			String lastName, String email, List<String> groupIds) {
+			String lastName, String email, List<String> groupCodes) {
 		super();
 		this.userId = userId;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.groupIds = groupIds;
+		this.groupCodes = groupCodes;
 	}
 
 	public String getUserId() {
@@ -62,12 +62,12 @@ public class ChangeUserInfoCommand {
 		this.email = email;
 	}
 
-	public List<String> getGroupIds() {
-		return groupIds;
+	public List<String> getGroupCodes() {
+		return groupCodes;
 	}
 
-	public void setGroupIds(List<String> groupIds) {
-		this.groupIds = groupIds;
+	public void setGroupCodes(List<String> groupCodes) {
+		this.groupCodes = groupCodes;
 	}
 
 }

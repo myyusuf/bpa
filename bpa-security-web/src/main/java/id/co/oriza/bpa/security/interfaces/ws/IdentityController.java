@@ -78,16 +78,16 @@ public class IdentityController extends CommonController{
 		String lastName = (String) params.get("lastName");
 		String email = (String) params.get("email");
 		
-		List<String> groupIds = new ArrayList<String>(0);
+		List<String> groupCodes = new ArrayList<String>(0);
 		List<Map<String, Object>> groupsMap = (List<Map<String, Object>>) params.get("groups");
 		for (Map<String, Object> groupMap : groupsMap) {
-			groupIds.add((String) groupMap.get("id"));
+			groupCodes.add((String) groupMap.get("code"));
 		}
 		System.out.println("groupsMap : " + groupsMap);
-		System.out.println("groupIds : " + groupIds);
+		System.out.println("groupCodes : " + groupCodes);
 		
 		
-		NewUserCommand command = new NewUserCommand(id, password, firstName, lastName, email, groupIds );
+		NewUserCommand command = new NewUserCommand(id, password, firstName, lastName, email, groupCodes);
 		this.identityService().newUserWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -110,15 +110,15 @@ public class IdentityController extends CommonController{
 		String lastName = (String) params.get("lastName");
 		String email = (String) params.get("email");
 		
-		List<String> groupIds = new ArrayList<String>(0);
+		List<String> groupCodes = new ArrayList<String>(0);
 		List<Map<String, Object>> groupsMap = (List<Map<String, Object>>) params.get("groups");
 		for (Map<String, Object> groupMap : groupsMap) {
-			groupIds.add((String) groupMap.get("id"));
+			groupCodes.add((String) groupMap.get("code"));
 		}
 		System.out.println("groupsMap : " + groupsMap);
-		System.out.println("groupIds : " + groupIds);
+		System.out.println("groupCodes : " + groupCodes);
 		
-		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, password, firstName, lastName, email, groupIds);
+		ChangeUserInfoCommand command = new ChangeUserInfoCommand(id, password, firstName, lastName, email, groupCodes);
 		this.identityService().changeUserInfo(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
