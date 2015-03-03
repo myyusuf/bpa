@@ -29,15 +29,15 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		Observable.call(_self, _subscribers);
 		
 		_options.dataFields = [
-		                       { name: 'id', type: 'string' },
+		                       { name: 'code', type: 'string' },
 		                       { name: 'name', type: 'string' }
 		                   ];
-		_options.dataFieldId = "id";
+		_options.dataFieldId = "code";
 		
 		_options.url = BPA.Constant.security.groupsUrl;
 		
 		_options.columns = [
-		                   { text: 'Id', datafield: 'id', width: '50%' },
+		                   { text: 'Code', datafield: 'code', width: '50%' },
 		                   { text: 'Name', datafield: 'name', width: '50%' }
 		                 ];
 		
@@ -74,7 +74,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jqxbuttons", "jqxinpu
 		_saveButton.appendTo(_buttonColumn);
 		_saveButton.click(function(event){
 			var _selectedData = _simpleListGrid.getSelectedData();
-			Observable.prototype.publish.call(_self, {id: _selectedData.id, name: _selectedData.name}, "onSelectGroup");
+			Observable.prototype.publish.call(_self, {code: _selectedData.code, name: _selectedData.name}, "onSelectGroup");
 			_self.close();
         });
 		
