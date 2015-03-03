@@ -133,9 +133,9 @@ public class IdentityController extends CommonController{
 		
 		logger.debug("removeUser");
 		
-		String id = (String) params.get("id");
+		String userId = (String) params.get("userId");
 		
-		RemoveUserCommand command = new RemoveUserCommand(id);
+		RemoveUserCommand command = new RemoveUserCommand(userId);
 		this.identityService().removeUser(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -238,9 +238,9 @@ public class IdentityController extends CommonController{
 		
 		logger.debug("removeGroup");
 		
-		String id = (String) params.get("id");
+		String code = (String) params.get("code");
 		
-		RemoveGroupCommand command = new RemoveGroupCommand(id);
+		RemoveGroupCommand command = new RemoveGroupCommand(code);
 		this.identityService().removeGroup(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();

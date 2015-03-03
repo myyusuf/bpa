@@ -13,7 +13,7 @@
 		<property name="firstName" column="FIRST_NAME" type="java.lang.String" />
 		<property name="lastName" column="LAST_NAME" type="java.lang.String" />
 		<property name="email" column="EMAIL" type="java.lang.String" />
-		<set name="groups" table="BPA_USER_GROUP" inverse="false" lazy="true" fetch="select" cascade="all">
+		<set name="groups" table="BPA_USER_GROUP" inverse="false" lazy="true" fetch="select">
             <key column="USER_ID" not-null="true" />
             <many-to-many class="id.co.oriza.bpa.security.domain.model.Group">
             	<column name="GROUP_ID" not-null="true"/>

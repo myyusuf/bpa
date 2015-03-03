@@ -90,7 +90,7 @@ define(["notificationWindow", "view/security/GroupList", "view/security/GroupEdi
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Group', 
-			content: "Are you sure want to delete this group : " + deletedGroup.id + " (" + deletedGroup.name + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this group : " + deletedGroup.code + " (" + deletedGroup.name + ") ?", type: 'info', onOk: _onOk});
 		}
 		_groupList.subscribe(_onDeleteGroup, "onDeleteGroup");
 		
