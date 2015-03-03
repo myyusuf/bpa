@@ -13,7 +13,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		var _options = {};
 		
 		var _isEditForm = false;
-		if(user.id){
+		if(user.userId){
 			_isEditForm = true;
 			_options.caption = "Edit User";
 		}else{
@@ -120,8 +120,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "view/security/GroupSe
 		        });
 		
 		_options.formFields = [
-		                       {name: "userId", label: "UserId", value: user.lastName, required: true, maxLength: 30},
-		                       {name: "password", label: "Password", value: user.lastName, type: 'password', required: true, maxLength: 100},
+		                       {name: "userId", label: "UserId", value: user.userId, required: true, maxLength: 30},
+		                       {name: "password", label: "Password", value: user.password, type: 'password', required: true, maxLength: 100},
 		                       {name: "firstName", label: "First Name", value: user.firstName, required: true, maxLength: 100},
 		                       {name: "lastName", label: "Last Name", value: user.lastName, maxLength: 100},
 		                       {name: "email", label: "Email", value: user.email, required: true, maxLength: 100},

@@ -64,6 +64,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	
         	if(rowData){
         		_user.userId = rowData.userId;
+        		_user.password = rowData.password;
             	_user.firstName = rowData.firstName;
             	_user.lastName = rowData.lastName;
             	_user.email = rowData.email;

@@ -46,7 +46,7 @@ define(["notificationWindow", "view/security/UserList", "view/security/UserEdit"
 		UserComposer.prototype.buildOnEditUser = function(subClassRefUserList){
 			var _onEditUser = function(userToBeEdited){
 				
-				var _userGroupUrl = BPA.Constant.security.identity.usersUrl + "/" + userToBeEdited.id + "/groups";
+				var _userGroupUrl = BPA.Constant.security.usersUrl + "/" + userToBeEdited.userId + "/groups";
 				_sendData(_userGroupUrl, {}, "GET", function(result){
 					
 					console.log(result.data);
