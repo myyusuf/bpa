@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<dataset>
+	<bpa_employee
+		CONCURRENCY_VERSION="1" 
+		ID="1"
+		EMPLOYEE_ID="1111"
+		NAME="Test Employee"
+	/>
+</dataset>

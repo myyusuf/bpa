@@ -3,6 +3,6 @@
 
 <hibernate-configuration>
 	<session-factory>
-		<!-- <mapping resource="id/co/oriza/bpa/acc/domain/model/AccountGroup.hbm.xml" /> -->
+		<mapping resource="id/co/oriza/bpa/workstructure/domain/model/Employee.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

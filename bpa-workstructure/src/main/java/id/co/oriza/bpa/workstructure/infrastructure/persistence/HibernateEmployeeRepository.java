@@ -26,9 +26,9 @@ public class HibernateEmployeeRepository  extends AbstractHibernateSession imple
 		}
 		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.workstructure.domain.model.Employee as _obj_ "
-				+ "where _obj_.employeeId like :anEmployeeId "
+				+ "where _obj_.employeeId like :employeeId "
 				+ "or _obj_.name like :aName ");
-		query.setString("anEmployeeId", anEmployeeId + "%");
+		query.setString("employeeId", anEmployeeId + "%");
 		query.setString("aName", aName + "%");
 		query.setFirstResult(aStart);
 		query.setMaxResults(aLimit);

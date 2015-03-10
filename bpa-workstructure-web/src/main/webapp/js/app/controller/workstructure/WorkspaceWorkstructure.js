@@ -2,7 +2,7 @@ define(["jQuery", "jqxcore"], function () {
 	
 	var WorkspaceWorkstructure = function(container){
 		
-		$.subscribe("viewEmployeetListEvent", function(e, data){
+		$.subscribe("viewEmployeeListEvent", function(e, data){
 			
 			var _gridContainer = $('<div></div>');
         	

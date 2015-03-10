@@ -14,10 +14,12 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class EmployeeController extends CommonController{
 	
 	private static final int MAX_LIMIT = 10000;
@@ -34,6 +36,8 @@ public class EmployeeController extends CommonController{
 		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
 		
 		String employeeIdOrNameStartsWith = params.get("employeeIdOrNameStartsWith") != null ? params.get("employeeIdOrNameStartsWith") : "";
+		
+		employeeIdOrNameStartsWith = "test";
 		
 		printParamsString(params);
 		
