@@ -19,7 +19,7 @@ public class WorkstructureApplicationService {
 	private HibernateEmployeeRepository employeeRepository;
 	
 	@Transactional(readOnly=true)
-	public Collection<Employee> allSimilarlyCodedOrNamedAccountGroups(String anEmployeeId, String aName, int aStart, int aLimit){
+	public Collection<Employee> allSimilarlyEmployeeIdOrNamedEmployees(String anEmployeeId, String aName, int aStart, int aLimit){
 		Collection<Employee> employees = this.employeeRepository().allSimilarlyEmployeeIdOrNamed(anEmployeeId, aName, aStart, aLimit);
 		return employees;
 	}

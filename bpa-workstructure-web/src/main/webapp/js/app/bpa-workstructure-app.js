@@ -25,36 +25,8 @@
                 
                 var registerMenu = function(){
                 	
-                	$("#deploymentListMenu").click(function(){
-                		$.publish("viewDeploymentListEvent", {name: "deployment"});
-                	});
-                	
-                	$("#processDefinitionListMenu").click(function(){
-                		$.publish("viewProcessDefinitionListEvent", {name: "process definition"});
-                	});
-                	
-                	$("#userListMenu").click(function(){
-                		$.publish("viewUserListEvent", {name: "user"});
-                	});
-                	
-                	$("#groupListMenu").click(function(){
-                		$.publish("viewGroupListEvent", {name: "group"});
-                	});
-                	
-                	$("#taskListMenu").click(function(){
-                		$.publish("viewTaskListEvent", {name: "task"});
-                	});
-                	
-                	$("#runningProcessInstanceListMenu").click(function(){
-                		$.publish("viewRunningProcessInstanceListEvent", {name: "task"});
-                	});
-                	
-                	$("#queuedTaskListMenu").click(function(){
-                		$.publish("viewQueuedTaskListMenuEvent", {name: "queued task"});
-                	});
-                	
-                	$("#inboxTaskListMenu").click(function(){
-                		$.publish("viewInboxTaskListMenuEvent", {name: "inbox task"});
+                	$("#employeeListMenu").click(function(){
+                		$.publish("viewEmployeeListEvent", {name: "employee"});
                 	});
                 	
                 }
