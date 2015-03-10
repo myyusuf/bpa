@@ -17,15 +17,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/mvc
 http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<!-- <context:annotation-config />
-	<context:component-scan base-package="id.co.visitek.dpu.cms">
-	</context:component-scan>
-	
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	
-	<context:property-placeholder location="classpath:cms-user-app-config.properties, classpath:cms-user.properties" /> -->
-	
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="order" value="1" />
@@ -46,7 +37,5 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		</property>
 		<property name="ignoreAcceptHeader" value="true" />
 	</bean>
-	
-	<bean id="workflowUserAccessor" class="id.co.oriza.bpa.workflow.interfaces.ws.WorkflowUserAccessorImpl" autowire="byName"/>
 	
 </beans>

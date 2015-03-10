@@ -9,7 +9,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:bpa-workflow-ctx.xml
+			classpath:bpa-workstructure-ctx.xml
 		</param-value>
 	</context-param>
 
@@ -33,7 +33,7 @@
 	</listener>
 
 	<welcome-file-list>
-		<welcome-file>workspace_workflow.html</welcome-file>
+		<welcome-file>workspace_workstructure.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>
