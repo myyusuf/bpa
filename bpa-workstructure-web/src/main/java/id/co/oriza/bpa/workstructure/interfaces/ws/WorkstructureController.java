@@ -3,8 +3,10 @@ package id.co.oriza.bpa.workstructure.interfaces.ws;
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService;
 import id.co.oriza.bpa.workstructure.domain.model.Employee;
+import id.co.oriza.bpa.workstructure.domain.model.Location;
 import id.co.oriza.bpa.workstructure.domain.model.Position;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.EmployeePresentationModel;
+import id.co.oriza.bpa.workstructure.interfaces.ws.pm.LocationPresentationModel;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.PositionPresentationModel;
 
 import java.util.ArrayList;
@@ -82,6 +84,32 @@ public class WorkstructureController extends CommonController{
 		
 		result.put("num", positionsSize);
 		result.put("data", positionModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workstructure/locations", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> allLocations(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		printParamsString(params);
+		
+		List<LocationPresentationModel> locationModels = new ArrayList<LocationPresentationModel>();
+		Collection<Location> locations = this.workstructureService().allSimilarlyCodedOrAddressedLocations("", "", start, limit);
+		for (Location location : locations) {
+			LocationPresentationModel locationModel = new LocationPresentationModel(location);
+			locationModels.add(locationModel);
+		}
+		
+		Long locationsSize = 1l;//this.workstructureService().allEmployeesSize();
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", locationsSize);
+		result.put("data", locationModels);
 		result.put("success", true);
 		
 		return result;

@@ -33,6 +33,10 @@
                 		$.publish("viewPositionListEvent", {name: "employee"});
                 	});
                 	
+                	$("#locationListMenu").click(function(){
+                		$.publish("viewLocationListEvent", {name: "employee"});
+                	});
+                	
                 }
                 
                 registerMenu();
