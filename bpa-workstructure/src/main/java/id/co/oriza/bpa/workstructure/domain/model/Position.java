@@ -11,15 +11,17 @@ public class Position extends IdentifiedValueObject {
 
 	private String code;
 	private String name;
+	private String description;
 	
 	protected Position() {
 		super();
 	}
 
-	public Position(String aCode, String aName) {
+	public Position(String aCode, String aName, String aDescription) {
 		this();
 		this.setCode(aCode);
 		this.setName(aName);
+		this.setDescription(aDescription);
 	}
 
 	public String code() {
@@ -28,6 +30,10 @@ public class Position extends IdentifiedValueObject {
 
 	public String name() {
 		return name;
+	}
+	
+	public String description() {
+		return description;
 	}
 
 	protected void setCode(String aCode) {
@@ -40,8 +46,16 @@ public class Position extends IdentifiedValueObject {
 		this.name = aName;
 	}
 	
+	protected void setDescription(String aDescription) {
+		this.description = aDescription;
+	}
+	
 	public void changeName(String aName) {
 		this.setName(aName);
+	}
+	
+	public void changeDescription(String aDescription) {
+		this.setDescription(aDescription);
 	}
 
 }
