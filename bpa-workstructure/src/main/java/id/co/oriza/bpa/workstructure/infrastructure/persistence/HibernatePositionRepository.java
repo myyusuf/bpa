@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class HibernatePositionRepository extends AbstractHibernateSession implements PositionRepository{
 	
-	final Logger logger = LoggerFactory.getLogger(HibernateEmployeeRepository.class);
+	final Logger logger = LoggerFactory.getLogger(HibernatePositionRepository.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
