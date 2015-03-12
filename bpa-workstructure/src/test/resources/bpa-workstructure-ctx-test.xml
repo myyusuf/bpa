@@ -62,5 +62,6 @@
 	<bean id="workstructureApplicationService" class="id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService" autowire="byName"/>
 	<bean id="hibernateEmployeeRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernateEmployeeRepository" autowire="byName"/>
 	<bean id="hibernatePositionRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernatePositionRepository" autowire="byName"/>
-
+	<bean id="hibernateLocationRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernateLocationRepository" autowire="byName"/>
+	
 </beans>
