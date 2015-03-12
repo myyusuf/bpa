@@ -10,7 +10,7 @@ import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HibernatePositionRepositroy extends AbstractHibernateSession implements PositionRepository{
+public class HibernatePositionRepository extends AbstractHibernateSession implements PositionRepository{
 	
 	final Logger logger = LoggerFactory.getLogger(HibernateEmployeeRepository.class);
 

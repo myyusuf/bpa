@@ -30,7 +30,7 @@ public class WorkstructureApplicationService {
 	}
 	
 	@Transactional(readOnly=true)
-	public Collection<Position> allSimilarlyCodedOrNamed(String aCode, String aName, int aStart, int aLimit){
+	public Collection<Position> allSimilarlyCodedOrNamedPositions(String aCode, String aName, int aStart, int aLimit){
 		Collection<Position> positions = this.positionRepository().allSimilarlyCodedOrNamed(aCode, aName, aStart, aLimit);
 		return positions;
 	}
