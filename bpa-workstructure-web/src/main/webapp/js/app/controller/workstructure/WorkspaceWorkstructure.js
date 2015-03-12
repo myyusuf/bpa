@@ -17,6 +17,21 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewPositionListEvent", function(e, data){
+			
+			var _gridContainer = $('<div></div>');
+        	
+			require(['./composer/workstructure/PositionComposer'], function (PositionComposer) {
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				_gridContainer.appendTo(container);
+				
+            	var _positionComposer = new PositionComposer(_gridContainer);
+            });
+		});
+		
 	};
 	
 	return WorkspaceWorkstructure;

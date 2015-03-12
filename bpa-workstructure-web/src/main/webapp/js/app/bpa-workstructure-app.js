@@ -29,6 +29,10 @@
                 		$.publish("viewEmployeeListEvent", {name: "employee"});
                 	});
                 	
+                	$("#positionListMenu").click(function(){
+                		$.publish("viewPositionListEvent", {name: "employee"});
+                	});
+                	
                 }
                 
                 registerMenu();
