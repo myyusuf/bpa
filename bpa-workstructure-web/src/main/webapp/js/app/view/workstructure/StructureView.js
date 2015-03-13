@@ -1,5 +1,5 @@
 define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
-        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection"
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jQueryUi", "primitives"
         ], function (Observable, SimpleListGrid) {
 	
 	var StructureView = function(container, url){
@@ -35,20 +35,20 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
                 context: {data: 'test'}
             });
 		
-		_items.push(item);
+		_items.push(_item);
 		
-		_options.items = items;
+		_options.items = _items;
 		_options.cursorItem = 0;
 		_options.hasSelectorCheckbox = primitives.common.Enabled.True;
-		_options.buttons = buttons;
+		_options.buttons = _buttons;
 		_options.hasButtons = primitives.common.Enabled.Auto;
 		_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
 		
-		var _chartContainer = $('<div></div>');
-		chartContainer.appendTo(container);
+		var _chartContainer = $('<div id="orgchart" style="height: 500px">dddd</div>');
+		_chartContainer.appendTo(container);
 		
-		chartContainer.orgDiagram(options);
-		chartContainer.orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+		$('#orgchart').orgDiagram(_options);
+		$('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
 	        
 	}
 	
