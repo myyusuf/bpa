@@ -37,6 +37,10 @@
                 		$.publish("viewLocationListEvent", {name: "employee"});
                 	});
                 	
+                	$("#structureViewMenu").click(function(){
+                		$.publish("viewStructureViewEvent", {name: "structureView"});
+                	});
+                	
                 }
                 
                 registerMenu();

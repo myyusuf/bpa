@@ -14,66 +14,42 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		Observable.call(_self, _subscribers);
 		
-		_options.dataFields = [
-		                       { name: 'code', type: 'string' },
-		                       { name: 'name', type: 'string' }
-		                   ];
-		_options.dataFieldId = "code";
+		//-------
 		
-		_options.url = url || BPA.Constant.workstructure.positionsUrl;
-		
-		_options.columns = [
-		                   { text: 'Code', datafield: 'code', width: '50%' },
-		                   { text: 'Name', datafield: 'name', width: '50%' }
-		                 ];
-		
-		var _addButton = $('<div style="margin-left: 2px;">New Position</div>');
-		_addButton.jqxButton({ width: '116', height: '16', theme: 'metro' });
-		_addButton.click(function(event){
-			Observable.prototype.publish.call(_self, {}, "onAddPosition");
-        });
-		
-		_options.toolbarButtons = [_addButton];
-		
-		var _simpleListGrid = new SimpleListGrid(container, _options);
-		
-		var _onContextMenuClick = function(commandObject){
-			var _command = commandObject.command;
-			var _rowData = commandObject.rowData;
-			console.log(_command);
-			
-			var _eventName = "";
-			if(_command == "add"){
-				_eventName = "onAddPosition";
-			}else if(_command == "edit"){
-				_eventName = "onEditPosition";
-			}else if(_command == "delete"){
-				_eventName = "onDeletePosition";
-			}
-			Observable.prototype.publish.call(_self, _getPositionFromRowData(_rowData), _eventName);
-		}
-		_simpleListGrid.subscribe(_onContextMenuClick, "onContextMenuClick");
-		
-		var _getPositionFromRowData = function(rowData){
-        	var _position = {};
-        	
-        	if(rowData){
-        		_position.code = rowData.code;
-            	_position.name = rowData.name;
-        	}
-        	
-        	return _position;
-        }
+		var _options = new primitives.orgdiagram.Config();
+		var _items = [];
+		var _buttons = [];
+        _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
+        _buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-person", "Add"));
         
-        this.refreshGrid = function(){
-        	_simpleListGrid.refreshGrid();
-        }
-        
-        this.getComponent = function(){
-        	return _simpleListGrid.getComponent();
-        }
-        
-        
+		var _maximumId = 0;
+		var id = ++_maximumId;
+		console.log('id --> ' + id);
+		
+		var _item = 
+            new primitives.orgdiagram.ItemConfig({
+                id: id,
+                parent: '',
+                title: 'firstName',
+                description: 'positionName',
+                context: {data: 'test'}
+            });
+		
+		_items.push(item);
+		
+		_options.items = items;
+		_options.cursorItem = 0;
+		_options.hasSelectorCheckbox = primitives.common.Enabled.True;
+		_options.buttons = buttons;
+		_options.hasButtons = primitives.common.Enabled.Auto;
+		_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
+		
+		var _chartContainer = $('<div></div>');
+		chartContainer.appendTo(container);
+		
+		chartContainer.orgDiagram(options);
+		chartContainer.orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+	        
 	}
 	
 	inheritPrototype(StructureView, Observable);

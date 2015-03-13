@@ -34,6 +34,7 @@
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
         "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
+        "primitives" : "../primitives/primitives.min",
         
         "notificationWindow": "../app/component/base/NotificationWindow",
         "bpaObservable": "../app/component/base/Observable"
@@ -161,6 +162,10 @@
         },
         "bpaObservable": {
             export: "Observable"
+        },
+    	"primitives": {
+            export: "$",
+            deps: ['jQuery']
         }
     },
     packages: [

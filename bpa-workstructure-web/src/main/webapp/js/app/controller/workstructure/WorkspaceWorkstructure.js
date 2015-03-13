@@ -47,6 +47,21 @@ define(["jQuery", "jqxcore"], function () {
             });
 		});
 		
+		$.subscribe("viewStructureViewEvent", function(e, data){
+			
+			var _gridContainer = $('<div></div>');
+        	
+			require(['./view/workstructure/StructureView'], function (StructureView) {
+				var _children = container.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				_gridContainer.appendTo(container);
+				
+            	var _structureView = new StructureView(_gridContainer);
+            });
+		});
+		
 	};
 	
 	return WorkspaceWorkstructure;
