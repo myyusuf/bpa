@@ -6,6 +6,8 @@ import id.co.oriza.bpa.workstructure.domain.model.Location;
 import id.co.oriza.bpa.workstructure.domain.model.LocationRepository;
 import id.co.oriza.bpa.workstructure.domain.model.Position;
 import id.co.oriza.bpa.workstructure.domain.model.PositionRepository;
+import id.co.oriza.bpa.workstructure.domain.model.Structure;
+import id.co.oriza.bpa.workstructure.domain.model.StructureRepository;
 
 import java.util.Collection;
 
@@ -28,6 +30,9 @@ public class WorkstructureApplicationService {
 	@Autowired
 	private LocationRepository locationRepository;
 	
+	@Autowired
+	private StructureRepository structureRepository;
+	
 	@Transactional(readOnly=true)
 	public Collection<Employee> allSimilarlyEmployeeIdOrNamedEmployees(String anEmployeeId, String aName, int aStart, int aLimit){
 		Collection<Employee> employees = this.employeeRepository().allSimilarlyEmployeeIdOrNamed(anEmployeeId, aName, aStart, aLimit);
@@ -45,6 +50,12 @@ public class WorkstructureApplicationService {
 		Collection<Location> locations = this.locationRepository().allSimilarlyCodedOrAddressed(aCode, anAddress, aStart, aLimit);
 		return locations;
 	}
+	
+	@Transactional(readOnly=true)
+	public Collection<Structure> allStructures(int aStart, int aLimit){
+		Collection<Structure> structures = this.structureRepository().all(aStart, aLimit);
+		return structures;
+	}
 
 	public EmployeeRepository employeeRepository() {
 		return employeeRepository;
@@ -56,6 +67,10 @@ public class WorkstructureApplicationService {
 
 	public LocationRepository locationRepository() {
 		return locationRepository;
+	}
+
+	public StructureRepository structureRepository() {
+		return structureRepository;
 	}
 
 }
