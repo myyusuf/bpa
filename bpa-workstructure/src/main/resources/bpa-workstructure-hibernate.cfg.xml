@@ -6,5 +6,6 @@
 		<mapping resource="id/co/oriza/bpa/workstructure/domain/model/Employee.hbm.xml" />
 		<mapping resource="id/co/oriza/bpa/workstructure/domain/model/Position.hbm.xml" />
 		<mapping resource="id/co/oriza/bpa/workstructure/domain/model/Location.hbm.xml" />
+		<mapping resource="id/co/oriza/bpa/workstructure/domain/model/Structure.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
