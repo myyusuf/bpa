@@ -12,6 +12,24 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		Observable.call(_self, _subscribers);
 		
+		var _sendData = function(url, data, requestType, onSuccess, onError){
+			$.ajax({
+			    url: url,
+			    type: requestType,
+			    data: data,
+			    beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+			    success: function(result) {
+			    	onSuccess(result);
+			    },
+			    error: function(jqXHR, status, error){
+			    	onError(jqXHR.status, error);
+			    }
+			});
+		};
+		
 		//-------
 		
 		var _options = new primitives.orgdiagram.Config();
@@ -23,56 +41,73 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		var _maximumId = 0;
 		
 		var _onSuccessGetStructuresData = function(result){
+			var _structures = result.data;
+			for(var _i = 0; _i<_structures.length; _i++){
+				
+				var _structure = _structures[_i];
+				var _item = 
+		            new primitives.orgdiagram.ItemConfig({
+		                id: ++_maximumId,
+		                parent: _structure.parentId,
+		                title: _structure.employee.name,
+		                description: "<b>" + _structure.position.name + "</b>",
+		                context: _structure,
+		                image: "service/workstructure/employee/loadimage/"
+		            });
+				
+				_items.push(_item);
+				
+				_options.items = _items;
+				_options.cursorItem = 0;
+				_options.hasSelectorCheckbox = primitives.common.Enabled.True;
+				_options.buttons = _buttons;
+				_options.hasButtons = primitives.common.Enabled.Auto;
+				_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
+				
+				var _chartContainer = $('<div id="orgchart" style="height: 500px;">dd</div>');
+				_chartContainer.appendTo(container);
+				
+				$('#orgchart').orgDiagram(_options);
+				$('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+			}
+		}
+		
+		var _onErrorGetStructuresData = function(result){
 			console.log("result : " + result);
 		}
 		
-		_sendData(BPA.BPA.Constant.workstructure.structuresUrl, {}, "GET", _onSuccessGetStructuresData, function(result){
-			
-		});
+		_sendData(BPA.Constant.workstructure.structuresUrl, {}, "GET", _onSuccessGetStructuresData, _onErrorGetStructuresData);
 		
-		var _id = ++_maximumId;
-		console.log('_maximumId --> ' + _maximumId);
 		
-		var _item = 
-            new primitives.orgdiagram.ItemConfig({
-                id: _id,
-                parent: null,
-                title: 'firstName',
-                description: 'positionName',
-                context: {data: 'test'},
-                image: "service/workstructure/employee/loadimage/"
-            });
 		
-		_items.push(_item);
+//		var _item = 
+//            new primitives.orgdiagram.ItemConfig({
+//                id: _id,
+//                parent: null,
+//                title: 'firstName',
+//                description: 'positionName',
+//                context: {data: 'test'},
+//                image: "service/workstructure/employee/loadimage/"
+//            });
+//		
+//		_items.push(_item);
 		
-		_options.items = _items;
-		_options.cursorItem = 0;
-		_options.hasSelectorCheckbox = primitives.common.Enabled.True;
-		_options.buttons = _buttons;
-		_options.hasButtons = primitives.common.Enabled.Auto;
-		_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
 		
-		var _chartContainer = $('<div id="orgchart" style="height: 500px;">dd</div>');
-		_chartContainer.appendTo(container);
-		
-		$('#orgchart').orgDiagram(_options);
-		$('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
-		
-		var _newItem = new primitives.orgdiagram.ItemConfig({
-            id: ++_maximumId,
-            parent: _id,
-            title: 'employeeName',
-            description: 'positionName',
-            context: {data: 'test'},
-            image: "service/workstructure/employee/loadimage/"
-        });
-
-    	_items.push(_newItem);
-        $("#orgchart").orgDiagram({
-            items: _items,
-            cursorItem: _newItem.id
-        });
-        $('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+//		var _newItem = new primitives.orgdiagram.ItemConfig({
+//            id: ++_maximumId,
+//            parent: _id,
+//            title: 'employeeName',
+//            description: 'positionName',
+//            context: {data: 'test'},
+//            image: "service/workstructure/employee/loadimage/"
+//        });
+//
+//    	_items.push(_newItem);
+//        $("#orgchart").orgDiagram({
+//            items: _items,
+//            cursorItem: _newItem.id
+//        });
+//        $('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
 	        
 		
 		/*var _chartContainer = $('<div id="orgchart" style="height: 500px; background-color: silver;">dd</div>');
@@ -110,23 +145,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 
         jQuery("#orgchart").orgDiagram(options);*/
         
-        var _sendData = function(url, data, requestType, onSuccess, onError){
-			$.ajax({
-			    url: url,
-			    type: requestType,
-			    data: data,
-			    beforeSend: function(xhr) {
-		            xhr.setRequestHeader("Accept", "application/json");
-		            xhr.setRequestHeader("Content-Type", "application/json");
-		        },
-			    success: function(result) {
-			    	onSuccess(result);
-			    },
-			    error: function(jqXHR, status, error){
-			    	onError(jqXHR.status, error);
-			    }
-			});
-		};
+        
 	}
 	
 	inheritPrototype(StructureView, Observable);
