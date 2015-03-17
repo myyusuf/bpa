@@ -22,6 +22,14 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         
 		var _maximumId = 0;
 		
+		var _onSuccessGetStructuresData = function(result){
+			console.log("result : " + result);
+		}
+		
+		_sendData(BPA.BPA.Constant.workstructure.structuresUrl, {}, "GET", _onSuccessGetStructuresData, function(result){
+			
+		});
+		
 		var _id = ++_maximumId;
 		console.log('_maximumId --> ' + _maximumId);
 		

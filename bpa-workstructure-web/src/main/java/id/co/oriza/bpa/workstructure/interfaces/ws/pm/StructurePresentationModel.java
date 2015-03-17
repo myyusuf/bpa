@@ -11,6 +11,14 @@ public class StructurePresentationModel {
 		this.structure = structure;
 	}
 	
+	public String getStructureId(){
+		return structure.structureId();
+	}
+	
+	public String getParentId(){
+		return structure.parentId();
+	}
+	
 	public EmployeePresentationModel getEmployee(){
 		return new EmployeePresentationModel(structure.employee());
 	}

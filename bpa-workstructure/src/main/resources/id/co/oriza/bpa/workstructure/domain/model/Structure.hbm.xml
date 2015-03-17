@@ -8,6 +8,8 @@
 			<generator class="native"/>
 		</id>
 		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
+		<property name="structureId" column="STRUCTURE_ID" type="java.lang.String" />
+		<property name="parentId" column="PARENT_ID" type="java.lang.String" />
 		<many-to-one name="employee" class="id.co.oriza.bpa.workstructure.domain.model.Employee" column="EMPLOYEE_ID"/>
 		<many-to-one name="position" class="id.co.oriza.bpa.workstructure.domain.model.Position" column="POSITION_ID"/>
 		

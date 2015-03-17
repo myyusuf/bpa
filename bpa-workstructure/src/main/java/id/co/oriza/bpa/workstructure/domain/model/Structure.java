@@ -1,5 +1,7 @@
 package id.co.oriza.bpa.workstructure.domain.model;
 
+import java.util.UUID;
+
 import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
 public class Structure extends ConcurrencySafeEntity {
@@ -9,7 +11,8 @@ public class Structure extends ConcurrencySafeEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Long parentId;
+	private String structureId;
+	private String parentId;
 	private Employee employee;
 	private Position position;
 
@@ -17,14 +20,15 @@ public class Structure extends ConcurrencySafeEntity {
 		super();
 	}
 
-	public Structure(Long parentId, Employee employee, Position position) {
+	public Structure(String aParentId, Employee anEmployee, Position aPosition) {
 		this();
-		this.parentId = parentId;
-		this.employee = employee;
-		this.position = position;
+		this.setStructureId(UUID.randomUUID().toString().toUpperCase());
+		this.setParentId(parentId);
+		this.setEmployee(anEmployee);
+		this.setPosition(aPosition);
 	}
 
-	public Long parentId() {
+	public String parentId() {
 		return parentId;
 	}
 
@@ -36,7 +40,7 @@ public class Structure extends ConcurrencySafeEntity {
 		return position;
 	}
 
-	protected void setParentId(Long parentId) {
+	protected void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 
@@ -50,7 +54,7 @@ public class Structure extends ConcurrencySafeEntity {
 		this.position = aPosition;
 	}
 	
-	public void changeParentId(Long aParentId) {
+	public void changeParentId(String aParentId) {
 		this.setParentId(aParentId);
 	}
 	
@@ -60,6 +64,14 @@ public class Structure extends ConcurrencySafeEntity {
 	
 	public void changePosition(Position aPosition) {
 		this.setPosition(aPosition);
+	}
+
+	public String structureId() {
+		return structureId;
+	}
+
+	protected void setStructureId(String structureId) {
+		this.structureId = structureId;
 	}
 
 }
