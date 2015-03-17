@@ -101,6 +101,24 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         options.hasSelectorCheckbox = primitives.common.Enabled.True;
 
         jQuery("#orgchart").orgDiagram(options);*/
+        
+        var _sendData = function(url, data, requestType, onSuccess, onError){
+			$.ajax({
+			    url: url,
+			    type: requestType,
+			    data: data,
+			    beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+			    success: function(result) {
+			    	onSuccess(result);
+			    },
+			    error: function(jqXHR, status, error){
+			    	onError(jqXHR.status, error);
+			    }
+			});
+		};
 	}
 	
 	inheritPrototype(StructureView, Observable);
