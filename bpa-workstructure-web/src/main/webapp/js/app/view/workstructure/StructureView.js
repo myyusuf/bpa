@@ -12,6 +12,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		Observable.call(_self, _subscribers);
 		
+		var _randomId = BPA.Util.getRandomId("workstructureStructureView");
+		
 		var _sendData = function(url, data, requestType, onSuccess, onError){
 			$.ajax({
 			    url: url,
@@ -38,6 +40,10 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
         _buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-person", "Add"));
         
+        var _chartContainerId = "orgchart_" + _randomId;
+		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 500px;">[Loading Organizational Chart...]</div>');
+		_chartContainer.appendTo(container);
+        
 		var _maximumId = 0;
 		
 		var _onSuccessGetStructuresData = function(result){
@@ -50,9 +56,9 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		                id: ++_maximumId,
 		                parent: _structure.parentId,
 		                title: _structure.employee.name,
-		                description: "<b>" + _structure.position.name + "</b>",
+		                description: _structure.position.name,
 		                context: _structure,
-		                image: "service/workstructure/employee/loadimage/"
+		                image: "service/workstructure/employee/image/" + _structure.employee.employeeId
 		            });
 				
 				_items.push(_item);
@@ -64,11 +70,9 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 				_options.hasButtons = primitives.common.Enabled.Auto;
 				_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
 				
-				var _chartContainer = $('<div id="orgchart" style="height: 500px;">dd</div>');
-				_chartContainer.appendTo(container);
-				
-				$('#orgchart').orgDiagram(_options);
-				$('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+				$('#' + _chartContainerId).empty();
+				$('#' + _chartContainerId).orgDiagram(_options);
+				$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
 			}
 		}
 		
