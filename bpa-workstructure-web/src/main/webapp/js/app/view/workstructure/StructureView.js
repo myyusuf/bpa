@@ -53,7 +53,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 				var _structure = _structures[_i];
 				var _item = 
 		            new primitives.orgdiagram.ItemConfig({
-		                id: ++_maximumId,
+		                id: _structure.structureId,
 		                parent: _structure.parentId,
 		                title: _structure.employee.name,
 		                description: _structure.position.name,
@@ -63,17 +63,18 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 				
 				_items.push(_item);
 				
-				_options.items = _items;
-				_options.cursorItem = 0;
-				_options.hasSelectorCheckbox = primitives.common.Enabled.True;
-				_options.buttons = _buttons;
-				_options.hasButtons = primitives.common.Enabled.Auto;
-				_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
-				
-				$('#' + _chartContainerId).empty();
-				$('#' + _chartContainerId).orgDiagram(_options);
-				$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
 			}
+			
+			_options.items = _items;
+			_options.cursorItem = 0;
+			_options.hasSelectorCheckbox = primitives.common.Enabled.True;
+			_options.buttons = _buttons;
+			_options.hasButtons = primitives.common.Enabled.Auto;
+			_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
+			
+			$('#' + _chartContainerId).empty();
+			$('#' + _chartContainerId).orgDiagram(_options);
+			$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
 		}
 		
 		var _onErrorGetStructuresData = function(result){
