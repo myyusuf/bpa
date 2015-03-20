@@ -1,6 +1,6 @@
-define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+define(["bpaObservable", "component/base/SimpleListGrid", "view/workstructure/StructureEdit", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
         "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jQueryUi", "primitives"
-        ], function (Observable, SimpleListGrid) {
+        ], function (Observable, SimpleListGrid, StructureEdit) {
 	
 	var StructureView = function(container, url){
 		
@@ -32,13 +32,44 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 			});
 		};
 		
+		function _getSubItemsForParent(items, parentItem) {
+            var _children = {},
+                _itemsById = {},
+                _index, _len, _item;
+            for (_index = 0, _len = items.length; _index < _len; _index += 1) {
+                var _item = _items[_index];
+                if (_children[_item.parent] == null) {
+                    _children[_item.parent] = [];
+                }
+                _children[_item.parent].push(_item);
+            }
+            var _newChildren = _children[_parentItem.id];
+            var _result = {};
+            if (_newChildren != null) {
+                while (_newChildren.length > 0) {
+                    var _tempChildren = [];
+                    for (var _index = 0; _index < _newChildren.length; _index++) {
+                        var _item = _newChildren[_index];
+                        _result[_item.id] = _item;
+                        if (_children[_item.id] != null) {
+                            _tempChildren = _tempChildren.concat(_children[_item.id]);
+                        }
+                    }
+                    _newChildren = _tempChildren;
+                }
+            }
+            return _result;
+        };
+
+		
 		//-------
 		
 		var _options = new primitives.orgdiagram.Config();
 		var _items = [];
 		var _buttons = [];
+		_buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-person", "Add"));
+        _buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
-        _buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-person", "Add"));
         
         var _chartContainerId = "orgchart_" + _randomId;
 		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 500px;">[Loading Organizational Chart...]</div>');
@@ -71,6 +102,52 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 			_options.buttons = _buttons;
 			_options.hasButtons = primitives.common.Enabled.Auto;
 			_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
+			_options.onButtonClick = function (e, /*primitives.orgdiagram.EventArgs*/ data) {
+                switch (data.name) {
+                    case "delete":
+                        if (/*parentItem: primitives.orgdiagram.ItemConfig*/data.parentItem == null) {
+                            alert("You are trying to delete root item!");
+                        }
+                        else {
+                            var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
+                            var _newItems = [];
+                            /* collect all children of deleted items, we are going to delete them as well. */
+                            var _itemsToBeDeleted = _getSubItemsForParent(items, /*context: primitives.orgdiagram.ItemConfig*/data.context);
+                            /* add deleted item to that collection*/
+                            _itemsToBeDeleted[data.context.structureId] = true;
+
+                            /* copy to newItems collection only remaining items */
+                            for (var _index = 0, _len = _items.length; _index < _len; _index += 1) {
+                                var _item = _items[_index];
+                                if (!_itemsToBeDeleted.hasOwnProperty(_item.structureId)) {
+                                    _newItems.push(_item);
+                                }
+                            }
+                            /* update items list in chart */
+                            $('#' + _chartContainerId).orgDiagram({
+                                items: _newItems,
+                                cursorItem: data.parentItem.id
+                            });
+                            $('#' + _chartContainerId).orgDiagram("update", /*Refresh: use fast refresh to update chart*/ primitives.orgdiagram.UpdateMode.Refresh);
+
+                        }
+                        
+                        break;
+                        
+                    case "add":
+                    	
+                    	var _structureEdit = new StructureEdit(container, {});
+                    	_structureEdit.open();
+                		console.log("add structure");
+                		
+                        break;
+                    case "edit":
+                    	
+                		console.log("edit");
+                		
+                        break;
+                }
+            };
 			
 			$('#' + _chartContainerId).empty();
 			$('#' + _chartContainerId).orgDiagram(_options);

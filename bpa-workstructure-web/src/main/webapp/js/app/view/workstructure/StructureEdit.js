@@ -62,7 +62,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             url: _employeeComboBoxUrl
         };
         var _employeeDataAdapter = new $.jqx.dataAdapter(_employeeComboSource,{});
-        _employeeComboBox = _employeeComboBox.jqxComboBox({ selectedIndex: 0, source: _structureGroupDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        _employeeComboBox = _employeeComboBox.jqxComboBox({ selectedIndex: 0, source: _employeeDataAdapter, displayMember: "name", valueMember: "employeeId", width: 233, height: 21,
         	promptText: "Select Employee...",
         	renderer: function (index, label, value) {
                 var _item = _employeeDataAdapter.records[index];
@@ -119,6 +119,47 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
         
 		//------------------------------------------------------
         
+        
+        
+        _newRow = $('<tr></tr>');
+		_newRow.appendTo(_editTable);
+		
+		var _saveButtonLabel = $('<td></td>');
+		_saveButtonLabel.appendTo(_newRow);
+		var _buttonColumn = $('<td colspan="2"></td>');
+		var _saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
+		_saveButton.appendTo(_buttonColumn);
+		
+		var _cancelButton = $('<input type="button" value="Cancel"/>');
+		_cancelButton.appendTo(_buttonColumn);
+		
+		_buttonColumn.appendTo(_newRow);
+		
+		_windowHeader.appendTo(_editWindow);
+		_windowContent.appendTo(_editWindow);
+        _editWindow.appendTo(container);
+        
+        _editWindow.jqxWindow('resizable', true);
+        _editWindow.jqxWindow('draggable', true);
+        
+        _editWindow.jqxWindow({
+        	autoOpen: false,
+            showCollapseButton: false, 
+            isModal: true,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 328, width: 394,
+            initContent: function () {
+            	_editWindow.jqxWindow('focus');
+            },
+            theme: 'metro'
+        });
+        
+        _editWindow.on('close', function (event) { 
+        	_editWindow.jqxWindow('destroy');
+        });
+        
+//        _codeInput.jqxInput({ theme: 'metro' });
+//        _nameInput.jqxInput({ theme: 'metro' });
+//        _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
         
         
         _editForm.jqxValidator({
