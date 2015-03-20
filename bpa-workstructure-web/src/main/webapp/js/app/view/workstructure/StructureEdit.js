@@ -62,7 +62,7 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             url: _employeeComboBoxUrl
         };
         var _employeeDataAdapter = new $.jqx.dataAdapter(_employeeComboSource,{});
-        _employeeComboBox = _employeeComboBox.jqxComboBox({ selectedIndex: 0, source: _employeeDataAdapter, displayMember: "name", valueMember: "employeeId", width: 233, height: 21,
+        _employeeComboBox = _employeeComboBox.jqxComboBox({ source: _employeeDataAdapter, displayMember: "name", valueMember: "employeeId", width: 233, height: 21,
         	promptText: "Select Employee...",
         	renderer: function (index, label, value) {
                 var _item = _employeeDataAdapter.records[index];

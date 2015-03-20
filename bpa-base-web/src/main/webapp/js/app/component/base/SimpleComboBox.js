@@ -32,7 +32,7 @@ define(["jqxcombobox"], function () {
             }
         	
         });
-        var _simpleComboBox = container.jqxComboBox({ selectedIndex: 0, source: _simpleDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        var _simpleComboBox = container.jqxComboBox({ source: _simpleDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
         	multiSelect: true,
         	renderer: function (index, label, value) {
                 var _item = _simpleDataAdapter.records[index];

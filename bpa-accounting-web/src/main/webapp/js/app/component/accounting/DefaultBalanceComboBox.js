@@ -29,7 +29,7 @@ define(["jqxcombobox"], function () {
             }
         	
         });
-        var _defaultBalanceComboBox = container.jqxComboBox({ selectedIndex: 0, source: _defaultBalanceDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        var _defaultBalanceComboBox = container.jqxComboBox({ source: _defaultBalanceDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
         	
         	renderer: function (index, label, value) {
                 var _item = _defaultBalanceDataAdapter.records[index];

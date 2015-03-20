@@ -67,7 +67,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
             }*/
         	
         });
-        var _accountGroupComboBox = _accountGroupInput.jqxComboBox({ selectedIndex: 0, source: _accountGroupDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        var _accountGroupComboBox = _accountGroupInput.jqxComboBox({ source: _accountGroupDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
         	promptText: "Select Account Group...",
         	renderer: function (index, label, value) {
                 var _item = _accountGroupDataAdapter.records[index];
@@ -160,7 +160,7 @@ define(["bpaObservable", "component/accounting/DefaultBalanceComboBox", "jqxbutt
             }
         	
         });*/
-        var _parentComboBox = _parentInput.jqxComboBox({ selectedIndex: 0, 
+        var _parentComboBox = _parentInput.jqxComboBox({  
         	//source: _parentDataAdapter, 
         	displayMember: "code", valueMember: "code", 
         	width: 233, height: 21,
