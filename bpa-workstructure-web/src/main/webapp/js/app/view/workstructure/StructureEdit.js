@@ -10,6 +10,7 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
 		
 		var _employeeComboBoxUrl = BPA.Constant.workstructure.employeesUrl;
 		var _positionComboboxUrl =  BPA.Constant.workstructure.positionsUrl;
+		var _locationComboboxUrl =  BPA.Constant.workstructure.locationsUrl;
 		
 		var _subscribers = {
 			any:[]
@@ -117,9 +118,9 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         
       //Position Combo-----------------------------------------------
-		var _newRow = $('<tr></tr>');
-		var _rowLabel = $('<td style="width: 100px;">Position</td>');
-		var _rowFirstColumn = $('<td style="width: 255px;"></td>');
+		_newRow = $('<tr></tr>');
+		_rowLabel = $('<td style="width: 100px;">Position</td>');
+		_rowFirstColumn = $('<td style="width: 255px;"></td>');
 		_newRow.appendTo(_editTable);
 		_rowLabel.appendTo(_newRow);
 		_rowFirstColumn.appendTo(_newRow);
@@ -130,7 +131,7 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
 		$(BPA.Constant.requiredFieldSymbol).appendTo(_rowFirstColumn);
 		
 		
-		var _positionComboBox = new SimpleComboBox(_positionComboBox,{url: _positionComboboxUrl});
+		var _positionComboBox = new SimpleComboBox(_positionComboBox,{promptText: 'Select Position...', url: _positionComboboxUrl});
         
         _positionComboBox.on('bindingComplete', function (event) {
         	
@@ -145,6 +146,39 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         _positionComboBox.on('change', function (event){
             _editForm.jqxValidator('validateInput', "#" + _positionComboBox.attr("id"));
+	    });
+        
+		//------------------------------------------------------
+        
+        //Location Combo-----------------------------------------------
+		_newRow = $('<tr></tr>');
+		_rowLabel = $('<td style="width: 100px;">Location</td>');
+		_rowFirstColumn = $('<td style="width: 255px;"></td>');
+		_newRow.appendTo(_editTable);
+		_rowLabel.appendTo(_newRow);
+		_rowFirstColumn.appendTo(_newRow);
+		
+		var _locationComboBox = $('<div style="margin-top: 3px; margin-bottom: 0px; margin-left: 0px; float: left;"></div>');
+		_locationComboBox.attr("id", "locationComboBox" + _randomId);
+		_locationComboBox.appendTo(_rowFirstColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_rowFirstColumn);
+		
+		
+		var _locationComboBox = new SimpleComboBox(_locationComboBox,{promptText: 'Select Location...', url: _locationComboboxUrl, displayMember : "address", valueMember: "code"});
+        
+        _locationComboBox.on('bindingComplete', function (event) {
+        	
+        	if(_editedStructure.location != undefined && _editedAccountGroup.location != null){
+        		var _selectedItem = _locationComboBox.jqxComboBox('getItemByValue', _editedStructure.location.code);
+            	_locationComboBox.jqxComboBox('selectItem', _selectedItem);
+        	}
+        	
+        	_editForm.jqxValidator('hide');
+        	
+        });
+        
+        _locationComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _locationComboBox.attr("id"));
 	    });
         
 		//------------------------------------------------------
@@ -176,7 +210,7 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         	autoOpen: false,
             showCollapseButton: false, 
             isModal: true,
-            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 328, width: 394,
+            maxHeight: 400, maxWidth: 700, minHeight: 150, minWidth: 200, height: 187, width: 376,
             initContent: function () {
             	_editWindow.jqxWindow('focus');
             },
@@ -186,11 +220,6 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         _editWindow.on('close', function (event) { 
         	_editWindow.jqxWindow('destroy');
         });
-        
-//        _codeInput.jqxInput({ theme: 'metro' });
-//        _nameInput.jqxInput({ theme: 'metro' });
-//        _descriptionInput.jqxInput({ theme: 'metro', width: 235, height: 80 });
-        
         
         _editForm.jqxValidator({
         	closeOnClick: true,
@@ -204,7 +233,25 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
 	                    	}
 	                    	return true;
                     	}
-                     }
+                     },
+                     { input: "#" + _positionComboBox.attr("id"), message: 'Position is required', action: 'keyup, blur', 
+                     	rule: function(input){
+ 	                    	var _val = _positionComboBox.jqxComboBox('val');
+ 	                    	if(_val==""){
+ 	                    		return false;
+ 	                    	}
+ 	                    	return true;
+                     	}
+                      },
+                      { input: "#" + _locationComboBox.attr("id"), message: 'Location is required', action: 'keyup, blur', 
+                      	rule: function(input){
+  	                    	var _val = _locationComboBox.jqxComboBox('val');
+  	                    	if(_val==""){
+  	                    		return false;
+  	                    	}
+  	                    	return true;
+                      	}
+                       }
                    
                    ]
         	});

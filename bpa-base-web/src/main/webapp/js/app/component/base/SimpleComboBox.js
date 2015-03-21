@@ -11,8 +11,9 @@ define(["jqxcombobox"], function () {
 		}
 		
 		var _promptText = _options.promptText || "Please Select...";
-		var _displayMember = _options.displayMember || "code";
-		var _valueMember = _options.valueMember || "name";
+		var _valueMember = _options.valueMember || "code";
+		var _displayMember = _options.displayMember || "name";
+		
 		var _multiSelect = _options.multiSelect || false;
 		
 		var _theme = _options.theme || "metro";
@@ -21,8 +22,8 @@ define(["jqxcombobox"], function () {
         {
             datatype: "json",
             datafields: [
-                { name: 'code' },
-                { name: 'name' }
+                { name: _valueMember },
+                { name: _displayMember }
             ],
             url: _simpleComboBoxUrl
         };
