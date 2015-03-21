@@ -278,8 +278,8 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
 //        	var _parentComboItem = _parentComboBox.jqxComboBox('getSelectedItem');
 //        	var _defaultBalanceComboItem = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
 //        	
-//        	var _savedData = {};
-//        	_savedData.code = _codeInput.val();
+        	var _savedData = {};
+        	_savedData.employeeId =_employeeComboBox.jqxComboBox('getSelectedItem').value;
 //        	_savedData.name = _nameInput.val();;
 //        	_savedData.description = _descriptionInput.val();
 //        	
@@ -297,6 +297,12 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
 //        	}else{
 //        		Observable.prototype.publish.call(_self, _savedData, "addnewstructure");
 //        	}
+        	
+        	if(_isEditForm){
+        		Observable.prototype.publish.call(_self, _savedData, "onSaveStructure");
+        	}else{
+        		Observable.prototype.publish.call(_self, _savedData, "onSaveNewStructure");
+        	}
         }
         
         this.open = function(){

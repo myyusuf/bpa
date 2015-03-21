@@ -1,6 +1,6 @@
-define(["bpaObservable", "component/base/SimpleListGrid", "view/workstructure/StructureEdit", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
-        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jQueryUi", "primitives"
-        ], function (Observable, SimpleListGrid, StructureEdit) {
+define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", "view/workstructure/StructureEdit", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput", "jqxmenu",
+        "jqxgrid", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.edit", "jqxgrid.selection", "jqxnotification", "jQueryUi", "primitives"
+        ], function (Observable, NotificationWindow, SimpleListGrid, StructureEdit) {
 	
 	var StructureView = function(container, url){
 		
@@ -11,6 +11,15 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workstructure/St
 		};
 		
 		Observable.call(_self, _subscribers);
+		
+		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
+        });
+		var _successDeleteNotification = $('<div>Data successfully deleted</div>').jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
+        });
 		
 		var _randomId = BPA.Util.getRandomId("workstructureStructureView");
 		
@@ -137,6 +146,25 @@ define(["bpaObservable", "component/base/SimpleListGrid", "view/workstructure/St
                     case "add":
                     	
                     	var _structureEdit = new StructureEdit(container, {});
+                    	
+                    	var _onSaveNewStructure = function(editedStructure){
+        					
+        					var _requestType = "PUT";
+        					
+        					var _onSuccess = function(result){// Depends on new _employeeEdit instance
+        						console.log('Success save structure : ' + result);
+        						_successNotification.jqxNotification("open");
+        					}
+        					
+        					var _onError = function(status, error){
+        						var _errorWindow = new NotificationWindow(container, {title:'Error Saving Structure', 
+        							content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
+        					}
+        					
+        					_sendData(BPA.Constant.workstructure.structuresUrl, editedStructure, _requestType, _onSuccess, _onError);
+        				}
+                    	_structureEdit.subscribe(_onSaveNewStructure, "onSaveNewStructure");
+        				
                     	_structureEdit.open();
                 		console.log("add structure");
                 		
