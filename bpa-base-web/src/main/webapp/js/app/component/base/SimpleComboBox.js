@@ -11,6 +11,10 @@ define(["jqxcombobox"], function () {
 		}
 		
 		var _promptText = _options.promptText || "Please Select...";
+		var _displayMember = _options.displayMember || "code";
+		var _valueMember = _options.valueMember || "name";
+		var _multiSelect = _options.multiSelect || false;
+		
 		var _theme = _options.theme || "metro";
 		
 		var _simpleComboSource =
@@ -30,13 +34,18 @@ define(["jqxcombobox"], function () {
             }
         	
         });
-        var _simpleComboBox = container.jqxComboBox({ source: _simpleDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        var _simpleComboBox = container.jqxComboBox({ source: _simpleDataAdapter, displayMember: _displayMember, valueMember: _valueMember, width: 233, height: 21,
         	promptText: _promptText, 
-        	multiSelect: true,
+        	multiSelect: _multiSelect,
         	renderer: function (index, label, value) {
                 var _item = _simpleDataAdapter.records[index];
                 if (_item != null) {
-                	var _label = _item.name;
+                	var _label = '';
+                	if(_item[_valueMember] != ''){
+                		_label = _item[_displayMember] + " (" + _item[_valueMember] + ")";
+                	}else{
+                		_label = _item[_displayMember];
+                	}
                 	return _label;
                 }
                 
@@ -46,12 +55,20 @@ define(["jqxcombobox"], function () {
             renderSelectedItem: function(index, item){
                 var _item = _simpleDataAdapter.records[index];
                 if (_item != null) {
-                	var _label = _item.name;
+                	
+                	var _label = '';
+                	if(_item[_valueMember] != ''){
+                		_label = _item[_displayMember] + " (" + _item[_valueMember] + ")";
+                	}else{
+                		_label = _item[_displayMember];
+                	}
                 	return _label;
+                    
                 }
                 
                 return '';   
             },
+            
             theme: _theme
         });
         
