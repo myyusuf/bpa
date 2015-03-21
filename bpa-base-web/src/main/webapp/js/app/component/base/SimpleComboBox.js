@@ -5,10 +5,13 @@ define(["jqxcombobox"], function () {
 		
 		var _options = options || {};
 		
-		var _simpleComboBoxUrl = _options.simpleComboBoxUrl;
+		var _simpleComboBoxUrl = _options.url;
 		if(!_simpleComboBoxUrl){
-			throw "Parameter simpleComboBoxUrl is required";
+			throw "Parameter url is required";
 		}
+		
+		var _promptText = _options.promptText || "Please Select...";
+		var _theme = _options.theme || "metro";
 		
 		var _simpleComboSource =
         {
@@ -22,17 +25,13 @@ define(["jqxcombobox"], function () {
         var _simpleDataAdapter = new $.jqx.dataAdapter(_simpleComboSource,{
         	
         	formatData: function (data) {
-                   data.selfAccountCode = data.code;
+//                   data.selfAccountCode = data.code;
                    return data;
-            }, 
-          //this records.splice(0, 0, {code: '', name: '--Please Select--'}); placed here to prevent error max call exceed, because if _records.splice(0, 0, {code: '', name: '--Please Select--'}) is placed in 'bindingComplete' and then called when records length == 0, calling the 'insertAt : 0' will cause 'bindingComplete' recalled.
-            beforeLoadComplete: function (records) {
-            	records.splice(0, 0, {code: '', name: '--Please Select--'});
-                return records;
             }
         	
         });
         var _simpleComboBox = container.jqxComboBox({ source: _simpleDataAdapter, displayMember: "code", valueMember: "code", width: 233, height: 21,
+        	promptText: _promptText, 
         	multiSelect: true,
         	renderer: function (index, label, value) {
                 var _item = _simpleDataAdapter.records[index];
@@ -53,7 +52,7 @@ define(["jqxcombobox"], function () {
                 
                 return '';   
             },
-            theme: 'metro'
+            theme: _theme
         });
         
         return _simpleComboBox;

@@ -1,4 +1,4 @@
-define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable) {
+define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleComboBox) {
 	
 	var StructureEdit = function(container, options){
 		
@@ -113,9 +113,39 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox"
             _editForm.jqxValidator('validateInput', "#" + _employeeComboBox.attr("id"));
 	    });
         
-//        if(_isEditForm){
-//        	_employeeComboBox.jqxComboBox({ disabled: true }); 
-//        }
+		//------------------------------------------------------
+        
+        
+      //Position Combo-----------------------------------------------
+		var _newRow = $('<tr></tr>');
+		var _rowLabel = $('<td style="width: 100px;">Position</td>');
+		var _rowFirstColumn = $('<td style="width: 255px;"></td>');
+		_newRow.appendTo(_editTable);
+		_rowLabel.appendTo(_newRow);
+		_rowFirstColumn.appendTo(_newRow);
+		
+		var _positionComboBox = $('<div style="margin-top: 3px; margin-bottom: 0px; margin-left: 0px; float: left;"></div>');
+		_positionComboBox.attr("id", "positionComboBox" + _randomId);
+		_positionComboBox.appendTo(_rowFirstColumn);
+		$(BPA.Constant.requiredFieldSymbol).appendTo(_rowFirstColumn);
+		
+		
+		var _positionComboBox = new SimpleComboBox(_positionComboBox,{url: _positionComboboxUrl});
+        
+        _positionComboBox.on('bindingComplete', function (event) {
+        	
+        	if(_editedStructure.position != undefined && _editedAccountGroup.position != null){
+        		var _selectedItem = _positionComboBox.jqxComboBox('getItemByValue', _editedStructure.position.code);
+            	_positionComboBox.jqxComboBox('selectItem', _selectedItem);
+        	}
+        	
+        	_editForm.jqxValidator('hide');
+        	
+        });
+        
+        _positionComboBox.on('change', function (event){
+            _editForm.jqxValidator('validateInput', "#" + _positionComboBox.attr("id"));
+	    });
         
 		//------------------------------------------------------
         
