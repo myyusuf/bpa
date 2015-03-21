@@ -70,7 +70,29 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             return _result;
         };
 
+        //-------
+        
+        var _toolbarContainer = $('<div style="width: 100%; background-color: #f4f4f4; height: 35px; padding-left: 15px;"></div>');
+        _toolbarContainer.appendTo(container);
+        
+        var _toolbarTable = $('<table></table>');
+        _toolbarTable.appendTo(_toolbarContainer);
 		
+		var _newRow = $('<tr></tr>');
+		_newRow.appendTo(_toolbarTable);
+		var _firstColumn = $('<td></td>');
+		_firstColumn.appendTo(_newRow);
+		var _secondColumn = $('<td></td>');
+		_secondColumn.appendTo(_newRow);
+        
+    	var _addButton = $('<div>Add Root</div>');
+    	_addButton.appendTo(_firstColumn);
+    	_addButton.jqxButton({ width: 80, height: 15, theme: 'metro' });
+    	
+    	var _saveButton = $('<div>Save</div>');
+    	_saveButton.appendTo(_secondColumn);
+    	_saveButton.jqxButton({ width: 80, height: 15, theme: 'metro' });
+            	
 		//-------
 		
 		var _options = new primitives.orgdiagram.Config();

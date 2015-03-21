@@ -33,6 +33,7 @@
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
+        
         "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
         
         "jQueryUi": "../jqueryui/1.10.4/jquery-ui.min",
