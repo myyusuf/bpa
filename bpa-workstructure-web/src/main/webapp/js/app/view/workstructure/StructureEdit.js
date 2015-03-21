@@ -272,31 +272,23 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         	_editWindow.jqxWindow('destroy');
         });
         
+       var _generateUUID = function(){
+            var d = new Date().getTime();
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = (d + Math.random()*16)%16 | 0;
+                d = Math.floor(d/16);
+                return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+            });
+            return uuid;
+        };
+        
         var _saveStructure = function(){
         	
-//        	var _structureGroupComboItem = _structureGroupComboBox.jqxComboBox('getSelectedItem');
-//        	var _parentComboItem = _parentComboBox.jqxComboBox('getSelectedItem');
-//        	var _defaultBalanceComboItem = _defaultBalanceComboBox.jqxComboBox('getSelectedItem');
-//        	
         	var _savedData = {};
-        	_savedData.employeeId =_employeeComboBox.jqxComboBox('getSelectedItem').value;
-//        	_savedData.name = _nameInput.val();;
-//        	_savedData.description = _descriptionInput.val();
-//        	
-//        	_savedData.structureGroup = {};
-//        	_savedData.structureGroup.code = _structureGroupComboItem.value;
-//        	
-//        	_savedData.parent = {};
-//        	_savedData.parent.code = _parentComboItem.value;
-//        	
-//        	_savedData.defaultBalance = {};
-//        	_savedData.defaultBalance.code = _defaultBalanceComboItem.value;
-//        	
-//        	if(_isEditForm){
-//        		Observable.prototype.publish.call(_self, _savedData, "updatestructure");
-//        	}else{
-//        		Observable.prototype.publish.call(_self, _savedData, "addnewstructure");
-//        	}
+        	_savedData.structureId = _generateUUID();
+        	_savedData.employee =_employeeComboBox.jqxComboBox('getSelectedItem').originalItem;
+        	_savedData.position =_positionComboBox.jqxComboBox('getSelectedItem').originalItem;
+        	_savedData.location =_locationComboBox.jqxComboBox('getSelectedItem').originalItem;
         	
         	if(_isEditForm){
         		Observable.prototype.publish.call(_self, _savedData, "onSaveStructure");

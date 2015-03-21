@@ -147,21 +147,33 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     	
                     	var _structureEdit = new StructureEdit(container, {});
                     	
+                    	var _parentId = data.context.context.structureId;
+                    	
                     	var _onSaveNewStructure = function(editedStructure){
+                    		
+                    		console.log("_parentId : " + _parentId);
+                    		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
         					
-        					var _requestType = "PUT";
-        					
-        					var _onSuccess = function(result){// Depends on new _employeeEdit instance
-        						console.log('Success save structure : ' + result);
-        						_successNotification.jqxNotification("open");
-        					}
-        					
-        					var _onError = function(status, error){
-        						var _errorWindow = new NotificationWindow(container, {title:'Error Saving Structure', 
-        							content: 'Error status : '+ status + '<br>Error message : '+ error, type: 'error'});
-        					}
-        					
-        					_sendData(BPA.Constant.workstructure.structuresUrl, editedStructure, _requestType, _onSuccess, _onError);
+                    		var _item = 
+            		            new primitives.orgdiagram.ItemConfig({
+            		                id: editedStructure.structureId,
+            		                parent: _parentId,
+            		                title: editedStructure.employee.name,
+            		                description: editedStructure.position.name,
+            		                context: editedStructure,
+            		                image: "service/workstructure/employee/image/" + editedStructure.employee.employeeId
+            		            });
+            				
+            				_items.push(_item);
+            				
+            				$('#' + _chartContainerId).orgDiagram({
+            		            items: _items,
+            		            cursorItem: editedStructure.structureId
+            		        });
+            				$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+            				
+            				_structureEdit.close();
+                    		
         				}
                     	_structureEdit.subscribe(_onSaveNewStructure, "onSaveNewStructure");
         				
