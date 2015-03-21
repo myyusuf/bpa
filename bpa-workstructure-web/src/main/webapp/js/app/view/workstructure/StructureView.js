@@ -80,18 +80,18 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		
 		var _newRow = $('<tr></tr>');
 		_newRow.appendTo(_toolbarTable);
-		var _firstColumn = $('<td></td>');
+		var _firstColumn = $('<td style="width: 95px;"></td>');
 		_firstColumn.appendTo(_newRow);
 		var _secondColumn = $('<td></td>');
 		_secondColumn.appendTo(_newRow);
         
     	var _addButton = $('<div>Add Root</div>');
-    	_addButton.appendTo(_firstColumn);
+    	_addButton.appendTo(_secondColumn);
     	_addButton.jqxButton({ width: 80, height: 15, theme: 'metro' });
     	
     	var _saveButton = $('<div>Save</div>');
-    	_saveButton.appendTo(_secondColumn);
-    	_saveButton.jqxButton({ width: 80, height: 15, theme: 'metro' });
+    	_saveButton.appendTo(_firstColumn);
+    	_saveButton.jqxButton({ width: 80, height: 15, theme: 'metro', template: "success" });
             	
 		//-------
 		
@@ -103,7 +103,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
         
         var _chartContainerId = "orgchart_" + _randomId;
-		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 500px;">[Loading Organizational Chart...]</div>');
+		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 700px;">[Loading Organizational Chart...]</div>');
 		_chartContainer.appendTo(container);
         
 		var _maximumId = 0;
