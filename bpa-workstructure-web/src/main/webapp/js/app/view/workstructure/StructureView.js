@@ -52,7 +52,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                 }
                 _children[_item.parent].push(_item);
             }
-            var _newChildren = _children[_parentItem.id];
+            var _newChildren = _children[parentItem.id];
             var _result = {};
             if (_newChildren != null) {
                 while (_newChildren.length > 0) {
@@ -121,14 +121,14 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                             var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
                             var _newItems = [];
                             /* collect all children of deleted items, we are going to delete them as well. */
-                            var _itemsToBeDeleted = _getSubItemsForParent(items, /*context: primitives.orgdiagram.ItemConfig*/data.context);
+                            var _itemsToBeDeleted = _getSubItemsForParent(_items, /*context: primitives.orgdiagram.ItemConfig*/data.context);
                             /* add deleted item to that collection*/
-                            _itemsToBeDeleted[data.context.structureId] = true;
+                            _itemsToBeDeleted[data.context.context.structureId] = true;
 
                             /* copy to newItems collection only remaining items */
                             for (var _index = 0, _len = _items.length; _index < _len; _index += 1) {
                                 var _item = _items[_index];
-                                if (!_itemsToBeDeleted.hasOwnProperty(_item.structureId)) {
+                                if (!_itemsToBeDeleted.hasOwnProperty(_item.id)) {
                                     _newItems.push(_item);
                                 }
                             }
