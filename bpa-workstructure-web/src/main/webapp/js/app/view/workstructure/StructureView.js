@@ -69,11 +69,27 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             }
             return _result;
         };
+        
+        var _pageTable = $('<table style="margin-top: 2px; border: 0; border-spacing: 0px; background-color: #f4f4f4 border-collapse: collapse; width: 100%;"></table>');
+        _pageTable.appendTo(container);
+        
+        var _firstRow = $('<tr></tr>');
+        _firstRow.appendTo(_pageTable);
+        
+        var _firstRowColumn = $('<td></td>');
+        _firstRowColumn.appendTo(_firstRow);
+        
+        var _secondRow = $('<tr></tr>');
+        _secondRow.appendTo(_pageTable);
+        
+        var _secondRowColumn = $('<td></td>');
+        _secondRowColumn.appendTo(_secondRow);
+        
 
         //-------
         
-        var _toolbarContainer = $('<div style="width: 100%; background-color: #f4f4f4; height: 35px; padding-left: 15px;"></div>');
-        _toolbarContainer.appendTo(container);
+        var _toolbarContainer = $('<div style="width: 100%; background-color: #f4f4f4; height: 35px; padding-left: 15px; padding-top: 3px;"></div>');
+        _toolbarContainer.appendTo(_firstRowColumn);
         
         var _toolbarTable = $('<table></table>');
         _toolbarTable.appendTo(_toolbarContainer);
@@ -103,8 +119,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
         
         var _chartContainerId = "orgchart_" + _randomId;
-		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 700px;">[Loading Organizational Chart...]</div>');
-		_chartContainer.appendTo(container);
+		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 700px; overflow-y: auto;">[Loading Organizational Chart...]</div>');
+		_chartContainer.appendTo(_secondRowColumn);
         
 		var _maximumId = 0;
 		
