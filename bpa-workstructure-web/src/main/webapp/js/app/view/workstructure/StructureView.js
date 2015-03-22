@@ -104,6 +104,9 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		_firstColumn.appendTo(_newRow);
 		var _secondColumn = $('<td></td>');
 		_secondColumn.appendTo(_newRow);
+		
+		var _thirdColumn = $('<td></td>');
+		_thirdColumn.appendTo(_newRow);
         
     	var _addButton = $('<div>Add Root</div>');
     	_addButton.appendTo(_secondColumn);
@@ -112,6 +115,10 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
     	var _saveButton = $('<div>Save</div>');
     	_saveButton.appendTo(_firstColumn);
     	_saveButton.jqxButton({ width: 80, height: 15, theme: 'metro', template: "success" });
+    	
+    	var _refreshButton = $('<div><img src="resources/images/arrow_refresh.png"/></div>');
+    	_refreshButton.appendTo(_thirdColumn);
+    	_refreshButton.jqxButton({ height: 15, theme: 'metro' });
             	
 		//-------
 		
@@ -119,7 +126,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		var _items = [];
 		var _buttons = [];
 		_buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-person", "Add"));
-        _buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
+//        _buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
         
         var _overflowContainer = $('<div style="overflow-y: auto; height: 100%;"></div>');
@@ -348,6 +355,34 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 				
 			});
 			
+		});
+		
+		_refreshButton.click(function(result){
+			_sendData(BPA.Constant.workstructure.structuresUrl, {}, "GET", function(result){
+				_items = [];
+				var _structures = result.data;
+				for(var _i = 0; _i<_structures.length; _i++){
+					
+					var _structure = _structures[_i];
+					var _item = 
+			            new primitives.orgdiagram.ItemConfig({
+			                id: _structure.structureId,
+			                parent: _structure.parentId,
+			                title: _structure.employee.name,
+			                description: _structure.position.name,
+			                context: _structure,
+			                image: "service/workstructure/employee/image/" + _structure.employee.employeeId
+			            });
+					
+					_items.push(_item);
+					
+				}
+				
+				$('#' + _chartContainerId).orgDiagram({
+		            items: _items
+		        });
+				$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+			});
 		});
 		
 		_loadDiagram();
