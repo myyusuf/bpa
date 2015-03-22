@@ -22,7 +22,7 @@ public class Structure extends ConcurrencySafeEntity {
 		this();
 //		this.setStructureId(UUID.randomUUID().toString().toUpperCase());
 		this.setStructureId(structureId);
-		this.setParentId(parentId);
+		this.setParentId(aParentId);
 		this.setEmployee(anEmployee);
 		this.setPosition(aPosition);
 	}

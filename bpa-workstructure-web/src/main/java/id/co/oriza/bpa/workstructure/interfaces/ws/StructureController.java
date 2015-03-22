@@ -1,6 +1,8 @@
 package id.co.oriza.bpa.workstructure.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.workstructure.application.CreateStructureCommand;
+import id.co.oriza.bpa.workstructure.application.CreateStructureModel;
 import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService;
 import id.co.oriza.bpa.workstructure.domain.model.Structure;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.StructurePresentationModel;
@@ -69,6 +71,7 @@ private static final int MAX_LIMIT = 10000;
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/workstructure/structures", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> createStructures(@RequestBody(required=false) Map<String, Object> params){
 		
@@ -77,9 +80,20 @@ private static final int MAX_LIMIT = 10000;
 		printParams(params);
 		
 		List<Map<String, Object>> structuresMap = (List<Map<String, Object>>) params.get("structures");
+		List<CreateStructureModel> createStructureModels = new ArrayList<CreateStructureModel>(0);
 		for (Map<String, Object> structureMap : structuresMap) {
 			System.out.println("structureId : " + structureMap.get("structureId"));
+			String structureId = (String) structureMap.get("structureId");
+			String parentId = (String) structureMap.get("parentId");
+			String employeeId = (String) structureMap.get("employeeId");
+			String positionCode = (String) structureMap.get("positionCode");
+			String locationCode = (String) structureMap.get("locationCode");
+			CreateStructureModel createStructureModel = new CreateStructureModel(structureId, parentId, employeeId, positionCode, locationCode);
+			createStructureModels.add(createStructureModel);
 		}
+		
+		CreateStructureCommand createStructureCommand = new CreateStructureCommand(createStructureModels);
+		this.workstructureService().newStructuresWith(createStructureCommand);
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		result.put("success", true);
