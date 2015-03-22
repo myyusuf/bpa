@@ -6,4 +6,8 @@ public interface StructureRepository {
 	
 	Collection<Structure> all(int aStart, int aLimit);
 
+	void deleteAll();
+
+	void add(Structure structure);
+
 }

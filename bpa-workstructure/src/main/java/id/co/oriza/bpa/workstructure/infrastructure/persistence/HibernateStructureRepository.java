@@ -1,14 +1,16 @@
 package id.co.oriza.bpa.workstructure.infrastructure.persistence;
 
+import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
+import id.co.oriza.bpa.workstructure.domain.model.Structure;
+import id.co.oriza.bpa.workstructure.domain.model.StructureRepository;
+
 import java.util.Collection;
+
+import javax.validation.ConstraintViolationException;
 
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import id.co.oriza.bpa.base.persistence.AbstractHibernateSession;
-import id.co.oriza.bpa.workstructure.domain.model.Structure;
-import id.co.oriza.bpa.workstructure.domain.model.StructureRepository;
 
 public class HibernateStructureRepository extends AbstractHibernateSession implements StructureRepository {
 	
@@ -26,6 +28,22 @@ public class HibernateStructureRepository extends AbstractHibernateSession imple
 		query.setMaxResults(aLimit);
 		
 		return query.list();
+	}
+
+	@Override
+	public void deleteAll() {
+		Query query = this.session().createQuery("delete from id.co.oriza.bpa.workstructure.domain.model.Structure ");
+		query.executeUpdate();
+	}
+	
+	@Override
+	public void add(Structure aStructure) {
+		try{
+			this.session().saveOrUpdate(aStructure);
+		}catch(ConstraintViolationException e){
+			throw new IllegalStateException("Structure is not unique.", e);
+		}
+
 	}
 
 }

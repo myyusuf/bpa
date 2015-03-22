@@ -36,4 +36,13 @@ public class HibernateEmployeeRepository  extends AbstractHibernateSession imple
 		return query.list();
 	}
 
+	@Override
+	public Employee withEmployeeId(String anEmployeeId) {
+		Query query = this.session().createQuery("from id.co.oriza.bpa.workstructure.domain.model.Employee as _obj_ "
+				+ "where _obj_.employeeId = :employeeId ");
+		query.setString("employeeId", anEmployeeId);
+		
+		return (Employee) query.uniqueResult();
+	}
+
 }

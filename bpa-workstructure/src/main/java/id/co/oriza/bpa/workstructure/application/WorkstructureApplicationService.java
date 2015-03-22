@@ -10,6 +10,7 @@ import id.co.oriza.bpa.workstructure.domain.model.Structure;
 import id.co.oriza.bpa.workstructure.domain.model.StructureRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,21 @@ public class WorkstructureApplicationService {
 	public Collection<Structure> allStructures(int aStart, int aLimit){
 		Collection<Structure> structures = this.structureRepository().all(aStart, aLimit);
 		return structures;
+	}
+	
+	@Transactional
+	public void newStructuresWith(CreateStructureCommand aCommand){
+		List<CreateStructureModel> createStructureModels = aCommand.getCreateStructureModels();
+		this.structureRepository().deleteAll();
+		
+		
+		for (CreateStructureModel createStructureModel : createStructureModels) {
+			Employee employee = this.employeeRepository().withEmployeeId(createStructureModel.getEmployeeId());
+			Position position = this.positionRepository().withCode(createStructureModel.getPositionCode());
+			Structure newStructure = new Structure(createStructureModel.getStructureId(), createStructureModel.getParentId(), employee, position);
+			
+			this.structureRepository().add(newStructure);
+		}
 	}
 
 	public EmployeeRepository employeeRepository() {

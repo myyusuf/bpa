@@ -1,7 +1,5 @@
 package id.co.oriza.bpa.workstructure.domain.model;
 
-import java.util.UUID;
-
 import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
 public class Structure extends ConcurrencySafeEntity {
@@ -20,9 +18,10 @@ public class Structure extends ConcurrencySafeEntity {
 		super();
 	}
 
-	public Structure(String aParentId, Employee anEmployee, Position aPosition) {
+	public Structure(String structureId, String aParentId, Employee anEmployee, Position aPosition) {
 		this();
-		this.setStructureId(UUID.randomUUID().toString().toUpperCase());
+//		this.setStructureId(UUID.randomUUID().toString().toUpperCase());
+		this.setStructureId(structureId);
 		this.setParentId(parentId);
 		this.setEmployee(anEmployee);
 		this.setPosition(aPosition);

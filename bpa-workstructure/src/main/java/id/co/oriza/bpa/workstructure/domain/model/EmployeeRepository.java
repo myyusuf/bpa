@@ -6,4 +6,6 @@ public interface EmployeeRepository {
 	
 	public Collection<Employee> allSimilarlyEmployeeIdOrNamed(String anEmployeeId, String aName, int aStart, int aLimit);
 
+	public Employee withEmployeeId(String employeeId);
+
 }
