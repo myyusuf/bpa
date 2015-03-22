@@ -27,7 +27,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			$.ajax({
 			    url: url,
 			    type: requestType,
-			    data: data,
+			    data: JSON.stringify(data),
 			    beforeSend: function(xhr) {
 		            xhr.setRequestHeader("Accept", "application/json");
 		            xhr.setRequestHeader("Content-Type", "application/json");
@@ -255,7 +255,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			}
 			
 			console.log(_structures);
-			_sendData(BPA.Constant.workstructure.structuresUrl, {structures: _structures}, "PUT", function(result){
+			_sendData(BPA.Constant.workstructure.structuresUrl, {structures: _structures}, "POST", function(result){
 				_loadDiagram();
 			}, function(result){
 				

@@ -5,11 +5,9 @@ import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService
 import id.co.oriza.bpa.workstructure.domain.model.Employee;
 import id.co.oriza.bpa.workstructure.domain.model.Location;
 import id.co.oriza.bpa.workstructure.domain.model.Position;
-import id.co.oriza.bpa.workstructure.domain.model.Structure;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.EmployeePresentationModel;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.LocationPresentationModel;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.PositionPresentationModel;
-import id.co.oriza.bpa.workstructure.interfaces.ws.pm.StructurePresentationModel;
 
 import java.util.ArrayList;
 import java.util.Collection;

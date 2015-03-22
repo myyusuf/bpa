@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +64,24 @@ private static final int MAX_LIMIT = 10000;
 		
 		result.put("num", structuresSize);
 		result.put("data", structureModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workstructure/structures", method=RequestMethod.POST, produces="application/json")
+	public Map<String, Object> createStructures(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("createStructures");
+		
+		printParams(params);
+		
+		List<Map<String, Object>> structuresMap = (List<Map<String, Object>>) params.get("structures");
+		for (Map<String, Object> structureMap : structuresMap) {
+			System.out.println("structureId : " + structureMap.get("structureId"));
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("success", true);
 		
 		return result;
