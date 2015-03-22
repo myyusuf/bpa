@@ -160,10 +160,10 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			_options.onButtonClick = function (e, /*primitives.orgdiagram.EventArgs*/ data) {
                 switch (data.name) {
                     case "delete":
-                        if (/*parentItem: primitives.orgdiagram.ItemConfig*/data.parentItem == null) {
-                            alert("You are trying to delete root item!");
-                        }
-                        else {
+//                        if (/*parentItem: primitives.orgdiagram.ItemConfig*/data.parentItem == null) {
+//                            alert("You are trying to delete root item!");
+//                        }
+//                        else {
                             var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
                             var _newItems = [];
                             /* collect all children of deleted items, we are going to delete them as well. */
@@ -181,11 +181,11 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                             /* update items list in chart */
                             $('#' + _chartContainerId).orgDiagram({
                                 items: _newItems,
-                                cursorItem: data.parentItem.id
+//                                cursorItem: data.parentItem.id
                             });
                             $('#' + _chartContainerId).orgDiagram("update", /*Refresh: use fast refresh to update chart*/ primitives.orgdiagram.UpdateMode.Refresh);
 
-                        }
+//                        }
                         
                         break;
                         
@@ -248,6 +248,40 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			_sendData(BPA.Constant.workstructure.structuresUrl, {}, "GET", _onSuccessGetStructuresData, _onErrorGetStructuresData);
 		};
 		
+		_addButton.click(function(event){
+			var _structureEdit = new StructureEdit(container, {});
+        	
+        	var _onSaveNewStructure = function(editedStructure){
+        		
+        		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
+				
+        		var _item = 
+		            new primitives.orgdiagram.ItemConfig({
+		                id: editedStructure.structureId,
+		                parent: null,
+		                title: editedStructure.employee.name,
+		                description: editedStructure.position.name,
+		                context: editedStructure,
+		                image: "service/workstructure/employee/image/" + editedStructure.employee.employeeId
+		            });
+				
+				_items.push(_item);
+				
+				$('#' + _chartContainerId).orgDiagram({
+		            items: _items,
+		            cursorItem: editedStructure.structureId
+		        });
+				$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+				
+				_structureEdit.close();
+        		
+			}
+        	_structureEdit.subscribe(_onSaveNewStructure, "onSaveNewStructure");
+			
+        	_structureEdit.open();
+    		console.log("add parent structure");
+		});
+		
 		_saveButton.click(function(event){
 			
 			var _structures = [];
@@ -302,6 +336,9 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			            items: _items
 			        });
 					$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+					
+					_successNotification.jqxNotification("open");
+					
 				}, function(result){
 					
 				});
