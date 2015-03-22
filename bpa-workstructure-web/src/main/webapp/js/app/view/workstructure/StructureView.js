@@ -70,13 +70,17 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             return _result;
         };
         
-        var _pageTable = $('<table style="margin-top: 2px; border: 0; border-spacing: 0px; background-color: #f4f4f4 border-collapse: collapse; width: 100%;"></table>');
+        $(container).css('position', 'relative');
+        $(container).css('height', '100%');
+        $(container).css('z-index', '2');
+        
+        var _pageTable = $('<table style="margin-top: 2px; border: 0; border-spacing: 0px; background-color: #f4f4f4 border-collapse: collapse; width: 100%; height: 100%;"></table>');
         _pageTable.appendTo(container);
         
         var _firstRow = $('<tr></tr>');
         _firstRow.appendTo(_pageTable);
         
-        var _firstRowColumn = $('<td></td>');
+        var _firstRowColumn = $('<td style="height: 35px;"></td>');
         _firstRowColumn.appendTo(_firstRow);
         
         var _secondRow = $('<tr></tr>');
@@ -118,9 +122,12 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
         _buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
         
+        var _overflowContainer = $('<div style="overflow-y: auto; height: 100%;"></div>');
+        _overflowContainer.appendTo(_secondRowColumn);
+        
         var _chartContainerId = "orgchart_" + _randomId;
 		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 700px; overflow-y: auto;">[Loading Organizational Chart...]</div>');
-		_chartContainer.appendTo(_secondRowColumn);
+		_chartContainer.appendTo(_overflowContainer);
         
 		var _maximumId = 0;
 		
