@@ -110,8 +110,6 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		
 		var _onSuccessGetStructuresData = function(result){
 			
-			_items = [];
-			
 			var _structures = result.data;
 			for(var _i = 0; _i<_structures.length; _i++){
 				
@@ -256,7 +254,36 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			
 			console.log(_structures);
 			_sendData(BPA.Constant.workstructure.structuresUrl, {structures: _structures}, "POST", function(result){
-				_loadDiagram();
+				
+				_sendData(BPA.Constant.workstructure.structuresUrl, {}, "GET", function(result){
+					_items = [];
+					var _structures = result.data;
+					for(var _i = 0; _i<_structures.length; _i++){
+						
+						var _structure = _structures[_i];
+						var _item = 
+				            new primitives.orgdiagram.ItemConfig({
+				                id: _structure.structureId,
+				                parent: _structure.parentId,
+				                title: _structure.employee.name,
+				                description: _structure.position.name,
+				                context: _structure,
+				                image: "service/workstructure/employee/image/" + _structure.employee.employeeId
+				            });
+						
+						_items.push(_item);
+						
+					}
+					
+					$('#' + _chartContainerId).orgDiagram({
+			            items: _items
+			        });
+					$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+				}, function(result){
+					
+				});
+				
+				
 			}, function(result){
 				
 			});
