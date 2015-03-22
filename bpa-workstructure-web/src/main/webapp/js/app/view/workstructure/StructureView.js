@@ -261,10 +261,9 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 				
 			});
 			
-			_loadDiagram();
-			
-			
 		});
+		
+		_loadDiagram();
 		
 //		var _item = 
 //            new primitives.orgdiagram.ItemConfig({
