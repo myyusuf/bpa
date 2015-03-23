@@ -531,7 +531,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                         toValue = null;
                         toChart = name;
 
-                        Reparent(fromChart, fromValue, toChart, toValue);
+                        Reparent("orgdiagram", fromValue, "orgdiagram", toValue);
 
                         primitives.common.stopPropagation(event);
                     }
