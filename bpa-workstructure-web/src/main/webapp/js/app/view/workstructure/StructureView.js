@@ -126,7 +126,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		var _items = [];
 		var _buttons = [];
 		_buttons.push(new primitives.orgdiagram.ButtonConfig("add", "ui-icon-person", "Add"));
-//        _buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
+        _buttons.push(new primitives.orgdiagram.ButtonConfig("edit", "ui-icon-pencil", "Edit"));
         _buttons.push(new primitives.orgdiagram.ButtonConfig("delete", "ui-icon-close", "Delete"));
         
         var _overflowContainer = $('<div style="overflow-y: auto; height: 100%;"></div>');
@@ -236,8 +236,36 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                         break;
                     case "edit":
                     	
-                		console.log("edit");
-                		
+                    	var _structureId = data.context.context.structureId;
+                    	var _parentId = data.parent;
+                    	var _structureEdit = new StructureEdit(container, {structureId : _structureId});
+                    	
+                    	var _onSaveStructure = function(editedStructure){
+                    		
+                    		console.log("_parentId : " + _parentId);
+                    		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
+                    		for(var _i = 0; _i<_items.length; _i++){
+                    			var _item = items[i];
+                    			if(_item.id == _structureId){
+                    				_item.title = editedStructure.employee.name;
+                    				_item.description = editedStructure.position.name;
+                    				_item.context = editedStructure;
+                    				_item.image = "service/workstructure/employee/image/" + editedStructure.employee.employeeId;
+                    			}
+                    		}
+        					
+            				$('#' + _chartContainerId).orgDiagram({
+            		            items: _items,
+            		            cursorItem: editedStructure.structureId
+            		        });
+            				$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
+            				
+            				_structureEdit.close();
+                    		
+        				}
+                    	_structureEdit.subscribe(_onSaveStructure, "onSaveStructure");
+        				
+                    	_structureEdit.open();
                         break;
                 }
             };
