@@ -12,6 +12,7 @@
 		<property name="parentId" column="PARENT_ID" type="java.lang.String" />
 		<many-to-one name="employee" class="id.co.oriza.bpa.workstructure.domain.model.Employee" column="EMPLOYEE_ID"/>
 		<many-to-one name="position" class="id.co.oriza.bpa.workstructure.domain.model.Position" column="POSITION_ID"/>
+		<many-to-one name="location" class="id.co.oriza.bpa.workstructure.domain.model.Location" column="LOCATION_ID"/>
 		
 	</class> 
 </hibernate-mapping>

@@ -67,7 +67,8 @@ public class WorkstructureApplicationService {
 		for (CreateStructureModel createStructureModel : createStructureModels) {
 			Employee employee = this.employeeRepository().withEmployeeId(createStructureModel.getEmployeeId());
 			Position position = this.positionRepository().withCode(createStructureModel.getPositionCode());
-			Structure newStructure = new Structure(createStructureModel.getStructureId(), createStructureModel.getParentId(), employee, position);
+			Location location = this.locationRepository().withCode(createStructureModel.getLocationCode());
+			Structure newStructure = new Structure(createStructureModel.getStructureId(), createStructureModel.getParentId(), employee, position, location);
 			
 			this.structureRepository().add(newStructure);
 		}

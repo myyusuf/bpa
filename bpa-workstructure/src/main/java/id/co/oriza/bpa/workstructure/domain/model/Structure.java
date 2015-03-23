@@ -13,18 +13,20 @@ public class Structure extends ConcurrencySafeEntity {
 	private String parentId;
 	private Employee employee;
 	private Position position;
+	private Location location;
 
 	protected Structure() {
 		super();
 	}
 
-	public Structure(String structureId, String aParentId, Employee anEmployee, Position aPosition) {
+	public Structure(String structureId, String aParentId, Employee anEmployee, Position aPosition, Location aLocation) {
 		this();
 //		this.setStructureId(UUID.randomUUID().toString().toUpperCase());
 		this.setStructureId(structureId);
 		this.setParentId(aParentId);
 		this.setEmployee(anEmployee);
 		this.setPosition(aPosition);
+		this.setLocation(aLocation);
 	}
 
 	public String parentId() {
@@ -71,6 +73,14 @@ public class Structure extends ConcurrencySafeEntity {
 
 	protected void setStructureId(String structureId) {
 		this.structureId = structureId;
+	}
+
+	public Location location() {
+		return location;
+	}
+
+	protected void setLocation(Location aLocation) {
+		this.location = aLocation;
 	}
 
 }

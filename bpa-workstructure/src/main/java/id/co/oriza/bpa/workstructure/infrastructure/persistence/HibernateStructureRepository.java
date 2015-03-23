@@ -23,7 +23,8 @@ public class HibernateStructureRepository extends AbstractHibernateSession imple
 		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.workstructure.domain.model.Structure as _obj_ "
 				+ "left join fetch _obj_.employee e "
-				+ "left join fetch _obj_.position p ");
+				+ "left join fetch _obj_.position p "
+				+ "left join fetch _obj_.location l ");
 		query.setFirstResult(aStart);
 		query.setMaxResults(aLimit);
 		
