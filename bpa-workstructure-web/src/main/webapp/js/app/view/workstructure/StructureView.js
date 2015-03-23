@@ -164,6 +164,21 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			_options.buttons = _buttons;
 			_options.hasButtons = primitives.common.Enabled.Auto;
 			_options.leavesPlacementType = primitives.orgdiagram.ChildrenPlacementType.Matrix;
+			
+			 _options.normalLevelShift = 20;
+            _options.dotLevelShift = 10;
+            _options.lineLevelShift = 10;
+            _options.normalItemsInterval = 20;
+            _options.dotItemsInterval = 10;
+            _options.lineItemsInterval = 5;
+            _options.buttonsPanelSize = 48;
+
+            _options.pageFitMode = primitives.common.PageFitMode.Auto;
+            _options.graphicsType = primitives.common.GraphicsType.Auto;
+            _options.hasSelectorCheckbox = primitives.common.Enabled.True;
+            /* chart uses mouse drag to pan items, disable it in order to avoid conflict with drag & drop */
+            _options.enablePanning = false;
+			
 			_options.onButtonClick = function (e, /*primitives.orgdiagram.EventArgs*/ data) {
                 switch (data.name) {
                     case "delete":
