@@ -138,6 +138,210 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
         
 		var _maximumId = 0;
 		
+		//------------------------------------------------------------------------------------------------------------------------
+		
+		var fromValue = null; 
+		var toValue = null;
+		var items = {};
+		
+		function getContactTemplate() {
+            var result = new primitives.orgdiagram.TemplateConfig();
+            result.name = "contactTemplate";
+
+            result.itemSize = new primitives.common.Size(140, 100);
+            result.minimizedItemSize = new primitives.common.Size(4, 4);
+            result.highlightPadding = new primitives.common.Thickness(2, 2, 2, 2);
+
+
+            var itemTemplate = jQuery(
+              '<div class="bp-item bp-corner-all bt-item-frame">'
+                + '<div name="titleBackground" class="bp-item bp-corner-all bp-title-frame" style="top: 2px; left: 2px; width: 136px; height: 20px;">'
+                    + '<div name="title" class="bp-item bp-title" style="top: 3px; left: 6px; width: 128px; height: 18px;">'
+                    + '</div>'
+                + '</div>'
+                + '<div class="bp-item bp-photo-frame" style="top: 26px; left: 2px; width: 50px; height: 60px;">'
+                    + '<img name="photo" style="height:60px; width:50px;" />'
+                + '</div>'
+                + '<div name="description" class="bp-item" style="top: 26px; left: 56px; width: 82px; height: 52px; font-size: 10px;"></div>'
+            + '</div>'
+            ).css({
+                width: result.itemSize.width + "px",
+                height: result.itemSize.height + "px"
+            }).addClass("bp-item bp-corner-all bt-item-frame");
+            result.itemTemplate = itemTemplate.wrap('<div>').parent().html();
+
+            return result;
+        }
+		
+		function onOrgDiagramTemplateRender(event, data) {
+			
+			console.log('item render..');
+			
+            switch (data.renderingMode) {
+                case primitives.common.RenderingMode.Create:
+                    data.element.draggable({
+                        revert: "invalid",
+                        containment: "document",
+                        appendTo: "body",
+                        helper: "clone",
+                        cursor: "move",
+                        "zIndex": 10000,
+                        delay: 300,
+                        distance: 10,
+                        start: function (event, ui) {
+                            fromValue = jQuery(this).attr("data-value");
+                        }
+                    });
+                    data.element.droppable({
+                        /* this option is supposed to suppress event propogation from nested droppable to its parent
+                        *  but it does not work
+                        */
+                        greedy: true,
+                        drop: function (event, ui) {
+                            if (!event.cancelBubble) {
+                                console.log("Drop accepted!");
+                                toValue = jQuery(this).attr("data-value");
+
+                                Reparent("orgdiagram", fromValue, "orgdiagram", toValue);
+
+                                primitives.common.stopPropagation(event);
+                            } else {
+                                console.log("Drop ignored!");
+                            }
+                        },
+                        over: function (event, ui) {
+                            toValue = jQuery(this).attr("data-value");
+
+                            /* this is needed in order to update highlighted item in chart, 
+                            * so this creates consistent mouse over feed back  
+                            */
+                            $('#' + _chartContainerId).orgDiagram({ "highlightItem": toValue });
+                            $('#' + _chartContainerId).orgDiagram("update", primitives.common.UpdateMode.PositonHighlight);
+                        },
+                        accept: function (draggable) {
+                            /* be carefull with this event it is called for every available droppable including invisible items on every drag start event.
+                            * don't varify parent child relationship between draggable & droppable here it is too expensive.
+                            */
+                            return (jQuery(this).css("visibility") == "visible");
+                        }
+                    });
+                    /* Initialize widgets here */
+                    break;
+                case primitives.common.RenderingMode.Update:
+                    /* Update widgets here */
+                    break;
+            }
+	            var itemConfig = data.context;
+	
+	            /* Set item id as custom data attribute here */
+	            data.element.attr("data-value", itemConfig.id);
+	
+	            RenderField(data, itemConfig);
+	        }
+            
+            
+			function RenderField(data, itemConfig) {
+	            if (data.templateName == "contactTemplate") {
+	                data.element.find("[name=photo]").attr({ "src": itemConfig.image, "alt": itemConfig.title });
+	                data.element.find("[name=titleBackground]").css({ "background": itemConfig.itemTitleColor });
+	
+	                var fields = ["title", "description", "phone", "email"];
+	                for (var index = 0; index < fields.length; index++) {
+	                    var field = fields[index];
+	
+	                    var element = data.element.find("[name=" + field + "]");
+	                    if (element.text() != itemConfig[field]) {
+	                        element.text(itemConfig[field]);
+	                    }
+	                }
+	            }
+	        }
+            
+            
+            function Reparent(fromChart, value, toChart, toParent) {
+                /* following verification needed in order to avoid conflict with jQuery Layout widget */
+                if (fromChart != null && value != null && toChart != null) {
+                    console.log("Reparent fromChart:" + fromChart + ", value:" + value + ", toChart:" + toChart + ", toParent:" + toParent);
+                    var item = items[value];
+                    var fromItems = $('#' + _chartContainerId).orgDiagram("option", "items");
+                    var toItems = $('#' + _chartContainerId).orgDiagram("option", "items");
+                    if (toParent != null) {
+                        var toParentItem = items[toParent];
+                        if (!isParentOf(item, toParentItem)) {
+
+                            var children = getChildrenForParent(item);
+                            children.push(item);
+                            for (var index = 0; index < children.length; index++) {
+                                var child = children[index];
+                                fromItems.splice(primitives.common.indexOf(fromItems, child), 1);
+                                toItems.push(child);
+                            }
+                            item.parent = toParent;
+                        } else {
+                            console.log("Droped to own child!");
+                        }
+                    } else {
+                        var children = getChildrenForParent(item);
+                        children.push(item);
+                        for (var index = 0; index < children.length; index++) {
+                            var child = children[index];
+                            fromItems.splice(primitives.common.indexOf(fromItems, child), 1);
+                            toItems.push(child);
+                        }
+                        item.parent = null;
+                    }
+                    $('#' + _chartContainerId).orgDiagram("update", primitives.common.UpdateMode.Refresh);
+                }
+            }
+            
+            function getChildrenForParent(parentItem) {
+                var children = {};
+                for (var id in items) {
+                    var item = items[id];
+                    if (children[item.parent] == null) {
+                        children[item.parent] = [];
+                    }
+                    children[item.parent].push(id);
+                }
+                var newChildren = children[parentItem.id];
+                var result = [];
+                if (newChildren != null) {
+                    while (newChildren.length > 0) {
+                        var tempChildren = [];
+                        for (var index = 0; index < newChildren.length; index++) {
+                            var item = items[newChildren[index]];
+                            result.push(item);
+                            if (children[item.id] != null) {
+                                tempChildren = tempChildren.concat(children[item.id]);
+                            }
+                        }
+                        newChildren = tempChildren;
+                    }
+                }
+                return result;
+            }
+
+            function isParentOf(parentItem, childItem) {
+                var result = false,
+                    index,
+                    len,
+                    itemConfig;
+                if (parentItem.id == childItem.id) {
+                    result = true;
+                } else {
+                    while (childItem.parent != null) {
+                        childItem = items[childItem.parent];
+                        if (childItem.id == parentItem.id) {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+                return result;
+            };
+            
+		//------------------------------------------------------------------------------------------------------------------------
+		
 		var _onSuccessGetStructuresData = function(result){
 			
 			var _structures = result.data;
@@ -155,6 +359,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		            });
 				
 				_items.push(_item);
+				
+				items[_item.id] = _item;
 				
 			}
 			
@@ -176,6 +382,9 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             _options.pageFitMode = primitives.common.PageFitMode.Auto;
             _options.graphicsType = primitives.common.GraphicsType.Auto;
             _options.hasSelectorCheckbox = primitives.common.Enabled.True;
+            _options.templates = [getContactTemplate()];
+            _options.defaultTemplateName = "contactTemplate";
+            _options.onItemRender = onOrgDiagramTemplateRender;
             /* chart uses mouse drag to pan items, disable it in order to avoid conflict with drag & drop */
             _options.enablePanning = false;
 			
@@ -299,7 +508,34 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             };
 			
 			$('#' + _chartContainerId).empty();
+			
 			$('#' + _chartContainerId).orgDiagram(_options);
+			$('#' + _chartContainerId).droppable({
+                greedy: true,
+                drop: function (event, ui) {
+                    /* Check drop event cancelation flag
+			        * This fixes following issues:
+			        * 1. The same event can be received again by updated chart
+			        * so you changed hierarchy, updated chart and at the same drop position absolutly 
+			        * irrelevant item receives again drop event, so in order to avoid this use primitives.common.stopPropagation
+                    * 2. This particlular example has nested drop zones, in order to 
+                    * suppress drop event processing by nested droppable and its parent we have to set "greedy" to false,
+                    * but it does not work.
+                    * In this example items can be droped to other items (except immidiate children in order to avoid looping)
+                    * and to any free space in order to make them rooted.
+                    * So we need to cancel drop  event in order to avoid double reparenting operation.
+                    */
+                    if (!event.cancelBubble) {
+                        toValue = null;
+                        toChart = name;
+
+                        Reparent(fromChart, fromValue, toChart, toValue);
+
+                        primitives.common.stopPropagation(event);
+                    }
+                }
+            });
+			
 			$('#' + _chartContainerId).orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
 		}
 		
@@ -443,72 +679,6 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		
 		_loadDiagram();
 		
-//		var _item = 
-//            new primitives.orgdiagram.ItemConfig({
-//                id: _id,
-//                parent: null,
-//                title: 'firstName',
-//                description: 'positionName',
-//                context: {data: 'test'},
-//                image: "service/workstructure/employee/loadimage/"
-//            });
-//		
-//		_items.push(_item);
-		
-		
-//		var _newItem = new primitives.orgdiagram.ItemConfig({
-//            id: ++_maximumId,
-//            parent: _id,
-//            title: 'employeeName',
-//            description: 'positionName',
-//            context: {data: 'test'},
-//            image: "service/workstructure/employee/loadimage/"
-//        });
-//
-//    	_items.push(_newItem);
-//        $("#orgchart").orgDiagram({
-//            items: _items,
-//            cursorItem: _newItem.id
-//        });
-//        $('#orgchart').orgDiagram("update", primitives.orgdiagram.UpdateMode.Refresh);
-	        
-		
-		/*var _chartContainer = $('<div id="orgchart" style="height: 500px; background-color: silver;">dd</div>');
-		_chartContainer.appendTo(container);
-		
-		var options = new primitives.orgdiagram.Config();
-
-        var items = [
-            new primitives.orgdiagram.ItemConfig({
-                id: 0,
-                parent: null,
-                title: "Scott Aasrud",
-                description: "VP, Public Sector",
-                image: "demo/images/photos/a.png"
-            }),
-            new primitives.orgdiagram.ItemConfig({
-                id: 1,
-                parent: 0,
-                title: "Ted Lucas",
-                description: "VP, Human Resources",
-                image: "demo/images/photos/b.png"
-            }),
-            new primitives.orgdiagram.ItemConfig({
-                id: 2,
-                parent: 0,
-                title: "Joao Stuger",
-                description: "Business Solutions, US",
-                image: "demo/images/photos/c.png"
-            })
-        ];
-
-        options.items = items;
-        options.cursorItem = 0;
-        options.hasSelectorCheckbox = primitives.common.Enabled.True;
-
-        jQuery("#orgchart").orgDiagram(options);*/
-        
-        
 	}
 	
 	inheritPrototype(StructureView, Observable);
