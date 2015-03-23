@@ -237,8 +237,10 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     case "edit":
                     	
                     	var _structureId = data.context.context.structureId;
-                    	var _parentId = data.parent;
-                    	var _structureEdit = new StructureEdit(container, {structureId : _structureId});
+                    	var _employeeId = data.context.context.employee.employeeId;
+                    	var _positionCode = data.context.context.position.code;
+                    	var _editPageOtions = {editedStructure : {structureId : _structureId, employeeId: _employeeId, positionCode: _positionCode}};
+                    	var _structureEdit = new StructureEdit(container, _editPageOtions);
                     	
                     	var _onSaveStructure = function(editedStructure){
                     		

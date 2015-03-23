@@ -18,7 +18,7 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
 		
 		Observable.call(_self, _subscribers);
 		
-		var _isEditForm = _editedStructure.code != undefined && _editedStructure.code != null;
+		var _isEditForm = _editedStructure.structureId != undefined && _editedStructure.structureId != null;
 		
 		var _randomId = BPA.Util.getRandomId("workstructureStructureEdit");
         
@@ -101,8 +101,8 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         _employeeComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedStructure.employee != undefined && _editedStructure.employee != null){
-        		var _selectedEmployeeItem = _employeeComboBox.jqxComboBox('getItemByValue', _editedStructure.employee.employeeId);
+        	if(_editedStructure.employeeId != undefined && _editedStructure.employeeId != null){
+        		var _selectedEmployeeItem = _employeeComboBox.jqxComboBox('getItemByValue', _editedStructure.employeeId);
             	_employeeComboBox.jqxComboBox('selectItem', _selectedEmployeeItem);
         	}
         	
@@ -135,8 +135,8 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         _positionComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedStructure.position != undefined && _editedAccountGroup.position != null){
-        		var _selectedItem = _positionComboBox.jqxComboBox('getItemByValue', _editedStructure.position.code);
+        	if(_editedStructure.positionCode != undefined && _editedAccountGroup.positionCode != null){
+        		var _selectedItem = _positionComboBox.jqxComboBox('getItemByValue', _editedStructure.positionCode);
             	_positionComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
         	
