@@ -20,11 +20,30 @@ public class StructurePresentationModel {
 	}
 	
 	public EmployeePresentationModel getEmployee(){
-		return new EmployeePresentationModel(structure.employee());
+		if (structure.employee() != null){
+			return new EmployeePresentationModel(structure.employee());
+		}else{
+			return null;
+		}
+		
 	}
 	
 	public PositionPresentationModel getPosition(){
-		return new PositionPresentationModel(structure.position());
+		if (structure.position() != null){
+			return new PositionPresentationModel(structure.position());
+		}else{
+			return null;
+		}
+		
+	}
+	
+	public LocationPresentationModel getLocation(){
+		if (structure.location() != null){
+			return new LocationPresentationModel(structure.location());
+		}else{
+			return null;
+		}
+		
 	}
 
 }

@@ -135,7 +135,7 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         _positionComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedStructure.positionCode != undefined && _editedAccountGroup.positionCode != null){
+        	if(_editedStructure.positionCode != undefined && _editedStructure.positionCode != null){
         		var _selectedItem = _positionComboBox.jqxComboBox('getItemByValue', _editedStructure.positionCode);
             	_positionComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
@@ -168,8 +168,8 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         
         _locationComboBox.on('bindingComplete', function (event) {
         	
-        	if(_editedStructure.location != undefined && _editedAccountGroup.location != null){
-        		var _selectedItem = _locationComboBox.jqxComboBox('getItemByValue', _editedStructure.location.code);
+        	if(_editedStructure.locationCode != undefined && _editedStructure.locationCode != null){
+        		var _selectedItem = _locationComboBox.jqxComboBox('getItemByValue', _editedStructure.locationCode);
             	_locationComboBox.jqxComboBox('selectItem', _selectedItem);
         	}
         	
@@ -285,14 +285,16 @@ define(["bpaObservable", "component/base/SimpleComboBox", "jqxbuttons", "jqxinpu
         var _saveStructure = function(){
         	
         	var _savedData = {};
-        	_savedData.structureId = _generateUUID();
+        	
         	_savedData.employee =_employeeComboBox.jqxComboBox('getSelectedItem').originalItem;
         	_savedData.position =_positionComboBox.jqxComboBox('getSelectedItem').originalItem;
         	_savedData.location =_locationComboBox.jqxComboBox('getSelectedItem').originalItem;
         	
         	if(_isEditForm){
+        		_savedData.structureId = _editedStructure.structureId;
         		Observable.prototype.publish.call(_self, _savedData, "onSaveStructure");
         	}else{
+        		_savedData.structureId = _generateUUID();
         		Observable.prototype.publish.call(_self, _savedData, "onSaveNewStructure");
         	}
         }

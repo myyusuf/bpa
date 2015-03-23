@@ -237,9 +237,20 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     case "edit":
                     	
                     	var _structureId = data.context.context.structureId;
-                    	var _employeeId = data.context.context.employee.employeeId;
-                    	var _positionCode = data.context.context.position.code;
-                    	var _editPageOtions = {editedStructure : {structureId : _structureId, employeeId: _employeeId, positionCode: _positionCode}};
+                    	var _employeeId = null;
+                    	if(data.context.context.employee != null && data.context.context.employee != undefined ){
+                    		_employeeId = data.context.context.employee.employeeId
+                    	}
+                    	var _positionCode = null;
+                    	if(data.context.context.position != null && data.context.context.position != undefined ){
+                    		_positionCode = data.context.context.position.code;
+                    	}
+                    	var _locationCode = null;
+                    	if(data.context.context.location != null && data.context.context.location != undefined ){
+                    		_locationCode = data.context.context.location.code;
+                    	}
+                    	
+                    	var _editPageOtions = {editedStructure : {structureId : _structureId, employeeId: _employeeId, positionCode: _positionCode, locationCode: _locationCode}};
                     	var _structureEdit = new StructureEdit(container, _editPageOtions);
                     	
                     	var _onSaveStructure = function(editedStructure){
@@ -247,7 +258,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     		console.log("_parentId : " + _parentId);
                     		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
                     		for(var _i = 0; _i<_items.length; _i++){
-                    			var _item = items[i];
+                    			var _item = _items[_i];
                     			if(_item.id == _structureId){
                     				_item.title = editedStructure.employee.name;
                     				_item.description = editedStructure.position.name;
