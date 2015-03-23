@@ -488,6 +488,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     				_item.description = editedStructure.position.name;
                     				_item.context = editedStructure;
                     				_item.image = "service/workstructure/employee/image/" + editedStructure.employee.employeeId;
+                    				
+                    				items[_item.id] = _item;
                     			}
                     		}
         					
@@ -629,6 +631,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 						
 						_items.push(_item);
 						
+						items[_item.id] = _item;
+						
 					}
 					
 					$('#' + _chartContainerId).orgDiagram({
@@ -667,6 +671,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			            });
 					
 					_items.push(_item);
+					
+					items[_item.id] = _item;
 					
 				}
 				
