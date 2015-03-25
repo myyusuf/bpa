@@ -50,6 +50,7 @@ public class EmployeeController {
 		
 		String fullPath = employeeImageFolder + "/temp/";
 		String tempFileName = "";
+		String fileRandomCode = "";
 		
 		try{
 			for (Iterator<String> iterator =  multipartRequest.getFileNames(); iterator.hasNext();) {
@@ -58,11 +59,13 @@ public class EmployeeController {
 				
 				MultipartFile file = multipartRequest.getFile(fileName);
 				
-				tempFileName = UUID.randomUUID().toString().toUpperCase() + "_" + file.getOriginalFilename();
+				fileRandomCode = UUID.randomUUID().toString().toUpperCase();
+				tempFileName = fileRandomCode + "_" + file.getOriginalFilename();
 				System.out.println("tempFileName : " + tempFileName);
 				writeFile(file, fullPath + tempFileName);
 			}
 			
+			result.put("fileRandomCode", fileRandomCode);
 			result.put("tempFileName", tempFileName);
 			result.put("success", true);
 			
