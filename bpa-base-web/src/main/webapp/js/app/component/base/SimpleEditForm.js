@@ -242,6 +242,22 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
         	_editWindow.jqxWindow('destroy');
         }
         
+        this.resize = function(width, height){
+        	_editWindow.jqxWindow('resize', width, height);
+        }
+        
+        this.resizeWidth = function(width){
+        	_editWindow.jqxWindow('resize', width, _editWindow.jqxWindow('height'));
+        }
+        
+        this.resizeHeight = function(height){
+        	_editWindow.jqxWindow('resize', _editWindow.jqxWindow('width'), height);
+        }
+        
+        this.addHeight = function(height){
+        	_editWindow.jqxWindow('resize', _editWindow.jqxWindow('width'), _editWindow.jqxWindow('height') + height);
+        }
+        
 	}
 	
 	inheritPrototype(SimpleEditForm, Observable);

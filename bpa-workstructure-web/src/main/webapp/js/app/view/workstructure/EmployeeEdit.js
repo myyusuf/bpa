@@ -22,7 +22,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		_options.isEditForm = _isEditForm;
 		
 		_options.formName = "workstructureEmployeeEdit";
-		var _uploadFileField = $('<div></div>').jqxFileUpload({ width: 300, uploadUrl: BPA.Constant.workstructure.employeesUrl, fileInputName: 'fileToUpload', theme: 'metro' });
+		var _uploadFileField = $('<div></div>').jqxFileUpload({ width: 250, multipleFilesUpload: false, autoUpload: true, uploadUrl: BPA.Constant.workstructure.employeesUrl + '/upload', fileInputName: 'name', theme: 'metro' });
 		
 		_options.formFields = [{name: "employeeId", label: "Employee Id", value: employee.employeeId, isKey: true, required: true, maxLength: 30},
 		                       {name: "name", label: "Name", value: employee.name, required: true, maxLength: 100},
@@ -35,7 +35,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                ];
 		
 		_options.width = "auto";
-		_options.height = "auto";
+		_options.height = 187;
 
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
@@ -50,6 +50,13 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
         	}
 		}
 		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
+		
+		_uploadFileField.on('select', function(event){
+			_simpleEditForm.resizeHeight(265);
+		});
+		_uploadFileField.on('uploadEnd', function(event){
+			_simpleEditForm.resizeHeight(190);
+		});
 		
 		this.open = function(){
 			_simpleEditForm.open();
