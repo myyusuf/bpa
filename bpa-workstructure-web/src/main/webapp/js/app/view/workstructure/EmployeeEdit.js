@@ -1,4 +1,4 @@
-define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow"], function (Observable, SimpleEditForm) {
+define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinput", "jqxvalidator", "jqxcombobox", "jqxwindow", "jqxfileupload"], function (Observable, SimpleEditForm) {
 	
 	var EmployeeEdit = function(container, employee){
 		
@@ -22,9 +22,11 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		_options.isEditForm = _isEditForm;
 		
 		_options.formName = "workstructureEmployeeEdit";
+		var _uploadFileField = $('<div></div>').jqxFileUpload({ width: 300, uploadUrl: BPA.Constant.workstructure.employeesUrl, fileInputName: 'fileToUpload', theme: 'metro' });
 		
 		_options.formFields = [{name: "employeeId", label: "Employee Id", value: employee.employeeId, isKey: true, required: true, maxLength: 30},
-		                       {name: "name", label: "Name", value: employee.name, required: true, maxLength: 100}
+		                       {name: "name", label: "Name", value: employee.name, required: true, maxLength: 100},
+		                       {name: "photo", label: "Photo", type: "custom", customField: _uploadFileField}
 		                       ];
 		
 		_options.validationRules = [
@@ -32,11 +34,13 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                 { fieldName: "name", message: 'Name is required', action: 'keyup, blur', rule: 'required' }
                ];
 		
-		_options.width = 320;
-		_options.height = 145;
+		_options.width = "auto";
+		_options.height = "auto";
 
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
+		
+		
 		
 		var _onSaveForm = function(data){
 			if(_isEditForm){
