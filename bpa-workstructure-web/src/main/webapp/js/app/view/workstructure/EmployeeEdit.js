@@ -13,7 +13,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _options = {};
 		
 		var _isEditForm = false;
-		if(employee.id){
+		if(employee.employeeId){
 			_isEditForm = true;
 			_options.caption = "Edit Employee";
 		}else{
