@@ -12,16 +12,18 @@ public class Employee extends ConcurrencySafeEntity {
 	private String employeeId;
 	private String name;
 	private String email;
+	private String photoFileName;
 	
 	protected Employee() {
 		super();
 	}
 
-	public Employee(String anEmployeeId, String aName, String anEmail) {
+	public Employee(String anEmployeeId, String aName, String anEmail, String aPhotoFileName) {
 		this();
 		this.setEmployeeId(anEmployeeId);
 		this.setName(aName);
 		this.setEmail(anEmail);
+		this.setPhotoFileName(aPhotoFileName);
 	}
 
 	public String employeeId() {
@@ -40,6 +42,18 @@ public class Employee extends ConcurrencySafeEntity {
 	protected void setName(String aName) {
 		this.assertArgumentNotNull(name, "The name is required.");
 		this.name = aName;
+	}
+	
+	public void changeName(String aName) {
+		this.setName(aName);
+	}
+	
+	public void changeEmail(String anEmail) {
+		this.setEmail(anEmail);
+	}
+	
+	public void changePhotoFileName(String aPhotoFileName) {
+		this.setPhotoFileName(aPhotoFileName);
 	}
 
 	@Override
@@ -75,6 +89,14 @@ public class Employee extends ConcurrencySafeEntity {
 	protected void setEmail(String anEmail) {
 		this.assertArgumentNotNull(anEmail, "The email is required.");
 		this.email = anEmail;
+	}
+
+	public String photoFileName() {
+		return photoFileName;
+	}
+
+	protected void setPhotoFileName(String photoFileName) {
+		this.photoFileName = photoFileName;
 	}
 
 }

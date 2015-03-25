@@ -19,6 +19,8 @@ public class EmployeePresentationModel {
 		return this.employee.name();
 	}
 	
+	public String getPhotoFileName(){
+		return this.employee.photoFileName();
+	}
 	
-
 }

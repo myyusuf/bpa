@@ -8,5 +8,6 @@
 		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
 		<property name="employeeId" column="EMPLOYEE_ID" type="java.lang.String" />
 		<property name="name" column="NAME" type="java.lang.String" />
+		<property name="photoFileName" column="PHOTO_FILE_NAME" type="java.lang.String" />
 	</class> 
 </hibernate-mapping>

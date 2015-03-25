@@ -23,10 +23,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		_options.formName = "workstructureEmployeeEdit";
 		
-		
 		var _uploadFileField = $('<div></div>').jqxFileUpload({ width: 250, multipleFilesUpload: false, autoUpload: true, uploadUrl: BPA.Constant.workstructure.employeesUrl + '/upload', fileInputName: 'name', theme: 'metro' });
 		var _image = $('<img src="" style="border: 1px solid silver; width 100px; height: 100px;"/>');
-		_image.hide();
 		
 		var _photoTable = $('<table></table>');
 		var _photoRow1 = $('<tr></tr>');
@@ -58,8 +56,6 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
-		
-		
 		var _onSaveForm = function(data){
 			if(_isEditForm){
         		Observable.prototype.publish.call(_self, data, "onSaveEmployee");
@@ -68,6 +64,17 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
         	}
 		}
 		_simpleEditForm.subscribe(_onSaveForm, "onSaveForm");
+		
+		if(_isEditForm){
+			if(employee.photoFileName != undefined && employee.photoFileName != null && employee.photoFileName != ''){
+				_image.attr('src', 'service/workstructure/employee/image/' + _fileName);
+				_simpleEditForm.resizeHeight(310);
+			}else{
+				_image.hide();
+			}
+		}else{
+			_image.hide();
+		}
 		
 		_uploadFileField.on('select', function(event){
 			_simpleEditForm.resizeHeight(310);
