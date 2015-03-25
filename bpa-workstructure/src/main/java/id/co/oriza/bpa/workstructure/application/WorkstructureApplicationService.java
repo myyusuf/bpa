@@ -73,6 +73,11 @@ public class WorkstructureApplicationService {
 			this.structureRepository().add(newStructure);
 		}
 	}
+	
+	@Transactional(readOnly=true)
+	public Employee employeeWithEmployeeId(String employeeId){
+		return this.employeeRepository().withEmployeeId(employeeId);
+	}
 
 	public EmployeeRepository employeeRepository() {
 		return employeeRepository;

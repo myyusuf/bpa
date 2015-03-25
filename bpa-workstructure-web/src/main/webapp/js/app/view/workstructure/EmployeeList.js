@@ -16,7 +16,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		_options.dataFields = [
 		                       { name: 'employeeId', type: 'string' },
-		                       { name: 'name', type: 'string' }
+		                       { name: 'name', type: 'string' },
+		                       { name: 'photoFileName', type: 'string' }
 		                   ];
 		_options.dataFieldId = "employeeId";
 		
@@ -60,6 +61,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	if(rowData){
         		_employee.employeeId = rowData.employeeId;
             	_employee.name = rowData.name;
+            	_employee.photoFileName = rowData.photoFileName;
         	}
         	
         	return _employee;

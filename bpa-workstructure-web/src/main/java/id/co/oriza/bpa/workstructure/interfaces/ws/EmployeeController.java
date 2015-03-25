@@ -1,5 +1,8 @@
 package id.co.oriza.bpa.workstructure.interfaces.ws;
 
+import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService;
+import id.co.oriza.bpa.workstructure.domain.model.Employee;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -32,6 +36,12 @@ public class EmployeeController {
 	@Value("${employee.image.folder}")
 	private String employeeImageFolder;
 	
+	@Value("${employee.tempimage.folder}")
+	private String employeeTempImageFolder;
+	
+	@Autowired
+	private WorkstructureApplicationService workstructureService;
+	
 	@RequestMapping(value="/workstructure/employees/upload", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> uploadPhoto(@RequestParam(required=false) Map<String, String> params, HttpServletRequest request){
 		ServletContext servletContext = request.getSession().getServletContext();
@@ -48,7 +58,7 @@ public class EmployeeController {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		String fullPath = employeeImageFolder + "/temp/";
+		String fullPath = employeeTempImageFolder;
 		String tempFileName = "";
 		String fileRandomCode = "";
 		
@@ -80,7 +90,7 @@ public class EmployeeController {
 	@RequestMapping(value="/workstructure/employee/tempimage/{fileName}", method=RequestMethod.GET)
 	public void loadTemporaryImage(@PathVariable String fileName, HttpServletResponse resp) throws IOException {
 		
-		String fullPath = employeeImageFolder + "/temp/";
+		String fullPath = employeeTempImageFolder;
 		
 		fullPath += fileName + ".jpg";
 
@@ -102,16 +112,19 @@ public class EmployeeController {
 		in.close();
 	}
 	
-	@RequestMapping(value="/workstructure/employee/image/{fileName}", method=RequestMethod.GET)
-	public void loadImage(@PathVariable String fileName, HttpServletResponse resp) throws IOException {
+	@RequestMapping(value="/workstructure/employee/image/{employeeId}", method=RequestMethod.GET)
+	public void loadImage(@PathVariable String employeeId, HttpServletResponse resp) throws IOException {
 		
 		String defaultFile = employeeImageFolder + "cms_default_employee_img.png";
 		String fullPath = employeeImageFolder;
 		
-		if(StringUtils.isEmpty(fileName)){
+		if(StringUtils.isEmpty(employeeId) || "default".equals(employeeId)){
 			fullPath = defaultFile;
 		}else{
-			fullPath += fileName + ".jpg";
+			Employee employee = this.workstructureService().employeeWithEmployeeId(employeeId);
+			
+			if (employee == null) throw new IllegalArgumentException("Employee not found");
+			fullPath += "\\" + employeeId + "\\" + employee.photoFileName();
 		}
 
 //		resp.setContentType(mime);
@@ -160,6 +173,10 @@ public class EmployeeController {
 			e.printStackTrace();
 		}
 
+	}
+
+	public WorkstructureApplicationService workstructureService() {
+		return workstructureService;
 	}
 
 }

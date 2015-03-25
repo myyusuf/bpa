@@ -51,7 +51,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                ];
 		
 		_options.width = "auto";
-		_options.height = 227;
+		_options.height = 310;
 
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
@@ -67,13 +67,12 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		
 		if(_isEditForm){
 			if(employee.photoFileName != undefined && employee.photoFileName != null && employee.photoFileName != ''){
-				_image.attr('src', 'service/workstructure/employee/image/' + _fileName);
-				_simpleEditForm.resizeHeight(310);
+				_image.attr('src', 'service/workstructure/employee/image/' + employee.employeeId);
 			}else{
-				_image.hide();
+				_image.attr('src', 'service/workstructure/employee/image/default');
 			}
 		}else{
-			_image.hide();
+			_image.attr('src', 'service/workstructure/employee/image/default');
 		}
 		
 		_uploadFileField.on('select', function(event){

@@ -133,7 +133,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
         _overflowContainer.appendTo(_secondRowColumn);
         
         var _chartContainerId = "orgchart_" + _randomId;
-		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 700px; overflow-y: auto;">[Loading Organizational Chart...]</div>');
+		var _chartContainer = $('<div id="' + _chartContainerId + '" style="height: 1100px; overflow-y: auto;">[Loading Organizational Chart...]</div>');
 		_chartContainer.appendTo(_overflowContainer);
         
 		var _maximumId = 0;
