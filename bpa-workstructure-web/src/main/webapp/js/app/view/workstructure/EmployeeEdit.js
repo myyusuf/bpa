@@ -26,7 +26,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _uploadFileField = $('<div></div>').jqxFileUpload({ width: 250, multipleFilesUpload: false, autoUpload: true, uploadUrl: BPA.Constant.workstructure.employeesUrl + '/upload', fileInputName: 'name', theme: 'metro' });
 		var _image = $('<img src="" style="border: 1px solid silver; width 100px; height: 100px;"/>');
 		
-		var _photoTable = $('<table></table>');
+		var _imageFileName = "";
+		var _photoTable = $('<table style="margin-left: -4px; padding: 0;"></table>');
 		var _photoRow1 = $('<tr></tr>');
 		_photoRow1.appendTo(_photoTable);
 		var _photoColumn1 = $('<td></td>');
@@ -57,6 +58,9 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _simpleEditForm = new SimpleEditForm(container, _options);
 		
 		var _onSaveForm = function(data){
+			
+			data.imageFileName = _imageFileName;
+			
 			if(_isEditForm){
         		Observable.prototype.publish.call(_self, data, "onSaveEmployee");
         	}else{
@@ -91,6 +95,9 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 			
 			_image.attr('src', 'service/workstructure/employee/tempimage/' + _fileName);
 			_image.show();
+			
+			_imageFileName = _fileName;
+			
 			console.log(_uploadFileField);
 			
 //			_simpleEditForm.resizeHeight(190);

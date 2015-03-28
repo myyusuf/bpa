@@ -40,7 +40,7 @@ public class Employee extends ConcurrencySafeEntity {
 	}
 
 	protected void setName(String aName) {
-		this.assertArgumentNotNull(name, "The name is required.");
+		this.assertArgumentNotNull(aName, "The name is required.");
 		this.name = aName;
 	}
 	
@@ -87,7 +87,7 @@ public class Employee extends ConcurrencySafeEntity {
 	}
 
 	protected void setEmail(String anEmail) {
-		this.assertArgumentNotNull(anEmail, "The email is required.");
+//		this.assertArgumentNotNull(anEmail, "The email is required.");
 		this.email = anEmail;
 	}
 

@@ -8,4 +8,9 @@ public interface EmployeeRepository {
 
 	public Employee withEmployeeId(String employeeId);
 
+	public void add(Employee anEmployee);
+
+	public int allSimilarlyEmployeeIdOrNamedSize(String anEmployeeId,
+			String aName);
+
 }

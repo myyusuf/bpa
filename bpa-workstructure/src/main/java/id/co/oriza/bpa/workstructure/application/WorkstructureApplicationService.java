@@ -1,5 +1,6 @@
 package id.co.oriza.bpa.workstructure.application;
 
+import id.co.oriza.bpa.base.util.FileUtil;
 import id.co.oriza.bpa.workstructure.domain.model.Employee;
 import id.co.oriza.bpa.workstructure.domain.model.EmployeeRepository;
 import id.co.oriza.bpa.workstructure.domain.model.Location;
@@ -15,7 +16,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Transactional
 public class WorkstructureApplicationService {
@@ -34,10 +37,22 @@ public class WorkstructureApplicationService {
 	@Autowired
 	private StructureRepository structureRepository;
 	
+	@Value("${employee.image.folder}")
+	private String employeeImageFolder;
+	
+	@Value("${employee.tempimage.folder}")
+	private String employeeTempImageFolder;
+	
 	@Transactional(readOnly=true)
 	public Collection<Employee> allSimilarlyEmployeeIdOrNamedEmployees(String anEmployeeId, String aName, int aStart, int aLimit){
 		Collection<Employee> employees = this.employeeRepository().allSimilarlyEmployeeIdOrNamed(anEmployeeId, aName, aStart, aLimit);
 		return employees;
+	}
+	
+	@Transactional(readOnly=true)
+	public int allSimilarlyEmployeeIdOrNamedEmployeesSize(String anEmployeeId, String aName){
+		int employeesSize = this.employeeRepository().allSimilarlyEmployeeIdOrNamedSize(anEmployeeId, aName);
+		return employeesSize;
 	}
 	
 	@Transactional(readOnly=true)
@@ -77,6 +92,24 @@ public class WorkstructureApplicationService {
 	@Transactional(readOnly=true)
 	public Employee employeeWithEmployeeId(String employeeId){
 		return this.employeeRepository().withEmployeeId(employeeId);
+	}
+	
+	@Transactional
+	public void newEmployeeWith(NewEmployeeCommand aCommand){
+		
+		Employee employee = new Employee(aCommand.getEmployeeId(), aCommand.getName(), "", aCommand.getImageFileName());
+		this.employeeRepository().add(employee);
+		
+		if(!StringUtils.isEmpty(aCommand.getImageFileName())){
+			String employeePersonalDirectory = employeeImageFolder + "/" + aCommand.getEmployeeId(); 
+			FileUtil.forceMakeDirectory(employeePersonalDirectory);
+			
+			String temporaryEmployeePhotoFilePath = employeeTempImageFolder + "/" + aCommand.getImageFileName();
+			String employeePhotoFilePath = employeePersonalDirectory + "/" + aCommand.getImageFileName();
+			
+			FileUtil.copyFile(temporaryEmployeePhotoFilePath, employeePhotoFilePath);
+		}
+		
 	}
 
 	public EmployeeRepository employeeRepository() {

@@ -33,35 +33,6 @@ public class WorkstructureController extends CommonController{
 	@Autowired
 	private WorkstructureApplicationService workstructureService;
 	
-	@RequestMapping(value="/workstructure/employees", method=RequestMethod.GET, produces="application/json")
-	public Map<String, Object> allEmployees(@RequestParam(required=false) Map<String, String> params){
-		
-		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
-		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
-		
-		String employeeIdOrNameStartsWith = params.get("employeeIdOrNameStartsWith") != null ? params.get("employeeIdOrNameStartsWith") : "";
-		
-		employeeIdOrNameStartsWith = "test";
-		
-		printParamsString(params);
-		
-		List<EmployeePresentationModel> employeeModels = new ArrayList<EmployeePresentationModel>();
-		Collection<Employee> employees = this.workstructureService().allSimilarlyEmployeeIdOrNamedEmployees(employeeIdOrNameStartsWith, employeeIdOrNameStartsWith, start, limit);
-		for (Employee employee : employees) {
-			EmployeePresentationModel employeeModel = new EmployeePresentationModel(employee);
-			employeeModels.add(employeeModel);
-		}
-		
-		Long employeesSize = 1l;//this.workstructureService().allEmployeesSize();
-		
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		result.put("num", employeesSize);
-		result.put("data", employeeModels);
-		result.put("success", true);
-		
-		return result;
-	}
 	
 	@RequestMapping(value="/workstructure/positions", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allPositions(@RequestParam(required=false) Map<String, String> params){
