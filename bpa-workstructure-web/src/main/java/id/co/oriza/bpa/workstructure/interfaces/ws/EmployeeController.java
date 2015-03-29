@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.workstructure.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.workstructure.application.ChangeEmployeeInfoCommand;
 import id.co.oriza.bpa.workstructure.application.NewEmployeeCommand;
 import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService;
 import id.co.oriza.bpa.workstructure.domain.model.Employee;
@@ -98,6 +99,27 @@ public class EmployeeController extends CommonController{
 		NewEmployeeCommand aCommand = new NewEmployeeCommand(employeeId, name, imageFileName);
 		
 		this.workstructureService().newEmployeeWith(aCommand);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workstructure/employees", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changeEmployeeInfo(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("changeEmployeeInfo");
+		
+		printParams(params);
+		
+		String employeeId = (String) params.get("employeeId");
+		String name = (String) params.get("name");
+		String imageFileName = (String) params.get("imageFileName");
+		
+		ChangeEmployeeInfoCommand changeEmployeeInfoCommand = new ChangeEmployeeInfoCommand(employeeId, name, imageFileName);
+		this.workstructureService().changeEmployeeInfo(changeEmployeeInfoCommand);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		

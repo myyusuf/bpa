@@ -72,6 +72,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		if(_isEditForm){
 			if(employee.photoFileName != undefined && employee.photoFileName != null && employee.photoFileName != ''){
 				_image.attr('src', 'service/workstructure/employee/image/' + employee.employeeId);
+				_imageFileName = employee.photoFileName;
 			}else{
 				_image.attr('src', 'service/workstructure/employee/image/default');
 			}

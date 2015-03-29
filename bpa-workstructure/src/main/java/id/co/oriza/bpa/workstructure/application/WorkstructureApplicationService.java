@@ -111,6 +111,34 @@ public class WorkstructureApplicationService {
 		}
 		
 	}
+	
+	@Transactional
+	public void changeEmployeeInfo(ChangeEmployeeInfoCommand aCommand){
+		Employee existingEmployee = this.employee(aCommand.getEmployeeId());
+		if(existingEmployee == null){
+			throw new IllegalArgumentException("Employee does not exist for : " + aCommand.getEmployeeId());
+		}
+		
+		existingEmployee.changeName(aCommand.getName());
+		
+		String existingPhotoFileName = existingEmployee.photoFileName() != null ? existingEmployee.photoFileName() : "";
+		if(!existingPhotoFileName.equals(aCommand.getImageFileName())){
+			
+			existingEmployee.changePhotoFileName(aCommand.getImageFileName());
+			
+			String employeePersonalDirectory = employeeImageFolder + "/" + aCommand.getEmployeeId(); 
+			FileUtil.forceMakeDirectory(employeePersonalDirectory);
+			
+			String temporaryEmployeePhotoFilePath = employeeTempImageFolder + "/" + aCommand.getImageFileName();
+			String employeePhotoFilePath = employeePersonalDirectory + "/" + aCommand.getImageFileName();
+			
+			FileUtil.copyFile(temporaryEmployeePhotoFilePath, employeePhotoFilePath);
+		}
+	}
+	
+	private Employee employee(String employeeId){
+		return this.employeeRepository().withEmployeeId(employeeId);
+	}
 
 	public EmployeeRepository employeeRepository() {
 		return employeeRepository;
