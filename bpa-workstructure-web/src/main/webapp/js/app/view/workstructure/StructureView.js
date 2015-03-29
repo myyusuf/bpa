@@ -344,6 +344,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		
 		var _onSuccessGetStructuresData = function(result){
 			
+			var _imageRandomVersion = (new Date()).getTime(); //to disable browser image cache
+			
 			var _structures = result.data;
 			for(var _i = 0; _i<_structures.length; _i++){
 				
@@ -355,7 +357,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		                title: _structure.employee.name,
 		                description: _structure.position.name,
 		                context: _structure,
-		                image: "service/workstructure/employee/image/" + _structure.employee.employeeId
+		                image: "service/workstructure/employee/image/" + _structure.employee.employeeId  + "?ver=" + _imageRandomVersion
 		            });
 				
 				_items.push(_item);
@@ -430,6 +432,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     		
                     		console.log("_parentId : " + _parentId);
                     		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
+                    		
+                    		var _imageRandomVersion = (new Date()).getTime(); //to disable browser image cache
         					
                     		var _item = 
             		            new primitives.orgdiagram.ItemConfig({
@@ -438,7 +442,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             		                title: editedStructure.employee.name,
             		                description: editedStructure.position.name,
             		                context: editedStructure,
-            		                image: "service/workstructure/employee/image/" + editedStructure.employee.employeeId
+            		                image: "service/workstructure/employee/image/" + editedStructure.employee.employeeId  + "?ver=" + _imageRandomVersion
             		            });
             				
             				_items.push(_item);
@@ -480,6 +484,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     	var _onSaveStructure = function(editedStructure){
                     		
                     		console.log("_parentId : " + _parentId);
+                    		var _imageRandomVersion = (new Date()).getTime(); //to disable browser image cache
+                    		
                     		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
                     		for(var _i = 0; _i<_items.length; _i++){
                     			var _item = _items[_i];
@@ -487,7 +493,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
                     				_item.title = editedStructure.employee.name;
                     				_item.description = editedStructure.position.name;
                     				_item.context = editedStructure;
-                    				_item.image = "service/workstructure/employee/image/" + editedStructure.employee.employeeId;
+                    				_item.image = "service/workstructure/employee/image/" + editedStructure.employee.employeeId  + "?ver=" + _imageRandomVersion;
                     				
                     				items[_item.id] = _item;
                     			}
@@ -555,6 +561,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
         	var _onSaveNewStructure = function(editedStructure){
         		
         		var _items = $('#' + _chartContainerId).orgDiagram("option", "items");
+        		
+        		var _imageRandomVersion = (new Date()).getTime(); //to disable browser image cache
 				
         		var _item = 
 		            new primitives.orgdiagram.ItemConfig({
@@ -563,7 +571,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		                title: editedStructure.employee.name,
 		                description: editedStructure.position.name,
 		                context: editedStructure,
-		                image: "service/workstructure/employee/image/" + editedStructure.employee.employeeId
+		                image: "service/workstructure/employee/image/" + editedStructure.employee.employeeId + "?ver=" + _imageRandomVersion
 		            });
 				
 				_items.push(_item);
@@ -614,6 +622,9 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			_sendData(BPA.Constant.workstructure.structuresUrl, {structures: _structures}, "POST", function(result){
 				
 				_sendData(BPA.Constant.workstructure.structuresUrl, {}, "GET", function(result){
+					
+					var _imageRandomVersion = (new Date()).getTime(); //to disable browser image cache
+					
 					_items = [];
 					var _structures = result.data;
 					for(var _i = 0; _i<_structures.length; _i++){
@@ -626,7 +637,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 				                title: _structure.employee.name,
 				                description: _structure.position.name,
 				                context: _structure,
-				                image: "service/workstructure/employee/image/" + _structure.employee.employeeId
+				                image: "service/workstructure/employee/image/" + _structure.employee.employeeId  + "?ver=" + _imageRandomVersion
 				            });
 						
 						_items.push(_item);
@@ -655,6 +666,9 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		
 		_refreshButton.click(function(result){
 			_sendData(BPA.Constant.workstructure.structuresUrl, {}, "GET", function(result){
+				
+				var _imageRandomVersion = (new Date()).getTime(); //to disable browser image cache
+				
 				_items = [];
 				var _structures = result.data;
 				for(var _i = 0; _i<_structures.length; _i++){
@@ -667,7 +681,7 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 			                title: _structure.employee.name,
 			                description: _structure.position.name,
 			                context: _structure,
-			                image: "service/workstructure/employee/image/" + _structure.employee.employeeId
+			                image: "service/workstructure/employee/image/" + _structure.employee.employeeId + "?ver=" + _imageRandomVersion
 			            });
 					
 					_items.push(_item);
