@@ -447,6 +447,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
             				
             				_items.push(_item);
             				
+            				items[_item.id] = _item;
+            				
             				$('#' + _chartContainerId).orgDiagram({
             		            items: _items,
             		            cursorItem: editedStructure.structureId
@@ -575,6 +577,8 @@ define(["bpaObservable", "notificationWindow", "component/base/SimpleListGrid", 
 		            });
 				
 				_items.push(_item);
+				
+				items[_item.id] = _item;
 				
 				$('#' + _chartContainerId).orgDiagram({
 		            items: _items,
