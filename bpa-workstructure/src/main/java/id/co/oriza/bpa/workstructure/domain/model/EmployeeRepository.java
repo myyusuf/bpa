@@ -13,4 +13,6 @@ public interface EmployeeRepository {
 	public int allSimilarlyEmployeeIdOrNamedSize(String anEmployeeId,
 			String aName);
 
+	public void remove(Employee employee);
+
 }

@@ -55,5 +55,17 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void deleteDirectory(String dirPath){
+		File directory = new File(dirPath);
+		if(directory.exists()){
+			File[] listFiles = directory.listFiles();
+			for (File file : listFiles) {
+				file.delete();
+			}
+			
+			directory.delete();
+		}
+	}
 
 }

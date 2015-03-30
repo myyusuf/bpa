@@ -136,6 +136,18 @@ public class WorkstructureApplicationService {
 		}
 	}
 	
+	@Transactional
+	public void removeEmployee(RemoveEmployeeCommand aCommand){
+		Employee existingEmployee = this.employee(aCommand.getEmployeeId());
+		if(existingEmployee == null){
+			throw new IllegalArgumentException("Employee does not exist for : " + aCommand.getEmployeeId());
+		}
+		this.employeeRepository().remove(existingEmployee);
+		
+		String employeePersonalDirectory = employeeImageFolder + "/" + aCommand.getEmployeeId();
+		FileUtil.deleteDirectory(employeePersonalDirectory);
+	}
+	
 	private Employee employee(String employeeId){
 		return this.employeeRepository().withEmployeeId(employeeId);
 	}

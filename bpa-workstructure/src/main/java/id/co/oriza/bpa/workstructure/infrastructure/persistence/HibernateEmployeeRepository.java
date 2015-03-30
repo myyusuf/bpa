@@ -73,4 +73,9 @@ public class HibernateEmployeeRepository  extends AbstractHibernateSession imple
 		return ((Long) query.uniqueResult()).intValue();
 	}
 
+	@Override
+	public void remove(Employee employee) {
+		this.session().delete(employee);
+	}
+
 }

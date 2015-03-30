@@ -3,6 +3,7 @@ package id.co.oriza.bpa.workstructure.interfaces.ws;
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
 import id.co.oriza.bpa.workstructure.application.ChangeEmployeeInfoCommand;
 import id.co.oriza.bpa.workstructure.application.NewEmployeeCommand;
+import id.co.oriza.bpa.workstructure.application.RemoveEmployeeCommand;
 import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService;
 import id.co.oriza.bpa.workstructure.domain.model.Employee;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.EmployeePresentationModel;
@@ -128,7 +129,21 @@ public class EmployeeController extends CommonController{
 		return result;
 	}
 	
-	
+	@RequestMapping(value="/workstructure/employees", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deleteEmployee(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("delete employee");
+		
+		String employeeId = (String) params.get("employeeId");
+		
+		RemoveEmployeeCommand command = new RemoveEmployeeCommand(employeeId);
+		this.workstructureService().removeEmployee(command);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("success", true);
+		
+		return result;
+	}
 	
 	@RequestMapping(value="/workstructure/employees/upload", method=RequestMethod.POST, produces="application/json")
 	public Map<String, Object> uploadPhoto(@RequestParam(required=false) Map<String, String> params, HttpServletRequest request){

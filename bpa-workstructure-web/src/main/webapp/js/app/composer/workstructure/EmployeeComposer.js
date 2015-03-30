@@ -91,7 +91,7 @@ define(["notificationWindow", "view/workstructure/EmployeeList", "view/workstruc
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Employee', 
-			content: "Are you sure want to delete this employee : " + deletedEmployee.id + " (" + deletedEmployee.name + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this employee : " + deletedEmployee.name + " (" + deletedEmployee.employeeId + ") ?", type: 'info', onOk: _onOk});
 		}
 		_employeeList.subscribe(_onDeleteEmployee, "onDeleteEmployee");
 		
