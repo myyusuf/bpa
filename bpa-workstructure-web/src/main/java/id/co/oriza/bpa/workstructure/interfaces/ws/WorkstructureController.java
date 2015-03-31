@@ -34,32 +34,6 @@ public class WorkstructureController extends CommonController{
 	private WorkstructureApplicationService workstructureService;
 	
 	
-	@RequestMapping(value="/workstructure/positions", method=RequestMethod.GET, produces="application/json")
-	public Map<String, Object> allPositions(@RequestParam(required=false) Map<String, String> params){
-		
-		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
-		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
-		
-		printParamsString(params);
-		
-		List<PositionPresentationModel> positionModels = new ArrayList<PositionPresentationModel>();
-		Collection<Position> positions = this.workstructureService().allSimilarlyCodedOrNamedPositions("", "", start, limit);
-		for (Position position : positions) {
-			PositionPresentationModel positionModel = new PositionPresentationModel(position);
-			positionModels.add(positionModel);
-		}
-		
-		Long positionsSize = 1l;//this.workstructureService().allEmployeesSize();
-		
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		result.put("num", positionsSize);
-		result.put("data", positionModels);
-		result.put("success", true);
-		
-		return result;
-	}
-	
 	@RequestMapping(value="/workstructure/locations", method=RequestMethod.GET, produces="application/json")
 	public Map<String, Object> allLocations(@RequestParam(required=false) Map<String, String> params){
 		

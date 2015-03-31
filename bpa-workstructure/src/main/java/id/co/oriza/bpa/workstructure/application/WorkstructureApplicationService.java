@@ -60,6 +60,10 @@ public class WorkstructureApplicationService {
 		Collection<Position> positions = this.positionRepository().allSimilarlyCodedOrNamed(aCode, aName, aStart, aLimit);
 		return positions;
 	}
+	@Transactional(readOnly=true)
+	public int allSimilarlyCodedOrNamedPositionsSize(String aCode, String aName){
+		return this.positionRepository().allSimilarlyCodedOrNamedPositionsSize(aCode, aName);
+	}
 	
 	@Transactional(readOnly=true)
 	public Collection<Location> allSimilarlyCodedOrAddressedLocations(String aCode, String anAddress, int aStart, int aLimit){

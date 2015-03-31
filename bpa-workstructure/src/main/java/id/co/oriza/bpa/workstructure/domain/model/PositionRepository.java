@@ -10,4 +10,6 @@ public interface PositionRepository {
 
 	public void add(Position position);
 
+	public int allSimilarlyCodedOrNamedPositionsSize(String aCode, String aName);
+
 }

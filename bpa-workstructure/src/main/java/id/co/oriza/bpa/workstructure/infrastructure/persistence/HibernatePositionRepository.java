@@ -56,4 +56,19 @@ public class HibernatePositionRepository extends AbstractHibernateSession implem
 		
 	}
 
+	@Override
+	public int allSimilarlyCodedOrNamedPositionsSize(String aCode, String aName) {
+		if(aCode.endsWith("%") || aName.endsWith("%")){
+			throw new IllegalArgumentException("code or name prefixes must not include %");
+		}
+		
+		Query query = this.session().createQuery("select count(_obj_) from id.co.oriza.bpa.workstructure.domain.model.Position as _obj_ "
+				+ "where _obj_.code like :aCode "
+				+ "or _obj_.name like :aName ");
+		query.setString("aCode", aCode + "%");
+		query.setString("aName", aName + "%");
+		
+		return ((Long) query.uniqueResult()).intValue();
+	}
+
 }
