@@ -148,6 +148,14 @@ public class WorkstructureApplicationService {
 		FileUtil.deleteDirectory(employeePersonalDirectory);
 	}
 	
+	@Transactional
+	public void newPositionWith(NewPositionCommand aCommand){
+		
+		Position position = new Position(aCommand.getCode(), aCommand.getName(), aCommand.getDescription());
+		this.positionRepository().add(position);
+		
+	}
+	
 	private Employee employee(String employeeId){
 		return this.employeeRepository().withEmployeeId(employeeId);
 	}

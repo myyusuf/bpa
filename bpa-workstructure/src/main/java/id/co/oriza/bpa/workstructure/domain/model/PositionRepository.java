@@ -8,4 +8,6 @@ public interface PositionRepository {
 
 	public Position withCode(String positionCode);
 
+	public void add(Position position);
+
 }

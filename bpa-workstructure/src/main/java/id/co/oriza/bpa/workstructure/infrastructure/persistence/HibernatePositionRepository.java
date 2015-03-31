@@ -6,6 +6,8 @@ import id.co.oriza.bpa.workstructure.domain.model.PositionRepository;
 
 import java.util.Collection;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,16 @@ public class HibernatePositionRepository extends AbstractHibernateSession implem
 				+ "where _obj_.code = :aCode ");
 		query.setString("aCode", aCode);
 		return (Position) query.uniqueResult();
+	}
+
+	@Override
+	public void add(Position aPosition) {
+		try{
+			this.session().saveOrUpdate(aPosition);
+		}catch(ConstraintViolationException e){
+			throw new IllegalStateException("Position is not unique.", e);
+		}
+		
 	}
 
 }
