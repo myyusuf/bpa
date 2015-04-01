@@ -91,7 +91,7 @@ define(["notificationWindow", "view/workstructure/PositionList", "view/workstruc
 			}
 			
 			var _deleteConfirmationWindow = new NotificationWindow(container, {title:'Delete Position', 
-			content: "Are you sure want to delete this position : " + deletedPosition.id + " (" + deletedPosition.name + ") ?", type: 'info', onOk: _onOk});
+			content: "Are you sure want to delete this position : " + deletedPosition.code + " (" + deletedPosition.name + ") ?", type: 'info', onOk: _onOk});
 		}
 		_positionList.subscribe(_onDeletePosition, "onDeletePosition");
 		

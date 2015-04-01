@@ -13,7 +13,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _options = {};
 		
 		var _isEditForm = false;
-		if(location.id){
+		if(location.code){
 			_isEditForm = true;
 			_options.caption = "Edit Location";
 		}else{
@@ -33,8 +33,8 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
                 { fieldAddress: "address", message: 'Address is required', action: 'keyup, blur', rule: 'required' }
                ];
 		
-		_options.width = 320;
-		_options.height = 145;
+		_options.width = "auto";
+		_options.height = "auto";
 
 		
 		var _simpleEditForm = new SimpleEditForm(container, _options);
