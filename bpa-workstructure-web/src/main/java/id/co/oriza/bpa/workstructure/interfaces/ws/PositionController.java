@@ -1,7 +1,9 @@
 package id.co.oriza.bpa.workstructure.interfaces.ws;
 
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
+import id.co.oriza.bpa.workstructure.application.ChangePositionInfoCommand;
 import id.co.oriza.bpa.workstructure.application.NewPositionCommand;
+import id.co.oriza.bpa.workstructure.application.RemovePositionCommand;
 import id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService;
 import id.co.oriza.bpa.workstructure.domain.model.Position;
 import id.co.oriza.bpa.workstructure.interfaces.ws.pm.PositionPresentationModel;
@@ -42,7 +44,7 @@ public class PositionController extends CommonController{
 		printParamsString(params);
 		
 		List<PositionPresentationModel> positionModels = new ArrayList<PositionPresentationModel>();
-		Collection<Position> positions = this.workstructureService().allSimilarlyCodedOrNamedPositions("", "", start, limit);
+		Collection<Position> positions = this.workstructureService().allSimilarlyCodedOrNamedPositions(codeOrNameStartsWith, codeOrNameStartsWith, start, limit);
 		for (Position position : positions) {
 			PositionPresentationModel positionModel = new PositionPresentationModel(position);
 			positionModels.add(positionModel);
@@ -80,6 +82,43 @@ public class PositionController extends CommonController{
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workstructure/positions", method=RequestMethod.PUT, produces="application/json")
+	public Map<String, Object> changePositionInfo(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("changePositionInfo");
+		
+		printParams(params);
+		
+		String code = (String) params.get("code");
+		String name = (String) params.get("name");
+		String description = (String) params.get("description");
+		
+		ChangePositionInfoCommand aCommand = new ChangePositionInfoCommand(code, name, description);
+		this.workstructureService().changePositionInfo(aCommand);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/workstructure/positions", method=RequestMethod.DELETE, produces="application/json")
+	public Map<String, Object> deletePosition(@RequestBody(required=false) Map<String, Object> params){
+		
+		logger.debug("delete position");
+		
+		String code = (String) params.get("code");
+		
+		RemovePositionCommand aCommand = new RemovePositionCommand(code);
+		this.workstructureService().removePosition(aCommand);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("success", true);
 		
 		return result;
