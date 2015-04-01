@@ -70,6 +70,10 @@ public class WorkstructureApplicationService {
 		Collection<Location> locations = this.locationRepository().allSimilarlyCodedOrAddressed(aCode, anAddress, aStart, aLimit);
 		return locations;
 	}
+	@Transactional(readOnly=true)
+	public int allSimilarlyCodedOrAddressedLocationsSize(String aCode, String aName){
+		return this.locationRepository().allSimilarlyCodedOrAddressedLocationsSize(aCode, aName);
+	}
 	
 	@Transactional(readOnly=true)
 	public Collection<Structure> allStructures(int aStart, int aLimit){
@@ -159,9 +163,61 @@ public class WorkstructureApplicationService {
 		this.positionRepository().add(position);
 		
 	}
+	@Transactional
+	public void changePositionInfo(ChangePositionInfoCommand aCommand){
+		Position existingPosition = this.position(aCommand.getCode());
+		if(existingPosition == null){
+			throw new IllegalArgumentException("Position does not exist for : " + aCommand.getCode());
+		}
+		
+		existingPosition.changeName(aCommand.getName());
+		existingPosition.changeDescription(aCommand.getDescription());
+	}
+	@Transactional
+	public void removePosition(RemovePositionCommand aCommand){
+		Position existingPosition = this.position(aCommand.getCode());
+		if(existingPosition == null){
+			throw new IllegalArgumentException("Position does not exist for : " + aCommand.getCode());
+		}
+		
+		this.positionRepository().remove(existingPosition);
+	}
+	
+	@Transactional
+	public void newLocationWith(NewLocationCommand aCommand){
+		Location location = new Location(aCommand.getCode(), aCommand.getAddress(), aCommand.getDescription());
+		this.locationRepository().add(location);
+	}
+	@Transactional
+	public void changeLocationInfo(ChangeLocationInfoCommand aCommand){
+		Location existingLocation = this.location(aCommand.getCode());
+		if(existingLocation == null){
+			throw new IllegalArgumentException("Location does not exist for : " + aCommand.getCode());
+		}
+		
+		existingLocation.changeAddress(aCommand.getAddress());
+		existingLocation.changeDescription(aCommand.getDescription());
+	}
+	@Transactional
+	public void removeLocation(RemoveLocationCommand aCommand){
+		Location existingLocation = this.location(aCommand.getCode());
+		if(existingLocation == null){
+			throw new IllegalArgumentException("Location does not exist for : " + aCommand.getCode());
+		}
+		
+		this.locationRepository().remove(existingLocation);
+	}
 	
 	private Employee employee(String employeeId){
 		return this.employeeRepository().withEmployeeId(employeeId);
+	}
+	
+	private Position position(String code){
+		return this.positionRepository().withCode(code);
+	}
+	
+	private Location location(String code){
+		return this.locationRepository().withCode(code);
 	}
 
 	public EmployeeRepository employeeRepository() {

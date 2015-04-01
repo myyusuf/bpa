@@ -8,4 +8,11 @@ public interface LocationRepository {
 
 	public Location withCode(String locationCode);
 
+	public void add(Location location);
+
+	public void remove(Location location);
+
+	public int allSimilarlyCodedOrAddressedLocationsSize(String aCode,
+			String aName);
+
 }

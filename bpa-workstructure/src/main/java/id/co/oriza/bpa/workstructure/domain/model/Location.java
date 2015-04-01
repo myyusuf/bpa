@@ -17,10 +17,10 @@ public class Location extends IdentifiedValueObject {
 		super();
 	}
 
-	public Location(String aCode, String aAddress, String aDescription) {
+	public Location(String aCode, String anAddress, String aDescription) {
 		this();
 		this.setCode(aCode);
-		this.setAddress(aAddress);
+		this.setAddress(anAddress);
 		this.setDescription(aDescription);
 	}
 
@@ -50,8 +50,8 @@ public class Location extends IdentifiedValueObject {
 		this.description = aDescription;
 	}
 	
-	public void changeAddress(String aAddress) {
-		this.setAddress(aAddress);
+	public void changeAddress(String anAddress) {
+		this.setAddress(anAddress);
 	}
 	
 	public void changeDescription(String aDescription) {

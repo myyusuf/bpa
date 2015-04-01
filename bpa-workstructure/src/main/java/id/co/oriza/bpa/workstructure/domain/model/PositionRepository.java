@@ -12,4 +12,6 @@ public interface PositionRepository {
 
 	public int allSimilarlyCodedOrNamedPositionsSize(String aCode, String aName);
 
+	public void remove(Position position);
+
 }

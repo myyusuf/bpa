@@ -71,4 +71,9 @@ public class HibernatePositionRepository extends AbstractHibernateSession implem
 		return ((Long) query.uniqueResult()).intValue();
 	}
 
+	@Override
+	public void remove(Position position) {
+		this.session().delete(position);
+	}
+
 }
