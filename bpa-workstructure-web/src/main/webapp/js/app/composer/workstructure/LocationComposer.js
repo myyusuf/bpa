@@ -7,11 +7,11 @@ define(["notificationWindow", "view/workstructure/LocationList", "view/workstruc
 		var _locationListUrl = BPA.Constant.workstructure.locationsUrl;
 		
 		var _successNotification = $('<div>Data successfully saved</div>').jqxNotification({
-            width: 250, location: "top-right", opacity: 0.9,
+            width: 250, position: "top-right", opacity: 0.9,
             autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
         });
 		var _successDeleteNotification = $('<div>Data successfully deleted</div>').jqxNotification({
-            width: 250, location: "top-right", opacity: 0.9,
+            width: 250, position: "top-right", opacity: 0.9,
             autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
         });
 			

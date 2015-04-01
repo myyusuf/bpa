@@ -21,16 +21,16 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		}
 		_options.isEditForm = _isEditForm;
 		
-		_options.formAddress = "workstructureLocationEdit";
+		_options.formName = "workstructureLocationEdit";
 		
-		_options.formFields = [{address: "code", label: "Code", value: location.code, isKey: true, required: true, maxLength: 30},
-		                       {address: "address", label: "Address", value: location.address, required: true, maxLength: 100},
-		                       {address: "description", label: "Description", value: location.address, maxLength: 150}
+		_options.formFields = [{name: "code", label: "Code", value: location.code, isKey: true, required: true, maxLength: 30},
+		                       {name: "address", label: "Address", value: location.address, required: true, maxLength: 100},
+		                       {name: "description", label: "Description", value: location.description, maxLength: 150}
 		                       ];
 		
 		_options.validationRules = [
-                { fieldAddress: "code", message: 'Code is required', action: 'keyup, blur', rule: 'required' },
-                { fieldAddress: "address", message: 'Address is required', action: 'keyup, blur', rule: 'required' }
+                { fieldName: "code", message: 'Code is required', action: 'keyup, blur', rule: 'required' },
+                { fieldName: "address", message: 'Address is required', action: 'keyup, blur', rule: 'required' }
                ];
 		
 		_options.width = "auto";

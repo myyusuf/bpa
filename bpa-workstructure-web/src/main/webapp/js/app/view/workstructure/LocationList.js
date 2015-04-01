@@ -15,8 +15,9 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		Observable.call(_self, _subscribers);
 		
 		_options.dataFields = [
-		                       { address: 'code', type: 'string' },
-		                       { address: 'address', type: 'string' }
+		                       { name: 'code', type: 'string' },
+		                       { name: 'address', type: 'string' },
+		                       { name: 'description', type: 'string' }
 		                   ];
 		_options.dataFieldId = "code";
 		
@@ -60,6 +61,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	if(rowData){
         		_location.code = rowData.code;
             	_location.address = rowData.address;
+            	_location.description = rowData.description;
         	}
         	
         	return _location;
