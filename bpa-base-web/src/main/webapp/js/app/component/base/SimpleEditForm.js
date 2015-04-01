@@ -119,19 +119,21 @@ define(["bpaObservable", "jqxbuttons", "jqxinput", "jqxpasswordinput", "jqxtoolt
 		var _saveButtonLabel = $('<td></td>');
 		_saveButtonLabel.appendTo(_newRow);
 		var _buttonColumn = $('<td colspan="2"></td>');
-		var _saveButton = $('<input type="button" value="Save" style="margin-right: 5px; margin-top: 5px;"/>');
-		_saveButton.appendTo(_buttonColumn);
+		var _saveButton = $('<input type="button" value="Save" />');
+		
 		_saveButton.click(function(event){
         	_editForm.jqxValidator('validate');
 		});
 		
-		var _cancelButton = $('<input type="button" value="Cancel"/>');
-		_cancelButton.appendTo(_buttonColumn);
+		var _cancelButton = $('<input type="button" value="Cancel" style="margin-right: 5px; margin-top: 5px;"/>');
+		
 		_cancelButton.click(function(event){
         	_editWindow.jqxWindow('close');
         	_editWindow.jqxWindow('destroy');
         });
 		
+		_cancelButton.appendTo(_buttonColumn);
+		_saveButton.appendTo(_buttonColumn);
 		_buttonColumn.appendTo(_newRow);
 		
 		_saveButton.jqxButton({ width: 60, height: 25, theme: 'metro'});

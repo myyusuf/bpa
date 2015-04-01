@@ -13,7 +13,7 @@ define(["bpaObservable", "component/base/SimpleEditForm", "jqxbuttons", "jqxinpu
 		var _options = {};
 		
 		var _isEditForm = false;
-		if(position.id){
+		if(position.code){
 			_isEditForm = true;
 			_options.caption = "Edit Position";
 		}else{

@@ -16,7 +16,8 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
 		
 		_options.dataFields = [
 		                       { name: 'code', type: 'string' },
-		                       { name: 'name', type: 'string' }
+		                       { name: 'name', type: 'string' },
+		                       { name: 'description', type: 'string' }
 		                   ];
 		_options.dataFieldId = "code";
 		
@@ -60,6 +61,7 @@ define(["bpaObservable", "component/base/SimpleListGrid", "jQuery", "jqxcore", "
         	if(rowData){
         		_position.code = rowData.code;
             	_position.name = rowData.name;
+            	_position.description = rowData.description;
         	}
         	
         	return _position;
