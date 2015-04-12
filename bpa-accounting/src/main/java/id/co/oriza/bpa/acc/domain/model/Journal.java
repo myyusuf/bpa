@@ -19,6 +19,7 @@ public class Journal extends ConcurrencySafeEntity {
 	private MovementType position;
 	
 	private Transaction transaction;
+	private String description;
 
 	public JournalId journalId() {
 		return journalId;
@@ -73,14 +74,24 @@ public class Journal extends ConcurrencySafeEntity {
 	}
 
 	public Journal(JournalId journalId, Date createdTime, Account account,
-			BigDecimal amount, MovementType position, Transaction transaction) {
+			BigDecimal amount, MovementType position, Transaction transaction,
+			String description) {
 		this();
-		this.journalId = journalId;
-		this.createdTime = createdTime;
-		this.account = account;
-		this.amount = amount;
-		this.position = position;
-		this.transaction = transaction;
+		this.setJournalId(journalId);
+		this.setCreatedTime(createdTime);
+		this.setAccount(account);
+		this.setAmount(amount);
+		this.setPosition(position);
+		this.setTransaction(transaction);
+		this.setDescription(description);
+	}
+
+	public String description() {
+		return description;
+	}
+
+	protected void setDescription(String description) {
+		this.description = description;
 	}
 
 }

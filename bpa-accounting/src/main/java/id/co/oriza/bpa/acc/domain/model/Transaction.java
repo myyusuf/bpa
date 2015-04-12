@@ -1,6 +1,8 @@
 package id.co.oriza.bpa.acc.domain.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import id.co.oriza.bpa.base.domain.model.ConcurrencySafeEntity;
 
@@ -16,6 +18,8 @@ public class Transaction extends ConcurrencySafeEntity {
 	private String transactionNumber;
 	private String description;
 	private Date createdTime;
+	
+	private Set<Journal> journals;
 
 	public String getTransactionNumber() {
 		return transactionNumber;
@@ -51,11 +55,28 @@ public class Transaction extends ConcurrencySafeEntity {
 
 	public Transaction(TransactionId transactionId, String transactionNumber,
 			String description, Date createdTime) {
+		this();
+		this.setTransactionId(transactionId);
+		this.setTransactionNumber(transactionNumber);
+		this.setDescription(description);
+		this.setCreatedTime(createdTime);
+	}
+
+	public Set<Journal> getJournals() {
+		return journals;
+	}
+
+	protected void setJournals(Set<Journal> journals) {
+		this.journals = journals;
+	}
+	
+	public void addJournal(Journal aJournal) {
+		this.getJournals().add(aJournal);
+	}
+
+	public Transaction() {
 		super();
-		this.transactionId = transactionId;
-		this.transactionNumber = transactionNumber;
-		this.description = description;
-		this.createdTime = createdTime;
+		this.setJournals(new HashSet<Journal>(0));
 	}
 
 }
