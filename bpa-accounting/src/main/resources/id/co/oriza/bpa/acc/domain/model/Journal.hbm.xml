@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping default-access="field">
+	<class name="id.co.oriza.bpa.acc.domain.model.Journal" table="BPA_JOURNAL">
+		<id name="id" type="long" column="ID" unsaved-value="-1">
+			<generator class="native"/>
+		</id>
+		
+		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
+		
+		<many-to-one name="journalId" class="id.co.oriza.bpa.acc.domain.model.JournalId" column="JOURNAL_ID"/>
+		<property name="createdTime" column="CREATED_TIME" type="java.util.Date" />
+		
+		<many-to-one name="transaction" class="id.co.oriza.bpa.acc.domain.model.Transaction" column="TRANSACTION_ID"/>
+		
+		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		
+	</class> 
+</hibernate-mapping>
