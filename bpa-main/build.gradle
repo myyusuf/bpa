@@ -39,6 +39,7 @@ dependencies {
 			"org.hibernate:hibernate-validator:4.3.1.Final",
 			"id.co.oriza.bpa:bpa-base:1.0",
 			"id.co.oriza.bpa:bpa-security:1.0",
+			"id.co.oriza.bpa:bpa-workstructure:1.0",
 			"id.co.oriza.bpa:bpa-workflow:1.0",
 			"id.co.oriza.bpa:bpa-accounting:1.0"
 			
@@ -49,6 +50,10 @@ dependencies {
 			"mysql:mysql-connector-java:5.1.6",
 			"org.slf4j:slf4j-api:1.7.7",
 			"org.slf4j:slf4j-log4j12:1.7.7",
+			"id.co.oriza.bpa:bpa-base-web:1.0@war",
+			"id.co.oriza.bpa:bpa-security-web:1.0@war",
+			"id.co.oriza.bpa:bpa-workstructure-web:1.0@war",
+			"id.co.oriza.bpa:bpa-workflow-web:1.0@war",
 			"id.co.oriza.bpa:bpa-accounting-web:1.0@war"
 			
 	testCompile group: 'junit', name: 'junit', version: '4.+'
@@ -65,9 +70,15 @@ buildscript {
 	}
 }
 
-task copyTask(type: Copy) {
+task copyWebFiles(type: Copy) {
 	from 'src/main/webapp'
-	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-main-1.0.war')
+	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-main-web-1.0.war')
+	exclude 'WEB-INF'
+}
+
+task copyClassFiles(type: Copy) {
+	from 'build/classes/main'
+	into file('file:/E:/Installers/servers/jboss/jboss-eap-6.2/standalone/deployments/bpa-main-web-1.0.war/WEB-INF/classes')
 	exclude 'WEB-INF'
 }
 
