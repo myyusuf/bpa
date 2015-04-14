@@ -37,31 +37,6 @@
 		<property name="password" value="admin" />
 	</bean>
 	
-	<!-- <bean id="sessionFactory" 
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-				 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>  
-			</props>
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>  
-			</props>
-		</property>
-	</bean>
-
-	<bean id="transactionManager" 
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean> -->
-	
 	<bean id="sessionFactory" 
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -84,8 +59,26 @@
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	
 	<bean id="sessionProvider" class="id.co.oriza.bpa.base.spring.SpringHibernateSessionProvider" autowire="byName"/>
+	
+	<bean id="identityApplicationService" class="id.co.oriza.bpa.security.application.IdentityApplicationService" autowire="byName"/>
+	<bean id="hibernateUserRepository" class="id.co.oriza.bpa.security.infrastructure.persistence.HibernateUserRepository" autowire="byName"/>
+	<bean id="hibernateGroupRepository" class="id.co.oriza.bpa.security.infrastructure.persistence.HibernateGroupRepository" autowire="byName"/>
+	
+	<bean id="workstructureApplicationService" class="id.co.oriza.bpa.workstructure.application.WorkstructureApplicationService" autowire="byName"/>
+	<bean id="hibernateEmployeeRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernateEmployeeRepository" autowire="byName"/>
+	<bean id="hibernatePositionRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernatePositionRepository" autowire="byName"/>
+	<bean id="hibernateLocationRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernateLocationRepository" autowire="byName"/>
+	<bean id="hibernateStructureRepository" class="id.co.oriza.bpa.workstructure.infrastructure.persistence.HibernateStructureRepository" autowire="byName"/>
+	
+	<bean id="taskServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.TaskServiceActiviti" autowire="byName"/>
+	<bean id="identityServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.IdentityServiceActiviti" autowire="byName"/>
+	<bean id="administrationServiceActiviti" class="id.co.oriza.bpa.workflow.infrastructure.services.AdministrationServiceActiviti" autowire="byName"/>
+	
+	<import resource="bpa-workflow-bean.xml"/>
+	
 	<bean id="accountApplicationService" class="id.co.oriza.bpa.acc.application.AccountApplicationService" autowire="byName"/>
 	<bean id="hibernateAccountRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateAccountRepository" autowire="byName"/>
 	<bean id="hibernateAccountGroupRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateAccountGroupRepository" autowire="byName"/>
 
+	
 </beans>

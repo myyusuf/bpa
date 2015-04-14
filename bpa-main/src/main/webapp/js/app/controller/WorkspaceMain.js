@@ -56,16 +56,25 @@ define(["jQuery", "jqxcore"], function () {
 			changeWidth();
 		});
 		
+		$.subscribe("viewAccountGroupListEvent", function(e, data){
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Account Group' , 'accountGroupListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="accountGroupListGrid">Account Group Grid : [Loading]</div>');
+			
+			require(['./composer/accounting/AccountGroupComposer'], function (AccountGroupComposer) {
+				
+				var parentContainer = $('#accountGroupListGrid').parent();
+            	var accountGroupComposer = new AccountGroupComposer(parentContainer);
+            });
+			
+			changeWidth();
+		});
 		$.subscribe("viewCoaListEvent", function(e, data){
 			var tabsCount = tabs.jqxTabs('length');
 			
 			tabs.jqxTabs('addLast', 'Chart of Account' , 'coaListGrid');
 			tabs.jqxTabs('setContentAt', tabsCount , '<div id="coaListGrid">Coa Grid : [Loading]</div>');
-			
-//			require(['./view/accounting/CoaList'], function (CoaList) {
-//				var parentContainer = $('#coaListGrid').parent();
-//            	var coaList = new CoaList(parentContainer);
-//            });
 			
 			require(['./composer/accounting/AccountComposer'], function (AccountComposer) {
 				
@@ -101,9 +110,19 @@ define(["jQuery", "jqxcore"], function () {
 			tabs.jqxTabs('setContentAt', tabsCount , '<div id="processListListGrid">Process List Grid : [Loading]</div>');
 			
 			
-			require(['./view/workflow/TaskList'], function (TaskList) {
+//			require(['./view/workflow/TaskList'], function (TaskList) {
+//				var parentContainer = $('#processListListGrid').parent();
+//            	var taskList = new TaskList(parentContainer);
+//            });
+			
+			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
 				var parentContainer = $('#processListListGrid').parent();
-            	var taskList = new TaskList(parentContainer);
+				var _children = parentContainer.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				
+            	var runningProcessInstanceList = new RunningProcessInstanceList(parentContainer);
             });
 			
 			changeWidth();

@@ -67,6 +67,9 @@
             		$.publish("viewRoleListEvent", {name: "waw"});
             	});
             	
+            	$("#accountGroupListMenu").click(function(){
+            		$.publish("viewAccountGroupListEvent", {name: "waw"});
+            	});
             	$("#coaListMenu").click(function(){
             		$.publish("viewCoaListEvent", {name: "waw"});
             	});
