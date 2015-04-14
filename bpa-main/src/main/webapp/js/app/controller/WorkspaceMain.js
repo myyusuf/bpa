@@ -62,9 +62,15 @@ define(["jQuery", "jqxcore"], function () {
 			tabs.jqxTabs('addLast', 'Chart of Account' , 'coaListGrid');
 			tabs.jqxTabs('setContentAt', tabsCount , '<div id="coaListGrid">Coa Grid : [Loading]</div>');
 			
-			require(['./view/accounting/CoaList'], function (CoaList) {
+//			require(['./view/accounting/CoaList'], function (CoaList) {
+//				var parentContainer = $('#coaListGrid').parent();
+//            	var coaList = new CoaList(parentContainer);
+//            });
+			
+			require(['./composer/accounting/AccountComposer'], function (AccountComposer) {
+				
 				var parentContainer = $('#coaListGrid').parent();
-            	var coaList = new CoaList(parentContainer);
+            	var accountComposer = new AccountComposer(parentContainer);
             });
 			
 			changeWidth();

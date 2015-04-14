@@ -2,6 +2,7 @@
     paths: {
         "jQuery": "../jquery/1.11.1/jquery.min",
         "tinypubsub": "../tinypubsub/ba-tiny-pubsub",
+        "i18next": "../i18next/i18next-1.7.7.min",
         "jqxcore": "../jqwidgets/3.5.0/jqxcore",
         "jqxtabs": "../jqwidgets/3.5.0/jqxtabs",
         "jqxbuttons": "../jqwidgets/3.5.0/jqxbuttons",
@@ -21,21 +22,26 @@
         "jqxlistbox": "../jqwidgets/3.5.0/jqxlistbox",
         "jqxgrid": "../jqwidgets/3.5.0/jqxgrid",
         "jqxdata": "../jqwidgets/3.5.0/jqxdata",
-        "jqxslider": "../jqwidgets/3.5.0/jqxslider",
         "jqxtreegrid": "../jqwidgets/3.5.0/jqxtreegrid",
         "jqxdatatable": "../jqwidgets/3.5.0/jqxdatatable",
         "jqxwindow": "../jqwidgets/3.5.0/jqxwindow",
         "jqxinput": "../jqwidgets/3.5.0/jqxinput",
         "jqxvalidator": "../jqwidgets/3.5.0/jqxvalidator",
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
+        "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
+        "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
         
-        "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
-        
-        "bpaErrorWindow": "../app/component/base/ErrorWindow"
+        "notificationWindow": "../app/component/base/NotificationWindow",
+        "bpaObservable": "../app/component/base/Observable"
+        	
     },
     //waitSeconds: 60,
     shim: {
     	"tinypubsub": {
+            export: "$",
+            deps: ['jQuery']
+        },
+        "i18next": {
             export: "$",
             deps: ['jQuery']
         },
@@ -105,19 +111,15 @@
         },
         "jqxgrid": {
             export: "$",
-            deps: ['jQuery', "jqxcore", "jqxdropdownlist"]
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar"]
         },
         "jqxdata": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },
-        "jqxslider": {
-            export: "$",
-            deps: ['jQuery', "jqxcore"]
-        },
         "jqxtreegrid": {
             export: "$",
-            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxdatatable"]
+            deps: ['jQuery', "jqxcore", "jqxdropdownlist", "jqxscrollbar", "jqxdatatable"]
         },
         "jqxdatatable": {
             export: "$",
@@ -139,14 +141,25 @@
             export: "$",
             deps: ['jQuery', "jqxcore"]
         },
+        "jqxnotification": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
+        "jqxmaskedinput": {
+            export: "$",
+            deps: ['jQuery', "jqxcore"]
+        },
         "bpaErrorWindow": {
             export: "ErrorWindow"
+        },
+        "notificationWindow": {
+            export: "NotificationWindow"
+        },
+        "bpaObservable": {
+            export: "Observable"
         }
-    },
-    packages: [
-               { name: "dojo", location: "../dojo/dojo" },
-               { name: "dojox", location: "../dojo/dojox"},
-          ]
+        
+    }
 });
 require(["bpa-main-app"], function (App) {
     App.initialize();
