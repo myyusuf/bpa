@@ -18,7 +18,7 @@
         	
         	$('#mainSplitter').jqxSplitter({  width: '100%', height: contentHeight(), panels: [{ size: '240', min: 100 }, { min: 200}], theme: 'metro' });
             $('#contentSplitter').jqxSplitter({ width: '100%', height: '100%',  orientation: 'horizontal', 
-            	panels: [{ size: '70%', min: 100, collapsible: false }, { min: 100, collapsible: true}], theme: 'metro' });
+            	panels: [{ size: '90%', min: 100, collapsible: false }, { min: 10, collapsible: true}], theme: 'metro' });
             $('#contentSplitter').css({margin : "0px"})
         
             $("#feedExpander").jqxExpander({toggleMode: 'none', showArrow: false, width: "100%", height: feedExpanderHeight(), 
