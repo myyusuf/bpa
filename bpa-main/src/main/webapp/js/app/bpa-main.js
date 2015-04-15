@@ -30,7 +30,11 @@
         "jqxcombobox": "../jqwidgets/3.5.0/jqxcombobox",
         "jqxnotification": "../jqwidgets/3.5.0/jqxnotification",
         "jqxmaskedinput": "../jqwidgets/3.5.0/jqxmaskedinput",
+        
         "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
+        
+        "jQueryUi": "../jqueryui/1.10.4/jquery-ui.min",
+        "primitives" : "../primitives/primitives.min",
         
         "notificationWindow": "../app/component/base/NotificationWindow",
         "bpaObservable": "../app/component/base/Observable"
@@ -149,6 +153,14 @@
         "jqxmaskedinput": {
             export: "$",
             deps: ['jQuery', "jqxcore"]
+        },
+    	"jQueryUi": {
+            export: "$",
+            deps: ['jQuery']
+        },
+    	"primitives": {
+            export: "$",
+            deps: ['jQuery', 'jQueryUi']
         },
         "bpaErrorWindow": {
             export: "ErrorWindow"
