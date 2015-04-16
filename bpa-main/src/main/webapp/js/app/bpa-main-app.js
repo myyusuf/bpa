@@ -81,6 +81,10 @@
             		$.publish("viewProcessListListEvent", {name: "waw"});
             	});
             	
+            	$("#structureListMenu").click(function(){
+            		$.publish("viewStructureListEvent", {name: "waw"});
+            	});
+            	
 //            	$('#jqxTree').bind('select', function (event) {
 //                    var htmlElement = event.args.element;
 //                    var item = $('#jqxTree').jqxTree('getItem', htmlElement);

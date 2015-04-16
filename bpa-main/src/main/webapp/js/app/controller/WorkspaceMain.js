@@ -102,7 +102,6 @@ define(["jQuery", "jqxcore"], function () {
 		});
 		
 		$.subscribe("viewProcessListListEvent", function(e, data){
-			var roleListGrid = $('<div id="taskListGrid"></div>');
 			
 			var tabsCount = tabs.jqxTabs('length');
 			
@@ -114,6 +113,36 @@ define(["jQuery", "jqxcore"], function () {
 //				var parentContainer = $('#processListListGrid').parent();
 //            	var taskList = new TaskList(parentContainer);
 //            });
+			
+			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
+				var parentContainer = $('#processListListGrid').parent();
+				var _children = parentContainer.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				
+            	var runningProcessInstanceList = new RunningProcessInstanceList(parentContainer);
+            });
+			
+			changeWidth();
+		});
+		
+		$.subscribe("viewStructureListEvent", function(e, data){
+			
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Process List' , 'structureListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="structureListGrid" >Structure List Grid : [Loading]</div>');
+			
+			require(['./view/workstructure/StructureView'], function (StructureView) {
+				var parentContainer = $('#structureListGrid').parent();
+				var _children = parentContainer.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				
+            	var _structureView = new StructureView(parentContainer);
+            });
 			
 			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
 				var parentContainer = $('#processListListGrid').parent();
