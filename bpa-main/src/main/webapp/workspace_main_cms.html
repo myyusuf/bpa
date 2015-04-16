@@ -15,8 +15,8 @@
 	<script type="text/javascript" src="sample/bpa-accounting-constant-sample.js"></script>
 	<script type="text/javascript" src="sample/data/workflow/bpa-workflow-constant-sample.js"></script> -->
 	
-	<link type="text/css" rel="Stylesheet" href="resources/styles/jqx.base.css"/>
-	<link type="text/css" rel="Stylesheet" href="resources/styles/jqx.metro.css"/>
+	<link type="text/css" rel="Stylesheet" href="resources/styles/jqwidgets/3.7.1/jqx.base.css"/>
+	<link type="text/css" rel="Stylesheet" href="resources/styles/jqwidgets/3.7.1/jqx.metro.css"/>
 	<link type="text/css" rel="Stylesheet" href="resources/styles/jqx.arctic.css"/>
 	
 	<link type="text/css" rel="Stylesheet" href="resources/styles/app.css"/>
@@ -237,7 +237,7 @@
 								<div style='float: left;'>
 									<img alt='Mail' src='resources/images/blog-posterous.png'/></div>
 								<div style='margin-left: 4px; float: left;'>
-									Purchasing
+									Workstructure
 								</div>
 							</div>
 						</div>
@@ -245,15 +245,14 @@
 							
 							<div class="jqx-hideborder" id='purchasingTreeMenu' style='height: 500px'>
 								<ul>
-									<li item-expanded='true'>
+									<li id="structureListMenu">
+												<img style='float: left; margin-right: 5px;' src='resources/images/sitemap-image.png' /><span
+													item-title="true">Structure</span> </li>
+									<li id="employeeListMenu" item-expanded='true'>
 										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Vendor Maintenance Record</span>
+											item-title="true">Employee</span>
 									</li>
-									<li item-expanded='true'>
-										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Purchase Requisition</span>
-									</li>
-									<li item-expanded='true'>
+									<!-- <li item-expanded='true'>
 										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
 											item-title="true">Purchase Order</span>
 									</li>
@@ -268,45 +267,7 @@
 									<li item-expanded='true'>
 										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
 											item-title="true">Account Payable</span>
-									</li>
-								</ul>
-							</div>
-							
-						</div>
-						
-						<div>
-							<div style='margin-top: 2px;'>
-								<div style='float: left;'>
-									<img alt='Mail' src='resources/images/sort-price.png'/></div>
-								<div style='margin-left: 4px; float: left;'>
-									Sales
-								</div>
-							</div>
-						</div>
-						<div>
-							
-							<div class="jqx-hideborder" id='salesTreeMenu' style='height: 500px'>
-								<ul>
-									<li item-expanded='true'>
-										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Customer Maintenance Record</span>
-									</li>
-									<li item-expanded='true'>
-										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Sales Requisition</span>
-									</li>
-									<li item-expanded='true'>
-										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Sales Order</span>
-									</li>
-									<li item-expanded='true'>
-										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Goods Dispatched Notes</span>
-									</li>
-									<li item-expanded='true'>
-										<img style='float: left; margin-right: 5px;' src='resources/images/blue-document.png' /><span
-											item-title="true">Account Receivable</span>
-									</li>
+									</li> -->
 								</ul>
 							</div>
 							
@@ -333,9 +294,6 @@
 												<img style='float: left; margin-right: 5px;' src='resources/images/view_tree_modernist.png' /><span
 													item-title="true">Process List</span> 
 											</li>
-											<li id="structureListMenu">
-												<img style='float: left; margin-right: 5px;' src='resources/images/sitemap-image.png' /><span
-													item-title="true">Structure</span> </li>
 										</ul>
 									</li>
 									

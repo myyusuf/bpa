@@ -9,7 +9,6 @@ define(["jQuery", "jqxcore"], function () {
         	$('#securityTreeMenu').jqxTree({width: innerWidth});
         	$('#workflowTreeMenu').jqxTree({width: innerWidth});
         	$('#purchasingTreeMenu').jqxTree({width: innerWidth});
-        	$('#salesTreeMenu').jqxTree({width: innerWidth});
 		}
 		
 		var tabs = $('<div id="tabs"><ul><li>Dashboard</li></ul><div></div></div>');
@@ -131,7 +130,7 @@ define(["jQuery", "jqxcore"], function () {
 			
 			var tabsCount = tabs.jqxTabs('length');
 			
-			tabs.jqxTabs('addLast', 'Process List' , 'structureListGrid');
+			tabs.jqxTabs('addLast', 'Structure' , 'structureListGrid');
 			tabs.jqxTabs('setContentAt', tabsCount , '<div id="structureListGrid" >Structure List Grid : [Loading]</div>');
 			
 			require(['./view/workstructure/StructureView'], function (StructureView) {
@@ -144,14 +143,24 @@ define(["jQuery", "jqxcore"], function () {
             	var _structureView = new StructureView(parentContainer);
             });
 			
-			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
-				var parentContainer = $('#processListListGrid').parent();
+			changeWidth();
+		});
+		
+		$.subscribe("viewEmployeeListEvent", function(e, data){
+			
+			var tabsCount = tabs.jqxTabs('length');
+			
+			tabs.jqxTabs('addLast', 'Employee List' , 'employeeListGrid');
+			tabs.jqxTabs('setContentAt', tabsCount , '<div id="employeeListGrid" >Employee List Grid : [Loading]</div>');
+			
+			require(['./composer/workstructure/EmployeeComposer'], function (EmployeeComposer) {
+				var parentContainer = $('#employeeListGrid').parent();
 				var _children = parentContainer.children();
 				for(var i=0; i<_children.length; i++){
 					_children[i].remove();
 				}
 				
-            	var runningProcessInstanceList = new RunningProcessInstanceList(parentContainer);
+            	var _employeeComposer = new EmployeeComposer(parentContainer);
             });
 			
 			changeWidth();

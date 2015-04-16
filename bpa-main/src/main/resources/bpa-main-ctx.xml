@@ -16,6 +16,7 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
     
+    <context:property-placeholder location="classpath:bpa-workstructure.properties" />
     <!-- <context:property-placeholder location="classpath:bpa-main-app-config.properties, classpath:bpa-main.properties" /> -->
     
     <aop:aspectj-autoproxy />
@@ -40,7 +41,7 @@
 	<bean id="sessionFactory" 
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:bpa-accounting-hibernate.cfg.xml" />
+		<property name="configLocation" value="classpath:bpa-main-hibernate.cfg.xml" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
