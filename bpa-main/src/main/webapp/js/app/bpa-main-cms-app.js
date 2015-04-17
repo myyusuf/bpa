@@ -88,6 +88,9 @@
             	$("#positionListMenu").click(function(){
             		$.publish("viewPositionListEvent", {name: "waw"});
             	});
+            	$("#locationListMenu").click(function(){
+            		$.publish("viewLocationListEvent", {name: "waw"});
+            	});
             	
             }
             

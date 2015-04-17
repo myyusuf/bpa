@@ -191,6 +191,18 @@ define(["jQuery", "jqxcore"], function () {
 			
 		});
 		
+		$.subscribe("viewLocationListEvent", function(e, data){
+			
+			var _onContentLoad = function(container){
+				require(['./composer/workstructure/LocationComposer'], function (LocationComposer) {
+	            	var _locationComposer = new LocationComposer(container);
+	            });
+			}
+			
+			_addTab("workstructure_location", "Location List", _onContentLoad);
+			
+		});
+		
 	};
 	
 	return WorkspaceMain;
