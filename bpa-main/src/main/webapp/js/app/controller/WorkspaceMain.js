@@ -6,7 +6,7 @@ define(["jQuery", "jqxcore"], function () {
 			var _tabsCount = 0;
 			var _positionIndex = -1;
 			
-			for(_index = 0; _index < tabs.jqxTabs('length'); _index++){
+			for(var _index = 0; _index < tabs.jqxTabs('length'); _index++){
 				if(tabs.jqxTabs('getTitleAt', _index) == tabCaption){
 					_positionIndex = _index;
 				}
