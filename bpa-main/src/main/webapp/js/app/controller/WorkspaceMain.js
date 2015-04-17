@@ -4,15 +4,6 @@ define(["jQuery", "jqxcore"], function () {
 		
 		var _tabPosition = {};
 		
-		// It is needed to fix bug for jqxtree
-		var changeWidth = function(){
-			var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
-        	$('#financeTreeMenu').jqxTree({width: innerWidth});
-        	$('#securityTreeMenu').jqxTree({width: innerWidth});
-        	$('#workflowTreeMenu').jqxTree({width: innerWidth});
-        	$('#purchasingTreeMenu').jqxTree({width: innerWidth});
-		}
-		
 		var _addTab = function(tabId, tabCaption, onContentLoad){
 			var _tabsCount = 0;
 			
@@ -37,7 +28,6 @@ define(["jQuery", "jqxcore"], function () {
 				
 				onContentLoad(_parentContainer);
 				
-				changeWidth();
 			}
 			
 		}
@@ -66,7 +56,6 @@ define(["jQuery", "jqxcore"], function () {
             	}); 
             });
 			
-			changeWidth();
 		});
 		
 		$.subscribe("viewRoleListEvent", function(e, data){
@@ -83,7 +72,6 @@ define(["jQuery", "jqxcore"], function () {
             	var roleList = new RoleList(parentContainer);
             });
 			
-			changeWidth();
 		});
 		
 		$.subscribe("viewAccountGroupListEvent", function(e, data){
@@ -98,7 +86,6 @@ define(["jQuery", "jqxcore"], function () {
             	var accountGroupComposer = new AccountGroupComposer(parentContainer);
             });
 			
-			changeWidth();
 		});
 		$.subscribe("viewCoaListEvent", function(e, data){
 			var tabsCount = tabs.jqxTabs('length');
@@ -112,7 +99,6 @@ define(["jQuery", "jqxcore"], function () {
             	var accountComposer = new AccountComposer(parentContainer);
             });
 			
-			changeWidth();
 		});
 		$.subscribe("viewLedgerListEvent", function(e, data){
 			var roleListGrid = $('<div id="ledgerListGrid"></div>');
@@ -128,33 +114,17 @@ define(["jQuery", "jqxcore"], function () {
             	var ledgerList = new LedgerList(parentContainer);
             });
 			
-			changeWidth();
 		});
 		
 		$.subscribe("viewProcessListListEvent", function(e, data){
 			
-			var tabsCount = tabs.jqxTabs('length');
+			var _onContentLoad = function(container){
+				require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
+	            	var runningProcessInstanceList = new RunningProcessInstanceList(container);
+	            });
+			}
 			
-			tabs.jqxTabs('addLast', 'Process List' , 'processListListGrid');
-			tabs.jqxTabs('setContentAt', tabsCount , '<div id="processListListGrid" >Process List Grid : [Loading]</div>');
-			
-			
-//			require(['./view/workflow/TaskList'], function (TaskList) {
-//				var parentContainer = $('#processListListGrid').parent();
-//            	var taskList = new TaskList(parentContainer);
-//            });
-			
-			require(['./composer/workflow/administration/RunningProcessInstanceComposer'], function (RunningProcessInstanceList) {
-				var parentContainer = $('#processListListGrid').parent();
-				var _children = parentContainer.children();
-				for(var i=0; i<_children.length; i++){
-					_children[i].remove();
-				}
-				
-            	var runningProcessInstanceList = new RunningProcessInstanceList(parentContainer);
-            });
-			
-			changeWidth();
+			_addTab("workflow_processlist", "Process List", _onContentLoad);
 		});
 		
 		$.subscribe("viewStructureListEvent", function(e, data){

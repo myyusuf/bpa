@@ -32,6 +32,15 @@
             $("#jqxNavigationBar").jqxNavigationBar({ width: "100%", height: feedExpanderHeight(), expandMode: "singleFitHeight", theme: 'metro'});
             $('#jqxNavigationBar').css({marginLeft: "1px"});
             
+            // It is needed to fix bug for jqxtree
+            $("#jqxNavigationBar").on('expandedItem', function(event){
+            	var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
+            	$('#financeTreeMenu').jqxTree({width: innerWidth});
+            	$('#securityTreeMenu').jqxTree({width: innerWidth});
+            	$('#workflowTreeMenu').jqxTree({width: innerWidth});
+            	$('#purchasingTreeMenu').jqxTree({width: innerWidth});
+            });
+            
             var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
             
             $('#securityTreeMenu').jqxTree({ height: '100%', width: innerWidth, theme: 'metro'});
