@@ -2,6 +2,8 @@ define(["jQuery", "jqxcore"], function () {
 	
 	var WorkspaceMain = function(container){
 		
+		var _tabPosition = {};
+		
 		// It is needed to fix bug for jqxtree
 		var changeWidth = function(){
 			var innerWidth = $("#jqxNavigationBar").innerWidth() - 2 + 'px';
@@ -9,6 +11,35 @@ define(["jQuery", "jqxcore"], function () {
         	$('#securityTreeMenu').jqxTree({width: innerWidth});
         	$('#workflowTreeMenu').jqxTree({width: innerWidth});
         	$('#purchasingTreeMenu').jqxTree({width: innerWidth});
+		}
+		
+		var _addTab = function(tabId, tabCaption, onContentLoad){
+			var _tabsCount = 0;
+			
+			var _positionIndex = _tabPosition[tabId];
+			if(_positionIndex){
+				tabs.jqxTabs('select', _positionIndex);
+			}else{
+				_positionIndex = tabs.jqxTabs('length');
+				tabs.jqxTabs('addLast', tabCaption , tabId + "_content");
+				tabs.jqxTabs('setContentAt', _positionIndex , '<div id="' + tabId + '" >Loading content...</div>');
+				_tabPosition[tabId] = _positionIndex;
+				
+				tabs.on('removed', function (event) { 
+					delete _tabPosition[tabId];
+				}); 
+				
+				var _parentContainer = $('#' + tabId).parent();
+				var _children = _parentContainer.children();
+				for(var i=0; i<_children.length; i++){
+					_children[i].remove();
+				}
+				
+				onContentLoad(_parentContainer);
+				
+				changeWidth();
+			}
+			
 		}
 		
 		var tabs = $('<div id="tabs"><ul><li>Dashboard</li></ul><div></div></div>');
@@ -165,7 +196,19 @@ define(["jQuery", "jqxcore"], function () {
 			
 			changeWidth();
 		});
+		
+		$.subscribe("viewPositionListEvent", function(e, data){
 			
+			var _onContentLoad = function(container){
+				require(['./composer/workstructure/PositionComposer'], function (PositionComposer) {
+	            	var _positionComposer = new PositionComposer(container);
+	            });
+			}
+			
+			_addTab("workstructure_position", "Position List", _onContentLoad);
+			
+		});
+		
 	};
 	
 	return WorkspaceMain;

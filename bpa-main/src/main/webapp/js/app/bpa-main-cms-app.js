@@ -85,6 +85,9 @@
             	$("#employeeListMenu").click(function(){
             		$.publish("viewEmployeeListEvent", {name: "waw"});
             	});
+            	$("#positionListMenu").click(function(){
+            		$.publish("viewPositionListEvent", {name: "waw"});
+            	});
             	
             }
             
