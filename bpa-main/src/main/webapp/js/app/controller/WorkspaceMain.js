@@ -110,6 +110,16 @@ define(["jQuery", "jqxcore"], function () {
 			
 		});
 		
+		$.subscribe("viewDeploymentListEvent", function(e, data){
+			
+			var _onContentLoad = function(container){
+				require(['./composer/workflow/DeploymentComposer'], function (DeploymentComposer) {
+	            	var _deploymentComposer = new DeploymentComposer(container);
+	            });
+			}
+			
+			_addTab("workflow_deployment", "Deployment", _onContentLoad);
+		});
 		$.subscribe("viewProcessListListEvent", function(e, data){
 			
 			var _onContentLoad = function(container){

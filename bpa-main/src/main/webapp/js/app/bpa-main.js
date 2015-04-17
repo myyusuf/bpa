@@ -33,6 +33,7 @@
         "jqxfileupload": "../jqwidgets/3.7.1/jqxfileupload",
         "jqxpasswordinput": "../jqwidgets/3.7.1/jqxpasswordinput",
         "jqxtooltip": "../jqwidgets/3.7.1/jqxtooltip",
+        "jqxslider": "../jqwidgets/3.7.1/jqxslider",
         
         "bpmn/Bpmn" : "../bpmnjs/bpmn.min",
         

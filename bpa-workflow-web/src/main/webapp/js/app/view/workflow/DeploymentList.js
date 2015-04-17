@@ -59,11 +59,11 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         	        overlayHtml : '<div style="position: relative; top:100%"></div>'
         	      }).then(function (bpmn){
         	        //bpmn.zoom(0.8);
-        	        bpmn.annotation("usertask1").addClasses(["highlight"]);
-        			
-        	        $('div[id="diagram_'+ _diagramId + '"] div[data-activity-id="usertask1"]').click(function(){
-        				console.log("userTask clicked..");
-        			});
+//        	        bpmn.annotation("usertask1").addClasses(["highlight"]);
+//        			
+//        	        $('div[id="diagram_'+ _diagramId + '"] div[data-activity-id="usertask1"]').click(function(){
+//        				console.log("userTask clicked..");
+//        			});
         	        
         	        var mySlider = $('#myslider_' + _diagramId).jqxSlider({ min: 1, max: 10, ticksFrequency: 1, value: 10, step: 1});
         	        $('#myslider_' + _diagramId).on('change', function (event) {

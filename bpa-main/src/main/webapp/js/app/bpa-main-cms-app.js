@@ -84,6 +84,9 @@
             		$.publish("viewLedgerListEvent", {name: "waw"});
             	});
             	
+            	$("#deploymentListMenu").click(function(){
+            		$.publish("viewDeploymentListEvent", {name: "waw"});
+            	});
             	$("#processListListMenu").click(function(){
             		$.publish("viewProcessListListEvent", {name: "waw"});
             	});
