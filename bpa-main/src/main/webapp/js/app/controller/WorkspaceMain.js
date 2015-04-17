@@ -159,42 +159,24 @@ define(["jQuery", "jqxcore"], function () {
 		
 		$.subscribe("viewStructureListEvent", function(e, data){
 			
-			var tabsCount = tabs.jqxTabs('length');
+			var _onContentLoad = function(container){
+				require(['./view/workstructure/StructureView'], function (StructureView) {
+	            	var _structureView = new StructureView(container);
+	            });
+			};
 			
-			tabs.jqxTabs('addLast', 'Structure' , 'structureListGrid');
-			tabs.jqxTabs('setContentAt', tabsCount , '<div id="structureListGrid" >Structure List Grid : [Loading]</div>');
-			
-			require(['./view/workstructure/StructureView'], function (StructureView) {
-				var parentContainer = $('#structureListGrid').parent();
-				var _children = parentContainer.children();
-				for(var i=0; i<_children.length; i++){
-					_children[i].remove();
-				}
-				
-            	var _structureView = new StructureView(parentContainer);
-            });
-			
-			changeWidth();
+			_addTab("workstructure_structure", "Structure", _onContentLoad);
 		});
 		
 		$.subscribe("viewEmployeeListEvent", function(e, data){
 			
-			var tabsCount = tabs.jqxTabs('length');
+			var _onContentLoad = function(container){
+				require(['./composer/workstructure/EmployeeComposer'], function (EmployeeComposer) {
+	            	var _employeeComposer = new EmployeeComposer(container);
+	            });
+			}
 			
-			tabs.jqxTabs('addLast', 'Employee List' , 'employeeListGrid');
-			tabs.jqxTabs('setContentAt', tabsCount , '<div id="employeeListGrid" >Employee List Grid : [Loading]</div>');
-			
-			require(['./composer/workstructure/EmployeeComposer'], function (EmployeeComposer) {
-				var parentContainer = $('#employeeListGrid').parent();
-				var _children = parentContainer.children();
-				for(var i=0; i<_children.length; i++){
-					_children[i].remove();
-				}
-				
-            	var _employeeComposer = new EmployeeComposer(parentContainer);
-            });
-			
-			changeWidth();
+			_addTab("workstructure_employee", "Employee List", _onContentLoad);
 		});
 		
 		$.subscribe("viewPositionListEvent", function(e, data){
