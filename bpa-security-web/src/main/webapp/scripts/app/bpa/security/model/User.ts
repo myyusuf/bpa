@@ -4,6 +4,8 @@
 
 import Model = require("bpa/base/model/Model");
 
+import Group = require("bpa/security/model/Group");
+
 class User extends Model{
 
     userId: string;
@@ -12,7 +14,9 @@ class User extends Model{
     email: string;
     password: string;
 
-    constructor(theUserId: string, theFirstName: string, theLastName: string, theEmail: string, thePassword: string){
+    groups: Array<Group>;
+
+    constructor(theUserId: string, theFirstName: string, theLastName: string, theEmail: string, thePassword: string, theGroups: Array<Group>){
         super();
 
         this.userId = theUserId;
@@ -20,10 +24,11 @@ class User extends Model{
         this.lastName = theLastName;
         this.email = theEmail;
         this.password = thePassword;
+        this.groups = theGroups;
     }
 
     static newInstance(): User{
-        return new User(null,  null, null, null, null);
+        return new User(null,  null, null, null, null, null);
     }
 }
 

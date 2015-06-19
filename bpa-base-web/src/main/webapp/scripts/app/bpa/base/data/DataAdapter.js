@@ -3,8 +3,9 @@
  */
 define(["require", "exports", "jquery", "jqxdata", "jqxgrid.pager", "jqxgrid.sort", "jqxgrid.selection"], function (require, exports, $, jqxdata, jqxgridpager, jqxgridsort, jqxgridselection) {
     var DataAdapter = (function () {
-        function DataAdapter(theSource) {
+        function DataAdapter(theSource, formatDataCallback) {
             this.dataAdapter = new $.jqx.dataAdapter(theSource, {
+                formatData: formatDataCallback,
                 downloadComplete: function (data, status, xhr) {
                 },
                 loadComplete: function (data) {

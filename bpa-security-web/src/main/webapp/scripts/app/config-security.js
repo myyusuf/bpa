@@ -30,6 +30,8 @@ requirejs.config({
         "jqxdatatable": "../lib/jqwidgets/3.8.0/jqxdatatable",
         "jqxvalidator": "../lib/jqwidgets/3.8.0/jqxvalidator",
         "jqxnotification": "../lib/jqwidgets/3.8.0/jqxnotification",
+        "jqxtooltip": "../lib/jqwidgets/3.8.0/jqxtooltip",
+        "jqxpasswordinput": "../lib/jqwidgets/3.8.0/jqxpasswordinput",
         "myresize": "../lib/alman/jquery.ba-resize.min"
     },
     shim: {
@@ -132,6 +134,14 @@ requirejs.config({
         "jqxnotification": {
             export: "$",
             deps: ['jquery', "jqxcore"]
+        },
+        "jqxtooltip": {
+            export: "$",
+            deps: ['jquery', "jqxcore"]
+        },
+        "jqxpasswordinput": {
+            export: "$",
+            deps: ['jquery', "jqxcore", "jqxtooltip"]
         },
         "myresize": {
             export: "$",

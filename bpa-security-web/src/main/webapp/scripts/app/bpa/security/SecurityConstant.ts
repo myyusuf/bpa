@@ -3,7 +3,7 @@
  */
 
 class SecurityConstant{
-    public static get GROUPS_URL(): string {return "http://localhost:18787/bpa-security-web-1.0/service/security/groupsx";}
+    public static get GROUPS_URL(): string {return "http://localhost:18787/bpa-security-web-1.0/service/security/groups";}
     public static get USERS_URL(): string {return "http://localhost:18787/bpa-security-web-1.0/service/security/users";}
     //public static get GROUPS_URL(): string {return "sample/bpa/security/groups.json";}
 }

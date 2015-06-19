@@ -4,15 +4,14 @@
 
 import ComponentOptions = require("bpa/base/component/ComponentOptions");
 
-interface TextBoxOptions extends ComponentOptions{
+interface PasswordInputOptions extends ComponentOptions{
     name: string;
     value?: string;
     placeHolder?: string;
     isRequired?: boolean;
-    isEmailFormat?: boolean;
     minLength?: number;
     maxLength?: number;
     disabled?: boolean;
 }
 
-export = TextBoxOptions;
+export = PasswordInputOptions;

@@ -16,6 +16,11 @@ import OnEditModelListener = require("bpa/base/model/event/OnEditModelListener")
 import OnDeleteModelListener = require("bpa/base/model/event/OnDeleteModelListener");
 import SecurityConstant = require("bpa/security/SecurityConstant");
 
+import Toolbar = require("bpa/base/component/Toolbar");
+import Button = require("bpa/base/component/Button");
+import ImageButton = require("bpa/base/component/ImageButton");
+import TextBox = require("bpa/base/component/input/TextBox");
+
 import Group = require("bpa/security/model/Group");
 
 class GroupList extends Component{
@@ -49,8 +54,13 @@ class GroupList extends Component{
             url: SecurityConstant.GROUPS_URL
         };
 
+        var _searchTextBox = new TextBox({name: "searchCodeOrName"});
+
         var _dataSource = new DataSource(_dataSourceOptions);
-        var _dataAdapter = new DataAdapter(_dataSource);
+        var _dataAdapter = new DataAdapter(_dataSource, function(data){
+            data.codeOrNameStartsWith = _searchTextBox.getValue();
+            return data;
+        });
 
         var _columns: Array<GridColumn> = [
             { text: 'Code', datafield: 'code', width: '33.3%' },
@@ -96,9 +106,32 @@ class GroupList extends Component{
 
         ];
 
+        var _newGroupButton: Button = new Button({
+            label: "New Group",
+            onClick: function(event){
+               console.log("add group");
+                if(_this.onAddGroup != undefined){
+                    var _newGroup: Group = Group.newInstance();
+                    _this.onAddGroup(_newGroup);
+                }
+            }
+        });
+
+        var _searchButton: ImageButton = new ImageButton({
+            width: 15,
+            height: 15,
+            imageUrl: "images/icons/bpa/base/search.png",
+            onClick: function(event){
+                _this.dataGrid.refreshGrid();
+            }
+        });
+
+        var _toolbar: Toolbar = new Toolbar({items: [_searchTextBox, _searchButton, _newGroupButton]});
+
         var _dataGridOptions: DataGridOptions = {
             dataAdapter: _dataAdapter,
             columns: _columns,
+            toolbar: _toolbar,
             contextMenuItems: _contextMenuItems,
             widthInPercentage: 100,
             heightInPercentage: 100

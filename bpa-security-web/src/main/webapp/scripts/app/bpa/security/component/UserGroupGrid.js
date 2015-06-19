@@ -14,6 +14,7 @@ define(["require", "exports", "bpa/base/component/Component", "bpa/base/data/Dat
             _super.call(this, theOptions);
             var _this = this;
             this.name = theOptions.name;
+            this.groups = theOptions.groups;
             var _data = [{ code: "GROUP1", name: "Group 1" }];
             var _dataSourceOptions = {
                 dataType: "json",
@@ -22,7 +23,7 @@ define(["require", "exports", "bpa/base/component/Component", "bpa/base/data/Dat
                     { name: 'name', type: 'string' },
                 ],
                 id: 'code',
-                localData: _data
+                localData: this.groups
             };
             var _dataSource = new DataSource(_dataSourceOptions);
             var _dataAdapter = new DataAdapter(_dataSource);
@@ -54,6 +55,7 @@ define(["require", "exports", "bpa/base/component/Component", "bpa/base/data/Dat
                 dataAdapter: _dataAdapter,
                 columns: _columns,
                 widthInPercentage: 100,
+                height: 200
             };
             this.dataGrid = new DataGrid(_dataGridOptions);
         }

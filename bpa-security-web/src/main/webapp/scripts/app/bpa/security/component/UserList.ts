@@ -16,6 +16,11 @@ import OnEditModelListener = require("bpa/base/model/event/OnEditModelListener")
 import OnDeleteModelListener = require("bpa/base/model/event/OnDeleteModelListener");
 import SecurityConstant = require("bpa/security/SecurityConstant");
 
+import Toolbar = require("bpa/base/component/Toolbar");
+import Button = require("bpa/base/component/Button");
+import ImageButton = require("bpa/base/component/ImageButton");
+import TextBox = require("bpa/base/component/input/TextBox");
+
 import User = require("bpa/security/model/User");
 
 class UserList extends Component{
@@ -45,7 +50,8 @@ class UserList extends Component{
                 { name: 'firstName', type: 'string' },
                 { name: 'lastName', type: 'string' },
                 { name: 'email', type: 'string' },
-                { name: 'password', type: 'string' }
+                { name: 'password', type: 'string' },
+                { name: 'groups' }
             ],
             id: 'code',
             //url: "sample/bpa/security/users.json"
@@ -53,8 +59,13 @@ class UserList extends Component{
             url: SecurityConstant.USERS_URL
         };
 
+        var _searchTextBox = new TextBox({name: "searchCodeOrName"});
+
         var _dataSource = new DataSource(_dataSourceOptions);
-        var _dataAdapter = new DataAdapter(_dataSource);
+        var _dataAdapter = new DataAdapter(_dataSource, function(data){
+            data.codeOrNameStartsWith = _searchTextBox.getValue();
+            return data;
+        });
 
         var _columns: Array<GridColumn> = [
             { text: 'User Id', datafield: 'userId', width: '25%' },
@@ -82,7 +93,7 @@ class UserList extends Component{
 
                     console.log("edit rowData : " +  rowData);
                     if(_this.onEditUser != undefined){
-                        var _selectedUser: User = new User(rowData.userId, rowData.firstName, rowData.lastName, rowData.email, rowData.password);
+                        var _selectedUser: User = new User(rowData.userId, rowData.firstName, rowData.lastName, rowData.email, rowData.password, rowData.groups);
                         _this.onEditUser(_selectedUser);
                     }
                 }
@@ -101,9 +112,31 @@ class UserList extends Component{
 
         ];
 
+        var _newUserButton: Button = new Button({
+            label: "New User",
+            onClick: function(event){
+                if(_this.onAddUser != undefined){
+                    var _newUser: User = User.newInstance();
+                    _this.onAddUser(_newUser);
+                }
+            }
+        });
+
+        var _searchButton: ImageButton = new ImageButton({
+            width: 15,
+            height: 15,
+            imageUrl: "images/icons/bpa/base/search.png",
+            onClick: function(event){
+                _this.dataGrid.refreshGrid();
+            }
+        });
+
+        var _toolbar: Toolbar = new Toolbar({items: [_searchTextBox, _searchButton, _newUserButton]});
+
         var _dataGridOptions: DataGridOptions = {
             dataAdapter: _dataAdapter,
             columns: _columns,
+            toolbar: _toolbar,
             contextMenuItems: _contextMenuItems,
             widthInPercentage: 100,
             heightInPercentage: 100

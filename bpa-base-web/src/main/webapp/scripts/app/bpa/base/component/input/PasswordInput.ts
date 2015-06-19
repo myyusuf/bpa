@@ -5,25 +5,24 @@
 /// <reference path="../../../../ts/jquery.d.ts" />
 
 import $ = require("jquery");
-import jqxinput = require("jqxinput");
+import jqxpasswordinput = require("jqxpasswordinput");
 import Component = require("bpa/base/component/Component");
 import FormInput = require("bpa/base/component/input/FormInput");
-import TextBoxOptions = require("bpa/base/component/input/TextBoxOptions");
+import PasswordInputOptions = require("bpa/base/component/input/PasswordInputOptions");
 import ValidatorRule = require("bpa/base/component/input/ValidatorRule");
 
-class TextBox extends Component implements FormInput {
+class PasswordInput extends Component implements FormInput {
 
     name: string;
     value: string;
     placeHolder: string;
     validatorRules: Array<ValidatorRule>;
     isRequired: boolean;
-    isEmailFormat: boolean;
     minLength: number;
     maxLength: number;
     disabled: boolean;
 
-    constructor(theOptions: TextBoxOptions) {
+    constructor(theOptions: PasswordInputOptions) {
         super(theOptions);
 
         this.name = theOptions.name;
@@ -42,7 +41,6 @@ class TextBox extends Component implements FormInput {
         }
 
         this.isRequired = theOptions.isRequired;
-        this.isEmailFormat = theOptions.isEmailFormat;
         this.minLength = theOptions.minLength;
         this.maxLength = theOptions.maxLength;
 
@@ -66,21 +64,12 @@ class TextBox extends Component implements FormInput {
             });
         }
 
-        if(this.isEmailFormat){
-            this.validatorRules.push({
-                input: "#" + this.id,
-                message: "Invalid email format",
-                action: "keyup, blur",
-                rule: "email"
-            });
-        }
-
-        jqxinput;
+        jqxpasswordinput;
     }
 
     renderTo(theContainer: any){
 
-        this.element = $("<input type=\"text\" class=\"text-input\" id=\"" + this.id + "\"/>");
+        this.element = $("<input type=\"password\" class=\"text-input\" id=\"" + this.id + "\"/>");
 
         var _width: any = '';
         if(this.widthInPercentage != undefined){
@@ -130,7 +119,16 @@ class TextBox extends Component implements FormInput {
             this.element.attr("maxlength", this.maxLength);
         }
 
-        this.element = this.element.jqxInput({placeHolder: this.placeHolder, height: this.height, width: this.width, disabled: this.disabled, theme: this.theme});
+        this.element = this.element.jqxPasswordInput({
+            showStrength: true,
+            showStrengthPosition: "right",
+            showPasswordIcon: false,
+            placeHolder: this.placeHolder,
+            height: this.height,
+            width: this.width,
+            disabled: this.disabled,
+            theme: this.theme
+        });
 
 
 
@@ -168,4 +166,4 @@ class TextBox extends Component implements FormInput {
     }
 }
 
-export  = TextBox;
+export  = PasswordInput;

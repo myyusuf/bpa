@@ -17,12 +17,16 @@ import Toolbar = require("bpa/base/component/Toolbar");
 import Button = require("bpa/base/component/Button");
 
 import User = require("bpa/security/model/User");
+import Group = require("bpa/security/model/Group");
+
 
 import GroupSelectWindow = require("bpa/security/component/GroupSelectWindow");
 
 class UserGroupGrid extends Component implements FormInput{
 
     name: string;
+    groups: Array<Group>;
+
     validatorRules: Array<ValidatorRule>;
 
     dataGrid: DataGrid;
@@ -35,6 +39,7 @@ class UserGroupGrid extends Component implements FormInput{
         var _this = this;
 
         this.name = theOptions.name;
+        this.groups = theOptions.groups;
 
         var _data = [{code: "GROUP1", name: "Group 1"}];
 
@@ -45,7 +50,7 @@ class UserGroupGrid extends Component implements FormInput{
                 { name: 'name', type: 'string' },
             ],
             id: 'code',
-            localData: _data
+            localData: this.groups
         };
 
         var _dataSource = new DataSource(_dataSourceOptions);
@@ -86,7 +91,7 @@ class UserGroupGrid extends Component implements FormInput{
             dataAdapter: _dataAdapter,
             columns: _columns,
             widthInPercentage: 100,
-            //height: 200
+            height: 200
         }
 
         this.dataGrid = new DataGrid(_dataGridOptions);

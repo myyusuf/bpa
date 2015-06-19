@@ -7,10 +7,10 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "jquery", "jqxinput", "bpa/base/component/Component"], function (require, exports, $, jqxinput, Component) {
-    var TextBox = (function (_super) {
-        __extends(TextBox, _super);
-        function TextBox(theOptions) {
+define(["require", "exports", "jquery", "jqxpasswordinput", "bpa/base/component/Component"], function (require, exports, $, jqxpasswordinput, Component) {
+    var PasswordInput = (function (_super) {
+        __extends(PasswordInput, _super);
+        function PasswordInput(theOptions) {
             _super.call(this, theOptions);
             this.name = theOptions.name;
             this.value = theOptions.value;
@@ -27,7 +27,6 @@ define(["require", "exports", "jquery", "jqxinput", "bpa/base/component/Componen
                 this.placeHolder = "";
             }
             this.isRequired = theOptions.isRequired;
-            this.isEmailFormat = theOptions.isEmailFormat;
             this.minLength = theOptions.minLength;
             this.maxLength = theOptions.maxLength;
             this.validatorRules = [];
@@ -47,18 +46,10 @@ define(["require", "exports", "jquery", "jqxinput", "bpa/base/component/Componen
                     rule: "minLength=" + this.minLength
                 });
             }
-            if (this.isEmailFormat) {
-                this.validatorRules.push({
-                    input: "#" + this.id,
-                    message: "Invalid email format",
-                    action: "keyup, blur",
-                    rule: "email"
-                });
-            }
-            jqxinput;
+            jqxpasswordinput;
         }
-        TextBox.prototype.renderTo = function (theContainer) {
-            this.element = $("<input type=\"text\" class=\"text-input\" id=\"" + this.id + "\"/>");
+        PasswordInput.prototype.renderTo = function (theContainer) {
+            this.element = $("<input type=\"password\" class=\"text-input\" id=\"" + this.id + "\"/>");
             var _width = '';
             if (this.widthInPercentage != undefined) {
                 _width = this.widthInPercentage + '%';
@@ -98,15 +89,24 @@ define(["require", "exports", "jquery", "jqxinput", "bpa/base/component/Componen
             if (this.maxLength != undefined) {
                 this.element.attr("maxlength", this.maxLength);
             }
-            this.element = this.element.jqxInput({ placeHolder: this.placeHolder, height: this.height, width: this.width, disabled: this.disabled, theme: this.theme });
+            this.element = this.element.jqxPasswordInput({
+                showStrength: true,
+                showStrengthPosition: "right",
+                showPasswordIcon: false,
+                placeHolder: this.placeHolder,
+                height: this.height,
+                width: this.width,
+                disabled: this.disabled,
+                theme: this.theme
+            });
             if (this.value != undefined) {
                 this.element.val(this.value);
             }
             this.rendered = true;
         };
-        TextBox.prototype.setValue = function (value) {
+        PasswordInput.prototype.setValue = function (value) {
         };
-        TextBox.prototype.getValue = function () {
+        PasswordInput.prototype.getValue = function () {
             if (this.rendered) {
                 return this.element.val();
             }
@@ -114,19 +114,19 @@ define(["require", "exports", "jquery", "jqxinput", "bpa/base/component/Componen
                 return null;
             }
         };
-        TextBox.prototype.disable = function () {
+        PasswordInput.prototype.disable = function () {
             this.disabled = true;
             if (this.rendered) {
                 this.element.jqxInput({ disabled: true });
             }
         };
-        TextBox.prototype.enable = function () {
+        PasswordInput.prototype.enable = function () {
             this.disabled = false;
             if (this.rendered) {
                 this.element.jqxInput({ disabled: false });
             }
         };
-        return TextBox;
+        return PasswordInput;
     })(Component);
-    return TextBox;
+    return PasswordInput;
 });

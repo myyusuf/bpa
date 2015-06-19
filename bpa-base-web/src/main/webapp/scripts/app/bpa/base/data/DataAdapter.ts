@@ -15,8 +15,9 @@ class DataAdapter{
 
     dataAdapter: any;
 
-    constructor(theSource: DataSource){
+    constructor(theSource: DataSource, formatDataCallback?: any){
        this.dataAdapter = new $.jqx.dataAdapter(theSource, {
+            formatData: formatDataCallback,
             downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
