@@ -123,7 +123,7 @@ define(["bpaObservable", "jQuery", "jqxcore", "jqxbuttons", "jqxdata", "jqxinput
         
         _accountGroupListGrid.on('rowclick', function (event) {
         	
-        	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = args.rowindex;
+        	var _args = event.args, _clickEvent = _args.originalEvent, _rowIndex = _args.rowindex;
         	
         	var _rightClick = _isRightClick(_clickEvent);
             if (_rightClick) {

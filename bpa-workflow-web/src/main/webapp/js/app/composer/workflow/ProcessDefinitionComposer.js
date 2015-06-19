@@ -1,4 +1,4 @@
-define(["notificationWindow", "view/workflow/ProcessDefinitionList", "view/workflow/ProcessDefinitionUpload", "jqxnotification"], function (NotificationWindow, ProcessDefinitionList, ProcessDefinitionUpload) {
+define(["notificationWindow", "view/workflow/ProcessDefinitionList", "jqxnotification"], function (NotificationWindow, ProcessDefinitionList) {
 	
 	var ProcessDefinitonComposer = function(container){
 		

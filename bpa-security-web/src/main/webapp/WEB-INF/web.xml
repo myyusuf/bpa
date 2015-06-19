@@ -12,6 +12,15 @@
 			classpath:bpa-security-ctx.xml
 		</param-value>
 	</context-param>
+	
+	<filter>
+		<filter-name>myFilter</filter-name>
+		<filter-class>id.co.oriza.bpa.security.interfaces.ws.MyFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>myFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>

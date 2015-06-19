@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class IdentityController extends CommonController{
 	private IdentityApplicationService identityService;
 	
 	@RequestMapping(value="/security/users", method=RequestMethod.GET, produces="application/json")
-	public Map<String, Object> allUsers(@RequestParam(required=false) Map<String, String> params){
+	public Map<String, Object> allUsers(HttpServletResponse response,  @RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
 		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
@@ -61,6 +63,8 @@ public class IdentityController extends CommonController{
 		result.put("num", usersSize);
 		result.put("data", userModels);
 		result.put("success", true);
+		
+		response.setHeader("Access-Control-Allow-Origin","*");
 		
 		return result;
 	}
@@ -166,7 +170,7 @@ public class IdentityController extends CommonController{
 	}
 	
 	@RequestMapping(value="/security/groups", method=RequestMethod.GET, produces="application/json")
-	public Map<String, Object> allGroups(@RequestParam(required=false) Map<String, String> params){
+	public Map<String, Object> allGroups(HttpServletResponse response, @RequestParam(required=false) Map<String, String> params){
 		
 		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
 		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
@@ -188,11 +192,13 @@ public class IdentityController extends CommonController{
 		result.put("data", groupModels);
 		result.put("success", true);
 		
+		response.setHeader("Access-Control-Allow-Origin","*");
+		
 		return result;
 	}
 	
 	@RequestMapping(value="/security/groups", method=RequestMethod.POST, produces="application/json")
-	public Map<String, Object> createGroup(@RequestBody(required=false) Map<String, Object> params){
+	public Map<String, Object> createGroup(HttpServletResponse response, @RequestBody(required=false) Map<String, Object> params){
 		
 		logger.debug("createGroup");
 		
@@ -206,6 +212,8 @@ public class IdentityController extends CommonController{
 		this.identityService().newGroupWith(command);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
+		
+		response.setHeader("Access-Control-Allow-Origin","*");
 		
 		result.put("success", true);
 		

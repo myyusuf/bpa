@@ -34,8 +34,10 @@ define(["jQuery", "jqxcore"], function () {
 		var tabs = $('<div id="tabs"><ul><li>Dashboard</li></ul><div></div></div>');
 		
 		tabs.appendTo(container);
-		tabs.jqxTabs({ width: '100%', height: '100%', position: 'top', showCloseButtons: true, scrollPosition: 'both', selectionTracker: true, theme: 'metro'});
+		tabs.jqxTabs({ width: '100%', height: '100%', position: 'top', showCloseButtons: true, scrollPosition: 'both', reorder: true, selectionTracker: true, theme: 'metro'});
 		tabs.css({marginLeft: "-1px", marginTop: "0px", borderTop: "0px"});
+		
+		tabs.jqxTabs('hideCloseButtonAt', 0); 
 		
 		
 		$.subscribe("viewUserListEvent", function(e, data){
