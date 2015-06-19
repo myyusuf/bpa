@@ -1,0 +1,39 @@
+.text-input {
+    height: 21px;
+}
+
+.edit-table {
+	/*margin-top: 5px;
+	margin-bottom: 5px;*/
+}
+
+.edit-table td,.edit-table tr {
+	margin: 0px;
+	padding: 2px;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	font-family: Verdana;
+	font-size: 12px;
+	height: 27px;
+}
+
+.jqx-validator-hint{
+	height: 18px;
+    width: auto;
+    display: inline-block;
+    cursor: pointer;
+    padding: 3px 7px 3px 26px;
+    font-family: Verdana;
+    font-size: 13px;
+    border: 1px solid #C80000;
+    background-color: #fffAF0;
+    color: #111;
+    z-index: 99999;
+    white-space: nowrap;
+    border-radius:4px; box-shadow: 4px 4px 8px #CCC;
+    background-image:url('../../../images/icons/bpa/base/error.png');
+    background-repeat: no-repeat;
+    background-position:5px 4px;
+}
+
+.ui-widget{font-family:Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;font-size:10px}

@@ -15,4 +15,16 @@
 		<nature>org.springsource.ide.eclipse.gradle.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>std-lib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>std-lib/lib.d.ts</name>
+			<type>1</type>
+			<location>E:/Installers/ide/eclipse/eclipse-jee-kepler-SR1-win32-x86_64/plugins/com.axmor.eclipse.typescript.core_2.0.0.201410231804/lib/bridge/ts_1.0/lib.d.ts</location>
+		</link>
+	</linkedResources>
 </projectDescription>
