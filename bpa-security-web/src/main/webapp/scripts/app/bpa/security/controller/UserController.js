@@ -31,7 +31,7 @@ define(["require", "exports", "bpa/security/component/UserEditWindow", "bpa/secu
                     _this.remoteService.getRequest({
                         data: userToEdit,
                         url: _userGroupUrl,
-                        onSendDataSuccess: function (result) {
+                        onSendDataSuccess: function (status, result) {
                             console.log(result);
                             var _groups = result.data;
                             userToEdit.groups = _groups;

@@ -57,7 +57,7 @@ class UserController{
                 _this.remoteService.getRequest({
                     data: userToEdit,
                     url: _userGroupUrl,
-                    onSendDataSuccess: function(result){
+                    onSendDataSuccess: function(status: string, result: any){
                         console.log(result);
                         var _groups = result.data;
 
