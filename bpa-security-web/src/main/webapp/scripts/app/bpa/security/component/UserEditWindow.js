@@ -12,9 +12,15 @@ define(["require", "exports", "bpa/base/component/container/EditWindow", "bpa/se
     var UserEditWindow = (function (_super) {
         __extends(UserEditWindow, _super);
         function UserEditWindow(user, theOnSaveListener) {
-            _super.call(this, { title: "Edit User", width: 426, height: 443 });
+            _super.call(this, { width: 426, height: 443 });
             var _this = this;
             _this.user = user;
+            if (_this.isEditMode()) {
+                _this.title = "Edit User";
+            }
+            else {
+                _this.title = "Add User";
+            }
             _this.onSaveUserListener = theOnSaveListener;
         }
         UserEditWindow.prototype.buildEditWindowContent = function () {
@@ -27,6 +33,14 @@ define(["require", "exports", "bpa/base/component/container/EditWindow", "bpa/se
             }, onCancelButtonClick: function () {
                 _this.closeWindow();
             } };
+        };
+        UserEditWindow.prototype.isEditMode = function () {
+            if (this.user != undefined && this.user != null && this.user.userId != null && this.user.userId != "") {
+                return true;
+            }
+            else {
+                return false;
+            }
         };
         return UserEditWindow;
     })(EditWindow);

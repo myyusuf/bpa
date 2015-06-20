@@ -35,8 +35,12 @@ class GroupSelectWindow extends SelectWindow{
 
         _this.onSelectGroupListener = theOnSelectGroupListener;
 
-        _this.onSelectDataListener =  function(group: Group){
-            _this.onSelectGroupListener(group);
+        _this.onSelectDataListener =  function(selectedData: any){
+            var _selectedGroup = Group.newInstance();
+            _selectedGroup.code = selectedData.code;
+            _selectedGroup.name = selectedData.name;
+
+            _this.onSelectGroupListener(_selectedGroup);
         }
 
         var _dataSourceOptions: DataSourceOptions = {

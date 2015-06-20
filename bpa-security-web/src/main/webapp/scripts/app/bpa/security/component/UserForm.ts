@@ -41,7 +41,7 @@ class UserForm extends Form{
         var _emailTextBox: TextBox = new TextBox({name: 'email', value: this.user.email, isRequired: true, isEmailFormat: true, widthInPercentage: 90});
 
         var _userGroupLabel: Label = new Label({label: "Group"});
-        var _userGroupGrid: UserGroupGrid = new UserGroupGrid({name: 'userGroup', groups: this.user.groups});
+        var _userGroupGrid: UserGroupGrid = new UserGroupGrid({name: 'groups', groups: this.user.groups});
 
         var _simplePanel = new SimplePanel({content: _userGroupGrid});
 

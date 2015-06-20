@@ -25,7 +25,7 @@ define(["require", "exports", "bpa/base/component/input/Form", "bpa/base/compone
             var _emailLabel = new Label({ label: "Email" });
             var _emailTextBox = new TextBox({ name: 'email', value: this.user.email, isRequired: true, isEmailFormat: true, widthInPercentage: 90 });
             var _userGroupLabel = new Label({ label: "Group" });
-            var _userGroupGrid = new UserGroupGrid({ name: 'userGroup', groups: this.user.groups });
+            var _userGroupGrid = new UserGroupGrid({ name: 'groups', groups: this.user.groups });
             var _simplePanel = new SimplePanel({ content: _userGroupGrid });
             var _tableLayout = new TableLayout({
                 classStyling: "edit-table",

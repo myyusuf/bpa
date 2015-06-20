@@ -75,7 +75,8 @@ define(["require", "exports", "bpa/base/component/Component", "bpa/base/data/Dat
                     onClick: function (rowData) {
                         console.log("delete rowData : " + rowData);
                         if (_this.onDeleteUser != undefined) {
-                            var _selectedUser = new User(rowData.userId, rowData.firstName);
+                            var _selectedUser = User.newInstance();
+                            _selectedUser.userId = rowData.userId;
                             _this.onDeleteUser(_selectedUser);
                         }
                     }
@@ -111,6 +112,9 @@ define(["require", "exports", "bpa/base/component/Component", "bpa/base/data/Dat
         }
         UserList.prototype.renderTo = function (theContainer) {
             this.dataGrid.renderTo(theContainer);
+        };
+        UserList.prototype.refreshGrid = function () {
+            this.dataGrid.refreshGrid();
         };
         return UserList;
     })(Component);

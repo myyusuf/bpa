@@ -28,7 +28,7 @@ class User extends Model{
     }
 
     static newInstance(): User{
-        return new User(null,  null, null, null, null, null);
+        return new User(null,  null, null, null, null, []);
     }
 }
 

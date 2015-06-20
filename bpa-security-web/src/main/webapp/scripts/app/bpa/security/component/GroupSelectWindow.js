@@ -8,15 +8,18 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "bpa/base/component/container/SelectWindow", "bpa/base/data/DataSource", "bpa/base/data/DataAdapter", "bpa/security/SecurityConstant"], function (require, exports, SelectWindow, DataSource, DataAdapter, SecurityConstant) {
+define(["require", "exports", "bpa/base/component/container/SelectWindow", "bpa/security/model/Group", "bpa/base/data/DataSource", "bpa/base/data/DataAdapter", "bpa/security/SecurityConstant"], function (require, exports, SelectWindow, Group, DataSource, DataAdapter, SecurityConstant) {
     var GroupSelectWindow = (function (_super) {
         __extends(GroupSelectWindow, _super);
         function GroupSelectWindow(theOnSelectGroupListener) {
             _super.call(this, { title: "Select Group", width: 426, height: 280 });
             var _this = this;
             _this.onSelectGroupListener = theOnSelectGroupListener;
-            _this.onSelectDataListener = function (group) {
-                _this.onSelectGroupListener(group);
+            _this.onSelectDataListener = function (selectedData) {
+                var _selectedGroup = Group.newInstance();
+                _selectedGroup.code = selectedData.code;
+                _selectedGroup.name = selectedData.name;
+                _this.onSelectGroupListener(_selectedGroup);
             };
             var _dataSourceOptions = {
                 type: "GET",

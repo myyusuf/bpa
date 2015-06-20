@@ -20,11 +20,17 @@ class UserEditWindow extends EditWindow{
 
     constructor(user: User, theOnSaveListener: OnSaveUserListener) {
 
-        super({title: "Edit User", width: 426, height: 443});
+        super({width: 426, height: 443});
 
         var _this = this;
 
         _this.user = user;
+
+        if(_this.isEditMode()){
+            _this.title = "Edit User";
+        }else{
+            _this.title = "Add User";
+        }
 
         _this.onSaveUserListener = theOnSaveListener;
     }
@@ -44,6 +50,14 @@ class UserEditWindow extends EditWindow{
                 _this.closeWindow();
             }
         };
+    }
+
+    isEditMode(){
+        if(this.user != undefined && this.user != null && this.user.userId != null && this.user.userId != ""){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

@@ -1,13 +1,13 @@
 /**
  * Created by Yusuf on 5/25/2015.
  */
-define(["require", "exports", "bpa/security/component/UserEditWindow", "bpa/security/component/UserList", "bpa/base/data/RemoteService", "bpa/base/component/SuccessNotification", "bpa/base/component/ErrorNotification", "bpa/security/SecurityConstant"], function (require, exports, UserEditWindow, UserList, RemoteService, SuccessNotification, ErrorNotification, SecurityConstant) {
+define(["require", "exports", "bpa/security/component/UserEditWindow", "bpa/security/component/UserList", "bpa/base/data/RemoteService", "bpa/base/component/SuccessNotification", "bpa/base/component/ErrorNotification", "bpa/base/component/ConfirmationWindow", "bpa/security/SecurityConstant"], function (require, exports, UserEditWindow, UserList, RemoteService, SuccessNotification, ErrorNotification, ConfirmationWindow, SecurityConstant) {
     var UserController = (function () {
         function UserController() {
             var _this = this;
             _this.successNotification = new SuccessNotification();
             _this.errorNotification = new ErrorNotification();
-            this.remoteService = new RemoteService({ defaultUrl: "sample/bpa/security/users" });
+            this.remoteService = new RemoteService({ defaultUrl: SecurityConstant.USERS_URL });
             this.userList = new UserList({
                 onAddUser: function (newUser) {
                     _this.userEditWindow = new UserEditWindow(newUser, function (user) {
@@ -15,10 +15,11 @@ define(["require", "exports", "bpa/security/component/UserEditWindow", "bpa/secu
                             data: user,
                             onSendDataSuccess: function (status, result) {
                                 _this.userEditWindow.closeWindow();
+                                _this.userList.refreshGrid();
                                 _this.successNotification.open();
                             },
                             onSendDataError: function (status, result) {
-                                _this.userEditWindow.closeWindow();
+                                //_this.userEditWindow.closeWindow();
                                 _this.errorNotification.open();
                             }
                         });
@@ -36,14 +37,15 @@ define(["require", "exports", "bpa/security/component/UserEditWindow", "bpa/secu
                             var _groups = result.data;
                             userToEdit.groups = _groups;
                             _this.userEditWindow = new UserEditWindow(userToEdit, function (user) {
-                                _this.remoteService.postRequest({
+                                _this.remoteService.putRequest({
                                     data: user,
                                     onSendDataSuccess: function (status, result) {
                                         _this.userEditWindow.closeWindow();
+                                        _this.userList.refreshGrid();
                                         _this.successNotification.open();
                                     },
                                     onSendDataError: function (status, result) {
-                                        _this.userEditWindow.closeWindow();
+                                        //_this.userEditWindow.closeWindow();
                                         _this.errorNotification.open();
                                     }
                                 });
@@ -55,6 +57,25 @@ define(["require", "exports", "bpa/security/component/UserEditWindow", "bpa/secu
                             _this.errorNotification.open();
                         }
                     });
+                },
+                onDeleteUser: function (deletedUser) {
+                    _this.confirmationWindow = new ConfirmationWindow({
+                        message: "Are you sure want to delete User : " + deletedUser.userId,
+                        onOkButtonClick: function () {
+                            _this.remoteService.deleteRequest({
+                                data: deletedUser,
+                                onSendDataSuccess: function (status, result) {
+                                    _this.successNotification.open();
+                                    _this.userList.refreshGrid();
+                                },
+                                onSendDataError: function (status, result) {
+                                    _this.errorNotification.open();
+                                }
+                            });
+                        }
+                    });
+                    _this.confirmationWindow.renderTo(this.container);
+                    _this.confirmationWindow.openWindow();
                 }
             });
         }

@@ -84,9 +84,13 @@ public class IdentityController extends CommonController{
 		
 		List<String> groupCodes = new ArrayList<String>(0);
 		List<Map<String, Object>> groupsMap = (List<Map<String, Object>>) params.get("groups");
-		for (Map<String, Object> groupMap : groupsMap) {
-			groupCodes.add((String) groupMap.get("code"));
+		
+		if(groupsMap != null){
+			for (Map<String, Object> groupMap : groupsMap) {
+				groupCodes.add((String) groupMap.get("code"));
+			}
 		}
+		
 		System.out.println("groupsMap : " + groupsMap);
 		System.out.println("groupCodes : " + groupCodes);
 		
@@ -116,9 +120,13 @@ public class IdentityController extends CommonController{
 		
 		List<String> groupCodes = new ArrayList<String>(0);
 		List<Map<String, Object>> groupsMap = (List<Map<String, Object>>) params.get("groups");
-		for (Map<String, Object> groupMap : groupsMap) {
-			groupCodes.add((String) groupMap.get("code"));
+		
+		if(groupsMap != null){
+			for (Map<String, Object> groupMap : groupsMap) {
+				groupCodes.add((String) groupMap.get("code"));
+			}
 		}
+		
 		System.out.println("groupsMap : " + groupsMap);
 		System.out.println("groupCodes : " + groupCodes);
 		

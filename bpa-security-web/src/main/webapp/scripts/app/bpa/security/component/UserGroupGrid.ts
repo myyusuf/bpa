@@ -66,6 +66,13 @@ class UserGroupGrid extends Component implements FormInput{
             onClick: function(event){
                 var _groupSelectWindow = new GroupSelectWindow(function(group){
                     console.log("Selected Group : " + group.name);
+
+                    var _result = $.grep(_this.groups, function(e){ return e.code == group.code; });
+                    if(_result.length == 0){
+                        _this.groups.push(group);
+                        _this.dataGrid.refreshGrid();
+                    }
+
                 });
                 _groupSelectWindow.renderTo(_this.container);
                 _groupSelectWindow.openWindow();
@@ -75,7 +82,16 @@ class UserGroupGrid extends Component implements FormInput{
         var _removeGroupButton: Button = new Button({
             label: "Remove",
             onClick: function(event){
+                var _selectedGroup = _this.dataGrid.getSelectedData();
+                var _resultIndex = -1;
+                for(var _i=0;_i<_this.groups.length;_i++){
+                    if(_this.groups[_i].code == _selectedGroup.code){
+                        _resultIndex = _i;
+                    }
+                }
 
+                _this.groups.splice(_resultIndex, 1);
+                _this.dataGrid.refreshGrid();
             }
         });
 
@@ -102,7 +118,7 @@ class UserGroupGrid extends Component implements FormInput{
     }
 
     getValue(): any{
-        return "test"; //this.element.val();
+        return this.groups;
     }
 
     renderTo(theContainer: any){

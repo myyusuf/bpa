@@ -20,7 +20,7 @@ define(["require", "exports", "bpa/base/model/Model"], function (require, export
             this.groups = theGroups;
         }
         User.newInstance = function () {
-            return new User(null, null, null, null, null, null);
+            return new User(null, null, null, null, null, []);
         };
         return User;
     })(Model);

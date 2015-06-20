@@ -104,7 +104,8 @@ class UserList extends Component{
                 onClick: function(rowData){
                     console.log("delete rowData : " +  rowData);
                     if(_this.onDeleteUser != undefined){
-                        var _selectedUser: User = new User(rowData.userId, rowData.firstName);
+                        var _selectedUser: User = User.newInstance();
+                        _selectedUser.userId = rowData.userId;
                         _this.onDeleteUser(_selectedUser);
                     }
                 }
@@ -147,6 +148,10 @@ class UserList extends Component{
 
     renderTo(theContainer: any){
         this.dataGrid.renderTo(theContainer);
+    }
+
+    refreshGrid(){
+        this.dataGrid.refreshGrid();
     }
 
 }
