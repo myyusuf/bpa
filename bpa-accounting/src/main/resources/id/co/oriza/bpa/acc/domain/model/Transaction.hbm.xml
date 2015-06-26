@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping default-access="field">
+	<class name="id.co.oriza.bpa.acc.domain.model.Transaction" table="BPA_TRANSACTION">
+		<id name="id" type="long" column="ID" unsaved-value="-1">
+			<generator class="native"/>
+		</id>
+		
+		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
+		
+		<component name="transactionId" class="id.co.oriza.bpa.acc.domain.model.TransactionId">
+            <property name="id" column="TRANSACTION_ID_ID" type="java.lang.String" />
+        </component>
+		<property name="transactionNumber" column="TRANSACTION_NUMBER" type="java.lang.String" />
+		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<property name="createdTime" column="CREATED_TIME" type="java.util.Date" />
+		
+	</class> 
+</hibernate-mapping>

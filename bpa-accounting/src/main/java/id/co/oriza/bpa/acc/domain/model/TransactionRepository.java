@@ -5,9 +5,11 @@ import java.util.Collection;
 public interface TransactionRepository {
 	
 	public void add(Transaction aTransaction);
-	public Collection<Transaction> allSimilarlyDescribedTransactions(String aCode, String aName, int aStart, int aLimit);
-	long allSimilarlyDescribedTransactionsSize(String aCode, String aName);
-	public Transaction accountGroupWithCode(String aCode);
-	void remove(Transaction anTransaction);
+	public Collection<Transaction> allSimilarlyNumberedTransactions(String aTransactionNumber, int aStart, int aLimit);
+	long allSimilarlyNumberedTransactionsSize(String aTransactionNumber);
+	public Transaction transactionWithNumber(String aTransactionNumber);
+	void remove(Transaction aTransaction);
+	TransactionId nextIdentity();
+	Transaction transactionOfId(TransactionId aTransactionId);
 
 }

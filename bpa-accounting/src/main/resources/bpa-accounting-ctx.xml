@@ -87,5 +87,9 @@
 	<bean id="accountApplicationService" class="id.co.oriza.bpa.acc.application.AccountApplicationService" autowire="byName"/>
 	<bean id="hibernateAccountRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateAccountRepository" autowire="byName"/>
 	<bean id="hibernateAccountGroupRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateAccountGroupRepository" autowire="byName"/>
+	
+	<bean id="hibernateTransactionRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateTransactionRepository" autowire="byName"/>
+	<bean id="hibernateJournalRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateJournalRepository" autowire="byName"/>
+	<bean id="hibernateCurrencyRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateCurrencyRepository" autowire="byName"/>
 
 </beans>

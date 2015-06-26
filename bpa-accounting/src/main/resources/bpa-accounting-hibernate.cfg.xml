@@ -5,5 +5,9 @@
 	<session-factory>
 		<mapping resource="id/co/oriza/bpa/acc/domain/model/Account.hbm.xml" />
 		<!-- <mapping resource="id/co/oriza/bpa/acc/domain/model/AccountGroup.hbm.xml" /> -->
+		
+		<mapping resource="id/co/oriza/bpa/acc/domain/model/Transaction.hbm.xml" />
+		<mapping resource="id/co/oriza/bpa/acc/domain/model/Currency.hbm.xml" />
+		<mapping resource="id/co/oriza/bpa/acc/domain/model/Journal.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

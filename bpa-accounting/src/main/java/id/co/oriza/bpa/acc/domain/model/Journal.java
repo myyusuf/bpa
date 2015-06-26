@@ -16,10 +16,27 @@ public class Journal extends ConcurrencySafeEntity {
 	private Date createdTime;
 	private Account account;
 	private BigDecimal amount;
+	private Currency currency;
+	private BigDecimal kurs;
 	private MovementType position;
 	
-	private Transaction transaction;
+	private TransactionId transactionId;
 	private String description;
+	
+	public Journal(JournalId aJournalId, Date aCreatedTime, Account anAccount,
+			BigDecimal anAmount, Currency aCurrency, BigDecimal aKurs,
+			MovementType aPosition, TransactionId aTransactionId, String aDescription) {
+		super();
+		this.setJournalId(aJournalId);
+		this.setCreatedTime(aCreatedTime);
+		this.setAccount(anAccount);
+		this.setAmount(anAmount);
+		this.setCurrency(aCurrency);
+		this.setKurs(aKurs);
+		this.setPosition(aPosition);
+		this.setTransactionId(aTransactionId);
+		this.setDescription(aDescription);
+	}
 
 	public JournalId journalId() {
 		return journalId;
@@ -41,57 +58,69 @@ public class Journal extends ConcurrencySafeEntity {
 		return position;
 	}
 
-	public Transaction transaction() {
-		return transaction;
+	public TransactionId transactionId() {
+		return transactionId;
 	}
 
-	protected void setJournalId(JournalId journalId) {
-		this.journalId = journalId;
+	protected void setJournalId(JournalId aJournalId) {
+		this.assertArgumentNotNull(aJournalId, "The Journal Id is required.");
+		this.journalId = aJournalId;
 	}
 
-	protected void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
+	protected void setCreatedTime(Date aCreatedTime) {
+		this.assertArgumentNotNull(aCreatedTime, "The Created Time is required.");
+		this.createdTime = aCreatedTime;
 	}
 
-	protected void setAccount(Account account) {
-		this.account = account;
+	protected void setAccount(Account anAccount) {
+		this.assertArgumentNotNull(anAccount, "The Account is required.");
+		this.account = anAccount;
 	}
 
-	protected void setAmount(BigDecimal amount) {
-		this.amount = amount;
+	protected void setAmount(BigDecimal anAmount) {
+		this.assertArgumentNotNull(anAmount, "The Amount is required.");
+		this.amount = anAmount;
 	}
 
-	protected void setPosition(MovementType position) {
-		this.position = position;
+	protected void setPosition(MovementType aPosition) {
+		this.assertArgumentNotNull(aPosition, "The Position is required.");
+		this.position = aPosition;
 	}
 
-	protected void setTransaction(Transaction transaction) {
-		this.transaction = transaction;
+	protected void setTransactionId(TransactionId aTransactionId) {
+		this.assertArgumentNotNull(aTransactionId, "The Transaction Id is required.");
+		this.transactionId = aTransactionId;
 	}
 	
 	protected Journal() {
 		super();
 	}
 
-	public Journal(JournalId journalId, Date createdTime, Account account,
-			BigDecimal amount, MovementType position, Transaction transaction,
-			String description) {
-		this();
-		this.setJournalId(journalId);
-		this.setCreatedTime(createdTime);
-		this.setAccount(account);
-		this.setAmount(amount);
-		this.setPosition(position);
-		this.setTransaction(transaction);
-		this.setDescription(description);
-	}
-
 	public String description() {
 		return description;
 	}
 
-	protected void setDescription(String description) {
-		this.description = description;
+	protected void setDescription(String aDescription) {
+		this.assertArgumentNotEmpty(aDescription, "The Description is required.");
+		this.description = aDescription;
+	}
+
+	public BigDecimal kurs() {
+		return kurs;
+	}
+
+	protected void setKurs(BigDecimal aKurs) {
+		this.assertArgumentNotNull(aKurs, "The Kurs is required.");
+		this.kurs = aKurs;
+	}
+
+	public Currency currency() {
+		return currency;
+	}
+
+	protected void setCurrency(Currency aCurrency) {
+		this.assertArgumentNotNull(aCurrency, "The Currency is required.");
+		this.currency = aCurrency;
 	}
 
 }

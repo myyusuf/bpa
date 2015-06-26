@@ -10,12 +10,24 @@
 		
 		<version column="CONCURRENCY_VERSION" name="concurrencyVersion" type="int" />
 		
-		<many-to-one name="journalId" class="id.co.oriza.bpa.acc.domain.model.JournalId" column="JOURNAL_ID"/>
+		<component name="journalId" class="id.co.oriza.bpa.acc.domain.model.JournalId">
+            <property name="id" column="JOURNAL_ID_ID" type="java.lang.String" />
+        </component>
+		
 		<property name="createdTime" column="CREATED_TIME" type="java.util.Date" />
-		
-		<many-to-one name="transaction" class="id.co.oriza.bpa.acc.domain.model.Transaction" column="TRANSACTION_ID"/>
-		
-		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<many-to-one name="account" class="id.co.oriza.bpa.acc.domain.model.Account" column="ACCOUNT_ID"/>
+		<property name="amount" column="AMOUNT" type="java.math.BigDecimal" />
+		<many-to-one name="currency" class="id.co.oriza.bpa.acc.domain.model.Currency" column="CURRENCY_ID"/>
+		<property name="kurs" column="KURS" type="java.math.BigDecimal" />
+		<property name="position" column="POSITION">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">id.co.oriza.bpa.acc.domain.model.MovementType</param>
+				<param name="type">12</param>
+			</type>
+		</property>
+		<component name="transactionId" class="id.co.oriza.bpa.acc.domain.model.TransactionId">
+            <property name="id" column="TRANSACTION_ID_ID" type="java.lang.String" />
+        </component>
 		<property name="description" column="DESCRIPTION" type="java.lang.String" />
 		
 	</class> 
