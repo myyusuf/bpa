@@ -40,7 +40,7 @@ public class HibernateTransactionRepository extends AbstractHibernateSession imp
 		
 		Query query = this.session().createQuery("from id.co.oriza.bpa.acc.domain.model.Transaction as _obj_ "
 				+ "where _obj_.transactionNumber like :aTransactionNumber ");
-		query.setString("aDescription", aTransactionNumber + "%");
+		query.setString("aTransactionNumber", aTransactionNumber + "%");
 		query.setFirstResult(aStart);
 		query.setMaxResults(aLimit);
 		

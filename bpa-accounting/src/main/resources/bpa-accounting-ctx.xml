@@ -84,7 +84,10 @@
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	
 	<bean id="sessionProvider" class="id.co.oriza.bpa.base.spring.SpringHibernateSessionProvider" autowire="byName"/>
+	
 	<bean id="accountApplicationService" class="id.co.oriza.bpa.acc.application.AccountApplicationService" autowire="byName"/>
+	<bean id="transactionApplicationService" class="id.co.oriza.bpa.acc.application.TransactionApplicationService" autowire="byName"/>
+	
 	<bean id="hibernateAccountRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateAccountRepository" autowire="byName"/>
 	<bean id="hibernateAccountGroupRepository" class="id.co.oriza.bpa.acc.infrastructure.persistence.HibernateAccountGroupRepository" autowire="byName"/>
 	

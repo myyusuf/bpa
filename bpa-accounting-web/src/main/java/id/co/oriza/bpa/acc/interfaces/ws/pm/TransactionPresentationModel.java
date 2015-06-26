@@ -12,6 +12,10 @@ public class TransactionPresentationModel {
 		super();
 		this.transaction = transaction;
 	}
+	
+	public String getTransactionId() {
+		return transaction.getTransactionId().id();
+	}
 
 	public String getTransactionNumber() {
 		return transaction.getTransactionNumber();
