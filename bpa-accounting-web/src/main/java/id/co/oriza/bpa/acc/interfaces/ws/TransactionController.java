@@ -3,8 +3,12 @@ package id.co.oriza.bpa.acc.interfaces.ws;
 import id.co.oriza.bpa.acc.application.NewJournalCommand;
 import id.co.oriza.bpa.acc.application.NewTransactionCommand;
 import id.co.oriza.bpa.acc.application.TransactionApplicationService;
+import id.co.oriza.bpa.acc.domain.model.AccountGroup;
+import id.co.oriza.bpa.acc.domain.model.Currency;
 import id.co.oriza.bpa.acc.domain.model.Journal;
 import id.co.oriza.bpa.acc.domain.model.Transaction;
+import id.co.oriza.bpa.acc.interfaces.ws.pm.AccountGroupPresentationModel;
+import id.co.oriza.bpa.acc.interfaces.ws.pm.CurrencyPresentationModel;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.JournalPresentationModel;
 import id.co.oriza.bpa.acc.interfaces.ws.pm.TransactionPresentationModel;
 import id.co.oriza.bpa.base.interfaces.ws.CommonController;
@@ -154,6 +158,34 @@ final Logger logger = LoggerFactory.getLogger(TransactionController.class);
 		
 		result.put("num", journalsSize);
 		result.put("data", journalModels);
+		result.put("success", true);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/accounting/currencies", method=RequestMethod.GET, produces="application/json")
+	public Map<String, Object> getCurrencies(@RequestParam(required=false) Map<String, String> params){
+		
+		int start = params.get("pagenum") != null ? Integer.parseInt(params.get("pagenum")) : 0;
+		int limit = params.get("pagesize") != null ? Integer.parseInt(params.get("pagesize")) : MAX_LIMIT;
+		
+		String codeOrNameStartsWith = params.get("codeOrNameStartsWith") != null ? params.get("codeOrNameStartsWith") : "";
+		
+		printParamsString(params);
+		
+		List<CurrencyPresentationModel> currencyModels = new ArrayList<CurrencyPresentationModel>();
+		Collection<Currency> currencys = this.transactionApplicationService().allSimilarlyCodedOrNamedCurrencies(codeOrNameStartsWith, codeOrNameStartsWith, start, limit);
+		for (Currency currency : currencys) {
+			CurrencyPresentationModel currencyModel = new CurrencyPresentationModel(currency);
+			currencyModels.add(currencyModel);
+		}
+		
+		int currencysSize = this.transactionApplicationService().allSimilarlyCodedOrNamedCurrenciesSize(codeOrNameStartsWith, codeOrNameStartsWith);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("num", currencysSize);
+		result.put("data", currencyModels);
 		result.put("success", true);
 		
 		return result;

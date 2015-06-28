@@ -1,6 +1,7 @@
 package id.co.oriza.bpa.acc.application;
 
 import id.co.oriza.bpa.acc.domain.model.Account;
+import id.co.oriza.bpa.acc.domain.model.AccountGroup;
 import id.co.oriza.bpa.acc.domain.model.AccountRepository;
 import id.co.oriza.bpa.acc.domain.model.Currency;
 import id.co.oriza.bpa.acc.domain.model.CurrencyRepository;
@@ -112,6 +113,18 @@ public class TransactionApplicationService {
 			this.journalRepository().add(journal);
 		}
 		
+	}
+	
+	@Transactional(readOnly=true)
+	public Collection<Currency> allSimilarlyCodedOrNamedCurrencies(String aCode, String aName, int aStart, int aLimit){
+		Collection<Currency> currencies = this.currencyRepository().allSimilarlyCodedOrNamedCurrencies(aCode, aName, aStart, aLimit);
+		return currencies;
+	}
+	
+	@Transactional(readOnly=true)
+	public int allSimilarlyCodedOrNamedCurrenciesSize(String aCode, String aName){
+		int currenciesSize = this.currencyRepository().allSimilarlyCodedOrNamedCurrenciesSize(aCode, aName);
+		return currenciesSize;
 	}
 	
 	private Transaction existingTransaction(TransactionId aTransactionId) {
