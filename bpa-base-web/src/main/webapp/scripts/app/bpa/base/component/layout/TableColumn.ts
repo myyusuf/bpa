@@ -7,7 +7,7 @@ import ComponentOptions = require("bpa/base/component/ComponentOptions");
 
 interface TableColumn extends ComponentOptions{
 
-    span?: number;
+    colspan?: number;
     content?: Component;
 
 }

@@ -13,6 +13,9 @@ define(["require", "exports", "bpa/base/component/container/WindowPanel", "bpa/b
             if (theOptions.title == undefined) {
                 this.title = "Confirmation";
             }
+            else {
+                this.title = theOptions.title;
+            }
             this.titleIconUrl = "images/icons/bpa/base/exclamation-circle.png";
             this.message = theOptions.message;
             this.onOkButtonClick = theOptions.onOkButtonClick;

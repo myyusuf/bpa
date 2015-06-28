@@ -103,7 +103,7 @@ class PasswordInput extends Component implements FormInput {
 
         if(this.isRequired){
 
-            var _requiredSymbol = $("<canvas id=\"circlecanvas_" + this.id +  "\" width=\"6\" height=\"6\" style=\"float: left; margin-top: 10px; margin-left: 4px;\"></canvas>");
+            var _requiredSymbol: any = $("<canvas id=\"circlecanvas_" + this.id +  "\" width=\"6\" height=\"6\" style=\"float: left; margin-top: 10px; margin-left: 5px;\"></canvas>");
             _requiredSymbol.appendTo(_myContainer);
 
             var context = _requiredSymbol[0].getContext("2d");

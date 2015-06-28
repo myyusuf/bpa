@@ -84,6 +84,10 @@ class TableLayout extends Layout{
                     _rowColumn.css("height", _columnHeight);
                 }
 
+                if(column.colspan != undefined && column.colspan != null){
+                    _rowColumn.attr('colspan', column.colspan);
+                }
+
                 if(column.content != undefined && column.content != null){
                     column.content.renderTo(_rowColumn);
                 }

@@ -77,7 +77,7 @@ define(["require", "exports", "jquery", "jqxpasswordinput", "bpa/base/component/
             _myContainer.appendTo(theContainer);
             this.element.appendTo(_myContainer);
             if (this.isRequired) {
-                var _requiredSymbol = $("<canvas id=\"circlecanvas_" + this.id + "\" width=\"6\" height=\"6\" style=\"float: left; margin-top: 10px; margin-left: 4px;\"></canvas>");
+                var _requiredSymbol = $("<canvas id=\"circlecanvas_" + this.id + "\" width=\"6\" height=\"6\" style=\"float: left; margin-top: 10px; margin-left: 5px;\"></canvas>");
                 _requiredSymbol.appendTo(_myContainer);
                 var context = _requiredSymbol[0].getContext("2d");
                 context.arc(3, 3, 3, 0, Math.PI * 2, false);

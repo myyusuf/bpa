@@ -7,7 +7,7 @@
 import $ = require("jquery");
 import Component = require("bpa/base/component/Component");
 import WindowPanel = require("bpa/base/component/container/WindowPanel");
-import ConfirmationWindowOptions = require("bpa/base/component/ConfirmationWindowOptions");
+import AlertWindowOptions = require("bpa/base/component/AlertWindowOptions");
 import TableLayout = require("bpa/base/component/layout/TableLayout");
 import Button = require("bpa/base/component/Button");
 import Label = require("bpa/base/component/Label");
@@ -18,12 +18,14 @@ class AlertWindow extends WindowPanel{
     message: string;
     onCloseButtonClick: any;
 
-    constructor(theOptions: ConfirmationWindowOptions) {
+    constructor(theOptions: AlertWindowOptions) {
 
         super({width: 400, height: 150});
 
         if(theOptions.title == undefined){
             this.title = "Alert"
+        }else{
+            this.title = theOptions.title;
         }
         this.titleIconUrl = "images/icons/bpa/base/error.png";
         this.message = theOptions.message;

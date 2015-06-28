@@ -15,6 +15,9 @@ define(["require", "exports", "bpa/base/component/container/WindowPanel", "bpa/b
             if (theOptions.title == undefined) {
                 this.title = "Alert";
             }
+            else {
+                this.title = theOptions.title;
+            }
             this.titleIconUrl = "images/icons/bpa/base/error.png";
             this.message = theOptions.message;
         }

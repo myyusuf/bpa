@@ -5,7 +5,7 @@
 import ValidatorRule = require("bpa/base/component/input/ValidatorRule");
 
 interface FormInput{
-    setValue(any: string): void;
+    setValue(value: any): void;
     getValue(): any;
     name: string;
     validatorRules: Array<ValidatorRule>;

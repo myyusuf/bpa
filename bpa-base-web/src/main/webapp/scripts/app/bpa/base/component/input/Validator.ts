@@ -41,6 +41,8 @@ class Validator{
         var _this2 = this;
         if(!this.isValidatorInitialized){
             this.form.element.jqxValidator({
+                focus: false,
+                scroll: false,
                 closeOnClick: true,
                 arrow: false,
                 rules: this.rules

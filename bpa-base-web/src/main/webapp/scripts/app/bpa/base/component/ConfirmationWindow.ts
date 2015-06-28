@@ -21,6 +21,8 @@ class ConfirmationWindow extends WindowPanel{
 
         if(theOptions.title == undefined){
             this.title = "Confirmation"
+        }else{
+            this.title = theOptions.title;
         }
         this.titleIconUrl = "images/icons/bpa/base/exclamation-circle.png";
         this.message = theOptions.message;

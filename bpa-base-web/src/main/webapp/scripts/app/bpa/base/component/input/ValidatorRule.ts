@@ -7,7 +7,7 @@ interface ValidatorRules{
     input: string;
     message: string;
     action: string;
-    rule: string;
+    rule: any;
 }
 
 export = ValidatorRules;

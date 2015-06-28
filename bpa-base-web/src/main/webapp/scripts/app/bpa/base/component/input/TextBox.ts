@@ -114,7 +114,7 @@ class TextBox extends Component implements FormInput {
 
         if(this.isRequired){
 
-            var _requiredSymbol = $("<canvas id=\"circlecanvas_" + this.id +  "\" width=\"6\" height=\"6\" style=\"float: left; margin-top: 10px; margin-left: 4px;\"></canvas>");
+            var _requiredSymbol: any = $("<canvas id=\"circlecanvas_" + this.id +  "\" width=\"6\" height=\"6\" style=\"float: left; margin-top: 10px; margin-left: 5px;\"></canvas>");
             _requiredSymbol.appendTo(_myContainer);
 
             var context = _requiredSymbol[0].getContext("2d");
@@ -132,8 +132,6 @@ class TextBox extends Component implements FormInput {
 
         this.element = this.element.jqxInput({placeHolder: this.placeHolder, height: this.height, width: this.width, disabled: this.disabled, theme: this.theme});
 
-
-
         if(this.value != undefined){
             this.element.val(this.value);
         }
@@ -142,7 +140,12 @@ class TextBox extends Component implements FormInput {
     }
 
     setValue(value: any){
-
+        if(this.rendered){
+            this.value = value;
+            this.element.val(value);
+        }else{
+            this.value = value;
+        }
     }
 
     getValue(): any{
